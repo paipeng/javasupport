@@ -50,3 +50,5 @@ Here is a partial implementation of a typeical SimpleFormController exmaples:
         }
     }
 }}}
+
+Above code will validate a registration form with username and password as required field. An option email field. It also check in db for duplicated user validation.
