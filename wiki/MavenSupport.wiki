@@ -1,11 +1,33 @@
 #labels maven,archetype
 The maven2 is a great tool to manage and build java projects. Here we have extended to create easy and ready to use application templates called archetypes.
 
-= Using Archetypes =
+= Jumpstart Your Project Using Archetypes =
 
-== Creating typical Java library/CLI application ==
+Here are exmaples of how you create projects with our archetypes:
 
-Maven2 archetype already providing a default quicstart or simplejavaapp archetype. But this template is soo simple that you will hit error as soon as you start coding! Like it default to use JDK1.4 or below, so you can' use enchanced for loop and generics!
+[http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-javaapp.sh create-javaapp.sh] {{{com.mycompany.myjavaapp1 myjavaapp1}}}
 
-Here is how you create a our version of javaapp
-{{{maven-support/bin/create-javaapp.sh com.mycompany.myproject myproject}}}
+Maven2 archetype already providing a default quicstart or simplejavaapp archetype. But this template is soo simple that you will hit error as soon as you start coding! Like it default to use JDK1.4 or below, so you can't use enchanced for loop and generics! Junit is not using latest and can't use annotations etc. Our version will get you going quickly.
+
+[http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-webapp.sh create-javaapp.sh] {{{com.mycompany.mywebapp1 mywebapp1}}}
+
+This is basic setup project for a Servlet and JSP app. Often I want just a webapp created to serve html and few simple jsp or even simple Servlet class. This will do the job.
+
+
+[http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-springwebapp.sh create-javaapp.sh] {{{com.mycompany.myspringwebapp1 myspringwebapp1}}}
+
+I am a big fan of SpringFramework and they works great! I have successfully used SpringMVC for large and small projects. To get one going, it often requires you to digg up some templates, and xml examples to get started. Here is a templates that will get your webapp running with Simple springMVC ready.
+
+
+[http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-springwebapp-hibernate.sh create-javaapp.sh] {{{com.mycompany.myspringwebapphbm1 myspringwebapp_hbm1}}}
+
+This extends above and add sample of application that have Mysql database configured and ready to be extended! It also has all the configuration for Hibernate along with maven plugin configured to run JPA setup. 
+
+
+The shell script is downloadable, or you can type them if you preferred. You may might also want to download against a tagged release to avoid trunk development version.
+
+The first argument to the script is your package name, and second is your project name.
+
+Each project generated should hava README.txt and RELEASE.txt awaits your to fill them out. In README.txt I have include detail instruction on how to setup Eclipse and NetBeans IDE for each project!
+
+Enjoys.
