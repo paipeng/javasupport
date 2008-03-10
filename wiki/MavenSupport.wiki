@@ -1,5 +1,3 @@
-#MavenSupport
-
 The maven2 is a great tool to manage and build java projects. Here we have extended to create easy and ready to use application templates called archetypes.
 
 = Using Archetypes =
@@ -10,5 +8,3 @@ Maven2 archetype already providing a default quicstart or simplejavaapp archetyp
 
 Here is how you create a our version of javaapp
 {{{maven-support/bin/create-javaapp.sh com.mycompany.myproject myproject}}}
-
-
