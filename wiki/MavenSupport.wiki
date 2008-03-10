@@ -1,3 +1,4 @@
+#labels maven,archetype
 The maven2 is a great tool to manage and build java projects. Here we have extended to create easy and ready to use application templates called archetypes.
 
 = Using Archetypes =
