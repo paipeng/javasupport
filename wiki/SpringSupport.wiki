@@ -1,4 +1,6 @@
+#summary spring-support sub project providing SpringMVC extensions.
 #labels spring,validation,mvc,servlet
+
 = Servlet Support =
 
 Nothing fancy, but I need to extract request parameter all the time when coding webapp. So this helper class provide what I need.
