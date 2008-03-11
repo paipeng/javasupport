@@ -4,7 +4,8 @@ import javasupport.jdk.lang.CliApplication;
 
 /**
  * Sample of simple CliApplication implementation.
- * To run it with maven, do: mvn exec:java -Dexec.mainClass=${groupId}.Main
+ * To run it with maven that include all dependecies, type: 
+ *   mvn exec:java -Dexec.mainClass=${groupId}.Main -Dexec.args="--debug --help"
  */
 public class Main extends CliApplication{
 
