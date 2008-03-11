@@ -10,12 +10,19 @@
 	</mirrors>
 	
 	<servers>
-	
+		<!-- archiva server -->
 		<server>
 			<id>faxintelligence.com-internal</id>
 			<username>admin</username>
 			<password>secretpass</password>
 		</server>
+		<server>
+			<id>faxintelligence.com-snapshot</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+		
+		<!-- subversion server -->
 		<server>
 			<id>javasupport.googlecode.com</id>
 			<username>thebugslayer</username>
