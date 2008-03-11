@@ -51,8 +51,20 @@ public class ShortMethodsHelper {
     }
 
     //dates
+    public static Date now() {
+        return new Date();
+    }
+    
     public static String datef(String format, Date date) {
         return new SimpleDateFormat(format).format(date);
+    }
+    
+    public static Date mkdate() {
+        return mkdate(datef("yyyy-MM-dd", new Date()));
+    }
+
+    public static Date mkdatetime() {
+        return mkdate(datef("yyyy-MM-dd HH:mm:ss", new Date()));
     }
 
     public static Date mkdate(String yyyyMMdd) {
