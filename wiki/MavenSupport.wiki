@@ -1,4 +1,6 @@
+#summary maven-support sub project - provide maven archetype and plugin supports.
 #labels maven,archetype
+
 The maven2 is a great tool to manage and build java projects. Here we have extended to create easy and ready to use application templates called archetypes.
 
 = Jumpstart Your Project Using Archetypes =
@@ -28,4 +30,4 @@ The first argument to the script is your new package name, and second is your ne
 
 Each project generated should hava README.txt and RELEASE.txt await you to fill them out. In README.txt I have include detail instruction on how to setup Eclipse and NetBeans IDE for each project!
 
-Enjoys.
+NOTE: The generated project will default to a custom maven proxy repository. We encourage to create your own repository. See HowToBuildJavaSupport page for details.
