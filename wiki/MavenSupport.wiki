@@ -30,4 +30,4 @@ The first argument to the script is your new package name, and second is your ne
 
 Each project generated should hava README.txt and RELEASE.txt await you to fill them out. In README.txt I have include detail instruction on how to setup Eclipse and NetBeans IDE for each project!
 
-NOTE: The generated project will default to a custom maven proxy repository. We encourage to create your own repository. See HowToBuildJavaSupport page for details.
+NOTE: The generated project will default to a custom maven proxy repository. We encourage to create your own repository. See HowToSetupMavenInternalRepository page for details.
