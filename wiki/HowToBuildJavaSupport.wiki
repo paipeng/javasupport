@@ -1,3 +1,5 @@
+#How to build this project.
+
 = Building javasupport Project =
 
   # Install JDK1.5+
