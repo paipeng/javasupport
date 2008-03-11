@@ -33,7 +33,7 @@ public class Main extends CliApplication{
             exit("-- end " + now());
         }
         
-        println("This java application is ready. Type -help optiont to see more.");
+        println("This java application is ready. Type --help optiont to see more.");
         println("-- end " + now());
     }
     
