@@ -8,6 +8,6 @@ mvn archetype:create \
   -DremoteRepositories=http://bb:8082/archiva/repository/connextions \
   -DarchetypeGroupId=javasupport.maven \
   -DarchetypeArtifactId=maven-archetype-springwebapp-hibernate \
-  -DarchetypeVersion=0.0.1-SNAPSHOT\
+  -DarchetypeVersion=0.0.1\
   -DgroupId=$1 \
   -DartifactId=$2
