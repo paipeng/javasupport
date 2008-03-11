@@ -14,34 +14,12 @@
 		<server>
 			<id>faxintelligence.com</id>
 			<username>admin</username>
-			<password>admin123</password>
+			<password>secretpass</password>
 		</server>
-		
 		<server>
-			<id>faxintelligence.com</id>
+			<id>javasupport.googlecode.com</id>
 			<username>thebugslayer</username>
-			<password>thebugslayer123</password>
-		</server>
-		
-		<server>
-			<id>firebird</id>
-			<username>zdeng</username>
-			<password>cnx$password</password>
-		</server>
-		<server>
-			<id>connextions</id>
-			<username>zdeng</username>
-			<password>zdeng1234</password>
-		</server>
-		<server>
-			<id>connextions-snapshots</id>
-			<username>zdeng</username>
-			<password>zdeng1234</password>
-		</server>
-		<server>
-			<id>commercial</id>
-			<username>zdeng</username>
-			<password>zdeng1234</password>
+			<password>secretpass</password>
 		</server>
 	</servers>
 </settings>
