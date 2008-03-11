@@ -21,13 +21,35 @@ This repository may be setup by yourself as internal Remote Repository(or someti
 
 == Setup Your Internal Maven2 Repo ==
   # Install Archiva from http://maven.apache.org/archiva (use the standalone version Afthe first time, it's easier)
-  # After you have Archiva running, login as Admin and click on Repository menu
+  # After you have Archiva running, open broswer to http://losthost:8080/archiva
+  # Login as Admin user and click on Repository menu
   # Add two new Managed Repositories (mkdir if doesn't exists):
     # 1) A release repo points to /data/repositories/internal
     # 2) A snapshot repo points to /data/repositories/snapshots
   # Add Remote Repsitories in addition to what's already there:
     # 1) jobss: http://repository.jboss.org/maven2
     # 1) javanet: http://download.java.net/maven/2
+  # Now got to Proxis Connector, under internal create All the new repository you just added.
+
+Now you have your internal repo ready. You may tell javasupport project to uses your repo in two ways:
+
+method 1) Create a ${HOME}/.m2/settings.xml file that have fowlling as mirrors
+{{{
+<?xml version="1.0"?>
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                        http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<mirrors>
+		<mirror>
+		<id>central</id>
+		<mirrorOf>central</mirrorOf>
+		<url>http://losthost:8080/archiva/repository/internal</url>
+		</mirror>
+	</mirrors>
+</settings>
+}}}
+Assuming http://losthost:8080 is where you setup yoru Archiva.
+
+method 2) Just edit javasupport/pom.xml and replace our repo url to your host and port version.
+
 
 == Why Setup your Own Remote Repository ==
   * Well, for one thing you need to release your own project artifacts like jar or war files, this is where you upload to.
@@ -37,4 +59,3 @@ This repository may be setup by yourself as internal Remote Repository(or someti
 
 = Why JavaSupport Uses Maven2 =
 I used to use Ant tool to build all my java projects. As I progess to manage and handle more projects in my company at work, the building, release and organizing of projects just got too crazy. So I started looking into Maven2. Yes I do have many problems at first in learning it, but eventually I got it to build all my projects in a very consistent manner. I think Maven is a great tool, just like Ant, and best of all, I sometimes can make both of them work together! So if you are an Ant user, and had bad day with Maven before, don't get upset. See how this JavaSupport uses it and you might be change your mind too.
-
