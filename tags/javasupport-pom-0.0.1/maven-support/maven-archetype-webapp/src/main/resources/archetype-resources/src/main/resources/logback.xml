@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${dollar}{user.home}/.${artifactId}/logs/${artifactId}.log</file>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${artifactId}-%d{yyyy-MM-dd-HH-mm-ss}.log
+            </FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%-5level %date{MM/dd/YY hh:mm:ss} [%thread] %msg%n</pattern>
+        </layout>
+    </appender>	
+    
+    <logger name="${groupId}">
+        <level value="INFO" />
+    </logger>
+    <logger name="org.apache.catalina">
+        <level value="WARN" />
+    </logger>
+    
+    <root>
+        <level value="ERROR" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
