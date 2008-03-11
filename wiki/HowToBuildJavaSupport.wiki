@@ -46,6 +46,15 @@ method 1) Create a ${HOME}/.m2/settings.xml file that have fowlling as mirrors
 		<url>http://losthost:8080/archiva/repository/internal</url>
 		</mirror>
 	</mirrors>
+
+        <!-- this section is needed when you deploy into your own repo -->
+        <servers>	
+		<server>
+			<id>localhost</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+	</servers>
 </settings>
 }}}
 Assuming http://losthost:8080 is where you setup yoru Archiva.
