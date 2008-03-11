@@ -1,4 +1,4 @@
-#How to build this project.
+#summary How to Setup Maven2 Repository and build this project
 
 = Building javasupport Project =
 
