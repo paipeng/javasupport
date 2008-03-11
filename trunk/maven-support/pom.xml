@@ -8,10 +8,10 @@
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport.maven</groupId>
-    <artifactId>maven-support-pom</artifactId>
+    <artifactId>maven-support</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>${artifactId}</name>
+    <name>maven-support-pom</name>
     <modules>
         <module>maven-archetype-scalaapp</module>
         <module>maven-archetype-javaapp</module>
