@@ -7,6 +7,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport.maven</groupId>
     <artifactId>maven-archetype-springwebapp</artifactId>
-    <name>${artifactId}</name>
+    <name>maven-archetype-springwebapp</name>
     <version>0.0.2-SNAPSHOT</version>	
 </project>
