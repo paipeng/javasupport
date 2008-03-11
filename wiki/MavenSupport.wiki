@@ -16,18 +16,16 @@ This is basic setup project for a Servlet and JSP app. Often I want just a webap
 
 [http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-springwebapp.sh create-springwebapp.sh] {{{com.mycompany.myspringwebapp1 myspringwebapp1}}}
 
-I am a big fan of SpringFramework and they works great! I have successfully used SpringMVC for large and small projects. To get one going, it often requires you to digg up some templates, and xml examples to get started. Here is a templates that will get your webapp running with Simple springMVC ready.
-
+SpringFramework has a MVC library stack that works really well for web development. I have successfully used SpringMVC for large and small projects. To get one going, it often requires you to digg up some templates, and xml examples to get started. Here is a templates that will get your webapp running with Simple springMVC ready.
 
 [http://code.google.com/p/javasupport/source/browse/trunk/maven-support/bin/create-springwebapp-hibernate.sh create-springwebapp-hibernate.sh] {{{com.mycompany.myspringwebapphbm1 myspringwebapp_hbm1}}}
 
 This extends above and add sample of application that have Mysql database configured and ready to be extended! It also has all the configuration for Hibernate along with maven plugin configured to run JPA setup. 
 
+The shell script is just a wrapper calling mvn command. The link is pointing to trunk copy and set to latest SNAPSHOT. You may download and run it, or chage the to stable release version. If you are running on Windows, the download the *.bat version instead.
 
-The shell script is downloadable, or you can type them if you preferred. You may might also want to download against a tagged release to avoid trunk development version.
+The first argument to the script is your new package name, and second is your new project name.
 
-The first argument to the script is your package name, and second is your project name.
-
-Each project generated should hava README.txt and RELEASE.txt awaits your to fill them out. In README.txt I have include detail instruction on how to setup Eclipse and NetBeans IDE for each project!
+Each project generated should hava README.txt and RELEASE.txt await you to fill them out. In README.txt I have include detail instruction on how to setup Eclipse and NetBeans IDE for each project!
 
 Enjoys.
