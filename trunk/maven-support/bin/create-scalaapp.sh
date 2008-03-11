@@ -7,6 +7,6 @@ mvn archetype:create \
   -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/internal \
   -DarchetypeGroupId=javasupport.maven \
   -DarchetypeArtifactId=maven-archetype-scalaapp \
-  -DarchetypeVersion=0.0.1 \
+  -DarchetypeVersion=0.0.1-SNAPSHOT \
   -DgroupId=$1 \
   -DartifactId=$2
