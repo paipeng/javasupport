@@ -1,4 +1,4 @@
-= Building JavaSupport =
+= Building javasupport Project =
   # Install JDK1.5+
   # Install Maven2+
   # Install Svn Client
