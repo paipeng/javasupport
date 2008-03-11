@@ -17,7 +17,7 @@
 			<password>secretpass</password>
 		</server>
 		<server>
-			<id>faxintelligence.com-snapshot</id>
+			<id>faxintelligence.com-snapshots</id>
 			<username>admin</username>
 			<password>secretpass</password>
 		</server>
