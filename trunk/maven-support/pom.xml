@@ -13,10 +13,10 @@
     <packaging>pom</packaging>
     <name>maven-support-pom</name>
     <modules>
-        <module>maven-archetype-scalaapp</module>
         <module>maven-archetype-javaapp</module>
         <module>maven-archetype-webapp</module>
         <module>maven-archetype-springwebapp</module>
         <module>maven-archetype-springwebapp-hibernate</module>
+        <module>maven-archetype-scalaapp</module>
     </modules>		
 </project>
