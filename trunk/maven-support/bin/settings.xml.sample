@@ -12,7 +12,7 @@
 	<servers>
 	
 		<server>
-			<id>faxintelligence.com</id>
+			<id>faxintelligence.com-internal</id>
 			<username>admin</username>
 			<password>secretpass</password>
 		</server>
