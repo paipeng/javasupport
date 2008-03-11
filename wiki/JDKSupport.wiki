@@ -1,4 +1,6 @@
+#summary jdk-support providing helper classes to built-in JDK library.
 #labels jdk,apachecommons,CLI,parseOptions
+
 = Static Methods Helper =
 
 We have great library from Apache Commons with comons-lang, commons-io, and commons-net. Matter of matter this project will include these as dependencies and reuse what's available. 
