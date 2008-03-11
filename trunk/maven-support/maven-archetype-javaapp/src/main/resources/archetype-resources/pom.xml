@@ -81,6 +81,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>javasupport.jdk</groupId>
+            <artifactId>jdk-support</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.3</version>

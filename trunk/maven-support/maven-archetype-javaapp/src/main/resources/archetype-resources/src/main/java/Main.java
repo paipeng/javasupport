@@ -1,41 +1,40 @@
 package ${groupId};
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import javasupport.jdk.lang.CliApplication;
 
 /**
- * Main application entry point.
- * To run it with maven, do: mvn exec:java -Dexec.mainClass=deng.Main
+ * Sample of simple CliApplication implementation.
+ * To run it with maven, do: mvn exec:java -Dexec.mainClass=${groupId}.Main
  */
-public class Main {
+public class Main extends CliApplication{
 
-    public static void main(String[] args) throws Exception {
-        Object[] optsResult = parseOptions(args);
-        Properties opts = (Properties)optsResult[0];        
+    public static void main(String[] argv) {
+        String[] args = parseOptions(argv);
         
-        if(opts.containsKey("d")){
+        if(hasOpt("d") || hasOpt("debug")){
             println("Original arguments:");
-            for(String s : args) println(s);
+            for(String s : argv) println(s);
 
             println("After options arguments:");
-            List<String> newArgs = (List<String>)optsResult[1];
-            for(String s : newArgs) println(s);
+            for(String s : args) println(s);
 
             println("Options:");
             println(opts.toString());
         }
         
-        if(opts.containsKey("h")){
-            println("Usage: Main [options]");
-            println("  -d   Display option parsing info.");
-            println("  -h   Display help page.");
-            println("  -i  Display system information.");
-        }else if(opts.containsKey("i")){
-            printSystemInfo();            
-        }else{
-            println("This java application is ready. Type -help optiont to see more.");
+        if(hasOpt("d") || hasOpt("help")){
+            println("Usage: Main [options] <arguments...>");
+            println("  -d, --debug   Display option parsing info.");
+            println("  -h, --help     Display help page.");
+            println("  -i, --sysinfo  Display system information.");
+            exit("-- end " + now());
+        }else if(hasOpt("i") || hasOpt("sysinfo")){
+            printSystemInfo();    
+            exit("-- end " + now());
         }
+        
+        println("This java application is ready. Type -help optiont to see more.");
+        println("-- end " + now());
     }
     
     public static void printSystemInfo(){          
@@ -52,48 +51,6 @@ public class Main {
         long avaCPU = runtime.availableProcessors();
         printf("%15s: %d\n", "CPU", avaCPU);
         printf("%15s: %s\n", "MemoryUsed", (totalMem - freeMem) + "M/" + totalMem + "M");
-    }
-    
-    public static void println(String msg) {
-        System.out.println(msg);
-    }
-
-    public static void printf(String format, Object... args) {
-        System.out.printf(format, args);
-    }
-
-    /** 
-     * Simple parser for short and long style command line options and arguments. 
-     * Short option format is single dash prefix with single char flag. Anything beyong
-     * the first char will be treated as parameter value for it's flag.
-     * Long option format is two dashes prefix with one or more chars flag. Option parameter
-     * must specify with equal char.
-     * @return Object[] will always contain two elements tuple. [0]=options, [1]=newArgumentList.
-     */
-    public static Object[] parseOptions(String[] args) {
-        Properties opts = new Properties();
-        List argsList = new ArrayList();
-        for (int i = 0,  maxIndex = args.length; i < maxIndex; i++) {
-            String arg = args[i];
-            if (arg.startsWith("--")) {
-                String[] s = arg.substring(2).split("=");
-                if (s.length >= 2) {
-                    opts.setProperty(s[0], s[1]);
-                } else {
-                    opts.setProperty(s[0], "true");
-                }
-            } else if (arg.startsWith("-")) {
-                String s = arg.substring(1);
-                if (s.length() > 1) {
-                    opts.setProperty(s.substring(0, 1), s.substring(1));
-                } else {
-                    opts.setProperty(s, "true");
-                }
-            } else {
-                argsList.add(arg);
-            }
-        }
-        return new Object[]{opts, argsList};
     }
 }
 
