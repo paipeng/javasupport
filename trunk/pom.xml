@@ -79,8 +79,8 @@
     </profiles>
     
     <scm>
-        <connection>scm:svn:svn://faxintelligence.com/labs/javasupport/trunk</connection>
-        <developerConnection>scm:svn:svn://faxintelligence.com/labs/javasupport/trunk</developerConnection>
+        <connection>scm:svn:http://javasupport.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://javasupport.googlecode.com/svn/trunk</developerConnection>
     </scm>    
     
     <build>
