@@ -12,6 +12,7 @@
         <table>
             <tr><td>Application Version</td><td>${dollar}{appInfo.fullBuildName}</td></tr>
             <tr><td>Application Uptime</td><td>${dollar}{appUptime}</td></tr>
+            <tr><td>Server Time</td><td>${dollar}{systime}</td></tr>
             <tr><td>Server Info</td><td>${dollar}{serverInfo}</td></tr>
             <tr><td>System Resources</td><td>${dollar}{sysres}</td></tr>
         </table>
