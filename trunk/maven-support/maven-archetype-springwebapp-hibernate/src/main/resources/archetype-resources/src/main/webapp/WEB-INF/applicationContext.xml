@@ -55,11 +55,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
-    <bean id="sharedEntityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+    <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
     
     <bean id="userDao" class="${groupId}.user.UserDao">
-        <property name="em" ref="sharedEntityManager" />	
+        <property name="em" ref="entityManager" />	
     </bean>
 </beans>
