@@ -44,12 +44,19 @@ public class UserDao {
     public void save(User user) {
         logger.debug("Saving user " + user.getUsername());
         em.persist(user);
-        em.flush();
         logger.info("User saved with id=" + user.getId());
     }
 
-    User get(Integer id) {
+    public User get(Integer id) {
         logger.debug("Retrieving user " + id);
-        return em.find(User.class, id);
+        User user = em.find(User.class, id);
+        logger.info("Found user " + user);
+        return user;
+    }
+    
+    public void delete(User user){
+        logger.debug("Removing user " + user);
+        em.remove(user);
+        logger.info("User deleted");
     }
 }
