@@ -71,47 +71,38 @@ public class FieldValidator implements Validator {
     	return errors.getErrorCount()>0;
     }
     
-    public boolean skipValidation(){
-    	if (errors.getErrorCount()>0 || this instanceof SkipableFieldValidator) {
+    public boolean isSkipable(){
+    	if (this instanceof SkipableFieldValidator) {
     		return true;
     	}
         return false;
     }
     
     public FieldValidator skipIfHasError(){
-    	if(skipValidation()) return this;        
+    	if(isSkipable()) return this;        
         return new SkipableFieldValidator(this);
     }
 
     protected boolean isBlankField(Object fieldValue) {
         if (fieldValue == null) {
             return true;
-        } else if (fieldValue instanceof String) {
-            String val = (String) fieldValue;
-            if (StringUtils.isBlank(val)) {
-                return true;
-            }
         } else if (fieldValue.getClass().isArray()) {
             Object[] val = (Object[]) fieldValue;
             logger.debug("Field value is an array with size " + val.length + ", content: " + Arrays.asList(val));
-            if (val.length == 0) {
-                return true;
-            }
+            return val.length == 0;
         } else if (fieldValue instanceof Collection<?>) {
             Collection<?> val = (Collection<?>) fieldValue;
             logger.debug("Field value is a collection with size " + val.size() + ", content: " + val);
-            if (val.size() == 0) {
-                return true;
-            }
+            return val.size() == 0;
         } else {
-            throw new ValidationException("Can not determine blank filed with type: " + fieldValue.getClass().getSimpleName());
+            String val = fieldValue.toString();
+            return StringUtils.isBlank(val);
         }
-        return false;
     }
 
     // === simple chained field validation methods.
     public FieldValidator notBlank(String fieldName, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating not blank field: " + fieldName);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -123,7 +114,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator notNull(String fieldName, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating not null: " + fieldName);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -135,7 +126,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator length(String fieldName, int min, int max, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating lenght: " + fieldName + " min: " + min + " max: " + max);
         int len = 0;
@@ -159,7 +150,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator equalField(String fieldName, String fieldName2, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating fieldName: " + fieldName + " equal to fieldName2: " + fieldName2);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -174,7 +165,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator skipIfBlank(String fieldName) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating apply if not blank: " + fieldName);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -186,7 +177,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator match(String fieldName, String regex, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating matches: " + fieldName);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -204,7 +195,7 @@ public class FieldValidator implements Validator {
     }
 
     public FieldValidator notMatch(String fieldName, String regex, String errorMsg) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating notMatched: " + fieldName);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
@@ -275,7 +266,7 @@ public class FieldValidator implements Validator {
     }
     
     public FieldValidator function(String fieldName, ValidatorFunction func) {
-        if (skipValidation()) return this;
+        if (isSkipable()) return this;
 
         logger.debug("Validating field " + fieldName + " with custom function: " + func);
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
