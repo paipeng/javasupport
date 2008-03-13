@@ -28,6 +28,7 @@ public class SystemInfoController extends AbstractController {
         ModelAndView mav = new ModelAndView("systeminfo");
         mav.addObject("sysprops", new TreeMap<String, String>((Map) System.getProperties()));
         mav.addObject("sysenv", new TreeMap<String, String>((Map) System.getenv()));
+        mav.addObject("systime", new Date());
 
         //Calculate app uptime duration
         Date appStartTime = (Date) getServletContext().getAttribute("appStartTime");
