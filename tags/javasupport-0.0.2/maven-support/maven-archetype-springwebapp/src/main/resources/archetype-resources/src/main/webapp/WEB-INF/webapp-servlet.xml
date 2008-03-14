@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
+    <!-- Gets run once as web application startup. -->
+    <bean id="webappStartupConfigurer" class="${groupId}.web.WebappStartupConfigurer">
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <util:map>
+                <entry key="/welcome" value-ref="welcomeController" />
+                <entry key="/help" value-ref="urlFilenameViewController" />
+                <entry key="/systeminfo" value-ref="systemInfoController" />
+            </util:map>
+        </property>
+    </bean>
+    <bean id="welcomeController" class="${groupId}.web.WelcomeController">
+    </bean>
+    <bean id="systemInfoController" class="${groupId}.web.SystemInfoController">
+        <property name="applicationProperties">
+            <util:properties location="${dollar}{${artifactId}.conf.dir}/application.properties"/>
+        </property>
+    </bean>
+    <bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+    </bean>
+</beans>

@@ -1,0 +1,53 @@
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+	
+	<!--
+	<moduleSets>
+    <moduleSet>
+      <includes>
+        <include>*:*</include>
+      </includes>
+			<binaries>
+        <attachmentClassifier>bin</attachmentClassifier>
+      </binaries>
+    </moduleSet>
+  </moduleSets>
+	-->
+	
+  <fileSets>
+		<!--
+    <fileSet>
+      <includes>
+        <include>README*</include>
+        <include>LICENSE*</include>
+        <include>NOTICE*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>target</directory>
+      <outputDirectory></outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>  
+		-->
+		
+    <fileSet>
+      <directory>jdk-support/target</directory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+		
+		<fileSet>
+      <directory>spring-support/target</directory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+				
+  </fileSets>
+</assembly>
