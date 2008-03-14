@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport</groupId>
     <artifactId>javasupport</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>javasupport-pom</name>
     <modules>
@@ -79,8 +79,8 @@
     </profiles>
     
     <scm>
-        <connection>scm:svn:http://javasupport.googlecode.com/svn/tags/javasupport-0.0.2</connection>
-        <developerConnection>scm:svn:https://javasupport.googlecode.com/svn/tags/javasupport-0.0.2</developerConnection>
+        <connection>scm:svn:http://javasupport.googlecode.com/svn/trunk</connection>
+        <developerConnection>scm:svn:https://javasupport.googlecode.com/svn/trunk</developerConnection>
     </scm>    
     
     <build>

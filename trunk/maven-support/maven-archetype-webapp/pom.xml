@@ -3,11 +3,11 @@
     <parent>
         <groupId>javasupport.maven</groupId>
         <artifactId>maven-support</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport.maven</groupId>
     <artifactId>maven-archetype-webapp</artifactId>
     <name>maven-archetype-webapp</name>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
 </project>
