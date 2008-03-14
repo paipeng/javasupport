@@ -1,1 +1,1 @@
-mvn archetype:create -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/internal -DarchetypeGroupId=javasupport.maven -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=0.0.2-SNAPSHOT -DgroupId=%1 -DartifactId=%2
+mvn archetype:create -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/internal -DarchetypeGroupId=javasupport.maven -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=0.0.2 -DgroupId=%1 -DartifactId=%2
