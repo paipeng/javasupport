@@ -1,0 +1,17 @@
+<archetype>
+  <id>maven-archetype-javaapp</id>
+  <sources>
+    <source>src/main/java/Main.java</source>
+  </sources>
+  <resources>
+    <resource>README.txt</resource>
+    <resource>RELEASE.txt</resource>
+    <resource>src/main/resources/logback.xml</resource>
+  </resources>
+  <testSources>
+    <source>src/test/java/MainTest.java</source>
+  </testSources>  
+  <testResources>
+    <resource>src/test/resources/logback.xml</resource>
+  </testResources>
+</archetype>
