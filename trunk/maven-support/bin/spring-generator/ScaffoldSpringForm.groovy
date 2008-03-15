@@ -1,5 +1,5 @@
 import groovy.text.*
-class CreateTemplates {
+class ScaffoldSpringForm {
 	def data = new Expando()	
 	def templates = [
 		'dao' :
@@ -20,35 +20,46 @@ class CreateTemplates {
 	def templateEngine = new GStringTemplateEngine()
 	
 	static void main(args){
-		if(args.size()<2)
-		  throw new Exception("No enough arguments. Try: packageName.ClassName fieldName1 [fieldName2 ...]")
+		if(args.size()<3)
+		  throw new Exception("No enough arguments. Try: scaffoldType(all|model|dao|create|list|delete|update) packageName.ClassName fieldName1 [fieldName2 ...]")
 		
-		def main = new CreateTemplates()
-		main.data.className = args[0]
-		main.data.fields = args[1..-1]
+		def main = new ScaffoldSpringForm()
+		main.data.scaffoldType = args[0]
+		main.data.className = args[1]
+		main.data.fields = args[2..-1]
 		main.run()
 	}
 	
 	def run(){	
 		init()
 		
-		//javaBean
-		createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
+		if(data.scalffoldType == "all" || data.scalffoldType == "model"){
+			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
+		}
 		
-		//DAO
-		createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templates.dao.jpa)
+		if(data.scalffoldType == "all" || data.scalffoldType == "dao"){
+			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templates.dao.jpa)
+		}
 		
-		//Controllers
-		createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templates.controller.create)
-		createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templates.controller.edit)
-		createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templates.controller.delete)
-		createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
-				
-		//view
-		createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templates.view.create)
-		createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templates.view.edit)
-		createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templates.view.delete)
-		createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
+		if(data.scalffoldType == "all" || data.scalffoldType == "create"){
+			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templates.controller.create)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templates.view.create)
+		}
+		
+		if(data.scalffoldType == "all" || data.scalffoldType == "edit"){
+			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templates.controller.edit)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templates.view.edit)
+		}
+		
+		if(data.scalffoldType == "all" || data.scalffoldType == "delete"){
+			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templates.controller.delete)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templates.view.delete)
+		}
+		
+		if(data.scalffoldType == "all" || data.scalffoldType == "list"){
+			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
+		}
 	}		
 	
 	def createFromTemplate(output, template){
