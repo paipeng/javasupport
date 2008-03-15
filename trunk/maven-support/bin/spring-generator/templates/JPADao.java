@@ -33,6 +33,12 @@ public class ${className}Dao {
 		em.remove(${beanName});
 		logger.info("${className} deleted");
 	}
+	
+	public void delete(Integer id){
+		logger.debug("Removing ${beanName} with id=" + id);
+		em.remove(get(id));
+		logger.info("${className} deleted");
+	}
 
 	public List<${className}> findAll() {
 		logger.debug("Retrieving all ${beanName} objects.");

@@ -42,14 +42,9 @@ public class CreateController extends SimpleFormController {
 
 		// Validate command object.
 		FieldValidator validator = new FieldValidator(${beanName}, errors);
-		<%
-			def validateFields = fields.findAll{ field ->
-				!(field[0] == "id" || field[1] == className) 
-			}
-		%>
 		
 		//required fields
-		<% for (field in validateFields) { %>
+		<% for (field in displayFields) { %>
 		validator.notBlank("${field[0]}", "This field can not be blank.");
 		<% } %>
 		
@@ -58,7 +53,7 @@ public class CreateController extends SimpleFormController {
 			return;
 		
 		//length validations
-		<% for (field in validateFields) { 
+		<% for (field in displayFields) { 
 			def maxLen = 255 // default String length
 			def type = field[1].toLowerCase()
 			if(type == "integer" || type == "int") maxLen = 9
@@ -72,7 +67,7 @@ public class CreateController extends SimpleFormController {
 			return;
 		
 		//value validations
-		<% for (field in validateFields) { 
+		<% for (field in displayFields) { 
 			def type = field[1].toLowerCase()
 			if(type == "integer" || type == "int"){
 		%>

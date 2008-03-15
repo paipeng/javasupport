@@ -3,11 +3,6 @@
 	<h1>Create New ${className}</h1>
 	<form:form commandName="${beanName}">
 	<table>
-	<%
-		def displayFields = fields.findAll{ field ->
-			!(field[0] == "id" || field[1] == className) 
-		}
-	%>
 	<% for (field in displayFields) { %>	
 		<tr><td>${field[2]}</td><td><form:input path="${field[0]}" size="25"/><br/><form:errors cssClass="inputError" path="${field[0]}"/></td></tr>
 	<% } %>
