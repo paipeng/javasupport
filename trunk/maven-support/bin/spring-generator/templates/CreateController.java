@@ -44,7 +44,7 @@ public class CreateController extends SimpleFormController {
 		FieldValidator validator = new FieldValidator(${beanName}, errors);
 		<%
 			def validateFields = fields.findAll{ field ->
-				!(field[0] == "id" || field[1].toLowerCase() == className) 
+				!(field[0] == "id" || field[1] == className) 
 			}
 		%>
 		
