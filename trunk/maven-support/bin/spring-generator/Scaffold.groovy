@@ -28,37 +28,37 @@ class Scaffold {
 		main.data.scaffoldType = args[0]
 		main.data.className = args[1]
 		main.data.fields = args[2..-1]
-		main.scriptName = System.properties['script.name']
+		main.data.scriptName = System.properties['script.name']
 		main.run()
 	}
 	
 	def run(){	
 		init()
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "model"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "model"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templateDir+"/"+templates.model.javaBean)
 		}
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "dao"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "dao"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templateDir+"/"+templates.dao.jpa)
 		}
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "create"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "create"){
 			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templateDir+"/"+templates.controller.create)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templateDir+"/"+templates.view.create)
 		}
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "edit"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "edit"){
 			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templateDir+"/"+templates.controller.edit)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templateDir+"/"+templates.view.edit)
 		}
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "delete"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "delete"){
 			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templateDir+"/"+templates.controller.delete)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templateDir+"/"+templates.view.delete)
 		}
 		
-		if(data.scalffoldType == "all" || data.scalffoldType == "list"){
+		if(data.scaffoldType == "all" || data.scaffoldType == "list"){
 			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templateDir+"/"+templates.controller.list)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templateDir+"/"+templates.view.list)
 		}
@@ -73,8 +73,8 @@ class Scaffold {
 	
 	def init(){		
 		// set template dir based on script name path
-		if(data.scriptMain != "")
-			templateDir = new File(data.scriptMain).getParent().getAbsolutePath()
+		if(data.scriptName != "")
+			templateDir = new File(data.scriptName).getParentFile().getAbsolutePath()
 		
 		//find packageName
 		def ret = data.className.split("\\.")
@@ -84,7 +84,7 @@ class Scaffold {
 		//redefine className
 		data.className = ret[-1]
 		data.classNamePath = data.className.toLowerCase()
-		data.packageName = ret[0..-2].join(".")+"."+data.classNamePath
+		data.packageName = ret[0..-2].join(".")
 		data.packagePath = data.packageName.replaceAll("\\.", "/")
 		data.beanName = data.className[0].toLowerCase()+data.className[1..-1]
 		
