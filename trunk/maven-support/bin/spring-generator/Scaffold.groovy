@@ -131,6 +131,11 @@ class Scaffold {
 			parts << annot.join(" ")
 		}
 		
+		//create display fields
+		data.displayFields = data.fields.findAll{ field ->
+			!(field[0] == "id" || field[1] == data.className) 
+		}
+		
 		//check to make sure you are in maven project dir
 		//if(!new File("pom.xml").exists())
 		//  throw new Exception("You are not in a Maven base directory.")
