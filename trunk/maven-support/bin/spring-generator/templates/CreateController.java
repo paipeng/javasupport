@@ -1,12 +1,12 @@
 package ${packageName};
 
 import javasupport.spring.webmvc.validation.FieldValidator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /** Create Form Controller for ${className}. */
