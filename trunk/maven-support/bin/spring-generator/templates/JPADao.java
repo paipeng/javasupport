@@ -1,45 +1,44 @@
-
-package deng.estore.category;
+package ${packageName};
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-/** DAO for Category. */
+/** DAO for ${className}. */
 @Transactional
-public class CategoryDao {
-    protected Logger logger = LoggerFactory.getLogger(CategoryDao.class);
-    protected EntityManager em;
-    
-    public void setEm(EntityManager em) {
-            this.em = em;
-    }
-        
-    public void save(Category category) {
-        logger.debug("Saving category " + category);
-        em.persist(category);
-        logger.info("Category instance is saved. Id=" + category.getId());
-    }
+public class ${className}Dao {
+	protected Logger logger = LoggerFactory.getLogger(${className}Dao.class);
+	protected EntityManager em;
+	
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+		
+	public void save(${className} ${beanName}) {
+		logger.debug("Saving ${beanName} " + ${beanName});
+		em.persist(${beanName});
+		logger.info("${className} instance is saved. Id=" + ${beanName}.getId());
+	}
 
-    public Category get(Integer id) {
-        logger.debug("Retrieving category " + id);
-        Category category = em.find(Category.class, id);
-        logger.info("Found category " + category);
-        return category;
-    }
-    
-    public void delete(Category category){
-        logger.debug("Removing category " + category);
-        em.remove(category);
-        logger.info("Category deleted");
-    }
+	public ${className} get(Integer id) {
+		logger.debug("Retrieving ${beanName} " + id);
+		${className} ${beanName} = em.find(${className}.class, id);
+		logger.info("Found ${beanName} " + ${beanName});
+		return ${beanName};
+	}
+	
+	public void delete(${className} ${beanName}){
+		logger.debug("Removing ${beanName} " + ${beanName});
+		em.remove(${beanName});
+		logger.info("${className} deleted");
+	}
 
-	public List<Category> findAll() {
-		logger.debug("Retrieving all category objects.");
-		List<Category> ret = em.createQuery("from Category").getResultList();
-        logger.info("Found " + ret.size());
-        return ret;
+	public List<${className}> findAll() {
+		logger.debug("Retrieving all ${beanName} objects.");
+		List<${className}> ret = em.createQuery("from ${className}").getResultList();
+		logger.info("Found " + ret.size());
+		return ret;
 	}
 }
 
