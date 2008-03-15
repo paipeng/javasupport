@@ -1,5 +1,5 @@
 import groovy.text.*
-class ScaffoldSpringForm {
+class Scaffold {
 	def data = new Expando()	
 	def templates = [
 		'dao' :
@@ -24,7 +24,7 @@ class ScaffoldSpringForm {
 		if(args.size()<3)
 		  throw new Exception("No enough arguments. Try: scaffoldType(all|model|dao|create|list|delete|update) packageName.ClassName fieldName1 [fieldName2 ...]")
 		
-		def main = new ScaffoldSpringForm()
+		def main = new Scaffold()
 		main.data.scaffoldType = args[0]
 		main.data.className = args[1]
 		main.data.fields = args[2..-1]
