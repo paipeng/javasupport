@@ -28,12 +28,6 @@ public class ${className}Dao {
 		return ${beanName};
 	}
 	
-	public void delete(${className} ${beanName}){
-		logger.debug("Removing ${beanName} " + ${beanName});
-		em.remove(${beanName});
-		logger.info("${className} deleted");
-	}
-	
 	public void delete(Integer id){
 		logger.debug("Removing ${beanName} with id=" + id);
 		em.remove(get(id));
