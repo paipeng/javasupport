@@ -43,45 +43,31 @@ public class CreateController extends SimpleFormController {
 		// Validate command object.
 		FieldValidator validator = new FieldValidator(${beanName}, errors);
 		
-		//required fields
-		<% for (field in displayFields) { %>
-		validator.notBlank("${field[0]}", "This field can not be blank.");
-		<% } %>
-		
-		//exit if there are errors
-		if(validator.hasErrors())
-			return;
-		
-		//length validations
-		<% for (field in displayFields) { 
+		<% for (field in displayFields) {			
 			def maxLen = 255 // default String length
 			def type = field[1].toLowerCase()
-			if(type == "integer" || type == "int") maxLen = 9
+			if(type == "integer") maxLen = 9
 			else if(type == "double") maxLen = 12
 		%>
-		validator.length("${field[0]}", 1, ${maxLen}, "Input must between %d to %d characters.");
-		<% } %>		
-		
-		//exit if there are errors
-		if(validator.hasErrors())
-			return;
-		
-		//value validations
-		<% for (field in displayFields) { 
-			def type = field[1].toLowerCase()
-			if(type == "integer" || type == "int"){
+		validator.notBlank("${field[0]}", "This field can not be blank.")
+			.length("${field[0]}", 1, ${maxLen}, "Input must between %d to %d characters.")
+		<%
+			if(type == "integer"){
 		%>
-		validator.match("${field[0]}", "\\\\d+", "Invalid integer value.");
+			.match("${field[0]}", "\\\\d+", "Invalid integer value.")
 	  <%
 			}else if(type == "double"){
 		%>
-		validator.match("${field[0]}", "\\\\d{1,9}(\\\\.\\\\d{1,2}){0,1}", "Invalid decimal value. Try #.## format.");
+			.match("${field[0]}", "\\\\d{1,9}(\\\\.\\\\d{1,2}){0,1}", "Invalid decimal value. Try #.## format.")
 	  <%
 			}else{
 		%>
-		validator.match("${field[0]}", "\\\\p{ASCII}+", "Invalid ascii characters value.");
+			.match("${field[0]}", "\\\\p{ASCII}+", "Invalid ascii characters value.")
 		<% 
 			}
+		%>			
+			;
+		<%
 		} //for loop
 		%>
 	}

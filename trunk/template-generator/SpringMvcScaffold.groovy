@@ -91,7 +91,7 @@ class Scaffold {
 		if(new File(inputFilename).exists()){
 			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
 			def beans = new XmlParser().parse(inputFilename)
-			def opControllers = operations.collect{ it+'Controller' }
+			def opControllers = operations.collect{ it+"${data.className}Controller" }
 			for(bean in beans.children()){
 				def id = bean.'@id'
 				if( !(id in opControllers || id == urlControllerMappingKey) ){ //reprint out all other beans.
@@ -126,21 +126,23 @@ class Scaffold {
 					 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
 					 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 			''')
-			writer.println(beansXml.toString())
 			
 			//append url mapper.
 			writer.println(urlMappingXmlPrefix)
 			for(op in operations){
-				writer.println("""<entry key="/${data.classNamePath}/${op}" value-ref="${op}Controller" />""")	
+				writer.println("""<entry key="/${data.classNamePath}/${op}" value-ref="${op}${data.className}Controller" />""")	
 			}
 			writer.println(urlMappingXmlSuffix)
 			
 			for(op in operations){
 				writer.println("""
-				<bean id="${op}Controller" class="${data.packageName}.${op[0].toUpperCase()+op[1..-1]}Controller">
+				<bean id="${op}${data.className}Controller" class="${data.packageName}.${op[0].toUpperCase()+op[1..-1]}Controller">
 					<property name="${data.beanName}Dao" ref="${data.beanName}Dao" />
 				</bean>""")	
 			}
+			
+			writer.println(beansXml.toString())
+			
 			writer.println("</beans>")
 		}
 	}
