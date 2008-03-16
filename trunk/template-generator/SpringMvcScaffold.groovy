@@ -106,7 +106,7 @@ class Scaffold {
 				def entriesXmlWriter = new XmlNodePrinter(new PrintWriter(entriesXml))
 				def opUrls = operations.collect{ "/${data.classNamePath}/${it}" }
 				for(entry in entries){
-					if( !(entry.'@key' in opUrls) ){
+					if( !("${entry.'@key'}" in opUrls) ){
 					entriesXmlWriter.print(entry, null) }
 				}
 				urlMappingXmlPrefix += entriesXml.toString()
