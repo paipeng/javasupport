@@ -3,19 +3,19 @@ class Scaffold {
 	def data = new Expando()	
 	def templates = [
 		'dao' :
-			['jpa' : 'templates/JPADao.java'],
+			['jpa' : 'templates/spring/JPADao.java'],
 		'model' :
-			['javaBean' : 'templates/JavaBeanModel.java'],
+			['javaBean' : 'templates/spring/JavaBeanModel.java'],
 		'view' : 
-			['create' : 'templates/create.jsp',
-			'edit' : 'templates/edit.jsp',
-			'list' : 'templates/create.jsp',
-			'delete' : 'templates/delete.jsp'],
+			['create' : 'templates/spring/create.jsp',
+			'edit' : 'templates/spring/edit.jsp',
+			'list' : 'templates/spring/create.jsp',
+			'delete' : 'templates/spring/delete.jsp'],
 		'controller' : 
-			['create' : 'templates/CreateController.java',
-			'edit' : 'templates/EditController.java',
-			'list' : 'templates/ListController.java',
-			'delete' : 'templates/DeleteController.java']
+			['create' : 'templates/spring/CreateController.java',
+			'edit' : 'templates/spring/EditController.java',
+			'list' : 'templates/spring/ListController.java',
+			'delete' : 'templates/spring/DeleteController.java']
 		]
 	def templateEngine = new GStringTemplateEngine()
 	def templateDir = "."
@@ -36,35 +36,36 @@ class Scaffold {
 		init()
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "model"){
-			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templateDir+"/"+templates.model.javaBean)
+			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "dao"){
-			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templateDir+"/"+templates.dao.jpa)
+			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templates.dao.jpa)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "create"){
-			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templateDir+"/"+templates.controller.create)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templateDir+"/"+templates.view.create)
+			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templates.controller.create)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templates.view.create)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "edit"){
-			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templateDir+"/"+templates.controller.edit)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templateDir+"/"+templates.view.edit)
+			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templates.controller.edit)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templates.view.edit)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "delete"){
-			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templateDir+"/"+templates.controller.delete)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templateDir+"/"+templates.view.delete)
+			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templates.controller.delete)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templates.view.delete)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "list"){
-			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templateDir+"/"+templates.controller.list)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templateDir+"/"+templates.view.list)
+			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
 		}
 	}		
 	
 	def createFromTemplate(output, template){
+		template = templateDir+"/"+template //auto add path
 		println("Creating " + output + " from " + template)
 		def f = new File(template)
 		def templateRet = templateEngine.createTemplate(f).make(data.properties)
