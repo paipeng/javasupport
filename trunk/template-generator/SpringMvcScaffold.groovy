@@ -37,10 +37,12 @@ class Scaffold {
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "model"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
+			//println("mvn hibernate3:hbm2ddl".execute().text)
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "dao"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templates.dao.jpa)
+			updateApplicationContextXml()
 		}
 		
 		if(data.scaffoldType == "all" || data.scaffoldType == "create"){
@@ -62,7 +64,42 @@ class Scaffold {
 			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
 		}
-	}		
+	}
+	
+	// updates for DAOs
+	def updateApplicationContextXml(){
+		def inputFilename = "src/main/webapp/WEB-INF/applicationContext.xml"
+		def outputFilename = "src/main/webapp/WEB-INF/applicationContext.xml"
+		def beans = new XmlParser().parse(inputFilename)
+		def beansXml = new StringWriter()
+		def out = new XmlNodePrinter(new PrintWriter(beansXml))
+				
+		for(bean in beans.children()){
+			if(bean.'@id' != "${data.className}Dao"){ //reprint out all other beans.
+				out.print(bean, null)
+			}
+		}
+		
+		new File(outputFilename).withPrintWriter{ writer ->		
+			writer.println('''<?xml version="1.0" encoding="UTF-8"?>
+			<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+				 xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+				 xmlns:util="http://www.springframework.org/schema/util" xmlns:lang="http://www.springframework.org/schema/lang"
+				 xsi:schemaLocation="
+					 http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.0.xsd
+					 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+					 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+					 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+					 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+			''')
+			writer.println(beansXml.toString())
+			writer.println("""
+			<bean id="${data.className}Dao" class="${data.packageName}.${data.className}Dao">
+				<property name="em" ref="entityManager" />
+			</bean>""")			
+			writer.println("</beans>")
+		}
+	}
 	
 	def createFromTemplate(output, template){
 		template = templateDir+"/"+template //auto add path
