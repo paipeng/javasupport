@@ -79,7 +79,7 @@ public class EditController extends SimpleFormController {
 	  <%
 			}else{
 		%>
-		validator.match("${field[0]}", "\\\\p{ASCII}", "Invalid ascii characters value.");
+		validator.match("${field[0]}", "\\\\p{ASCII}+", "Invalid ascii characters value.");
 		<% 
 			}
 		} //for loop
