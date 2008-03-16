@@ -65,23 +65,29 @@ class Scaffold {
 			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
 		}
 		
-		updateWebappServletContextXml()
+		if(data.scaffoldType == "all"){
+			updateWebappServletContextXml()
+		}
 	}
 	
 	// updates for controllers
 	def updateWebappServletContextXml(){
 		def inputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
 		def outputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
-		def beans = new XmlParser().parse(inputFilename)
 		def beansXml = new StringWriter()
-		def out = new XmlNodePrinter(new PrintWriter(beansXml))
-				
 		def operations = [ 'create', 'delete', 'list', 'edit' ]
-		for(bean in beans.children()){
-			if( !(bean.'@id'+'Controller' in operations) ){ //reprint out all other beans.
-				out.print(bean, null)
+		
+		if(new File(inputFilename).exists()){
+			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
+			def beans = new XmlParser().parse(inputFilename)
+			def opControllers = operations.collect{ it+'Controller' }
+			for(bean in beans.children()){
+				if( !(bean.'@id' in opControllers) ){ //reprint out all other beans.
+					out.print(bean, null)
+				}
 			}
 		}
+			
 		
 		new File(outputFilename).withPrintWriter{ writer ->		
 			writer.println('''<?xml version="1.0" encoding="UTF-8"?>
@@ -111,13 +117,16 @@ class Scaffold {
 	def updateApplicationContextXml(){
 		def inputFilename = "src/main/webapp/WEB-INF/applicationContext-Dao.xml"
 		def outputFilename = "src/main/webapp/WEB-INF/applicationContext-Dao.xml"
-		def beans = new XmlParser().parse(inputFilename)
 		def beansXml = new StringWriter()
-		def out = new XmlNodePrinter(new PrintWriter(beansXml))
-				
-		for(bean in beans.children()){
-			if(bean.'@id' != "${data.className}Dao"){ //reprint out all other beans.
-				out.print(bean, null)
+		def operations = [ 'create', 'delete', 'list', 'edit' ]
+		
+		if(new File(inputFilename).exists()){
+			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
+			def beans = new XmlParser().parse(inputFilename)
+			for(bean in beans.children()){
+				if(bean.'@id' != "${data.className}Dao"){ //reprint out all other beans.
+					out.print(bean, null)
+				}
 			}
 		}
 		
