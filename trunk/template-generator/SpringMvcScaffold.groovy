@@ -220,7 +220,12 @@ class Scaffold {
 			
 			//redifine some temp vars
 			field = parts[0]
+			
 			def type = parts[1]
+			if(type=="int")//we want Integer wrapper
+				type = "Integer"
+			type = type[0].toUpperCase()+type[1..-1] //Always cap first letter  on type.
+			def lowCaseType = type.toLowerCase()
 			
 			parts << field[0].toUpperCase()+field[1..-1] //PropertyName
 			
@@ -234,7 +239,7 @@ class Scaffold {
 				annot << """@JoinColumn(name = "${field}_id")"""
 			}else{
 				//money
-				if(type.toLowerCase() == "double"){
+				if(type == "double"){
 					annot << """@Column(name = "${field}", precision = 2)"""
 				}else{
 					annot << """@Column(name = "${field}")"""
@@ -242,9 +247,9 @@ class Scaffold {
 			}
 			
 			//IT's a date field.
-			if(type.toLowerCase() == "date"){
+			if(type == "date"){
 				annot << """@Temporal(value = TemporalType.TIME)"""
-			}else if(type.toLowerCase() == "byte[]"){
+			}else if(type == "byte[]"){
 				annot << """@Lob"""
 			}
 			
