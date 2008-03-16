@@ -76,15 +76,40 @@ class Scaffold {
 		def outputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
 		def beansXml = new StringWriter()
 		def operations = [ 'create', 'delete', 'list', 'edit' ]
+		def urlControllerMappingKey = 'controllerUrlMappings'
+		def urlMappingXmlPrefix = """
+		<bean id="${urlControllerMappingKey}" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+			<property name="mappings">
+				<util:map>
+		"""
+		def urlMappingXmlSuffix = """
+				</util:map>
+			</property>
+		</bean>
+		"""
 		
 		if(new File(inputFilename).exists()){
 			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
 			def beans = new XmlParser().parse(inputFilename)
 			def opControllers = operations.collect{ it+'Controller' }
 			for(bean in beans.children()){
-				if( !(bean.'@id' in opControllers) ){ //reprint out all other beans.
+				def id = bean.'@id'
+				if( !(id in opControllers || id == urlControllerMappingKey) ){ //reprint out all other beans.
 					out.print(bean, null)
 				}
+			}
+			
+			def bean = beans.children().find{bean-> bean.'@id' == urlControllerMappingKey }
+			if(bean){
+				def entries = bean.children()[0].children()[0].children()
+				def entriesXml = new StringWriter()
+				def entriesXmlWriter = new XmlNodePrinter(new PrintWriter(entriesXml))
+				def opUrls = operations.collect{ "/${data.classNamePath}/${it}" }
+				for(entry in entries){
+					if( !(entry.'@key' in opUrls) ){
+					entriesXmlWriter.print(entry, null) }
+				}
+				urlMappingXmlPrefix += entriesXml.toString()
 			}
 		}
 			
@@ -102,6 +127,13 @@ class Scaffold {
 					 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 			''')
 			writer.println(beansXml.toString())
+			
+			//append url mapper.
+			writer.println(urlMappingXmlPrefix)
+			for(op in operations){
+				writer.println("""<entry key="/${data.classNamePath}/${op}" value-ref="${op}Controller" />""")	
+			}
+			writer.println(urlMappingXmlSuffix)
 			
 			for(op in operations){
 				writer.println("""
@@ -124,7 +156,7 @@ class Scaffold {
 			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
 			def beans = new XmlParser().parse(inputFilename)
 			for(bean in beans.children()){
-				if(bean.'@id' != "${data.className}Dao"){ //reprint out all other beans.
+				if(bean.'@id' != "${data.beanName}Dao"){ //reprint out all other beans.
 					out.print(bean, null)
 				}
 			}
