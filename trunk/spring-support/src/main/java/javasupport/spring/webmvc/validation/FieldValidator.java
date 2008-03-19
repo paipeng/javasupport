@@ -131,7 +131,9 @@ public class FieldValidator implements Validator {
         logger.debug("Validating lenght: " + fieldName + " min: " + min + " max: " + max);
         int len = 0;
         Object fieldValue = commandBeanWrapper.getPropertyValue(fieldName);
-        if (fieldValue instanceof String) {
+        if(fieldValue == null){
+        	len = 0;
+        }else if (fieldValue instanceof String) {
             len = ((String) fieldValue).length();
         } else if (fieldValue instanceof Integer) {
             len = (Integer) fieldValue;
