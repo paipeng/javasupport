@@ -1,23 +1,34 @@
 <?xml version="1.0"?>
 <settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                        http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	<profiles>
+		<profile>
+			<id>archiva-repo-proxy-profile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<archiva.server.url>http://hostname_within_your_lan:8082</archiva.server.url>
+			</properties>
+		</profile>
+	</profiles>
 	
-	<mirrors>
-		<!--<mirror>
+	<!--<mirrors>
+		<mirror>
 			<id>central</id>
 			<mirrorOf>central</mirrorOf>
 			<url>http://hostname_within_your_lan:8082/archiva/repository/internal</url>
-		</mirror>-->
-	</mirrors>
+		</mirror>
+	</mirrors>-->
 	
 	<servers>
 		<!-- archiva server -->
 		<server>
-			<id>faxintelligence.com-internal</id>
+			<id>internal</id>
 			<username>admin</username>
 			<password>secretpass</password>
 		</server>
 		<server>
-			<id>faxintelligence.com-snapshots</id>
+			<id>snapshots</id>
 			<username>admin</username>
 			<password>secretpass</password>
 		</server>
