@@ -1,25 +1,7 @@
 <?xml version="1.0"?>
 <settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                        http://maven.apache.org/xsd/settings-1.0.0.xsd">
-	<profiles>
-		<profile>
-			<id>archiva-repo-proxy-profile</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<archiva.server.url>http://hostname_within_your_lan:8082</archiva.server.url>
-			</properties>
-		</profile>
-	</profiles>
 	
-	<!--<mirrors>
-		<mirror>
-			<id>central</id>
-			<mirrorOf>central</mirrorOf>
-			<url>http://hostname_within_your_lan:8082/archiva/repository/internal</url>
-		</mirror>
-	</mirrors>-->
-	
+	<!-- Server auth information. -->
 	<servers>
 		<!-- archiva server -->
 		<server>
@@ -40,4 +22,73 @@
 			<password>secretpass</password>
 		</server>
 	</servers>
+	
+	
+	<!-- Example of another internal archiva server setup with multiple proxy repo
+	<profiles>
+		<profile>
+			<id>archiva-repo-proxy-profile</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<archiva.server.url>http://bb:8082</archiva.server.url>
+			</properties>			
+			<repositories>
+					<repository>
+							<id>central</id>
+							<name>central</name>
+							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
+							<releases>
+								<enabled>true</enabled>
+							</releases>
+							<snapshots>
+								<enabled>false</enabled>
+							</snapshots>
+					</repository>								
+					<repository>
+							<id>snapshots</id>
+							<name>snapshots</name>
+							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
+							<releases>
+								<enabled>false</enabled>
+							</releases>
+							<snapshots>
+								<enabled>true</enabled>
+							</snapshots>
+					</repository>
+			</repositories>
+			<pluginRepositories>
+					<pluginRepository>
+							<id>central</id>
+							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
+							<releases>
+								<enabled>true</enabled>
+							</releases>
+							<snapshots>
+								<enabled>false</enabled>
+							</snapshots>
+					</pluginRepository>								
+					<pluginRepository>
+							<id>snapshots</id>
+							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
+							<releases>
+								<enabled>false</enabled>
+							</releases>
+							<snapshots>
+								<enabled>true</enabled>
+							</snapshots>
+					</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles> -->
+	
+	<!-- Example of Manual override proxy or repo URL via Mirrors.
+	<mirrors>
+		<mirror>
+			<id>central</id>
+			<mirrorOf>central</mirrorOf>
+			<url>http://hostname_within_your_lan:8082/archiva/repository/internal</url>
+		</mirror>
+	</mirrors>-->
 </settings>
