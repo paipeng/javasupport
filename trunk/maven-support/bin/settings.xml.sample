@@ -5,7 +5,7 @@
 		<!--<mirror>
 			<id>central</id>
 			<mirrorOf>central</mirrorOf>
-			<url>http://faxintelligence.com:8082/archiva/repository/internal</url>
+			<url>http://hostname_within_your_lan:8082/archiva/repository/internal</url>
 		</mirror>-->
 	</mirrors>
 	
