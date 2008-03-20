@@ -9,7 +9,7 @@ class Scaffold {
 		'view' : 
 			['create' : 'templates/spring/create.jsp',
 			'edit' : 'templates/spring/edit.jsp',
-			'list' : 'templates/spring/create.jsp',
+			'list' : 'templates/spring/list.jsp',
 			'show' : 'templates/spring/show.jsp',
 			'delete' : 'templates/spring/delete.jsp'],
 		'controller' : 
