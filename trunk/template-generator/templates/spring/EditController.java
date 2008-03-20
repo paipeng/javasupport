@@ -20,7 +20,7 @@ public class EditController extends CreateController {
 	@Override
 	protected void doSubmitAction(Object command) throws Exception {
 		${className} ${beanName} = (${className}) command;
-		logger.info("Persisting ${beanName} " + ${beanName});
+		logger.info("Updating ${className} " + ${beanName});
 		${beanName}Dao.update(${beanName});
 	}
 }

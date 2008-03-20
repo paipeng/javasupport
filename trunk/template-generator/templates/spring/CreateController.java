@@ -27,7 +27,7 @@ public class CreateController extends SimpleFormController {
 	@Override
 	protected void doSubmitAction(Object command) throws Exception {
 		${className} ${beanName} = (${className}) command;
-		logger.info("Persisting ${beanName} " + ${beanName});
+		logger.info("Create new ${className} " + ${beanName});
 		${beanName}Dao.create(${beanName});
 	}
 

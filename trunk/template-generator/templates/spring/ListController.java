@@ -18,8 +18,7 @@ public class ListController extends AbstractController {
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<${className}> ret = ${beanName}Dao.findAll();
-		
-		return new ModelAndView("${classNamePath}/list", "list", ret);
+		List<${className}> ${beanName}List = ${beanName}Dao.findAll();		
+		return new ModelAndView("${classNamePath}/list", "${beanName}List", ${beanName}List);
 	}
 }
