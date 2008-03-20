@@ -21,10 +21,8 @@ public class DeleteController extends AbstractController {
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
-		${beanName}Dao.delete(id);
+		${className} ${beanName} = ${beanName}Dao.delete(id);
 		
-		List<${className}> ret = ${beanName}Dao.findAll();
-		
-		return new ModelAndView("${classNamePath}/list", "list", ret);
+		return new ModelAndView("${classNamePath}/delete", "${beanName}", ${beanName});
 	}
 }

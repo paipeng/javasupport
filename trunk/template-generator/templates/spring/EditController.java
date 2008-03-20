@@ -15,6 +15,13 @@ public class EditController extends CreateController {
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
 		${className} ${beanName} = ${beanName}Dao.get(id);
 		return product;
+	}	
+	
+	@Override
+	protected void doSubmitAction(Object command) throws Exception {
+		${className} ${beanName} = (${className}) command;
+		logger.info("Persisting ${beanName} " + ${beanName});
+		${beanName}Dao.update(${beanName});
 	}
 }
 

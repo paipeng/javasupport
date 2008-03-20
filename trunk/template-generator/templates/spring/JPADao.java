@@ -15,10 +15,16 @@ public class ${className}Dao {
 		this.em = em;
 	}
 		
-	public void save(${className} ${beanName}) {
-		logger.debug("Saving ${beanName} " + ${beanName});
+	public void create(${className} ${beanName}) {
+		logger.debug("Creating ${beanName} " + ${beanName});
 		em.persist(${beanName});
-		logger.info("${className} instance is saved. Id=" + ${beanName}.getId());
+		logger.info("${className} instance created. Id=" + ${beanName}.getId());
+	}
+	
+	public void update(${className} ${beanName}) {
+		logger.debug("Updating ${beanName} " + ${beanName});
+		em.merge(${beanName});
+		logger.info("${className} instance updated. Id=" + ${beanName}.getId());
 	}
 
 	public ${className} get(Integer id) {
@@ -28,10 +34,12 @@ public class ${className}Dao {
 		return ${beanName};
 	}
 	
-	public void delete(Integer id){
+	public ${className} delete(Integer id){
 		logger.debug("Removing ${beanName} with id=" + id);
-		em.remove(get(id));
+		${className} ${beanName} = get(id);
+		em.remove(${beanName});
 		logger.info("${className} deleted");
+		return ${beanName};
 	}
 
 	public List<${className}> findAll() {
