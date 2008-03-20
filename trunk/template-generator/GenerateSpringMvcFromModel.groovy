@@ -14,6 +14,7 @@ class GenerateSpringMvcFromModel extends GenerateSpringMvc {
 		//auto reflect all fields from model bean
 		def modelClass = Class.forName(main.data.className)
 		def bi = java.beans.Introspector.getBeanInfo(modelClass)
+		//main.data.fields = bi.propertyDescriptors.collect{ it.displayName + ':'+it.propertyType }
 		main.data.fields = bi.propertyDescriptors.collect{ it.displayName }
 		
 		//replace with new package name
