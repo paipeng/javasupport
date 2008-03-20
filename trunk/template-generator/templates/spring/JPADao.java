@@ -1,4 +1,7 @@
 package ${packageName};
+<% if(origModelClassName){ %>
+import ${origModelClassName}
+<% } %>
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;

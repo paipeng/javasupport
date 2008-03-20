@@ -1,5 +1,7 @@
 package ${packageName};
-
+<% if(origModelClassName){ %>
+import ${origModelClassName}
+<% } %>
 import javasupport.spring.webmvc.validation.FieldValidator;
 
 import javax.servlet.http.HttpServletRequest;

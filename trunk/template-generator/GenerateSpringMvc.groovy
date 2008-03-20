@@ -39,7 +39,7 @@ class GenerateSpringMvc {
 		init()
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "model"){
-			if(!(this instanceof GenerateSpringMvcFromModel)){
+			if(!data.origModelClassName){
 				createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
 			}  
 		}
