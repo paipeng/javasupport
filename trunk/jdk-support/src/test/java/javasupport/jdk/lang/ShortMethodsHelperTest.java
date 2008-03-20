@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang.SystemUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -19,7 +21,8 @@ import org.junit.Test;
  * @since Wed Feb 20 00:39:43 EST 2008
  */
 public class ShortMethodsHelperTest extends ShortMethodsHelper {
-
+	String testDir = System.getProperty("java.io.tmpdir");
+	
     @Test
     public void testSlice() {
         Assert.assertEquals(mklist(0, 1, 2, 3, 4, 5), slice(mklist(0, 1, 2, 3, 4, 5), 0, -1)); //all
@@ -66,9 +69,9 @@ public class ShortMethodsHelperTest extends ShortMethodsHelper {
             Assert.assertEquals(params + "\n", exec("echo", params));
 
             //Unix tar cmd test
-            String file1 = "/tmp/test.tgz";
-            String file2 = "/tmp/test1.txt";
-            String file3 = "/tmp/test2.txt";
+            String file1 = testDir + "/test.tgz";
+            String file2 = testDir + "/test1.txt";
+            String file3 = testDir + "/test2.txt";
 
             writeText(file2, "file one");
             writeText(file3, "file two");
@@ -127,7 +130,7 @@ public class ShortMethodsHelperTest extends ShortMethodsHelper {
     @Test
     public void testFileReadWrite() {
         //test file read and write & mklist
-        String filename = "/tmp/test.txt";
+        String filename = testDir + "/test.txt";
 
         //test empty file
         writeText(filename, "");
