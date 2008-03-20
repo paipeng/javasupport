@@ -36,18 +36,18 @@
 			</properties>			
 			<repositories>
 					<repository>
-							<id>central</id>
+							<id>proxycentral</id>
 							<name>central</name>
 							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
 							<releases>
-								<enabled>true</enabled>
+								<enabled>false</enabled>
 							</releases>
 							<snapshots>
 								<enabled>false</enabled>
 							</snapshots>
 					</repository>								
 					<repository>
-							<id>snapshots</id>
+							<id>proxycentral-snapshots</id>
 							<name>snapshots</name>
 							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
 							<releases>
@@ -60,7 +60,7 @@
 			</repositories>
 			<pluginRepositories>
 					<pluginRepository>
-							<id>central</id>
+							<id>proxycentral</id>
 							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
 							<releases>
 								<enabled>true</enabled>
@@ -70,7 +70,7 @@
 							</snapshots>
 					</pluginRepository>								
 					<pluginRepository>
-							<id>snapshots</id>
+							<id>proxycentral-snapshots</id>
 							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
 							<releases>
 								<enabled>false</enabled>
