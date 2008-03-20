@@ -20,7 +20,7 @@ public class ShowController extends AbstractController {
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		${className} ${beanName} = (${className})request.getAttribute("${beanName}");
-		if(product != null){
+		if(${beanName} != null){
 			return new ModelAndView("${classNamePath}/show", "${beanName}", ${beanName});
 		}
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");

@@ -35,21 +35,20 @@ public class EditController extends SimpleFormController implements UserConstant
         setFormView(USER_EDIT_VIEW);
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command,
-            BindException errors) throws Exception {
-        
-        User loggedInUser = (User)ServletRequestHelper.getSession(request, userSessionKey);
-        
+    
+	@Override
+	protected void doSubmitAction(Object command) throws Exception {     
         User user = (User) command;
         logger.debug("Updating user info " + user);
         
         try {
-            userDao.save(user);
+            userDao.update(user);
             logger.info("User " + user.getUsername() + " updated.");
             
-            if(!loggedInUser.getUsername().equals(user.getUsername())){
-                logger.info("Username has changed. Updating user session object.");
+            //Do we need to update loggin user?            
+            User loggedInUser = (User)ServletRequestHelper.getSession(request, userSessionKey);
+            if(loggedInUser.getId() == user.getId() && !loggedInUser.getUsername().equals(user.getUsername())){
+                logger.info("Logged in username has changed. Updating user session object.");
                 loggedInUser.setUsername(user.getUsername());
                 ServletRequestHelper.setSession(request, userSessionKey, loggedInUser);
             }
@@ -57,15 +56,20 @@ public class EditController extends SimpleFormController implements UserConstant
             logger.error("Failed to edit user " + user, e);
             throw new ModelAndViewDefiningException(new ModelAndView("error", "message", e.getMessage()));
         }
-
-        return super.onSubmit(request, response, command, errors);
     }
 
     
     @Override
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        User loggedinUser = (User)ServletRequestHelper.getSession(request, userSessionKey);
-        User user =  userDao.get(loggedinUser.getId());
+        int id = ServletRequestHelper.getOptinalIntParameter(request, "id", 0);
+        User user = null;
+        
+        if(id >0){
+            user = userDao.get(id);
+        }else{
+            User loggedinUser = (User)ServletRequestHelper.getSession(request, userSessionKey);
+            user =  userDao.get(loggedinUser.getId());
+        }
         return user;
     }
         

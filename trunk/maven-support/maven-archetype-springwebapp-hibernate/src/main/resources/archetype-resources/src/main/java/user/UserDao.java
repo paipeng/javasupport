@@ -41,11 +41,17 @@ public class UserDao {
         return foundUser;
     }
 
-    public void save(User user) {
-        logger.debug("Saving user " + user.getUsername());
+    public void create(User user) {
+        logger.debug("Creating new user " + user.getUsername());
         em.persist(user);
         logger.info("User saved with id=" + user.getId());
-    }
+    }    
+	
+	public void update(User user) {
+		logger.debug("Updating user " + user);
+		em.merge(user);
+		logger.info("User instance updated. Id=" + user.getId());
+	}
 
     public User get(Integer id) {
         logger.debug("Retrieving user " + id);
@@ -54,9 +60,18 @@ public class UserDao {
         return user;
     }
     
-    public void delete(User user){
-        logger.debug("Removing user " + user);
-        em.remove(user);
-        logger.info("User deleted");
-    }
+    public User delete(Integer id){
+		logger.debug("Removing user with id=" + id);
+		User user = get(id);
+		em.remove(user);
+		logger.info("User deleted");
+		return user;
+	}
+    
+    public List<User> findAll() {
+		logger.debug("Retrieving all product objects.");
+		List<User> ret = em.createQuery("from User").getResultList();
+		logger.info("Found " + ret.size());
+		return ret;
+	}
 }

@@ -1,7 +1,5 @@
 package ${packageName};
 
-import java.util.List;
-
 import javasupport.servlet.ServletRequestHelper;
 
 import javax.servlet.http.HttpServletRequest;

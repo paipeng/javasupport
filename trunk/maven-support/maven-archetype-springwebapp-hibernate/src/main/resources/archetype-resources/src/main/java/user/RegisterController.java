@@ -37,12 +37,12 @@ public class RegisterController extends SimpleFormController implements UserCons
         setFormView(USER_REGISTER_VIEW);
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command,
-            BindException errors) throws Exception {
+    
+	@Override
+	protected void doSubmitAction(Object command) throws Exception {
         User user = (User) command;
         try {
-            userDao.save(user);
+            userDao.create(user);
             logger.info("New user created: " + user.getUsername());
 
             //saving a user instance as userSession token
@@ -55,8 +55,6 @@ public class RegisterController extends SimpleFormController implements UserCons
             logger.error("Failed to create new user " + user, e);
             throw new ModelAndViewDefiningException(new ModelAndView("error", "message", e.getMessage()));
         }
-
-        return super.onSubmit(request, response, command, errors);
     }
 
     @Override
