@@ -3,10 +3,9 @@ package ${packageName};
 import javasupport.spring.webmvc.validation.FieldValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /** Create Form Controller for ${className}. */
@@ -26,18 +25,17 @@ public class CreateController extends SimpleFormController {
 	}
 
 	@Override
-	protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
+	protected void doSubmitAction(Object command) throws Exception {
 		${className} ${beanName} = (${className}) command;
 		logger.info("Saving new command object " + ${beanName});
 		${beanName}Dao.save(${beanName});
-
-		ModelAndView mv = new ModelAndView(getSuccessView());
-		mv.addObject("message", "Record created. New ID=" + ${beanName}.getId());
-		return mv;
 	}
 
 	@Override
 	protected void onBindAndValidate(HttpServletRequest request, Object command, BindException errors) throws Exception {
+		if(errors.hasErrors())
+			return;
+		
 		${className} ${beanName} = (${className}) command;
 
 		// Validate command object.
@@ -76,6 +74,20 @@ public class CreateController extends SimpleFormController {
 		}
 		%>		
 		;
+	}
+	
+	@Override
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) throws Exception {
+		<% for (field in displayFields) {	
+			def type = field[1].toLowerCase()
+			if(type == "date"){
+		%>
+			binder.registerCustomEditor(java.util.Date.class, "${field[0]}", 
+				new org.springframework.beans.propertyeditors.CustomDateEditor(new java.text.SimpleDateFormat("yyyy-MM-dd"), true));
+		<% 
+			} 
+		}
+		%>
 	}
 }
 
