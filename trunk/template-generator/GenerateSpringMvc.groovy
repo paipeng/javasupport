@@ -24,7 +24,7 @@ class GenerateSpringMvc {
 	
 	static void main(args){
 		if(args.size()<3)
-		  throw new Exception("No enough arguments. Try: scaffoldType(all|model|dao|create|list|delete|update|show) packageName.ClassName fieldName1 [fieldName2 ...]")
+		  throw new Exception("No enough arguments. Try: type(scaffold|model|dao|create|list|delete|update|show) packageName.ClassName fieldName1 [fieldName2 ...]")
 		
 		def main = new GenerateSpringMvc()
 		main.data.scaffoldType = args[0]
@@ -37,42 +37,42 @@ class GenerateSpringMvc {
 	def run(){	
 		init()
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "model"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "model"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
 			//println("mvn hibernate3:hbm2ddl".execute().text)
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "dao"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "dao"){
 			createFromTemplate("src/main/java/${data.packagePath}/${data.className}Dao.java", templates.dao.jpa)
 			updateApplicationContextXml()
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "create"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "create"){
 			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templates.controller.create)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templates.view.create)
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "edit"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "edit"){
 			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templates.controller.edit)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templates.view.edit)
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "delete"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "delete"){
 			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templates.controller.delete)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templates.view.delete)
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "list"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "list"){
 			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
 		}
 		
-		if(data.scaffoldType == "all" || data.scaffoldType == "show"){
+		if(data.scaffoldType == "scaffold" || data.scaffoldType == "show"){
 			createFromTemplate("src/main/java/${data.packagePath}/ShowController.java", templates.controller.show)
 			createFromTemplate("src/main/webapp/${data.classNamePath}/show.jsp", templates.view.show)
 		}
 		
-		if(data.scaffoldType == "all"){
+		if(data.scaffoldType == "scaffold"){
 			updateWebappServletContextXml()
 		}
 	}
