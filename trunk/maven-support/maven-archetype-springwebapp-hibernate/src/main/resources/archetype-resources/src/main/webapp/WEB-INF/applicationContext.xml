@@ -58,8 +58,6 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="entityManager" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-    
-    <bean id="userDao" class="${groupId}.user.UserDao">
-        <property name="em" ref="entityManager" />	
-    </bean>
+        
+    <import resource="applicationContext-Dao.xml"/>
 </beans>

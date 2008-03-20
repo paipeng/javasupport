@@ -14,7 +14,7 @@ public class EditController extends CreateController {
 	protected Object formBackingObject(HttpServletRequest request) throws Exception {
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
 		${className} ${beanName} = ${beanName}Dao.get(id);
-		return product;
+		return ${beanName};
 	}	
 	
 	@Override
