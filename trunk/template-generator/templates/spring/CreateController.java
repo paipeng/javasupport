@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /** Create Form Controller for ${className}. */
 public class CreateController extends SimpleFormController {
-	private ${className}Dao ${beanName}Dao;
+	protected ${className}Dao ${beanName}Dao;
 
 	public void set${className}Dao(${className}Dao that) {
 		this.${beanName}Dao = that;
@@ -27,7 +27,7 @@ public class CreateController extends SimpleFormController {
 	@Override
 	protected void doSubmitAction(Object command) throws Exception {
 		${className} ${beanName} = (${className}) command;
-		logger.info("Saving new command object " + ${beanName});
+		logger.info("Persisting ${beanName} " + ${beanName});
 		${beanName}Dao.save(${beanName});
 	}
 
