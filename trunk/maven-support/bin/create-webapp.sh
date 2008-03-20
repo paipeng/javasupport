@@ -4,7 +4,7 @@ if [[ $# < 2 ]]; then
 fi
 
 mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create \
-  -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/internal \
+  -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/snapshots \
   -DarchetypeGroupId=javasupport.maven \
   -DarchetypeArtifactId=maven-archetype-webapp \
   -DarchetypeVersion=0.0.3-SNAPSHOT \
