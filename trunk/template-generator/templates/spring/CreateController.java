@@ -42,16 +42,24 @@ public class CreateController extends SimpleFormController {
 
 		// Validate command object.
 		FieldValidator validator = new FieldValidator(${beanName}, errors);
-		
-		<% for (field in displayFields) {			
-			def maxLen = 255 // default String length
+		validator
+		<% for (field in displayFields) {	
 			def type = field[1].toLowerCase()
+		%>
+			.notBlank("${field[0]}", "This field can not be blank.")
+		<% } %>
+			.skipIfHasError()
+		<% for (field in displayFields) {	
+			def type = field[1].toLowerCase()	
+			def maxLen = 255 // default String length
 			if(type == "integer") maxLen = 9
 			else if(type == "double") maxLen = 12
 		%>
-		validator.notBlank("${field[0]}", "This field can not be blank.")
 			.length("${field[0]}", 1, ${maxLen}, "Input must between %d to %d characters.")
-		<%
+		<% } %>		
+			.skipIfHasError()
+		<% for (field in displayFields) {	
+			def type = field[1].toLowerCase()
 			if(type == "integer"){
 		%>
 			.match("${field[0]}", "\\\\d+", "Invalid integer value.")
@@ -62,14 +70,12 @@ public class CreateController extends SimpleFormController {
 	  <%
 			}else{
 		%>
-			.match("${field[0]}", "\\\\p{ASCII}+", "Invalid ascii characters value.")
+			.match("${field[0]}", "\\\\p{Alnum}+", "Invalid alpha numberic characters value.")
 		<% 
 			}
-		%>			
-			;
-		<%
-		} //for loop
-		%>
+		}
+		%>		
+		;
 	}
 }
 
