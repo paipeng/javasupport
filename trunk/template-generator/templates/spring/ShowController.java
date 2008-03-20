@@ -24,6 +24,9 @@ public class ShowController extends AbstractController {
 		}
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
 		${beanName} = ${beanName}Dao.get(id);
+		if(${beanName} == null){
+			throw new ModelAndViewDefiningException(new ModelAndView("error", "message", "${className} ID "+id+" not found"));
+		}
 		return new ModelAndView("${classNamePath}/show", "${beanName}", ${beanName});
 	}
 }
