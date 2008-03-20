@@ -21,8 +21,8 @@ public class EditController extends SimpleFormController {
 		setCommandClass(${className}.class);
 		setCommandName("${beanName}");
 
-		setSuccessView("${classNamePath}/edit");
-		setFormView("${classNamePath}/edit");
+		setFormView("${classNamePath}/create");
+		setSuccessView("redirect:${classNamePath}/show");
 	}
 
 	@Override
