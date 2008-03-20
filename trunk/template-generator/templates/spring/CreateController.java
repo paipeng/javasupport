@@ -19,9 +19,9 @@ public class CreateController extends SimpleFormController {
 	public CreateController() {
 		setCommandClass(${className}.class);
 		setCommandName("${beanName}");
-
-		setSuccessView("${classNamePath}/create");
+		
 		setFormView("${classNamePath}/create");
+		setSuccessView("forward:show");
 	}
 
 	@Override

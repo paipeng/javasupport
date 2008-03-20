@@ -10,11 +10,13 @@ class Scaffold {
 			['create' : 'templates/spring/create.jsp',
 			'edit' : 'templates/spring/edit.jsp',
 			'list' : 'templates/spring/create.jsp',
+			'show' : 'templates/spring/show.jsp',
 			'delete' : 'templates/spring/delete.jsp'],
 		'controller' : 
 			['create' : 'templates/spring/CreateController.java',
 			'edit' : 'templates/spring/EditController.java',
 			'list' : 'templates/spring/ListController.java',
+			'show' : 'templates/spring/ShowController.java',
 			'delete' : 'templates/spring/DeleteController.java']
 		]
 	def templateEngine = new GStringTemplateEngine()
@@ -22,7 +24,7 @@ class Scaffold {
 	
 	static void main(args){
 		if(args.size()<3)
-		  throw new Exception("No enough arguments. Try: scaffoldType(all|model|dao|create|list|delete|update) packageName.ClassName fieldName1 [fieldName2 ...]")
+		  throw new Exception("No enough arguments. Try: scaffoldType(all|model|dao|create|list|delete|update|show) packageName.ClassName fieldName1 [fieldName2 ...]")
 		
 		def main = new Scaffold()
 		main.data.scaffoldType = args[0]
@@ -65,6 +67,11 @@ class Scaffold {
 			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
 		}
 		
+		if(data.scaffoldType == "all" || data.scaffoldType == "show"){
+			createFromTemplate("src/main/java/${data.packagePath}/ShowController.java", templates.controller.show)
+			createFromTemplate("src/main/webapp/${data.classNamePath}/show.jsp", templates.view.show)
+		}
+		
 		if(data.scaffoldType == "all"){
 			updateWebappServletContextXml()
 		}
@@ -75,7 +82,7 @@ class Scaffold {
 		def inputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
 		def outputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
 		def beansXml = new StringWriter()
-		def operations = [ 'create', 'delete', 'list', 'edit' ]
+		def operations = [ 'create', 'delete', 'list', 'edit', 'show']
 		def urlControllerMappingKey = 'controllerUrlMappings'
 		def urlMappingXmlPrefix = """
 		<bean id="${urlControllerMappingKey}" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -152,7 +159,6 @@ class Scaffold {
 		def inputFilename = "src/main/webapp/WEB-INF/applicationContext-Dao.xml"
 		def outputFilename = "src/main/webapp/WEB-INF/applicationContext-Dao.xml"
 		def beansXml = new StringWriter()
-		def operations = [ 'create', 'delete', 'list', 'edit' ]
 		
 		if(new File(inputFilename).exists()){
 			def out = new XmlNodePrinter(new PrintWriter(beansXml))				
