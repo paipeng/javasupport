@@ -39,8 +39,9 @@ class GenerateSpringMvc {
 		init()
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "model"){
-			createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
-			//println("mvn hibernate3:hbm2ddl".execute().text)
+			if(!(this instanceof GenerateSpringMvcFromModel)){
+				createFromTemplate("src/main/java/${data.packagePath}/${data.className}.java", templates.model.javaBean)
+			}  
 		}
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "dao"){
