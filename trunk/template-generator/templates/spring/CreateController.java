@@ -45,7 +45,9 @@ public class CreateController extends SimpleFormController {
 			def type = field[1].toLowerCase()
 		%>
 			.notBlank("${field[0]}", "This field can not be blank.")
-		<% } %>
+		<% 
+			} 
+		%>
 			.skipIfHasError()
 		<% for (field in displayFields) {	
 			def type = field[1].toLowerCase()	

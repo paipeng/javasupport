@@ -10,24 +10,18 @@
 	<table>
 	
 		<tr>
-		<td>Controls</td>
-		<td>ID</td>
-		<% for(field in displayFields){ %>
-		<td>${field[2]}</td>
-		<% } %>
+			<td>ID</td>
+			<td>Actions</td>
 		</tr>	
 		
 		<c:forEach var="${beanName}" items="\${${beanName}List}">
 		<tr>
-		<td>
-		<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/show?id=\${${beanName}.id}">Show</a> |
-		<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/edit?id=\${${beanName}.id}">Edit</a> |
-		<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/delete?id=\${${beanName}.id}">Delete</a> |
-		</td>
-		<td>\${${beanName}.id}</td>
-		<% for(field in displayFields){%>
-		<td>\${${beanName}.${field[0]}}</td>
-		<% } %>
+			<td>\${${beanName}.id}</td>
+			<td>
+			<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/show?id=\${${beanName}.id}">Show</a> |
+			<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/edit?id=\${${beanName}.id}">Edit</a> |
+			<a href="\${pageContext.request.contextPath}/webapp/${classNamePath}/delete?id=\${${beanName}.id}">Delete</a>
+			</td>
 		</tr>	
 		</c:forEach>
 	</table>
