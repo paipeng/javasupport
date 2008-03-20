@@ -1,5 +1,7 @@
 package ${packageName};
-
+<% if(origModelClassName){ %>
+import ${origModelClassName}
+<% } %>
 import javasupport.servlet.ServletRequestHelper;
 
 import javax.servlet.http.HttpServletRequest;

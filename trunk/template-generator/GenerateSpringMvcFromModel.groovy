@@ -18,6 +18,7 @@ class GenerateSpringMvcFromModel extends GenerateSpringMvc {
 		
 		//replace with new package name
 		if(main.data.newPackageName){
+			main.data.origModelClassName = main.data.className
 			def pkgs = main.data.className.split('\\.')
 			main.data.className = main.data.newPackageName+'.'+pkgs[-1]
 		}
