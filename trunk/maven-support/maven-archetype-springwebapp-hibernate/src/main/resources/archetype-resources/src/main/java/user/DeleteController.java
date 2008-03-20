@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /** Delete Controller for User. */
-public class DeleteController extends AbstractController {
+public class DeleteController extends AbstractController implements UserConstants {
 	private UserDao userDao;
 
     protected String userSessionKey = USER_SESSION_KEY;

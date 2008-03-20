@@ -24,7 +24,7 @@ public class ProfileController extends AbstractController implements UserConstan
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = ServletRequestHelper.getOptinalIntParameter(request, "id", 0);
+        int id = ServletRequestHelper.getOptionalParameter(request, "id", 0);
         User user = null;
         
         if(id >0){

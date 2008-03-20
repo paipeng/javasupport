@@ -33,7 +33,7 @@ public class RegisterController extends SimpleFormController implements UserCons
         setCommandClass(User.class);
         setCommandName("user");
 
-        setSuccessView(USER_HOME_VIEW);
+        setSuccessView("redirect:/webapp/"+USER_LOGIN_VIEW);
         setFormView(USER_REGISTER_VIEW);
     }
 
@@ -43,14 +43,7 @@ public class RegisterController extends SimpleFormController implements UserCons
         User user = (User) command;
         try {
             userDao.create(user);
-            logger.info("New user created: " + user.getUsername());
-
-            //saving a user instance as userSession token
-            User userSession = new User();
-            userSession.setId(user.getId());
-            userSession.setUsername(user.getUsername());
-            ServletRequestHelper.setSession(request, userSessionKey, userSession);
-            logger.debug("User is saved into session with " + userSessionKey);
+            logger.info("New user created: " + user.getUsername());          
         } catch (Exception e) {
             logger.error("Failed to create new user " + user, e);
             throw new ModelAndViewDefiningException(new ModelAndView("error", "message", e.getMessage()));

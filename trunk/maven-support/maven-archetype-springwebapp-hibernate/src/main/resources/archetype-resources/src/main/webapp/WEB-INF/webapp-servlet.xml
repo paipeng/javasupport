@@ -17,7 +17,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <util:map>
                 <entry key="/welcome" value-ref="welcomeController" />
                 <entry key="/help" value-ref="urlFilenameViewController" />
-                <entry key="/systeminfo" value-ref="systemInfoController" />
                 <entry key="/user/login" value-ref="loginController" />
                 <entry key="/user/register" value-ref="registerUserController" />
             </util:map>
@@ -31,6 +30,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="memberOnly" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <util:map>
+                <entry key="/systeminfo" value-ref="systemInfoController" />
                 <entry key="/member/profile" value-ref="userProfileController" />
                 <entry key="/member/logout" value-ref="logoutController" />
                 <entry key="/member/edit" value-ref="editUserController" />
