@@ -1,6 +1,6 @@
 package ${packageName};
 <% if(origModelClassName){ %>
-import ${origModelClassName}
+import ${origModelClassName};
 <% } %>
 import java.util.List;
 
