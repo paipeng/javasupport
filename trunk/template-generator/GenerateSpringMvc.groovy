@@ -32,6 +32,7 @@ class GenerateSpringMvc {
 		main.data.fields = args[2..-1]
 		main.data.scriptName = System.properties['script.name']
 		//main.data.scriptName = System.properties['user.home'] + "/projects/java/javasupport/template-generator/GenerateSpringMvc.groovy"
+		main.data.origModelClassName = null
 		main.run()
 	}
 	
