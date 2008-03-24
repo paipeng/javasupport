@@ -13,6 +13,7 @@
     </modules>
     <properties>
     	<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+    	<archiva.dist.server.url>http://faxintelligence.com:8082</archiva.dist.server.url>
     </properties>
     <profiles>
     	<profile>
@@ -70,12 +71,12 @@
     			<repository>
     				<id>internal</id>
     				<name>internal</name>
-    				<url>${archiva.server.url}/archiva/repository/internal</url>
+    				<url>${archiva.dist.server.url}/archiva/repository/internal</url>
     			</repository>
     			<snapshotRepository>
     				<id>snapshots</id>
     				<name>snapshots</name>
-    				<url>${archiva.server.url}/archiva/repository/snapshots</url>
+    				<url>${archiva.dist.server.url}/archiva/repository/snapshots</url>
     			</snapshotRepository>
     		</distributionManagement>
     	</profile>
