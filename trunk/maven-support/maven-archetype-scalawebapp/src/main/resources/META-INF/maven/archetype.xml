@@ -1,9 +1,8 @@
 <archetype>
-  <id>maven-archetype-webapp</id>
-  <sources>
-    <source>src/main/scala/WelcomeServlet.scala</source>
-  </sources>
-  <resources>
+  <id>maven-archetype-scalawebapp</id>
+	<resources>
+    <resource>src/main/scala/WelcomeServlet.scala</resource>
+    <resource>src/test/scala/WelcomeServletTest.scala</resource>
     <resource>src/main/resources/logback.xml</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
     <resource>src/main/webapp/index.jsp</resource>
@@ -11,9 +10,6 @@
     <resource>README.txt</resource>
     <resource>RELEASE.txt</resource>
   </resources>
-  <testSources>
-    <source>src/test/scala/WelcomeServletTest.scala</source>
-  </testSources>  
   <testResources>
     <resource>src/test/resources/logback.xml</resource>
   </testResources>
