@@ -8,7 +8,7 @@
 	<name>${artifactId}</name>
 	
 	<properties>
-    <scala.version>2.7.0-final</scala.version>
+    <scala.version>2.7.0</scala.version>
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
 	<profiles>
