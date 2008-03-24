@@ -1,10 +1,14 @@
 <archetype>
   <id>maven-archetype-scalaapp</id>
+	<sources>
+    <source>src/main/scala/Main.scala</source>
+  </sources>
+  <testSources>
+    <source>src/test/scala/MainTest.scala</source>
+  </testSources>
   <resources>
     <resource>README.txt</resource>
     <resource>RELEASE.txt</resource>
-    <resource>src/main/scala/Main.scala</resource>
-    <resource>src/test/scala/MainTest.scala</resource>
     <resource>src/main/resources/logback.xml</resource>
   </resources>
   <testResources>

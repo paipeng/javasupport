@@ -1,8 +1,14 @@
 <archetype>
   <id>maven-archetype-scalawebapp</id>
+	
+	<sources>
+    <source>src/main/scala/WelcomeServlet.scala</source>
+  </sources>
+  <testSources>
+    <source>src/test/scala/WelcomeServletTest.scala</source>
+  </testSources>
+	
 	<resources>
-    <resource>src/main/scala/WelcomeServlet.scala</resource>
-    <resource>src/test/scala/WelcomeServletTest.scala</resource>
     <resource>src/main/resources/logback.xml</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
     <resource>src/main/webapp/index.jsp</resource>
