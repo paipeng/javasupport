@@ -79,8 +79,10 @@ public class FieldValidator implements Validator {
     }
     
     public FieldValidator skipIfHasError(){
-    	if(isSkipable()) return this;        
-        return new SkipableFieldValidator(this);
+    	if(isSkipable()) return this;
+    	if(hasErrors())
+    		return new SkipableFieldValidator(this);
+    	return this;
     }
 
     protected boolean isBlankField(Object fieldValue) {
@@ -209,7 +211,6 @@ public class FieldValidator implements Validator {
         logger.debug("Field value: " + val);
         if (Pattern.matches(regex, val)) {
             errors.rejectValue(fieldName, "matched", String.format(errorMsg, regex, fieldName, fieldValue));
-
         }
 
         return this;

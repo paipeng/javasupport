@@ -58,9 +58,10 @@ public class RegisterController extends SimpleFormController implements UserCons
                 notBlank("username", "This field can not be blank.").
                 notBlank("password", "This field can not be blank.").
                 skipIfHasError().
-                function("username", new ExistingUserFunction()).
                 length("username", 3, 64, "Input must between %d to %d characters.").
                 length("password", 3, 64, "Input must between %d to %d characters.").
+                skipIfHasError().
+                function("username", new ExistingUserFunction()).
                 skipIfBlank("email").
                 function("email", new EmailValidatorFunction("Invalid email format."));
     }
