@@ -7,7 +7,7 @@ package ${groupId}
  */
 object Main {
     def main(args: Array[String]) = {
-    	println("This java application is ready.")
+    	println("This scala application is ready.")
     }
 }
 
