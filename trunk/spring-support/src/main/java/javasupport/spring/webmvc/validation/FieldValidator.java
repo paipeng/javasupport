@@ -79,7 +79,6 @@ public class FieldValidator implements Validator {
     }
     
     public FieldValidator skipIfHasError(){
-    	if(isSkipable()) return this;
     	if(hasErrors())
     		return new SkipableFieldValidator(this);
     	return this;
