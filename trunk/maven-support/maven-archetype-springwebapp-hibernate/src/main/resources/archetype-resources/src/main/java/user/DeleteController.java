@@ -42,6 +42,6 @@ public class DeleteController extends AbstractController implements UserConstant
             logger.info("User " + user.getUsername() + " session has been destroyed.");
         }
         
-		return new ModelAndView("member/delete", "user", user);
+		return new ModelAndView(USER_DELETE_VIEW, "user", user);
 	}
 }
