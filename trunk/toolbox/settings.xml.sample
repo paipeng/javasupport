@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                        http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 	
 	<!-- Server auth information. -->
 	<servers>
@@ -23,65 +23,65 @@
 		</server>
 	</servers>
 	
-	
-	<!-- Example of another internal archiva server setup with multiple proxy repo
 	<profiles>
 		<profile>
-			<id>archiva-repo-proxy-profile</id>
+			<id>faxintelligence.com</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+
 			<properties>
-				<archiva.server.url>http://bb:8082</archiva.server.url>
-			</properties>			
+				<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+				<archiva.dist.server.url>http://faxintelligence.com:8082</archiva.dist.server.url>
+			</properties>
 			<repositories>
-					<repository>
-							<id>proxycentral</id>
-							<name>central</name>
-							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
-							<releases>
-								<enabled>false</enabled>
-							</releases>
-							<snapshots>
-								<enabled>false</enabled>
-							</snapshots>
-					</repository>								
-					<repository>
-							<id>proxycentral-snapshots</id>
-							<name>snapshots</name>
-							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
-							<releases>
-								<enabled>false</enabled>
-							</releases>
-							<snapshots>
-								<enabled>true</enabled>
-							</snapshots>
-					</repository>
+				<repository>
+					<id>proxycentral</id>
+					<name>central</name>
+					<url>${archiva.server.url}/archiva/repository/proxycentral</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>proxycentral-snapshots</id>
+					<name>snapshots</name>
+					<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
 			</repositories>
 			<pluginRepositories>
-					<pluginRepository>
-							<id>proxycentral</id>
-							<url>${archiva.server.url}/archiva/repository/proxycentral</url>					
-							<releases>
-								<enabled>true</enabled>
-							</releases>
-							<snapshots>
-								<enabled>false</enabled>
-							</snapshots>
-					</pluginRepository>								
-					<pluginRepository>
-							<id>proxycentral-snapshots</id>
-							<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>					
-							<releases>
-								<enabled>false</enabled>
-							</releases>
-							<snapshots>
-								<enabled>true</enabled>
-							</snapshots>
-					</pluginRepository>
+				<pluginRepository>
+					<id>proxycentral</id>
+					<url>${archiva.server.url}/archiva/repository/proxycentral</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+				<pluginRepository>
+					<id>proxycentral-snapshots</id>
+					<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
 			</pluginRepositories>
 		</profile>
-	</profiles> -->
+	</profiles>
 	
 	<!-- Example of Manual override proxy or repo URL via Mirrors.
 	<mirrors>
