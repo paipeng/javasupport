@@ -49,16 +49,16 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	<bean id="profileUserController" class="${groupId}.user.ProfileController">
 		<property name="userDao" ref="userDao" />
 	</bean>
-	<bean id="createUserController" class="${groupId}.user.CreateUserController">
+	<bean id="createUserController" class="${groupId}.user.CreateController">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="editUserController" class="${groupId}.user.EditController">
 		<property name="userDao" ref="userDao" />
 	</bean>
-	<bean id="listUserController" class="${groupId}.user.EditController">
+	<bean id="listUserController" class="${groupId}.user.ListController">
 		<property name="userDao" ref="userDao" />
 	</bean>
-	<bean id="deleteUserController" class="${groupId}.user.EditController">
+	<bean id="deleteUserController" class="${groupId}.user.DeleteController">
 		<property name="userDao" ref="userDao" />
 	</bean>
 </beans>
