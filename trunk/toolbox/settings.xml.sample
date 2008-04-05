@@ -23,6 +23,21 @@
 		</server>
 	</servers>
 	
+	<!-- Proxy mirrors.-->
+	<mirrors>
+		<mirror>
+			<id>central</id>
+			<mirrorOf>central</mirrorOf>
+			<url>http://faxintelligence.com:8082/archiva/repository/internal</url>
+		</mirror>
+		<mirror>
+			<id>snapshots</id>
+			<mirrorOf>snapshots</mirrorOf>
+			<url>http://faxintelligence.com:8082/archiva/repository/snapshots</url>
+		</mirror>
+	</mirrors>
+	
+	<!-- Exmaple of Custom Profile.
 	<profiles>
 		<profile>
 			<id>faxintelligence.com</id>
@@ -81,14 +96,5 @@
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
-	</profiles>
-	
-	<!-- Example of Manual override proxy or repo URL via Mirrors.
-	<mirrors>
-		<mirror>
-			<id>central</id>
-			<mirrorOf>central</mirrorOf>
-			<url>http://hostname_within_your_lan:8082/archiva/repository/internal</url>
-		</mirror>
-	</mirrors>-->
+	</profiles> -->
 </settings>
