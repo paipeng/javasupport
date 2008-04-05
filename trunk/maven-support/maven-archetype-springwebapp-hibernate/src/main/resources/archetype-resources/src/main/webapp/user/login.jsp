@@ -10,5 +10,5 @@
         </table>
     </form:form>
     
-    <p>Not a member yet? <a href="${dollar}{pageContext.request.contextPath}/webapp/user/register">Register here.</a></p>
+    <p>Not a member yet? <a href="${dollar}{pageContext.request.contextPath}/webapp/user/create">Register here.</a></p>
 </div>

@@ -8,36 +8,57 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-	
-    <bean id="publicControllerUrlMappings2" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="mappings">
-            <util:map>				
-                <entry key="/user/login" value-ref="loginController" />
-                <entry key="/user/register" value-ref="registerUserController" />
-            </util:map>
-        </property>
-        <property name="interceptors">
-            <list>
-                <ref bean="openEntityManagerInViewInterceptor" />
-            </list>
-        </property>
-    </bean>
-    
-	<bean id="securedControllerUrlMappings2" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+
+	<bean id="daoPublicControllerUrlMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
-			<util:map>                
-                <entry key="/member/profile" value-ref="userProfileController" />
-                <entry key="/member/logout" value-ref="logoutController" />
-                <entry key="/member/edit" value-ref="editUserController" />
-                <entry key="/member/list" value-ref="editUserController" />
-                <entry key="/member/delete" value-ref="editUserController" />               
+			<util:map>
+				<entry key="/user/login" value-ref="loginUserController" />
+				<entry key="/user/create" value-ref="createUserController" />
 			</util:map>
-		</property>        
-        <property name="interceptors">
-            <list>
-                <ref bean="userLoggedInOnlyInterceptor" />
-                <ref bean="openEntityManagerInViewInterceptor" />
-            </list>
-        </property>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="openEntityManagerInViewInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="daoSecuredControllerUrlMappings"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<util:map>
+				<entry key="/user/profile" value-ref="profileUserController" />
+				<entry key="/user/logout" value-ref="logoutUserController" />
+				<entry key="/user/edit" value-ref="editUserController" />
+				<entry key="/user/list" value-ref="listUserController" />
+				<entry key="/user/delete" value-ref="deleteUserController" />
+			</util:map>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="securedUserInterceptor" />
+				<ref bean="openEntityManagerInViewInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="logoutUserController" class="${groupId}.user.LogoutController"></bean>
+	<bean id="loginUserController" class="${groupId}.user.LoginController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="profileUserController" class="${groupId}.user.ProfileController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="createUserController" class="${groupId}.user.CreateUserController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="editUserController" class="${groupId}.user.EditController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="listUserController" class="${groupId}.user.EditController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="deleteUserController" class="${groupId}.user.EditController">
+		<property name="userDao" ref="userDao" />
 	</bean>
 </beans>

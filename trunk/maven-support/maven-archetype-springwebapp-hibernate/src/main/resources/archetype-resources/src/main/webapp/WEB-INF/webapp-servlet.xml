@@ -39,22 +39,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
     
-    <bean id="securedUserInterceptor" class="${groupId}.user.MemberOnlyInterceptor">
-    </bean>
-    
-    <bean id="logoutController" class="${groupId}.user.LogoutController">
-    </bean>
-    <bean id="loginController" class="${groupId}.user.LoginController">
-        <property name="userDao" ref="userDao" />
-    </bean>
-    <bean id="userProfileController" class="${groupId}.user.ProfileController">
-        <property name="userDao" ref="userDao" />
-    </bean>
-    <bean id="registerUserController" class="${groupId}.user.RegisterController">
-        <property name="userDao" ref="userDao" />
-    </bean>
-    <bean id="editUserController" class="${groupId}.user.EditController">
-        <property name="userDao" ref="userDao" />
+    <bean id="securedUserInterceptor" class="${groupId}.user.SecuredUserInterceptor">
     </bean>
     
     <bean id="welcomeController" class="${groupId}.web.WelcomeController">
@@ -67,5 +52,5 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
     </bean>
         
-    <import resource="webapp-servlet-controller.xml"/>
+    <import resource="webapp-servlet-dao-controllers.xml"/>
 </beans>
