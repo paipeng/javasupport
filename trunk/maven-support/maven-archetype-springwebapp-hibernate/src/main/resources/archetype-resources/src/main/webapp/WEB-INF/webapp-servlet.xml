@@ -12,13 +12,11 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="suffix" value=".jsp"/>
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
     </bean>
-    <bean id="public" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <bean id="publicControllerUrlMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <util:map>
                 <entry key="/welcome" value-ref="welcomeController" />
                 <entry key="/help" value-ref="urlFilenameViewController" />
-                <entry key="/user/login" value-ref="loginController" />
-                <entry key="/user/register" value-ref="registerUserController" />
             </util:map>
         </property>
         <property name="interceptors">
@@ -27,26 +25,21 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             </list>
         </property>
     </bean>
-    <bean id="memberOnly" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <bean id="securedControllerUrlMappings" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <util:map>
                 <entry key="/systeminfo" value-ref="systemInfoController" />
-                <entry key="/member/profile" value-ref="userProfileController" />
-                <entry key="/member/logout" value-ref="logoutController" />
-                <entry key="/member/edit" value-ref="editUserController" />
-                <entry key="/member/list" value-ref="editUserController" />
-                <entry key="/member/delete" value-ref="editUserController" />
             </util:map>
         </property>        
         <property name="interceptors">
             <list>
-                <ref bean="memberOnlyInterceptor" />
+                <ref bean="securedUserInterceptor" />
                 <ref bean="openEntityManagerInViewInterceptor" />
             </list>
         </property>
     </bean>
     
-    <bean id="memberOnlyInterceptor" class="${groupId}.user.MemberOnlyInterceptor">
+    <bean id="securedUserInterceptor" class="${groupId}.user.MemberOnlyInterceptor">
     </bean>
     
     <bean id="logoutController" class="${groupId}.user.LogoutController">
