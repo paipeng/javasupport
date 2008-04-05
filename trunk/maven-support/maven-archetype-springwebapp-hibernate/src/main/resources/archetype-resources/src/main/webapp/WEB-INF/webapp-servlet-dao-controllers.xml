@@ -28,10 +28,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 		<property name="mappings">
 			<util:map>
 				<entry key="/user/logout" value-ref="logoutUserController" />
-				<entry key="/user/show" value-ref="showUserController" />
-				<entry key="/user/edit" value-ref="editUserController" />
-				<entry key="/user/list" value-ref="listUserController" />
-				<entry key="/user/delete" value-ref="deleteUserController" />
+				<entry key="/user/showProfile" value-ref="showProfileController" />
+				<entry key="/user/editProfile" value-ref="editProfileController" />
 			</util:map>
 		</property>
 		<property name="interceptors">
@@ -41,15 +39,39 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="daoAdminSecuredControllerUrlMappings"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<util:map>				
+				<entry key="/user/show" value-ref="showUserController" />
+				<entry key="/user/edit" value-ref="editUserController" />
+				<entry key="/user/list" value-ref="listUserController" />
+				<entry key="/user/delete" value-ref="deleteUserController" />
+			</util:map>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="adminSecuredUserInterceptor" />
+				<ref bean="openEntityManagerInViewInterceptor" />
+			</list>
+		</property>
+	</bean>
 
 	<bean id="logoutUserController" class="${groupId}.user.LogoutController"></bean>
 	<bean id="loginUserController" class="${groupId}.user.LoginController">
 		<property name="userDao" ref="userDao" />
 	</bean>
-	<bean id="showUserController" class="${groupId}.user.ShowController">
+	<bean id="showProfileController" class="${groupId}.user.ShowProfileController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="editProfileController" class="${groupId}.user.EditProfileController">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="createUserController" class="${groupId}.user.CreateController">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="showUserController" class="${groupId}.user.ShowController">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="editUserController" class="${groupId}.user.EditController">

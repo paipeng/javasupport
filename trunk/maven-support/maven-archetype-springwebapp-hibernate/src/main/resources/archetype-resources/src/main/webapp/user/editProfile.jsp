@@ -19,8 +19,8 @@
         </table>
     </form:form>
     
-	<p>
-	<a href="${dollar}{pageContext.request.contextPath}/webapp/user/list">Back to User Listing.</a>
+    <p>
+	<a href="${dollar}{pageContext.request.contextPath}/webapp/user/showProfile">Back to User Profile.</a>
 	</p>
 </div>
 

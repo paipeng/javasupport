@@ -10,6 +10,8 @@
     <source>src/main/java/user/CreateController.java</source>
     <source>src/main/java/user/LoginController.java</source>
     <source>src/main/java/user/LogoutController.java</source>
+    <source>src/main/java/user/EditProfileController.java</source>
+    <source>src/main/java/user/ShowProfileController.java</source>
     <source>src/main/java/user/SecuredUserInterceptor.java</source>
     <source>src/main/java/user/PasswordNotMatchException.java</source>
     <source>src/main/java/user/User.java</source>
@@ -41,12 +43,14 @@
     <resource>src/main/webapp/layout/header.jsp</resource>
     <resource>src/main/webapp/layout/footer.jsp</resource>
     <resource>src/main/webapp/user/create.jsp</resource>
-    <resource>src/main/webapp/user/show.jsp</resource>
     <resource>src/main/webapp/user/list.jsp</resource>
     <resource>src/main/webapp/user/delete.jsp</resource>
-    <resource>src/main/webapp/user/login.jsp</resource>
+    <resource>src/main/webapp/user/show.jsp</resource>
     <resource>src/main/webapp/user/edit.jsp</resource>
+    <resource>src/main/webapp/user/login.jsp</resource>
     <resource>src/main/webapp/user/logout.jsp</resource>
+    <resource>src/main/webapp/user/showProfile.jsp</resource>
+    <resource>src/main/webapp/user/editProfile.jsp</resource>
     <resource>conf/dev/logback.xml</resource>
     <resource>conf/dev/application.properties</resource>
     <resource>conf/prod/logback.xml</resource>
