@@ -27,8 +27,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<util:map>
-				<entry key="/user/profile" value-ref="profileUserController" />
 				<entry key="/user/logout" value-ref="logoutUserController" />
+				<entry key="/user/show" value-ref="profileUserController" />
 				<entry key="/user/edit" value-ref="editUserController" />
 				<entry key="/user/list" value-ref="listUserController" />
 				<entry key="/user/delete" value-ref="deleteUserController" />
@@ -46,7 +46,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	<bean id="loginUserController" class="${groupId}.user.LoginController">
 		<property name="userDao" ref="userDao" />
 	</bean>
-	<bean id="profileUserController" class="${groupId}.user.ProfileController">
+	<bean id="showUserController" class="${groupId}.user.ShowController">
 		<property name="userDao" ref="userDao" />
 	</bean>
 	<bean id="createUserController" class="${groupId}.user.CreateController">
