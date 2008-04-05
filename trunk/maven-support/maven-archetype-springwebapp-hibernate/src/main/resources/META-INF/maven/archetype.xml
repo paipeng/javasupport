@@ -8,7 +8,7 @@
     <source>src/main/java/user/EditController.java</source>
     <source>src/main/java/user/LoginController.java</source>
     <source>src/main/java/user/LogoutController.java</source>
-    <source>src/main/java/user/SecureUserInterceptor.java</source>
+    <source>src/main/java/user/SecuredUserInterceptor.java</source>
     <source>src/main/java/user/PasswordNotMatchException.java</source>
     <source>src/main/java/user/ProfileController.java</source>
     <source>src/main/java/user/CreateController.java</source>
