@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  *
  * @author thebugslayer
  */
-public class ProfileController extends AbstractController implements UserConstants {
+public class ShowController extends AbstractController implements UserConstants {
     protected UserDao userDao;
     private String userSessionKey = USER_SESSION_KEY;    
     private String profileView = USER_HOME_VIEW;

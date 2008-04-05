@@ -18,7 +18,7 @@
 		<tr>
 			<td>${dollar}{user.id}</td>
 			<td>
-			<a href="${dollar}{pageContext.request.contextPath}/webapp/user/profile?id=${dollar}{user.id}">Show</a> |
+			<a href="${dollar}{pageContext.request.contextPath}/webapp/user/show?id=${dollar}{user.id}">Show</a> |
 			<a href="${dollar}{pageContext.request.contextPath}/webapp/user/edit?id=${dollar}{user.id}">Edit</a> |
 			<a href="${dollar}{pageContext.request.contextPath}/webapp/user/delete?id=${dollar}{user.id}">Delete</a>
 			</td>
