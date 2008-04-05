@@ -23,9 +23,9 @@
     <resource>src/main/resources/META-INF/persistence.xml</resource>
     <resource>src/main/webapp/WEB-INF/web.xml</resource>
     <resource>src/main/webapp/WEB-INF/applicationContext.xml</resource>
-    <resource>src/main/webapp/WEB-INF/applicationContext-Dao.xml</resource>
+    <resource>src/main/webapp/WEB-INF/applicationContext-dao.xml</resource>
     <resource>src/main/webapp/WEB-INF/webapp-servlet.xml</resource>
-    <resource>src/main/webapp/WEB-INF/webapp-servlet-controller.xml</resource>
+    <resource>src/main/webapp/WEB-INF/webapp-servlet-dao-controller.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh-decorators.xml</resource>
     <resource>src/main/webapp/index.jsp</resource>
@@ -42,11 +42,11 @@
     <resource>src/main/webapp/layout/footer.jsp</resource>
     <resource>src/main/webapp/user/register.jsp</resource>
     <resource>src/main/webapp/user/login.jsp</resource>
-    <resource>src/main/webapp/member/edit.jsp</resource>
-    <resource>src/main/webapp/member/logout.jsp</resource>
-    <resource>src/main/webapp/member/profile.jsp</resource>
-    <resource>src/main/webapp/member/list.jsp</resource>
-    <resource>src/main/webapp/member/delete.jsp</resource>
+    <resource>src/main/webapp/user/edit.jsp</resource>
+    <resource>src/main/webapp/user/logout.jsp</resource>
+    <resource>src/main/webapp/user/profile.jsp</resource>
+    <resource>src/main/webapp/user/list.jsp</resource>
+    <resource>src/main/webapp/user/delete.jsp</resource>
     <resource>conf/dev/logback.xml</resource>
     <resource>conf/dev/application.properties</resource>
     <resource>conf/prod/logback.xml</resource>
