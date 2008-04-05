@@ -17,7 +17,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author thebugslayer
  *
  */
-public class MemberOnlyInterceptor extends HandlerInterceptorAdapter implements UserConstants {
+public class SecuredUserInterceptor extends HandlerInterceptorAdapter implements UserConstants {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 	protected String failedView = "redirect:/webapp/"+USER_LOGIN_VIEW;
 	protected String userSessionKey = USER_SESSION_KEY;

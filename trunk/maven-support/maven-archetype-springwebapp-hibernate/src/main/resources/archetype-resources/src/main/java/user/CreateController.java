@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  *
  * @author thebugslayer
  */
-public class RegisterController extends SimpleFormController implements UserConstants {
+public class CreateController extends SimpleFormController implements UserConstants {
 
     protected UserDao userDao;
     protected String userSessionKey = USER_SESSION_KEY;
@@ -29,7 +29,7 @@ public class RegisterController extends SimpleFormController implements UserCons
         this.userDao = userDao;
     }
 
-    public RegisterController() {
+    public CreateController() {
         setCommandClass(User.class);
         setCommandName("user");
 

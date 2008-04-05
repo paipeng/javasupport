@@ -86,7 +86,7 @@ class GenerateSpringMvc {
 		def outputFilename = "src/main/webapp/WEB-INF/webapp-servlet-controller.xml"
 		def beansXml = new StringWriter()
 		def operations = [ 'create', 'delete', 'list', 'edit', 'show']
-		def urlControllerMappingKey = 'securedControllerUrlMappings2'
+		def urlControllerMappingKey = 'daoSecuredControllerUrlMappings'
 		def urlMappingXmlPrefix = """
 		<bean id="${urlControllerMappingKey}" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 			<property name="mappings">

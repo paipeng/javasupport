@@ -8,10 +8,10 @@
     <source>src/main/java/user/EditController.java</source>
     <source>src/main/java/user/LoginController.java</source>
     <source>src/main/java/user/LogoutController.java</source>
-    <source>src/main/java/user/MemberOnlyInterceptor.java</source>
+    <source>src/main/java/user/SecureUserInterceptor.java</source>
     <source>src/main/java/user/PasswordNotMatchException.java</source>
     <source>src/main/java/user/ProfileController.java</source>
-    <source>src/main/java/user/RegisterController.java</source>
+    <source>src/main/java/user/CreateController.java</source>
     <source>src/main/java/user/User.java</source>
     <source>src/main/java/user/UserConstants.java</source>
     <source>src/main/java/user/UserDao.java</source>
@@ -25,7 +25,7 @@
     <resource>src/main/webapp/WEB-INF/applicationContext.xml</resource>
     <resource>src/main/webapp/WEB-INF/applicationContext-dao.xml</resource>
     <resource>src/main/webapp/WEB-INF/webapp-servlet.xml</resource>
-    <resource>src/main/webapp/WEB-INF/webapp-servlet-dao-controller.xml</resource>
+    <resource>src/main/webapp/WEB-INF/webapp-servlet-dao-controllers.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh-decorators.xml</resource>
     <resource>src/main/webapp/index.jsp</resource>
@@ -40,7 +40,7 @@
     <resource>src/main/webapp/layout/default.jsp</resource>
     <resource>src/main/webapp/layout/header.jsp</resource>
     <resource>src/main/webapp/layout/footer.jsp</resource>
-    <resource>src/main/webapp/user/register.jsp</resource>
+    <resource>src/main/webapp/user/create.jsp</resource>
     <resource>src/main/webapp/user/login.jsp</resource>
     <resource>src/main/webapp/user/edit.jsp</resource>
     <resource>src/main/webapp/user/logout.jsp</resource>
