@@ -1,4 +1,5 @@
-#set($dollar = '$')<?xml version="1.0"?>
+#set($dollar = '$')
+<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -7,80 +8,25 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>${artifactId}</name>
-
 	<properties>
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
-	<profiles>
-		<profile>
-			<id>archiva-repo-proxy-profile</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>internal</id>
-					<name>internal</name>
-					<url>${dollar}{archiva.server.url}/archiva/repository/internal</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>snapshots</id>
-					<name>snapshots</name>
-					<url>${dollar}{archiva.server.url}/archiva/repository/snapshots</url>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-			<pluginRepositories>
-				<pluginRepository>
-					<id>internal</id>
-					<url>${dollar}{archiva.server.url}/archiva/repository/internal</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</pluginRepository>
-				<pluginRepository>
-					<id>snapshots</id>
-					<url>${dollar}{archiva.server.url}/archiva/repository/snapshots</url>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</pluginRepository>
-			</pluginRepositories>
-			<distributionManagement>
-				<repository>
-					<id>internal</id>
-					<name>internal</name>
-					<url>${dollar}{archiva.server.url}/archiva/repository/internal</url>
-				</repository>
-				<snapshotRepository>
-					<id>snapshots</id>
-					<name>snapshots</name>
-					<url>${dollar}{archiva.server.url}/archiva/repository/snapshots</url>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
-	</profiles>
 	<scm>
 		<connection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</connection>
 		<developerConnection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</developerConnection>
 	</scm>
+	<distributionManagement>
+		<repository>
+			<id>internal</id>
+			<name>internal</name>
+			<url>${dollar}{archiva.server.url}/archiva/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>${dollar}{archiva.server.url}/archiva/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
