@@ -42,6 +42,15 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <bean id="securedUserInterceptor" class="${groupId}.user.SecuredUserInterceptor">
     </bean>
     
+    <bean id="adminSecuredUserInterceptor" class="${groupId}.user.SecuredUserInterceptor">       
+        <property name="allowOnlyUsers">
+            <set>
+                <value>root</value>
+                <value>admin</value>
+            </set>
+        </property>
+    </bean>
+    
     <bean id="welcomeController" class="${groupId}.web.WelcomeController">
     </bean>
     <bean id="systemInfoController" class="javasupport.spring.webmvc.SystemInfoController">

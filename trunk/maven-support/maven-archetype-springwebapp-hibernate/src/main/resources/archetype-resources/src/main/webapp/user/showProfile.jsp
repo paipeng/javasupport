@@ -1,5 +1,7 @@
 <jsp:directive.include file="../taglibs.jsp"/>
 <div class="content">
+    <p>Want to logout? <a href="${dollar}{pageContext.request.contextPath}/webapp/user/logout">Click here.</a></p>
+    
     <h1>Your profile information</h1>  
     <table>
         <tr><td>Username</td><td>${dollar}{user.username}</td></tr>
@@ -14,8 +16,5 @@
         <tr><td>State</td><td>${dollar}{user.state}</td></tr>
         <tr><td>Zipcode</td><td>${dollar}{user.zipcode}</td></tr>
     </table>
-    
-	<p>
-	<a href="${dollar}{pageContext.request.contextPath}/webapp/user/list">Back to User Listing.</a>
-	</p>
+    <p>Want to update? <a href="${dollar}{pageContext.request.contextPath}/webapp/user/editProfile">Modify it here.</a></p>
 </div>

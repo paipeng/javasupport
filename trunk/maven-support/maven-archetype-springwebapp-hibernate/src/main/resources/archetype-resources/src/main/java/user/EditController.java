@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndViewDefiningException;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
- *
+ * Edit any user with id param. if not found assumed logged in.
  * @author thebugslayer
  */
 public class EditController extends SimpleFormController implements UserConstants {
@@ -31,7 +31,7 @@ public class EditController extends SimpleFormController implements UserConstant
         setCommandClass(User.class);
         setCommandName("user");
 
-        setSuccessView(USER_HOME_VIEW);
+        setSuccessView(USER_LIST_VIEW);
         setFormView(USER_EDIT_VIEW);
     }
 

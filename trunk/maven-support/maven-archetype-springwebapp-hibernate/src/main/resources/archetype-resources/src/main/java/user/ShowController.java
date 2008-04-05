@@ -7,13 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Show any user with id param. if not found assumed logged in.
  * @author thebugslayer
  */
 public class ShowController extends AbstractController implements UserConstants {
     protected UserDao userDao;
-    private String userSessionKey = USER_SESSION_KEY;    
-    private String profileView = USER_HOME_VIEW;
+    protected String userSessionKey = USER_SESSION_KEY;    
+    protected String view = USER_SHOW_VIEW;
     
     public void setUserSessionKey(String userSessionKey) {
         this.userSessionKey = userSessionKey;
@@ -34,6 +34,6 @@ public class ShowController extends AbstractController implements UserConstants 
             user = userDao.get(loginUser.getId());
         }
         
-        return new ModelAndView(profileView, "user", user);
+        return new ModelAndView(view, "user", user);
     }
 }

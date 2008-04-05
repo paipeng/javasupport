@@ -34,7 +34,7 @@ public class CreateController extends SimpleFormController implements UserConsta
         setCommandName("user");
 
         setSuccessView("redirect:/webapp/"+USER_LOGIN_VIEW);
-        setFormView(USER_REGISTER_VIEW);
+        setFormView(USER_CREATE_VIEW);
     }
 
     
