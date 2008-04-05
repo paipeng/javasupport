@@ -27,7 +27,7 @@ public class DeleteController extends AbstractController implements UserConstant
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
 		String confirm = ServletRequestHelper.getOptionalParameter(request, "confirm", "no");
 		if("no".equals(confirm)){
-			ModelAndView mv = new ModelAndView("member/delete");
+			ModelAndView mv = new ModelAndView(USER_DELETE_VIEW);
 			mv.addObject("confirm", confirm);
 			mv.addObject("id", id);
 			return mv;
