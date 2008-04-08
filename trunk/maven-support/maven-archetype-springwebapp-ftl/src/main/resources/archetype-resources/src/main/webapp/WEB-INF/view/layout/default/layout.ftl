@@ -3,8 +3,7 @@
 <html>
     <head>
         <title><@decorator.title default="${artifactId}"/></title>
-        <link href="${dollar}{contextPath}/css/reset.css" rel="stylesheet" type="text/css">
-        <link href="${dollar}{contextPath}/css/default.css" rel="stylesheet" type="text/css">
+        <link href="${dollar}{contextPath}/theme/default/css/screen.css" rel="stylesheet" type="text/css" media="screen">
         <@decorator.head />
     </head>
     <body>
