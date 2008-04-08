@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="basic">
+    <fileSets>
+        <fileSet filtered="true" packaged="true">
+            <directory>src/main/scala</directory>
+            <includes>
+                <include>**/*.scala</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true">
+            <directory>src/test/scala</directory>
+            <includes>
+                <include>**/*.scala</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</archetype-descriptor>

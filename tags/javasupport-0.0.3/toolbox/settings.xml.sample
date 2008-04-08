@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+	
+	<!-- Server auth information. -->
+	<servers>
+		<!-- archiva server -->
+		<server>
+			<id>internal</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+		<server>
+			<id>snapshots</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+		
+		<!-- subversion server -->
+		<server>
+			<id>javasupport.googlecode.com</id>
+			<username>thebugslayer</username>
+			<password>secretpass</password>
+		</server>
+	</servers>
+	
+	<!-- Proxy mirrors.-->
+	<mirrors>
+		<mirror>
+			<id>central</id>
+			<mirrorOf>central</mirrorOf>
+			<url>http://faxintelligence.com:8082/archiva/repository/internal</url>
+		</mirror>
+		<mirror>
+			<id>snapshots</id>
+			<mirrorOf>snapshots</mirrorOf>
+			<url>http://faxintelligence.com:8082/archiva/repository/snapshots</url>
+		</mirror>
+	</mirrors>
+	
+	<!-- Exmaple of Custom Profile.
+	<profiles>
+		<profile>
+			<id>faxintelligence.com</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+				<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+				<archiva.dist.server.url>http://faxintelligence.com:8082</archiva.dist.server.url>
+			</properties>
+			<repositories>
+				<repository>
+					<id>proxycentral</id>
+					<name>central</name>
+					<url>${archiva.server.url}/archiva/repository/proxycentral</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>proxycentral-snapshots</id>
+					<name>snapshots</name>
+					<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>proxycentral</id>
+					<url>${archiva.server.url}/archiva/repository/proxycentral</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>false</enabled>
+					</snapshots>
+				</pluginRepository>
+				<pluginRepository>
+					<id>proxycentral-snapshots</id>
+					<url>${archiva.server.url}/archiva/repository/proxycentral-snapshots</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles> -->
+</settings>
