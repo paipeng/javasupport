@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<decorators defaultdir="/WEB-INF/view/layout">
-    <decorator name="default" page="default.ftl">
+<decorators defaultdir="/WEB-INF/view/layout/default">
+    <decorator name="default" page="layout.ftl">
         <pattern>/*</pattern>
     </decorator>
 </decorators>

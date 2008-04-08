@@ -9,6 +9,7 @@ cf1519 - light shade red
 8B7E66 - light gray bg
 F5F5F5 - egg white fg
 */
+@import url(reset.css);
 @import url(menu.css);
 
 body {

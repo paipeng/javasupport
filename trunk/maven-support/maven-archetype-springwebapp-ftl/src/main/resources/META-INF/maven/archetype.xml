@@ -25,12 +25,12 @@
     <resource>src/main/webapp/WEB-INF/view/systeminfo.ftl</resource>
     <resource>src/main/webapp/WEB-INF/view/help.ftl</resource>
     <resource>src/main/webapp/WEB-INF/view/error.ftl</resource>
-    <resource>src/main/webapp/css/reset.css</resource>
-    <resource>src/main/webapp/css/default.css</resource>
-    <resource>src/main/webapp/css/menu.css</resource>
-    <resource>src/main/webapp/WEB-INF/view/layout/default.ftl</resource>
-    <resource>src/main/webapp/WEB-INF/view/layout/header.ftl</resource>
-    <resource>src/main/webapp/WEB-INF/view/layout/footer.ftl</resource>
+    <resource>src/main/webapp/theme/default/css/reset.css</resource>
+    <resource>src/main/webapp/theme/default/css/screen.css</resource>
+    <resource>src/main/webapp/theme/default/css/menu.css</resource>
+    <resource>src/main/webapp/WEB-INF/view/layout/default/layout.ftl</resource>
+    <resource>src/main/webapp/WEB-INF/view/layout/default/header.ftl</resource>
+    <resource>src/main/webapp/WEB-INF/view/layout/default/footer.ftl</resource>
     <resource>conf/dev/logback.xml</resource>
     <resource>conf/dev/application.properties</resource>
     <resource>conf/prod/logback.xml</resource>
