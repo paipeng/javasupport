@@ -1,0 +1,9 @@
+#summary A command line utilities toolboxes
+
+= Introduction =
+
+You should able to run many utilities with a wrapper scripts like this:
+
+{{{
+$ toolbox/bin/run.sh deng.toolbox.SearchJars MyClass /path/to/some/jarfiles.
+}}}
