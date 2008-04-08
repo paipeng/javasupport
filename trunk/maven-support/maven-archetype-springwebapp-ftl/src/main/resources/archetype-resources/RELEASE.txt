@@ -1,0 +1,12 @@
+=============
+RELEASE NOTES
+=============
+
+${artifactId}-${version}
+  * [Added] Mavenize project layout.
+
+=========  
+TODO LIST
+=========
+  * [BUG] Example here and there.
+  * [REQUEST] Add this and that.

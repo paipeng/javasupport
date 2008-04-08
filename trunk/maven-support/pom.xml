@@ -16,6 +16,7 @@
         <module>maven-archetype-webapp</module>
         <module>maven-archetype-springwebapp</module>
         <module>maven-archetype-springwebapp-hibernate</module>
+        <module>maven-archetype-springwebapp-ftl</module>
         <module>maven-archetype-scalaapp</module>
         <module>maven-archetype-scalawebapp</module>
     </modules>		
