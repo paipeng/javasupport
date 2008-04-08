@@ -2,13 +2,13 @@
     <parent>
         <groupId>javasupport</groupId>
         <artifactId>javasupport</artifactId>
-        <version>0.0.3</version>
+        <version>0.0.4-SNAPSHOT</version>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport.maven</groupId>
     <artifactId>maven-support</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>maven-support-pom</name>
     <modules>
