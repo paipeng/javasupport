@@ -1,0 +1,16 @@
+RELEASE NOTES
+=============
+
+java-support-0.0.2 (March 13 2008)
+  * [Fixed] spring-support's FieldValidator class
+  * [Updated] many minor changes for springwebapp* templates.
+	
+java-support-0.0.1 (March 10 2008)
+  * [Added] Mavenize project layout.
+  * [Added] jdk-support.
+  * [Added] spring-support.
+  * [Added] maven-archetype-javaapp.
+  * [Added] maven-archetype-webapp.
+  * [Added] maven-archetype-springwebapp.
+  * [Added] maven-archetype-springwebapp-hibernate.
+  * [Added] maven-archetype-scalaapp.
