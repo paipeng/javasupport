@@ -31,7 +31,7 @@ public class LoginController extends SimpleFormController implements UserConstan
         setCommandClass(User.class);
         setCommandName("user");
 
-        setSuccessView("redirect:/webapp/"+USER_HOME_VIEW);
+        setSuccessView("redirect:/webapp/"+USER_SHOW_PROFILE_VIEW);
         setFormView(USER_LOGIN_VIEW);
     }
 
