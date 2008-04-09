@@ -7,6 +7,7 @@ import java.io.{File, FileInputStream, FileOutputStream, BufferedReader, FileRea
 import java.util.zip.{ZipOutputStream, ZipInputStream, ZipEntry}
 import scala.io.Source
 import java.net.URI
+import RichStream.{MB, copyStream}
 
 /**
  * A class that handle dir and it's sub dirs and files content.
@@ -75,7 +76,8 @@ class DirFile(parent:File, filename:String) extends File(parent, filename) {
 /**
  * A class that handle binary content.
  */
-class BinaryFile(parent:File, filename:String) extends File(parent, filename) with IO { 
+class BinaryFile(parent:File, filename:String) extends File(parent, filename){
+  
   def this(filename:String)={
     this(null, filename)
   }
