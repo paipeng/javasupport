@@ -13,7 +13,7 @@ object Grep extends deng.toolbox.lang.CliApplication{
     }
     
     val debug = opts.getOrElse("debug", "false").toBoolean
-    val List(search, files@_*) = args
+    val (search::files) = args
 
     for(fn <- files){
       def grep(file: java.io.File){

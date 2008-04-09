@@ -1,7 +1,7 @@
 package deng.toolbox.io;
 
 import java.io.{InputStream, OutputStream}
-trait IO {
+object RichStream {
   val KB = 1024
   val MB = 1048576
   
@@ -17,3 +17,4 @@ trait IO {
 		}finally{ ins.close }
   }
 }
+

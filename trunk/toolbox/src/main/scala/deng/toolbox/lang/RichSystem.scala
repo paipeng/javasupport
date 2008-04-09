@@ -2,7 +2,8 @@ package deng.toolbox.lang;
 
 import java.lang.{ProcessBuilder, Process}
 import java.io.{ByteArrayOutputStream}
-object RichSystem extends deng.toolbox.io.IO{
+object RichSystem {
+  import deng.toolbox.io.RichStream.copyStream
   def exec(args :String*) :String ={
     //println("Exec " + args.toList)
     val pb = new ProcessBuilder(args.toArray)
