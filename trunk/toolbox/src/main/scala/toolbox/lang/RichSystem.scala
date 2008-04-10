@@ -3,7 +3,7 @@ package toolbox.lang;
 import java.lang.{ProcessBuilder, Process}
 import java.io.{ByteArrayOutputStream}
 object RichSystem {
-  import deng.toolbox.io.RichStream.copyStream
+  import toolbox.io.RichStream.copyStream
   def exec(args :String*) :String ={
     //println("Exec " + args.toList)
     val pb = new ProcessBuilder(args.toArray)

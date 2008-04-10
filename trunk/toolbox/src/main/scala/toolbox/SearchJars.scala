@@ -1,6 +1,6 @@
 package toolbox
 
-object SearchJars extends deng.toolbox.lang.CliApplication{
+object SearchJars extends toolbox.lang.CliApplication{
   def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
     

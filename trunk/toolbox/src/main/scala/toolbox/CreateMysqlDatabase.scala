@@ -3,7 +3,7 @@ package toolbox
 /**
  * Create new mysql db with user and perssions.
  */
-object CreateMysqlDatabase extends deng.toolbox.lang.CliApplication {
+object CreateMysqlDatabase extends toolbox.lang.CliApplication {
   def main(argv: Array[String]) = {
     val (args, opts) = parseOptions(argv)
   
@@ -31,7 +31,7 @@ object CreateMysqlDatabase extends deng.toolbox.lang.CliApplication {
     if(opts.contains("dryrun")){    
       stmts.foreach(ln=>println(ln+";"))
     }else{
-      import deng.toolbox.db.{MysqlVendor}
+      import toolbox.db.{MysqlVendor}
       val conn = new MysqlVendor(dbUser,dbPass, "jdbc:mysql://localhost/mysql").getConnection
       val stmt = conn.createStatement
       
