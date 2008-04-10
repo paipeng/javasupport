@@ -1,4 +1,4 @@
-package deng.toolbox.jcl
+package toolbox.jcl
 
 /** Create java HashMap object in Scala syntax. */
 object JMap{

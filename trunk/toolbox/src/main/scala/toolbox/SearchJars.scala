@@ -1,4 +1,4 @@
-package deng.toolbox
+package toolbox
 
 object SearchJars extends deng.toolbox.lang.CliApplication{
   def main(argv: Array[String]):Unit = {    

@@ -1,4 +1,4 @@
-package deng.toolbox
+package toolbox
 
 /**
  * Create new mysql db with user and perssions.

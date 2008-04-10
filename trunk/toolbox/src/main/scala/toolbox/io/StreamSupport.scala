@@ -1,4 +1,4 @@
-package deng.toolbox.io;
+package toolbox.io;
 
 import java.io.{InputStream, OutputStream}
 object RichStream {

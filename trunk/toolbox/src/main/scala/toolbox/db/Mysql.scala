@@ -1,4 +1,4 @@
-package deng.toolbox.db
+package toolbox.db
 
 import java.sql.{Connection, Statement, PreparedStatement, ResultSet}
 class MysqlVendor(var user:String, var pass:String, var url:String) extends scala.dbc.Vendor {

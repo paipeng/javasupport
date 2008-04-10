@@ -1,4 +1,4 @@
-package deng.toolbox
+package toolbox
 
 object Grep extends deng.toolbox.lang.CliApplication{
   def main(argv: Array[String]):Unit = {    

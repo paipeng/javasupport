@@ -1,4 +1,4 @@
-package deng.toolbox
+package toolbox
 
 /**
  * Main application entry point.
