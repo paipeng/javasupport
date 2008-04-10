@@ -23,7 +23,7 @@
 		</server>
 	</servers>
 	
-	<!-- Proxy mirrors.-->
+	<!-- Proxy mirrors -->
 	<mirrors>
 		<mirror>
 			<id>central</id>
@@ -37,7 +37,7 @@
 		</mirror>
 	</mirrors>
 	
-	<!-- Exmaple of Custom Profile.
+	<!-- Exmaple of Custom Profile with Multiple Internal Repositories
 	<profiles>
 		<profile>
 			<id>faxintelligence.com</id>
