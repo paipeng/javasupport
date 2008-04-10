@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 
 /** List and browse Controller for ${className}. */
 public class ListController extends AbstractController {
-	private ${className}Dao ${beanName}Dao;
+	protected ${className}Dao ${beanName}Dao;
 
 	public void set${className}Dao(${className}Dao that) {
 		this.${beanName}Dao = that;

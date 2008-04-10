@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 
 /** Delete Controller for ${className}. */
 public class DeleteController extends AbstractController {
-	private ${className}Dao ${beanName}Dao;
+	protected ${className}Dao ${beanName}Dao;
 
 	public void set${className}Dao(${className}Dao that) {
 		this.${beanName}Dao = that;
