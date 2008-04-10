@@ -21,4 +21,6 @@ Example:
 {{{
 $ cd into your maven project
 $ toolbox/bin/generate-springmvc.sh scaffold com.mycompany.demo.user.User username, password
+
+$ toolbox/bin/generate-springmvc-auth.sh com.mycompany.demo
 }}}
