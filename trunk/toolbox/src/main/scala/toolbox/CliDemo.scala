@@ -1,6 +1,6 @@
 package toolbox
 
-object CliDemo extends deng.toolbox.lang.CliApplication {
+object CliDemo extends toolbox.lang.CliApplication {
   def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
     

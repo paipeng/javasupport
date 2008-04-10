@@ -1,6 +1,6 @@
 package toolbox
 
-object Grep extends deng.toolbox.lang.CliApplication{
+object Grep extends toolbox.lang.CliApplication{
   def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
     

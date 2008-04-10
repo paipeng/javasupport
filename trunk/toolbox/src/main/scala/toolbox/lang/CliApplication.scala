@@ -6,7 +6,7 @@ package toolbox.lang
  *
  * Example:
  * <pre>
- * object Demo extends deng.toolbox.lang.CliApplication {
+ * object Demo extends toolbox.lang.CliApplication {
  *   def main(argv: Array[String]):Unit = {    
  *     val (args, opts) = parseOptions(argv)
  *     if(opts.contains("help") || opts.contains("h")){

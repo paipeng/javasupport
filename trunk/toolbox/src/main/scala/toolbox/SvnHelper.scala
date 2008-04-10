@@ -1,6 +1,6 @@
 package toolbox
 
-object SvnHelper extends deng.toolbox.lang.CliApplication {
+object SvnHelper extends toolbox.lang.CliApplication {
   def main(argv: Array[String]): Unit = {    
     val (args, opts) = parseOptions(argv)
     
@@ -17,7 +17,7 @@ object SvnHelper extends deng.toolbox.lang.CliApplication {
   }
 	
 	def removePendingFiles(wd: String): Unit = {
-    import deng.toolbox.lang.RichSystem.exec
+    import toolbox.lang.RichSystem.exec
 		val res = exec("svn", "st", wd);
 		for(ln <- res.split("\n")){
 			val files = ln.split("\\s+");
