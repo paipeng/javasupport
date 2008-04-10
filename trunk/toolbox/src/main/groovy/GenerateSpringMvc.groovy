@@ -7,11 +7,11 @@ class GenerateSpringMvc {
 		'model' :
 			['javaBean' : 'spring/JavaBeanModel.java'],
 		'view' : 
-			['create' : 'spring/create.jsp',
-			'edit' : 'spring/edit.jsp',
-			'list' : 'spring/list.jsp',
-			'show' : 'spring/show.jsp',
-			'delete' : 'spring/delete.jsp'],
+			['create' : 'spring/create.ftl',
+			'edit' : 'spring/edit.ftl',
+			'list' : 'spring/list.ftl',
+			'show' : 'spring/show.ftl',
+			'delete' : 'spring/delete.ftl'],
 		'controller' : 
 			['create' : 'spring/CreateController.java',
 			'edit' : 'spring/EditController.java',
@@ -50,27 +50,27 @@ class GenerateSpringMvc {
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "create"){
 			createFromTemplate("src/main/java/${data.packagePath}/CreateController.java", templates.controller.create)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/create.jsp", templates.view.create)
+			createFromTemplate("src/main/webapp/WEB-INF/view/${data.classNamePath}/create.ftl", templates.view.create)
 		}
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "edit"){
 			createFromTemplate("src/main/java/${data.packagePath}/EditController.java", templates.controller.edit)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/edit.jsp", templates.view.edit)
+			createFromTemplate("src/main/webapp/WEB-INF/view/${data.classNamePath}/edit.ftl", templates.view.edit)
 		}
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "delete"){
 			createFromTemplate("src/main/java/${data.packagePath}/DeleteController.java", templates.controller.delete)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/delete.jsp", templates.view.delete)
+			createFromTemplate("src/main/webapp/WEB-INF/view/${data.classNamePath}/delete.ftl", templates.view.delete)
 		}
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "list"){
 			createFromTemplate("src/main/java/${data.packagePath}/ListController.java", templates.controller.list)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/list.jsp", templates.view.list)
+			createFromTemplate("src/main/webapp/WEB-INF/view/${data.classNamePath}/list.ftl", templates.view.list)
 		}
 		
 		if(data.scaffoldType == "scaffold" || data.scaffoldType == "show"){
 			createFromTemplate("src/main/java/${data.packagePath}/ShowController.java", templates.controller.show)
-			createFromTemplate("src/main/webapp/${data.classNamePath}/show.jsp", templates.view.show)
+			createFromTemplate("src/main/webapp/WEB-INF/view/${data.classNamePath}/show.ftl", templates.view.show)
 		}
 		
 		if(data.scaffoldType == "scaffold"){
@@ -195,8 +195,8 @@ class GenerateSpringMvc {
 	def createFromTemplate(output, template){
 		template = templatesPath+"/"+template //prefix template path
 		println("Creating " + output + " from " + template)
-		def f = this.getClass().getResource(template).getFile()
-		def templateRet = templateEngine.createTemplate(f).make(data.properties)
+		def url = this.getClass().getResource(template)
+		def templateRet = templateEngine.createTemplate(url).make(data.properties)
 		new File(output).write(templateRet.toString())
 	}
 	
@@ -270,13 +270,15 @@ class GenerateSpringMvc {
 		//if(!new File("pom.xml").exists())
 		//  throw new Exception("You are not in a Maven base directory.")
 		
+		//model and controller paths
 		if(!new File("src/main/java/${data.packagePath}").exists()){
 			new File("src/main/java/${data.packagePath}").mkdirs()
 		  //throw new Exception("Java source dir doesn't exists. Run mkdir -p src/main/java/${data.packagePath}")
 		}
 		
-		if(!new File("src/main/webapp/${data.classNamePath}").exists()){
-			new File("src/main/webapp/${data.classNamePath}").mkdirs()
+		//view paths
+		if(!new File("src/main/webapp/WEB-INF/view/${data.classNamePath}").exists()){
+			new File("src/main/webapp/WEB-INF/view/${data.classNamePath}").mkdirs()
 		  //throw new Exception("Webapp view dir doesn't exists. Run mkdir -p src/main/webapp/${data.classNamePath}")
 		}			
 	}

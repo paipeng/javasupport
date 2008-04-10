@@ -22,14 +22,16 @@ public class DeleteController extends AbstractController {
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int id = ServletRequestHelper.getRequiredIntParameter(request, "id");
 		String confirm = ServletRequestHelper.getOptionalParameter(request, "confirm", "no");
-		if("no".equals(confirm)){
-			ModelAndView mv = new ModelAndView("${classNamePath}/delete");
-			mv.addObject("confirm", confirm);
-			mv.addObject("id", id);
-			return mv;
+		
+		ModelAndView mv = new ModelAndView("${classNamePath}/delete");
+		mv.addObject("confirm", confirm);
+		mv.addObject("id", id);
+		
+		if("yes".equals(confirm)){
+			${className} ${beanName} = ${beanName}Dao.delete(id);	
+			mv.addObject("${beanName}", ${beanName});
 		}
 		
-		${className} ${beanName} = ${beanName}Dao.delete(id);		
-		return new ModelAndView("${classNamePath}/delete", "${beanName}", ${beanName});
+		return mv;
 	}
 }

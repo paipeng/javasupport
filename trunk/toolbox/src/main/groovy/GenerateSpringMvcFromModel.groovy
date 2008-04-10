@@ -8,8 +8,6 @@ class GenerateSpringMvcFromModel extends GenerateSpringMvc {
 		main.data.scaffoldType = args[0]
 		main.data.className = args[1]
 		main.data.newPackageName = args[2]
-		main.data.scriptName = System.properties['script.name']
-		//main.data.scriptName = System.properties['user.home'] + "/projects/java/javasupport/template-generator/GenerateSpringMvc.groovy"
 		
 		//auto reflect all fields from model bean
 		def modelClass = Class.forName(main.data.className)
