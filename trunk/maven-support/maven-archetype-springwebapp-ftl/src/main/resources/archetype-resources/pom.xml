@@ -76,7 +76,6 @@
 					<doCheck>false</doCheck>
 					<doUpdate>true</doUpdate>
 					<timestampPropertyName>buildTimestamp</timestampPropertyName>
-					<!--Uncomment format and items if wanted buildNumber to use scm.developerConnection rev# instead!-->
 					<format>{0,date,yyyMMdd.HHmmss}</format>
 					<items>
 						<item>timestamp</item>
@@ -91,7 +90,7 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
-							<buildVersion>${dollar}{pom.${artifactId}-${dollar}{pom.version}</buildVersion>
+							<buildVersion>${dollar}{pom.artifactId}-${dollar}{pom.version}</buildVersion>
 							<buildNumber>${dollar}{buildNumber}</buildNumber>
 							<buildTimestamp>${dollar}{buildTimestamp}</buildTimestamp>
 						</manifestEntries>
@@ -219,6 +218,12 @@
 			<artifactId>c3p0</artifactId>
 			<version>0.9.1</version>
 			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javasupport.spring</groupId>
+			<artifactId>spring-support</artifactId>
+			<version>${pom.version}</version>
 		</dependency>
 		
 		<!-- Uncomment if email is needed.
