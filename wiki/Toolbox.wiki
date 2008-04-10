@@ -1,9 +1,24 @@
 #summary A command line utilities toolboxes
 
-= Introduction =
+= Command Line Tools =
 
 You should able to run many utilities with a wrapper scripts like this:
 
 {{{
-$ toolbox/bin/run.sh deng.toolbox.SearchJars MyClass /path/to/some/jarfiles.
+$ toolbox/bin/run.sh toolbox.SearchJars MyClass /path/to/some/jarfiles.
+}}}
+
+Download the package and see what tools are available. All tools should support --help option for more details.
+
+
+= Template Generator =
+
+I added some Groovy templates that can help generate/scaffold a SpringMVC webapp with Model/Dao, Controller, and View.
+
+There is also a simple Authentication template sets that work with user.User model.
+
+Example:
+{{{
+$ cd into your maven project
+$ toolbox/bin/generate-springmvc.sh scaffold com.mycompany.demo.user.User username, password
 }}}
