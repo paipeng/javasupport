@@ -4,6 +4,6 @@ package ${groupId}.user;
  *
  * @author thebugslayer
  */
-class PasswordNotMatchException extends RuntimeException{
+public class PasswordNotMatchException extends RuntimeException{
 
 }

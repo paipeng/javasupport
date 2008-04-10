@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  */
 public class EditProfileController extends EditController {
 	public EditProfileController() {
-        setFormView(USER_EDIT_PROFILE_VIEW);
+        setFormView(UserConstants.USER_EDIT_PROFILE_VIEW);
     }
 	
     @Override
