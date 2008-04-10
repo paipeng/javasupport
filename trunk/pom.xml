@@ -9,6 +9,7 @@
 		<module>maven-support</module>
 		<module>jdk-support</module>
 		<module>spring-support</module>
+		<module>toolbox</module>
 	</modules>
 	<properties>
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
