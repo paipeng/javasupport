@@ -1,4 +1,4 @@
-<#assign form=JspTaglibs["http://www.springframework.org/tags/form"]>
+<#assign form=JspTaglibs["/WEB-INF/resources/spring-form.tld"]>
 <div class="content">
 	<p>
 	<a href="\${Application.contextPath}/webapp/${classNamePath}/list">Back to ${className} Listing.</a>
