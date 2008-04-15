@@ -1,5 +1,4 @@
-<${pound}assign decorator=JspTaglibs["http://www.opensymphony.com/sitemesh/decorator"]>
-<${pound}assign page=JspTaglibs["http://www.opensymphony.com/sitemesh/page"]>
+<${pound}assign decorator=JspTaglibs["/WEB-INF/resources/sitemesh-decorator.tld"]>
 <html>
     <head>
         <title><@decorator.title default="${artifactId}"/></title>
