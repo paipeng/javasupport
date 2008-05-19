@@ -3,7 +3,7 @@ if [[ $# < 3 ]]; then
 	exit 1
 fi
 
-mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create \
+mvn archetype:generate \
   -DremoteRepositories=http://faxintelligence.com:8082/archiva/repository/snapshots \
   -DarchetypeGroupId=javasupport.maven \
   -DarchetypeArtifactId=maven-archetype-$1 \
