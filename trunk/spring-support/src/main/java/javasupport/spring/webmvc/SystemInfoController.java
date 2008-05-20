@@ -21,7 +21,8 @@ public class SystemInfoController extends AbstractController {
     public void setApplicationProperties(Properties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
-    
+
+    @SuppressWarnings("unchecked")
     public ModelAndView handleRequestInternal(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 

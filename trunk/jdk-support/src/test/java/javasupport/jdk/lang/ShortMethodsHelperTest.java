@@ -2,15 +2,9 @@ package javasupport.jdk.lang;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 
-import java.util.List;
-import java.util.Properties;
-
-import org.apache.commons.lang.SystemUtils;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
