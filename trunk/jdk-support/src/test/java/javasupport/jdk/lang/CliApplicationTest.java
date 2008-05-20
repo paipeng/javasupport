@@ -6,10 +6,9 @@ package javasupport.jdk.lang;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import org.junit.Test;
+
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *

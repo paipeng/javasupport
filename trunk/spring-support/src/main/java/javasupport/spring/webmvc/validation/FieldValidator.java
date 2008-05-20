@@ -50,6 +50,7 @@ public class FieldValidator implements Validator {
         this.errors = errors;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean supports(Class clazz) {
         return clazz.isInstance(getCommandBean());
     }
