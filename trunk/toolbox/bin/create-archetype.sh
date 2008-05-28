@@ -11,4 +11,5 @@ mvn archetype:generate \
 	-Dversion=0.0.1-SNAPSHOT \
   -DgroupId=$2 \
   -DartifactId=$3
-	-Dpackage=$4 
+	
+#	-Dpackage=$4 
