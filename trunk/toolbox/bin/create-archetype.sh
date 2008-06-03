@@ -1,5 +1,5 @@
-if [[ $# < 4 ]]; then
-	echo "create-archetype.sh <archetypeName> <groupId> <artifactId> <package>"
+if [[ $# < 3 ]]; then
+	echo "create-archetype.sh <archetypeName> <groupId> <artifactId>"
 	exit 1
 fi
 
