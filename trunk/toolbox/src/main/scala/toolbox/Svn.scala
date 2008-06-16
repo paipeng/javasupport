@@ -1,11 +1,11 @@
 package toolbox
-
-object SvnHelper extends toolbox.lang.CliApplication {
-  def main(argv: Array[String]): Unit = {    
+import toolbox.scalasupport._
+object SvnHelper extends CliApplication {
+  /*def main(argv: Array[String]): Unit = {    
     val (args, opts) = parseOptions(argv)
     
     if(opts.contains("help") || opts.contains("h")){
-      println("usage: scala SvnHelper [options] <subcommand> <workingdir> <subargs>")
+      println("usage: scala Svn [options] <subcommand> <workingdir> <subargs>")
       println("[options] --help, -h   Display helpage.")
       exit
     }
@@ -24,5 +24,5 @@ object SvnHelper extends toolbox.lang.CliApplication {
 			if("!".equals(files(0)))
 				printf("%s", exec("svn", "rm", files(1)));
 		}
-	}
+	}*/
 }

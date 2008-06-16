@@ -1,4 +1,11 @@
-package toolbox.lang
+package toolbox.scalasupport
+object JMap{
+  def apply[A,B](elems : (A, B)*): java.util.Map[A,B] = {
+    val jmap = new java.util.HashMap[A,B]
+    for((k,v) <- elems) jmap.put(k,v)
+    jmap
+  }
+}
 
 object JArray{
   /** This will allow you do thing like: <pre>String.format("%4d,%s", JArray(4, "foo"))</pre> */
@@ -22,9 +29,5 @@ object JCollectionView {
 class EnumerationIterator[A](e : java.util.Enumeration[A]) extends Iterator[A] {
    def hasNext = e.hasMoreElements
    def next() = e.nextElement()
-}
-
-object RichSystem {
-  def props = System.properties  
 }
 

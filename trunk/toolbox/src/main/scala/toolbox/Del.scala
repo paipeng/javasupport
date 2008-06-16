@@ -1,4 +1,5 @@
-package sayp.tool
+package toolbox
+import toolbox.scalasupport._
 import java.io.{ File, BufferedReader, InputStreamReader }
 object Del {   
   def main(args: Array[String]){

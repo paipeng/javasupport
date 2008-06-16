@@ -1,4 +1,4 @@
-package toolbox.lang
+package toolbox.scalasupport
 
 import java.text.{SimpleDateFormat}
 import java.util.{Date}
