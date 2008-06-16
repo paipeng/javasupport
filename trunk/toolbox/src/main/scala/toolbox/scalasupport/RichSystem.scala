@@ -17,5 +17,13 @@ object RichSystem {
   def execWithResult(args: String*)(f: String=>Unit){
     exec(args: _*).split("\n").foreach{ ln => f(ln) }
   }
-  def props = System.getProperties  
+  def props = System.getProperties
+   
+  def exitWith(msg: String) {
+    exitWith(msg, 0)
+  }
+  def exitWith(msg: String, code: Int) {
+    println(msg)
+    System.exit(code)
+  }
 }
