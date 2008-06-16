@@ -1,28 +1,19 @@
 package toolbox
 import toolbox.scalasupport._
-object SvnHelper extends CliApplication {
-  /*def main(argv: Array[String]): Unit = {    
-    val (args, opts) = parseOptions(argv)
-    
-    if(opts.contains("help") || opts.contains("h")){
-      println("usage: scala Svn [options] <subcommand> <workingdir> <subargs>")
-      println("[options] --help, -h   Display helpage.")
-      exit
+import RichSystem._
+object Svn extends CliApplication {
+  def main(args: Array[String]): Unit = {    
+    val (args, opts) = parseOptions(argv){ (args, opts) =>
+      case _ =>
     }
-		
-		val List(subcommand, workingdir, subargs@_*) = args
+		val(subcommand, subargs) = args
     subcommand match {
-			case "rmall" => removePendingFiles(workingdir)
+			case "status" => execWithResult("svn", "status", if(subargs.size==0) "." else subargs(0)){ println(_) }
 		}
   }
-	
-	def removePendingFiles(wd: String): Unit = {
-    import toolbox.lang.RichSystem.exec
-		val res = exec("svn", "st", wd);
-		for(ln <- res.split("\n")){
-			val files = ln.split("\\s+");
-			if("!".equals(files(0)))
-				printf("%s", exec("svn", "rm", files(1)));
-		}
-	}*/
+  
+  def usage = "Usage: scala Svn [options] ExtraSubCommand [arg ...]" + """
+    |   -h display helpage.                                                 
+    |   ExtraSubCommand status|add|remove|checkin|all
+    """.stripMargin
 }
