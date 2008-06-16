@@ -1,10 +1,10 @@
 package toolbox
-
+import toolbox.scalasupport._
 /**
  * Create new mysql db with user and perssions.
  */
-object CreateMysqlDatabase extends toolbox.lang.CliApplication {
-  def main(argv: Array[String]) = {
+object MysqlSetup extends toolbox.scalasupport.CliApplication {
+  /*def main(argv: Array[String]) = {
     val (args, opts) = parseOptions(argv)
   
     if(opts.contains("help") || opts.contains("h")){
@@ -40,6 +40,6 @@ object CreateMysqlDatabase extends toolbox.lang.CliApplication {
       stmt.close
       conn.close
     }
-  }
+  }*/
 }
 

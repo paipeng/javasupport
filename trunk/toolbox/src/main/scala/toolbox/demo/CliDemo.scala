@@ -1,6 +1,6 @@
-package toolbox
+package toolbox.demo
 
-object CliDemo extends toolbox.lang.CliApplication {
+/*object CliDemo extends toolbox.lang.CliApplication {
   def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
     
@@ -13,4 +13,4 @@ object CliDemo extends toolbox.lang.CliApplication {
     println(args)
     println(opts)
   }
-}
+}*/

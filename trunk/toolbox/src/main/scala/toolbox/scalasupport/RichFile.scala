@@ -1,7 +1,7 @@
 /**
  * Classes that support java.io.File better and provide more convinient Dir, BinaryFile, TextFile manipulation.
  */
-package toolbox.io
+package toolbox.scalasupport
 
 import java.io.{File, FileInputStream, FileOutputStream, BufferedReader, FileReader, FileWriter}
 import java.util.zip.{ZipOutputStream, ZipInputStream, ZipEntry}

@@ -1,7 +1,8 @@
 package toolbox
+import toolbox.scalasupport._
 
-object Grep extends toolbox.lang.CliApplication{
-  def main(argv: Array[String]):Unit = {    
+object Grep extends CliApplication{
+/*  def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
     
     if(opts.contains("h") || opts.contains("help")){
@@ -27,5 +28,5 @@ object Grep extends toolbox.lang.CliApplication{
       }
       grep(new java.io.File(fn))  
     }
-  }
+  }*/
 }

@@ -1,4 +1,5 @@
-package toolbox.lang
+package toolbox.scalasupport
+
 import scala.collection.mutable.{ HashMap, ListBuffer } 
 trait CliApplication {
   def usage = "Usage: scala " + getClass.getName + " [options] [arg ...]" + """

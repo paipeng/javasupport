@@ -1,9 +1,10 @@
-package toolbox.lang;
+package toolbox.scalasupport
 
+import toolbox.scalasupport.RichStream.copyStream
 import java.lang.{ProcessBuilder, Process}
 import java.io.{ByteArrayOutputStream}
+
 object RichSystem {
-  import toolbox.io.RichStream.copyStream
   def exec(args :String*) :String ={
     //println("Exec " + args.toList)
     val pb = new ProcessBuilder(args.toArray)
@@ -13,4 +14,6 @@ object RichSystem {
     copyStream(p.getInputStream(), output);
     output.toString();
   }
+  
+  def props = System.getProperties  
 }

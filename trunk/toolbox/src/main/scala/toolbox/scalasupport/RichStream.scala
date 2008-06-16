@@ -1,4 +1,4 @@
-package toolbox.io;
+package toolbox.scalasupport
 
 import java.io.{InputStream, OutputStream}
 object RichStream {

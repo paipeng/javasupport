@@ -1,4 +1,5 @@
-package sayp.tool
+package toolbox
+import toolbox.scalasupport._
 import java.io.{File}
 import java.util.regex.{Pattern, Matcher}
 import java.util.zip.{ZipFile,ZipEntry}
