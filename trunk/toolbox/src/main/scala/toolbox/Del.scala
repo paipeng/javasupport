@@ -1,6 +1,7 @@
 package toolbox
 import toolbox.scalasupport._
 import java.io.{ File, BufferedReader, InputStreamReader }
+import RichFile._
 object Del extends CliApplication {   
   def main(argv: Array[String]){
     val (args, opts) = parseOptions(argv)            
@@ -9,13 +10,9 @@ object Del extends CliApplication {
     val stdin = opts.getOrElse("stdin", "false").toBoolean
     def delete(file: File){
       val label = if(dryrun) "Will be deleting" else "Deleting"
-      if(file.isDirectory){
-        file.listFiles.foreach{ child => delete(child) }
-        println(label +" dir " + getPathname(file))
-        if(!dryrun) file.delete()
-      }else{
-        println(label +" file " + getPathname(file))
-        if(!dryrun) file.delete()
+      file.walk{ f =>        
+        println(label +" file " + f.getPathname)
+        if(!dryrun) f.delete
       }
     }
     if(debug) println("args: " + args)
@@ -43,18 +40,4 @@ object Del extends CliApplication {
     |   -s read filename from STDIN one per line.
     |   -d turn debug mode ON.  
     """.stripMargin
-    
-  /** Get only the path upto where it first defined if not abosulte. */
-  def getPathname(file: File): String = {
-    if(file.isAbsolute) file.getAbsolutePath
-    else{
-      var f = file //init file path name
-      val sb = new StringBuilder(f.getName)
-      while(f.getParentFile != null){
-        f = f.getParentFile
-        sb.insert(0, f.getName+File.separator)
-      }
-      sb.toString
-    }
-  }
 }

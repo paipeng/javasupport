@@ -18,32 +18,43 @@ object RichFile{
  * @author Zemian Deng
  */
 class RichFile(file: File) {
-  def eachFile(func: File=>Unit){
-    def traverse(traverseFile: File){
-      if(traverseFile.isDirectory)
-        for(subfile <- traverseFile.listFiles.toList.sort((f1,f2)=>f1.compareTo(f2)<0) )
-          traverse(subfile)
-      else
-        func(traverseFile)
-    }
-    traverse(file) 
-  }
-  def eachDir(func: File=>Unit){
-    def traverse(traverseDir: File){
-      if(traverseDir.isDirectory){
-        for(subdir <- traverseDir.listFiles.toList.sort((f1,f2)=>f1.compareTo(f2)<0) )
-          traverse(subdir)
-        func(traverseDir)
+  def this(fn: String) = this(new File(fn))
+  
+  /** Get only the path upto where it first defined if not abosulte. */
+  def getPathname: String = {
+    if(file.isAbsolute) file.getAbsolutePath
+    else{
+      var f = file //init file path name
+      val sb = new StringBuilder(f.getName)
+      while(f.getParentFile != null){
+        f = f.getParentFile
+        sb.insert(0, f.getName+File.separator)
       }
+      sb.toString
     }
-    traverse(file)
+  }
+  
+  def walk(func: File=>Unit){
+    def walk(walkedFile: File){
+      if(walkedFile.isDirectory){
+        val files = walkedFile.listFiles.toList
+        for(subfile <- files.sort((f1,f2)=>f1.compareTo(f2)<0) )
+          walk(subfile)
+      }
+      func(walkedFile)
+    }
+    walk(file)
+  }
+  
+  def eachFile(func: File=>Unit){
+    walk{ f =>  if(file.isFile) func(file) }
+  }
+  def eachDir(func: File=>Unit){    
+    walk{ f =>  if(file.isDirectory) func(file) }
   }
   def deleteAll{
-    eachFile{_.delete}
-    eachDir{_.delete}
-    file.delete
-  }
-    
+    walk{ file => file.delete }
+  }    
   def copyTo(dest:File)={
     //if dest is a directory, then copy into it. else overwrite dest file.
     if(dest.isDirectory){
@@ -63,12 +74,9 @@ class RichFile(file: File) {
     }finally{ reader.close() }
   }
   
-  def eachLineWithNumber(func: (Int, String)=>Unit){
+  def eachLineWithNumber(func: (String, Int)=>Unit){
     var i = 0
-    eachLine{ ln =>
-      i += 1
-      func(i, ln)
-    }    
+    eachLine{ ln => i += 1; func(ln, i) }    
   }
   
   def eachByte(process: (Byte)=>Unit)={
@@ -92,6 +100,7 @@ class RichFile(file: File) {
     try{ writer.write(text) }
     finally{ writer.close }
   }  
+  //NewLine is expected on input.
   def writeLines(lines: Iterator[String]) ={
     if(!file.getParentFile.exists) 
       file.getParentFile.mkdirs //auto creates dir if doesn't already exists.
@@ -112,6 +121,7 @@ class RichFile(file: File) {
     }finally{ reader.close() }
     sb.toString
   }
+  //NewLine is preserved.
   def readLines = scala.io.Source.fromFile(file).getLines
 }
 

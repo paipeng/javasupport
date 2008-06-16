@@ -1,6 +1,6 @@
 package toolbox
 import toolbox.scalasupport._
-
+import RichFile._
 object Grep extends CliApplication{
   def main(argv: Array[String]):Unit = {    
     val (args, opts) = parseOptions(argv)
@@ -21,9 +21,9 @@ object Grep extends CliApplication{
       if(file.isDirectory) 
         file.listFiles.map( grep(_) )
       else
-        if(debug) println("Searching " + file.getName)
+        if(debug) println("Searching " + file.getPathname)
         for(ln <- scala.io.Source.fromFile(file).getLines){
-          if(ln.contains(search)) print(file.getName+":"+ln)  
+          if(ln.contains(search)) print(file.getPathname+":"+ln)  
         }
     }
     for(fn <- files){
