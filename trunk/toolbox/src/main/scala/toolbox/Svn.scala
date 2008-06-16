@@ -8,7 +8,7 @@ object Svn extends CliApplication {
     if(opts.contains("-h") || args.size<1)
       exitWith(usage)
       
-		val List(subcommand, subargs@_*) = args
+		val (subcommand::subargs) = args
     def workingdir = if(subargs.size==0) "." else subargs(0)
     def getPendingFiles = execWithResult("svn", "status", workingdir) _                                                              
     subcommand match {

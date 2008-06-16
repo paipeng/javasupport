@@ -9,146 +9,102 @@ import scala.io.Source
 import java.net.URI
 import RichStream.{MB, copyStream}
 
-/**
- * A class that handle dir and it's sub dirs and files content.
- * @author Zemian Deng
- */
-class DirFile(parent:File, filename:String) extends File(parent, filename) {
-  def this(filename:String)={
-    this(null, filename)
-  }
-  def this(file:File)={    
-    this(file.getParentFile, file.getName)
-  }
-  
-  /** process each sub-files or sub-dirs in this dir */
-  def eachDirFile(processDirFile: (DirFile)=>Unit)={
-    val files = this.listFiles.toList.sort((e1,e2)=>e1.compareTo(e2)<0)
-    files.foreach{dirFile=>processDirFile(new DirFile(dirFile))}
-  }
-  
-  /** process each sub-files in this dir */
-  def eachFile(processFile: (File)=>Unit)={
-    val files = this.listFiles.toList.sort((e1,e2)=>e1.compareTo(e2)<0)
-    files.foreach{file=>
-      if(file.isFile) processFile(file)
-    }
-  }
-  /** process each sub-dirs in this dir */
-  def eachDir(processDir: (DirFile)=>Unit)={
-    val files = this.listFiles.toList.sort((e1,e2)=>e1.compareTo(e2)<0)
-    files.foreach{dir=>
-      if(dir.isDirectory) processDir(new DirFile(dir))
-    }
-  }
-        
-  /** process each sub-files in each recursive dir. */
-  def eachRecursiveFile(processFile: (File)=>Unit)={
-    def traverse(dir:File){
-      val files = dir.listFiles.toList.sort((e1,e2)=>e1.compareTo(e2)<0)
-      files.foreach{file=>
-        if(file.isDirectory) traverse(file)
-        else processFile(file)
-      }
-    }
-    traverse(this)
-  }
-  /** process each sub-dirs in each recursive dir. process will get call on each end leaf. */
-  def eachRecursiveDir(processDir: (DirFile)=>Unit)={
-    def traverse(dir:File){
-      val files = dir.listFiles.toList.sort((e1,e2)=>e1.compareTo(e2)<0)
-      files.foreach{file=>
-        if(file.isDirectory) {
-          traverse(file)
-          processDir(new DirFile(file))
-        }
-      }      
-    }
-    traverse(this)
-  }
-  def deleteAll()={
-    this.eachRecursiveFile{_.delete}
-    this.eachRecursiveDir{_.delete}
-    this.delete
-  }
+object RichFile{
+  implicit def file2RichFile(f: File) = new RichFile(f)  
 }
 
 /**
- * A class that handle binary content.
+ * Provide a rich file access to java.io.File.
+ * @author Zemian Deng
  */
-class BinaryFile(parent:File, filename:String) extends File(parent, filename){
-  
-  def this(filename:String)={
-    this(null, filename)
+class RichFile(file: File) {
+  def eachFile(func: File=>Unit){
+    def traverse(traverseFile: File){
+      if(traverseFile.isDirectory)
+        for(subfile <- traverseFile.listFiles.toList.sort((f1,f2)=>f1.compareTo(f2)<0) )
+          traverse(subfile)
+      else
+        func(traverseFile)
+    }
+    traverse(file) 
   }
-  def this(file:File)={    
-    this(file.getParentFile, file.getName)
+  def eachDir(func: File=>Unit){
+    def traverse(traverseDir: File){
+      if(traverseDir.isDirectory){
+        for(subdir <- traverseDir.listFiles.toList.sort((f1,f2)=>f1.compareTo(f2)<0) )
+          traverse(subdir)
+        func(traverseDir)
+      }
+    }
+    traverse(file)
+  }
+  def deleteAll{
+    eachFile{_.delete}
+    eachDir{_.delete}
+    file.delete
   }
     
-  def eachByte(process: (Byte)=>Unit)={
-    var b:Int = -1
-    val instream = new FileInputStream(this)
-    try{
-      while( {b = instream.read; b != -1} ){
-        process(b.toByte)
-      }
-		}finally{ instream.close }
+  def copyTo(dest:File)={
+    //if dest is a directory, then copy into it. else overwrite dest file.
+    if(dest.isDirectory){
+      val destFile = new File(dest, file.getName)
+      copyStream(new FileInputStream(file), new FileOutputStream(destFile))
+    }else{
+      copyStream(new FileInputStream(file), new FileOutputStream(dest))    
+    }
   }
+  def eachLine(process: (String)=>Unit){
+		var line: String = null
+    val reader = new BufferedReader(new FileReader(file))
+    try{
+      while( {line = reader.readLine; line != null} ){
+        process(line)
+      }
+    }finally{ reader.close() }
+  }
+  
+  def eachLineWithNumber(func: (Int, String)=>Unit){
+    var i = 0
+    eachLine{ ln =>
+      i += 1
+      func(i, ln)
+    }    
+  }
+  
+  def eachByte(process: (Byte)=>Unit)={
+    eachBlock(1){ buf => process(buf(0)) }
+  }
+  
   def eachBlock(size:Int)(process: (Array[Byte])=>Unit)={
 		val buf = new Array[Byte](size)
     var len = 0
-    val instream = new FileInputStream(this)
+    val instream = new FileInputStream(file)
     try{
       while( {len = instream.read(buf); len != -1} ){
         process(buf.subArray(0,len))
       }
 		}finally{ instream.close }
   }
-  
-  def copyTo(file:File)={
-    //if dest is a directory, then copy into it. else overwrite dest file.
-    val dest = {
-      if(file.isDirectory) new BinaryFile(file, this.getName)
-      else new BinaryFile(file)
-    }
-    copyStream(new FileInputStream(this), new FileOutputStream(dest))    
-  }
-}
-    
-/**
- * A class that handle text content.
- */
-class TextFile(parent:File, filename:String) extends BinaryFile(parent, filename) {  
-  def this(filename:String)={
-    this(null, filename)
-  }
-  def this(file:File)={    
-    this(file.getParentFile, file.getName)
-  }
-    
-  /** process each line from this text file */
-  def eachLine(process: (String)=>Unit)={
-    for(ln <- readLines) process(ln)
-  }
-  
-  def writeText(text:String)={
-    if(getParentFile != null && !getParentFile.exists) getParentFile.mkdirs
-    val writer = new FileWriter(this)
+  def writeText(text: String)={
+    if(!file.getParentFile.exists) 
+      file.getParentFile.mkdirs //auto creates dir if doesn't already exists.
+    val writer = new FileWriter(file)
     try{ writer.write(text) }
     finally{ writer.close }
   }  
-  def writeLines(lines:List[String])={
-    if(getParentFile != null && !getParentFile.exists) getParentFile.mkdirs
-    val writer = new FileWriter(this)
+  def writeLines(lines: Iterator[String]) ={
+    if(!file.getParentFile.exists) 
+      file.getParentFile.mkdirs //auto creates dir if doesn't already exists.
+    val writer = new FileWriter(file)
     try{ for(ln <- lines) writer.write(ln) }
     finally{ writer.close }
   }  
-  def readText():String={
+  def readText: String ={
     val sb = new StringBuilder()
     val MB = 1024*1024
 		var cbuf = new Array[Char](MB)
     var len = 0
-    val reader = new BufferedReader(new FileReader(this))
+    val reader = new BufferedReader(new FileReader(file))
     try{
       while( {len = reader.read(cbuf); len != -1} ){
         sb.append(cbuf,0,len)
@@ -156,31 +112,12 @@ class TextFile(parent:File, filename:String) extends BinaryFile(parent, filename
     }finally{ reader.close() }
     sb.toString
   }
-  def readLines():List[String]={
-    val lines = new collection.mutable.ListBuffer[String]
-		var line:String = null
-    val reader = new BufferedReader(new FileReader(this))
-    try{
-      while( {line = reader.readLine; line != null} ){
-        lines += line
-      }
-    }finally{ reader.close() }
-    lines.toList
-  }
+  def readLines = scala.io.Source.fromFile(file).getLines
 }
-
 
 /**
  * A class that handle zip and unzip files.
- */
-class ZipFile(parent:File, filename:String) extends BinaryFile(parent, filename) {
-  def this(filename:String)={
-    this(null, filename)
-  }
-  def this(file:File)={    
-    this(file.getParentFile, file.getName)
-  }
-  
+class RichZipFile(file: File) {
   val entries = new collection.mutable.HashSet[DirFile]
   var rootPrefix = ""
   
@@ -253,3 +190,4 @@ class ZipFile(parent:File, filename:String) extends BinaryFile(parent, filename)
     }
   }
 }
+*/

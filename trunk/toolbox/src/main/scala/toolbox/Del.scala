@@ -1,12 +1,12 @@
 package toolbox
 import toolbox.scalasupport._
 import java.io.{ File, BufferedReader, InputStreamReader }
-object Del {   
-  def main(args: Array[String]){
-    val (argList, options) = parseOptions(args)            
-    val dryrun = options.getOrElse("dryrun", "false").toBoolean
-    val debug = options.getOrElse("debug", "false").toBoolean
-    val stdin = options.getOrElse("stdin", "false").toBoolean
+object Del extends CliApplication {   
+  def main(argv: Array[String]){
+    val (args, opts) = parseOptions(argv)            
+    val dryrun = opts.getOrElse("dryrun", "false").toBoolean
+    val debug = opts.getOrElse("debug", "false").toBoolean
+    val stdin = opts.getOrElse("stdin", "false").toBoolean
     def delete(file: File){
       val label = if(dryrun) "Will be deleting" else "Deleting"
       if(file.isDirectory){
@@ -18,7 +18,12 @@ object Del {
         if(!dryrun) file.delete()
       }
     }
-    if(debug) println("argList: " + argList)
+    if(debug) println("args: " + args)
+    
+    if(opts.contains("-h"))
+      exitWith(usage)
+    
+    //Process delete files  
     if(stdin){
       //read in stdin as each line equals a file name
       val br = new BufferedReader(new InputStreamReader(System.in))
@@ -27,8 +32,8 @@ object Del {
         delete(new File(ln.trim))
       br.close
     }else{
-      if(argList.size<=0) printExitUsage
-      argList.foreach{ f => delete(new File(f)) }
+      if(args.size<=0) exitWith("Missing file argument.")
+      args.foreach{ f => delete(new File(f)) }
     }
   }
   def usage = """
@@ -38,24 +43,7 @@ object Del {
     |   -s read filename from STDIN one per line.
     |   -d turn debug mode ON.  
     """.stripMargin
-  def printExitUsage {
-    println(usage)
-    exit(1)
-  }
-  /** Parse commandline args and return immutable args list and options map. */
-  def parseOptions(args: Array[String]): (List[String], Map[String, String]) = {
-    import scala.collection.mutable.{ HashMap, ListBuffer } 
-    val argList = new ListBuffer[String]   
-    val options = new HashMap[String, String]
-    for(a <- args) a match {
-      case "-h" => printExitUsage
-      case "-d" => options("debug") = "true"
-      case "-n" => options("dryrun") = "true"
-      case "-s" => options("stdin") = "true"
-      case _ => argList.append(a)
-    }
-    (argList.toList, Map(options.toArray: _*))
-  }  
+    
   /** Get only the path upto where it first defined if not abosulte. */
   def getPathname(file: File): String = {
     if(file.isAbsolute) file.getAbsolutePath
