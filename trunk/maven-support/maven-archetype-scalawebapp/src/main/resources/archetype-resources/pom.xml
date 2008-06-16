@@ -14,8 +14,8 @@
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
 	<scm>
-		<connection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</connection>
-		<developerConnection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</developerConnection>
+		<connection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</connection>
+		<developerConnection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</developerConnection>
 	</scm>
 	<distributionManagement>
 		<repository>
@@ -72,7 +72,12 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<configuration>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<scanIntervalSeconds>1</scanIntervalSeconds>
+					<connectors>
+						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+							<port>9090</port>
+						</connector>
+					</connectors>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -91,22 +96,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>0.9.8</version>
@@ -114,7 +103,12 @@
 		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
-			<version>${dollar}{scala.version}</version>
+			<version>${scala.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.13</version>
 		</dependency>
 	</dependencies>
 </project>

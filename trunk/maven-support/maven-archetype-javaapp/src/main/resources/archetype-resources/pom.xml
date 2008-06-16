@@ -12,8 +12,8 @@
     	<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
     </properties>
     <scm>
-        <connection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</connection>
-        <developerConnection>scm:svn:svn://faxintelligence.com/labs/incubator/${artifactId}/trunk</developerConnection>
+        <connection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</connection>
+        <developerConnection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</developerConnection>
     </scm>
 	<distributionManagement>
 		<repository>
