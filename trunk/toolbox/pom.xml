@@ -14,7 +14,7 @@
 	<name>toolbox</name>
 	
 	<properties>
-		<scala.version>2.7.0</scala.version>
+		<scala.version>2.7.1</scala.version>
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
 	<scm>
