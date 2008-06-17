@@ -74,11 +74,6 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<!-- Following exec is needed if you point pluginRepository to internal! -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
