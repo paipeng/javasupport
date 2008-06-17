@@ -6,20 +6,20 @@ import java.util.zip.{ZipFile,ZipEntry}
 object SearchJar {   
   var options = Map[String, String]()
   
-  def main(args: Array[String]): Unit = {
-    var argList = List[String]()
-    for(s <- args) s match {
+  def main(argv: Array[String]): Unit = {
+    var args = List[String]()
+    for(s <- argv) s match {
       case "-h" | "--help" => printUsageAndExit
       case "-d" | "--debug" => options += ("debug"->"true")
       case "-f" | "--foldersearch" => options += ("foldersearch"->"true")
-      case _ => argList = s::argList
+      case _ => args = s::args
     }
     
-    if(argList.size <=1) printUsageAndExit
-    argList = argList.reverse
+    if(args.size <=1) printUsageAndExit
+    args = args.reverse
     
-    val text = argList(0)
-    val jars = argList.drop(1)
+    val text = args(0)
+    val jars = args.drop(1)
     val foldersearch = options.contains("foldersearch")
     
     debug("Searching: " + text)
