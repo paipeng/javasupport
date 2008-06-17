@@ -33,11 +33,10 @@ object Svn extends CliApplication {
 		}
   }
   
-  def usage = """CLI extenstion to Svn client that add, remove and checkin files quickly based
-    | on a working dir status files.
+  def usage = """CLI extenstion to Svn client that add, remove and checkin pending files quickly based
+    | on a working dir status.
     |
-    | Usage: scala Svn [options] ExtraSubCommand Workingdir
-    |   -h display helpage.                                                 
-    |   ExtraSubCommand can be one of st|add|rm|ci|all
+    | Usage: scala Svn [options] st|add|rm|ci|all WorkingDir
+    |   -h display helpage.                               
     """.stripMargin
 }
