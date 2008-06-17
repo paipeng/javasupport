@@ -34,7 +34,7 @@ object Del extends CliApplication {
     }
   }
   def usage = """
-    |Program to delete files recursively.
+    |Delete all files and directories recursively with possible preview.
     |Usage: scala Del [-n|-s|-d] file_or_dir [file_or_dir ...]
     |   -n dryrun only.
     |   -s read filename from STDIN one per line.

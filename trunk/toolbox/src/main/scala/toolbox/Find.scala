@@ -8,9 +8,9 @@ object Find extends CliApplication{
     if(opts.contains("h") || args.size < 1){
       exitWith(
       """Find file by name or list them all from a dir.
-        | usage: Find [options] dir name
+        | usage: Find [options] dir_name
         | [options] -h   Display helpage
-      """)
+      """.stripMargin)
     }
     
     val dir = args(0)    
