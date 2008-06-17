@@ -2,7 +2,7 @@ package toolbox.config
 object ConfigDemo extends Application {
   val cfg = Config("dev")
   val fooDao = cfg.fooDao
-  println(fooDao)
+  println(fooDao.get(1))
   //println(toolbox.scalasupport.RichSystem.props)
 }
 
@@ -18,7 +18,7 @@ import scala.collection.jcl.MapWrapper
 object PropertiesFile {
   def apply(name: String): MapWrapper[String, String] = {
     val props = new java.util.Properties
-    props.load(new java.io.FileReader(name))
+    props.load(new java.io.FileInputStream(name))
     new MapWrapper[String, String]{
       def underlying = props.asInstanceOf[java.util.Map[String,String]]
     }
