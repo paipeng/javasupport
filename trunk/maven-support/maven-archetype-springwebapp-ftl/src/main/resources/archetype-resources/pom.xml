@@ -103,11 +103,6 @@
 					<target>1.5</target>
 				</configuration>
 			</plugin>
-			<!-- Following exec is needed if you point pluginRepository to internal! -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -177,7 +172,7 @@
 			<artifactId>sitemesh</artifactId>
 			<version>2.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
@@ -193,13 +188,13 @@
 			<artifactId>persistence-api</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -218,13 +213,13 @@
 			<version>0.9.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javasupport.spring</groupId>
 			<artifactId>spring-support</artifactId>
 			<version>0.0.4-SNAPSHOT</version>
 		</dependency>
-		
+
 		<!-- Uncomment if email is needed.
 			<dependency>
 			<groupId>javax.activation</groupId>
