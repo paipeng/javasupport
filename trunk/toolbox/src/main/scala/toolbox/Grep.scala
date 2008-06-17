@@ -2,20 +2,18 @@ package toolbox
 import toolbox.scalasupport._
 import RichFile._
 object Grep extends CliApplication{
-  def main(argv: Array[String]):Unit = {    
-    val (args, opts) = parseOptions(argv)
-    
-    if(opts.contains("h")){
-      exitWith(
-      """Grep text inside a text files.
+  def usage ="""Grep text inside a text files.
         | usage: Grep [options] text file1 [file2...]
         | usage: Grep [options] text dir [dir2...]
         | [options] -h   Display helpage.
         | [options] -v   Revese display with found text.
         | [options] -s   Read from STDIN
         | [options] -d   Debug search.
-      """.stripMargin)
-    }
+      """.stripMargin
+      
+  def main(argv: Array[String]){    
+    val (args, opts) = parseOptions(argv)    
+    if(opts.contains("h")) exitWith(usage)
     
     val debug = opts.contains("d")
     val reverse = opts.contains("v")
