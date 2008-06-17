@@ -98,17 +98,19 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
       }
 		}finally{ instream.close }
   }
-  def writeText(text: String)={
+  protected def ensurePathExists{ 
     if(!this.getParentFile.exists) 
       this.getParentFile.mkdirs //auto creates dir if doesn't already exists.
+  }
+  def writeText(text: String)={
+    ensurePathExists
     val writer = new FileWriter(this)
     try{ writer.write(text) }
     finally{ writer.close }
   }  
   //NewLine is expected on input.
   def writeLines(lines: Iterator[String]) ={
-    if(!this.getParentFile.exists) 
-      this.getParentFile.mkdirs //auto creates dir if doesn't already exists.
+    ensurePathExists
     val writer = new FileWriter(this)
     try{ for(ln <- lines) writer.write(ln) }
     finally{ writer.close }
@@ -131,36 +133,42 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
 
 /**
  * A class that handle zip and unzip thiss.
-class RichZipFile(this: File) {
-  val entries = new collection.mutable.HashSet[DirFile]
-  var rootPrefix = ""
+class RichZipFile(file: File) extends RichFile(file){
+  def this(name: String) = this(new File(name))
   
+  val entries = new collection.mutable.HashSet[File]
+  var rootPrefix = ""  
   
-  def add(thiss:DirFile*):ZipFile={
-    thiss.foreach{ entries += _ }
+  def add(files: File*): RichZipFile ={
+    for(f <- files) entries += f
     this
   }
   
-  def zip()={    
+  def zip(files: File*){
+    add(files)
+    zip
+  }
+  
+  def zip{    
     if(entries.size<1)
-      throw new RuntimeException("Can not zip empty entries this.")
+      throw new Exception("Can not zip empty entries.")
       
-    if(getParentFile != null && !getParentFile.exists) getParentFile.mkdirs
+    ensurePathExists
     
     val zipStream = new ZipOutputStream(new FileOutputStream(this));
+    def addFileToZipStream(path: String, this: File){
+      zipStream.putNextEntry(new ZipEntry(path.substring(1) + this.getName))
+      eachBlock(MB){ buf => zipStream.write(buf) }
+      zipStream.closeEntry();
+    }
+    def traverse(prefix:String, entry:DirFile){     
+      if(entry.isDirectory){
+        entry.eachDirFile{dirFile=>traverse(prefix+"/"+entry.getName, dirFile)}
+      }else{
+        addFileToZipStream(prefix+"/", new BinaryFile(entry))
+      }
+    }
     try{ 
-      def addFileToZipStream(path:String, this:BinaryFile){
-        zipStream.putNextEntry(new ZipEntry(path.substring(1) + this.getName))
-        this.eachBlock(MB){ buf => zipStream.write(buf) }
-        zipStream.closeEntry();
-      }
-      def traverse(prefix:String, entry:DirFile){     
-        if(entry.isDirectory){
-          entry.eachDirFile{dirFile=>traverse(prefix+"/"+entry.getName, dirFile)}
-        }else{
-          addFileToZipStream(prefix+"/", new BinaryFile(entry))
-        }
-      }
       entries.foreach{traverse(rootPrefix, _)}
       zipStream.finish();
     }finally{ 
@@ -203,5 +211,5 @@ class RichZipFile(this: File) {
       }
     }
   }
-}
-*/
+} */
+
