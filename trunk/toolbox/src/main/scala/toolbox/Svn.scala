@@ -11,21 +11,17 @@ object Svn extends CliApplication {
 		val (subcommand::subargs) = args
     def workingdir = if(subargs.size==0) "." else subargs(0)
     def getPendingFiles = execWithResult("svn", "status", workingdir) _ 
-    def add{
-      getPendingFiles{ ln =>
+    def add = getPendingFiles{ ln =>
           val Array(flag, file) = ln.split("\\s+")
           if(flag == "?")
             println(exec("svn", "add", file))
       }
-    }
-    def rm{
-      getPendingFiles{ ln =>
+    def rm = getPendingFiles{ ln =>
         val Array(flag, file) = ln.split("\\s+")
         if(flag == "!")
           println(exec("svn", "rm", file))
       }
-    }
-    def ci{ println(exec("svn", "ci", "-m", "Auto checking.", workingdir)) }
+    def ci = println(exec("svn", "ci", "-m", "Auto checkin.", workingdir))
     
     subcommand match {
 			case "st" => getPendingFiles { println(_) }
