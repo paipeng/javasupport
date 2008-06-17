@@ -10,28 +10,29 @@ object Svn extends CliApplication {
       
 		val (subcommand::subargs) = args
     def workingdir = if(subargs.size==0) "." else subargs(0)
-    def getPendingFiles = execWithResult("svn", "status", workingdir) _                                                              
+    def getPendingFiles = execWithResult("svn", "status", workingdir) _ 
+    def add{
+      getPendingFiles{ ln =>
+          val Array(flag, file) = ln.split("\\s+")
+          if(flag == "?")
+            println(exec("svn", "add", file))
+      }
+    }
+    def rm{
+      getPendingFiles{ ln =>
+        val Array(flag, file) = ln.split("\\s+")
+        if(flag == "!")
+          println(exec("svn", "rm", file))
+      }
+    }
+    def ci{ println(exec("svn", "ci", "-m", "Auto checking.", workingdir)) }
+    
     subcommand match {
 			case "st" => getPendingFiles { println(_) }
-			case "add" => getPendingFiles{ ln =>
-          val Array(flag, file) = ln.split("\\s+")
-          if(flag eq "?")
-            println(exec("svn", "add", file))
-        }
-      case "rm" => getPendingFiles{ ln =>
-          val Array(flag, file) = ln.split("\\s+")
-          if(flag eq "!")
-            println(exec("svn", "rm", file))
-        }
-      case "ci" => println(exec("svn", "ci", "-m", "Auto checking.", workingdir))      
-      case "all" => getPendingFiles{ ln =>println(ln)
-          val Array(flag, file) = ln.split("\\s+")
-          if(flag eq "?")
-            println(exec("svn", "add", file))
-          else if(flag eq "!")
-            println(exec("svn", "rm", file))
-        }
-        println(exec("svn", "ci", "-m", "Auto checking.", workingdir))
+			case "add" => add
+      case "rm" => rm
+      case "ci" =>  ci   
+      case "all" => { add; rm; ci }
       case _ => exitWith("Wrong argument.")
 		}
   }
