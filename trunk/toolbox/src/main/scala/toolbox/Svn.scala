@@ -2,11 +2,18 @@ package toolbox
 import toolbox.scalasupport._
 import RichSystem._
 object Svn extends CliApplication {
-  def main(argv: Array[String]): Unit = {    
-    val (args, opts) = parseOptions(argv)
+  def usage = """CLI extenstion to Svn client that add, remove and checkin pending files quickly based
+    | on a working dir status.
+    |
+    | Usage: scala Svn [options] st|add|rm|ci|all [WorkingDir]
+    |   -h display helpage.                               
+    | 
+    | default WorkingDir is cwd.
+    """.stripMargin
     
-    if(opts.contains("-h") || args.size<1)
-      exitWith(usage)
+  def main(argv: Array[String]){    
+    val (args, opts) = parseOptions(argv)    
+    if(opts.contains("-h") || args.size<1) exitWith(usage)
       
 		val (subcommand::subargs) = args
     def workingdir = if(subargs.size==0) "." else subargs(0)
@@ -32,13 +39,4 @@ object Svn extends CliApplication {
       case _ => exitWith("Wrong argument.")
 		}
   }
-  
-  def usage = """CLI extenstion to Svn client that add, remove and checkin pending files quickly based
-    | on a working dir status.
-    |
-    | Usage: scala Svn [options] st|add|rm|ci|all [WorkingDir]
-    |   -h display helpage.                               
-    | 
-    | default WorkingDir is cwd.
-    """.stripMargin
 }

@@ -3,14 +3,11 @@
  */
 package toolbox.scalasupport
 
-import java.io.{File, FileInputStream, FileOutputStream, BufferedReader, FileReader, FileWriter}
-import java.util.zip.{ZipOutputStream, ZipInputStream, ZipEntry}
+import java.io._
 import scala.io.Source
-import java.net.URI
-import RichStream.{copyStream}
 
 object RichFile{
-  val DEFAULT_BLOCK_SIZE = 1024*1024 //read size when reading stream.
+  val DEFAULT_BLOCK_SIZE = RichStream.MB
   implicit def file2RichFile(f: File) = new RichFile(f)  
 }
 
@@ -24,7 +21,15 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
   def this(file: File) = this(file.getParentFile, file.getName, DEFAULT_BLOCK_SIZE)
   def this(file: File, name: String) = this(file, name, DEFAULT_BLOCK_SIZE)
   def this(file: File, blockSize: Int) = this(file.getParentFile, file.getName, blockSize)
-    
+  
+  def parseFileExt(sep: String): (String, String) = { 
+    val name = getName
+    val idx = name.lastIndexOf(sep)
+    (name.substring(0, idx), name.substring(idx+1))
+  }
+  def getExt = parseFileExt(".")._1
+  def getBasename = parseFileExt(".")._2
+  
   /** Get only the path upto where it first defined if not abosulte. */
   def getPathname: String = {
     if(this.isAbsolute) this.getAbsolutePath
@@ -61,22 +66,18 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
     walk{ f => f.delete }
   }    
   def copyTo(dest:File)={
+    if(!isFile) throw new Exception("Source is not a file.")
+    
     //if dest is a directory, then copy into it. else overwrite dest this.
     if(dest.isDirectory){
       val destFile = new File(dest, this.getName)
-      copyStream(new FileInputStream(this), new FileOutputStream(destFile))
+      RichStream.copyStream(new FileInputStream(this), new FileOutputStream(destFile), blockSize)
     }else{
-      copyStream(new FileInputStream(this), new FileOutputStream(dest))    
+      RichStream.copyStream(new FileInputStream(this), new FileOutputStream(dest), blockSize)    
     }
   }
   def eachLine(process: (String)=>Unit){
-		var line: String = null
-    val reader = new BufferedReader(new FileReader(this))
-    try{
-      while( {line = reader.readLine; line != null} ){
-        process(line)
-      }
-    }finally{ reader.close() }
+		RichStream.eachLine(new FileInputStream(this)){ ln => process(ln) }
   }
   
   def eachLineWithNumber(func: (String, Int)=>Unit){
@@ -84,19 +85,12 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
     eachLine{ ln => i += 1; func(ln, i) }    
   }
   
-  def eachByte(process: (Byte)=>Unit)={
+  def eachByte(process: (Byte)=>Unit){
     eachBlock(blockSize){ buf => for(b <- buf) process(b) }
   }
   
-  def eachBlock(size:Int)(process: (Array[Byte])=>Unit)={
-		val buf = new Array[Byte](size)
-    var len = 0
-    val instream = new FileInputStream(this)
-    try{
-      while( {len = instream.read(buf); len != -1} ){
-        process(buf.subArray(0,len))
-      }
-		}finally{ instream.close }
+  def eachBlock(size:Int)(process: (Array[Byte])=>Unit){
+		RichStream.eachBlock(new FileInputStream(this), size){ buf => process(buf) }
   }
   protected def ensurePathExists{ 
     if(!this.getParentFile.exists) 
@@ -104,35 +98,42 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
   }
   def writeText(text: String)={
     ensurePathExists
-    val writer = new FileWriter(this)
-    try{ writer.write(text) }
-    finally{ writer.close }
+    withPrintWriter{ out => out.println(text) }
   }  
   //NewLine is expected on input.
-  def writeLines(lines: Iterator[String]) ={
+  def writeLines(lines: Iterator[String]){
     ensurePathExists
-    val writer = new FileWriter(this)
-    try{ for(ln <- lines) writer.write(ln) }
+    withPrintWriter{ out => for(ln <- lines) out.println(ln) }
+  }  
+  def withWriter(func: Writer=>Unit){
+    val writer = new BufferedWriter(new FileWriter(this));
+    try{ func(writer)}
     finally{ writer.close }
   }  
-  def readText: String ={
+  def withPrintWriter(func: PrintWriter=>Unit){
+    withWriter{ writer =>
+      val out = new PrintWriter(writer)
+      try{ func(out)}
+      finally{ out.close }
+    }
+  }
+  def readText: String = {
+    val sep = File.separator
     val sb = new StringBuilder()
-		var cbuf = new Array[Char](blockSize)
-    var len = 0
-    val reader = new BufferedReader(new FileReader(this))
-    try{
-      while( {len = reader.read(cbuf); len != -1} ){
-        sb.append(cbuf,0,len)
-      }
-    }finally{ reader.close() }
+    RichStream.eachLine(new FileInputStream(this)){ ln => sb.append(ln); sb.append(sep) }
     sb.toString
   }
-  //NewLine is preserved.
-  def readLines = scala.io.Source.fromFile(this).getLines
+  
+  def readLines: List[String] = {
+    val lb = new scala.collection.mutable.ListBuffer[String]
+    RichStream.eachLine(new FileInputStream(this)){ ln => lb.append(ln) }
+    lb.toList
+  }
 }
 
 /**
  * A class that handle zip and unzip thiss.
+import java.util.zip._
 class RichZipFile(file: File) extends RichFile(file){
   def this(name: String) = this(new File(name))
   

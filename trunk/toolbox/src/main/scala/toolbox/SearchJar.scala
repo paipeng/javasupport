@@ -3,10 +3,20 @@ import toolbox.scalasupport._
 import java.io.{File}
 import java.util.regex.{Pattern, Matcher}
 import java.util.zip.{ZipFile,ZipEntry}
+
 object SearchJar {   
+  def printUsageAndExit(){	
+    println("Program to search text(entry name) inside a jar file.")
+    println("Usage: scala SearchJar [-d|-f] text jarfile_or_dir [jarfile_or_dir ...]")
+    println("   -d turn debug mode on.")
+    println("   -f also search any folder for file name match.")
+    exit(1)
+  }
+  
   var options = Map[String, String]()
   
   def main(argv: Array[String]): Unit = {
+    //parsing options
     var args = List[String]()
     for(s <- argv) s match {
       case "-h" | "--help" => printUsageAndExit
@@ -46,14 +56,6 @@ object SearchJar {
   }
 
   def debug(s: String) = if(options.contains("debug")) println(s)
-
-  def printUsageAndExit(){	
-    println("Program to search text(entry name) inside a jar file.")
-    println("Usage: scala SearchJar [-d|-f] text jarfile_or_dir [jarfile_or_dir ...]")
-    println("   -d turn debug mode on.")
-    println("   -f also search any folder for file name match.")
-    exit(1)
-  }
   
   def searchJar(text: String, jarfile: File): Unit = {
     debug("Searching: " + text + " in jarfile "+ getPathname(jarfile))

@@ -1,10 +1,7 @@
 package toolbox
 
 object MysqlSetup extends toolbox.scalasupport.CliApplication {
-  def main(argv: Array[String]) = {
-    val (args, opts) = parseOptions(argv)
-    if(opts.contains("h") || args.size < 1){
-      exitWith(
+  def usage = 
       """Find file by name or list them all from a dir.
         | usage: Mysql [options] new_dbname [new_user] [new_pwd]
         | [options] -h       Display helpage.
@@ -15,8 +12,11 @@ object MysqlSetup extends toolbox.scalasupport.CliApplication {
         |
         | Default [new_user] is devuser
         | Default [new_pwd] is [new_user]123
-      """.stripMargin)
-    }
+      """.stripMargin
+      
+  def main(argv: Array[String]) = {
+    val (args, opts) = parseOptions(argv)
+    if(opts.contains("h") || args.size < 1) exitWith(usage)
     
     val dbname = args(0)
     val user = if(args.length>=2) args(1) else "devuser"
