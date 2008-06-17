@@ -1,11 +1,17 @@
 package toolbox.config
 object ConfigDemo extends Application {
-  println(Config.props)
+  val cfg = Config("dev")
+  val fooDao = cfg.fooDao
+  println(fooDao)
   //println(toolbox.scalasupport.RichSystem.props)
 }
 
 object Config {
-  val props = PropertiesFile("config.properties")  
+  def apply(env: String) = new Config(env)
+}
+class Config(env: String) {
+  val props = PropertiesFile("conf/"+env+"/config.properties")
+  val fooDao: FooDao = new FooDaoImpl 
 }
 
 import scala.collection.jcl.MapWrapper
@@ -17,4 +23,15 @@ object PropertiesFile {
       def underlying = props.asInstanceOf[java.util.Map[String,String]]
     }
   }
+}
+
+/// test data
+case class User(id: Int, uname: String, pwd: String)
+trait FooDao{
+  def save(user: User): Unit
+  def get(id: Int): User
+}
+class FooDaoImpl extends FooDao{
+  def save(user: User) = println("Saving " +user)
+  def get(id: Int) = new User(1, "zman", "foo")  
 }
