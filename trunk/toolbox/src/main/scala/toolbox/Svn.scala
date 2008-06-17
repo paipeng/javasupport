@@ -24,7 +24,7 @@ object Svn extends CliApplication {
             println(exec("svn", "rm", file))
         }
       case "ci" => println(exec("svn", "ci", "-m", "Auto checking.", workingdir))      
-      case "all" => getPendingFiles{ ln =>
+      case "all" => getPendingFiles{ ln =>println(ln)
           val Array(flag, file) = ln.split("\\s+")
           if(flag eq "?")
             println(exec("svn", "add", file))
