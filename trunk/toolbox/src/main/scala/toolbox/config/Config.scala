@@ -11,7 +11,7 @@ object Config {
 }
 class Config(env: String) {
   val props = PropertiesFile("conf/"+env+"/config.properties")
-  val fooDao: FooDao = new FooDaoImpl 
+  val fooDao: FooDao = new FooDaoImpl{ val maxBar = props.get("maxBar")
 }
 
 import scala.collection.jcl.MapWrapper
@@ -32,6 +32,7 @@ trait FooDao{
   def get(id: Int): User
 }
 class FooDaoImpl extends FooDao{
+  val int maxBar = 8
   def save(user: User) = println("Saving " +user)
   def get(id: Int) = new User(1, "zman", "foo")  
 }
