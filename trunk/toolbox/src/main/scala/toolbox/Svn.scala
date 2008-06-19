@@ -28,7 +28,7 @@ object Svn extends CliApplication {
         if(flag == "!")
           println(exec("svn", "rm", file))
       }
-    def ci = println(exec("svn", "ci", "-m", "Auto checkin.", workingdir))
+    def ci = println("Commiting files...\n"+exec("svn", "ci", "-m", "Auto checkin.", workingdir))
     
     subcommand match {
 			case "st" => getPendingFiles { println(_) }
