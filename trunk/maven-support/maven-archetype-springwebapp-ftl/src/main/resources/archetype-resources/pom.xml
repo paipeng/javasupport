@@ -15,8 +15,8 @@
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
 	<scm>
-		<connection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</connection>
-		<developerConnection>scm:svn:svn://faxintelligence.com/labs/${artifactId}/trunk</developerConnection>
+		<connection>scm:svn:svn://faxintelligence.com/labs/${artifactId}</connection>
+		<developerConnection>scm:svn:svn://faxintelligence.com/labs/${artifactId}</developerConnection>
 	</scm>
 	<distributionManagement>
 		<repository>
@@ -54,9 +54,6 @@
 						<propertyfile>${dollar}{basedir}/conf/dev/application.properties</propertyfile>
 						<persistenceunit>default-persistence-unit</persistenceunit>
 						<drop>true</drop>
-						<create>true</create>
-						<jdk5>true</jdk5>
-						<export>true</export>
 					</componentProperties>
 				</configuration>
 			</plugin>
@@ -115,7 +112,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.12</version>
+			<version>2.3.13</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -164,8 +161,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>jcl104-over-slf4j</artifactId>
-			<version>1.5.0-M0</version>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>1.5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>opensymphony</groupId>

@@ -92,17 +92,11 @@ class RichFile(parent: File, name: String, blockSize: Int) extends File(parent, 
   def eachBlock(size:Int)(process: (Array[Byte])=>Unit){
 		RichStream.eachBlock(new FileInputStream(this), size){ buf => process(buf) }
   }
-  protected def ensurePathExists{ 
-    if(!this.getParentFile.exists) 
-      this.getParentFile.mkdirs //auto creates dir if doesn't already exists.
-  }
   def writeText(text: String)={
-    ensurePathExists
     withPrintWriter{ out => out.println(text) }
   }  
   //NewLine is expected on input.
   def writeLines(lines: Iterator[String]){
-    ensurePathExists
     withPrintWriter{ out => for(ln <- lines) out.println(ln) }
   }  
   def withWriter(func: Writer=>Unit){
@@ -154,8 +148,6 @@ class RichZipFile(file: File) extends RichFile(file){
     if(entries.size<1)
       throw new Exception("Can not zip empty entries.")
       
-    ensurePathExists
-    
     val zipStream = new ZipOutputStream(new FileOutputStream(this));
     def addFileToZipStream(path: String, this: File){
       zipStream.putNextEntry(new ZipEntry(path.substring(1) + this.getName))
