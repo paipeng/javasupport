@@ -20,6 +20,8 @@
     <resource>src/main/webapp/WEB-INF/webapp-servlet-dao-controllers.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh.xml</resource>
     <resource>src/main/webapp/WEB-INF/sitemesh-decorators.xml</resource>
+    <resource>src/main/webapp/WEB-INF/resources/sitemesh-decorator.tld</resource>
+    <resource>src/main/webapp/WEB-INF/resources/sitemesh-page.tld</resource>
     <resource>src/main/webapp/index.html</resource>
     <resource>src/main/webapp/WEB-INF/view/welcome.ftl</resource>
     <resource>src/main/webapp/WEB-INF/view/systeminfo.ftl</resource>
