@@ -1,8 +1,17 @@
 package javasupport.toolbox.generator;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
 
 public class FileUtils {
+	
+	public static FileFilter DIR_FILTER = new FileFilter(){
+		public boolean accept(File file) {
+			return file.isDirectory();
+		}
+	};
+	
 	public static String getFilePathname(File file){
 		if(file.isAbsolute()) 
 			return file.getAbsolutePath();
@@ -15,5 +24,35 @@ public class FileUtils {
 	      }
 	      return sb.toString();
 	    }
+	}
+	
+	public static interface FileProcess{
+		public void process(File file) throws Exception;
+	}
+	
+	public static void walk(File dir, FileFilter filter, FileProcess process) throws Exception {
+		for(File file: dir.listFiles(filter)){
+			if(file.isDirectory())
+				walk(file, filter, process);
+			else
+				process.process(file);
+		}
+	}
+	public static void eachFile(File dir, FileFilter filter, FileProcess process) throws Exception {
+		for(File file: dir.listFiles(filter)){
+			if(file.isDirectory())
+				eachFile(file, filter, process);
+			else
+				process.process(file);
+		}
+	}
+
+	public static void eachDir(File dir, FileFilter filter, FileProcess process) throws Exception {
+		for(File file: dir.listFiles(filter)){
+			if(file.isDirectory()){
+				process.process(file);
+				eachDir(file, filter, process);
+			}
+		}
 	}
 }
