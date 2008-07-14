@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package javasupport.jdk.lang;
 
 import java.util.ArrayList;
@@ -11,7 +6,7 @@ import java.util.Properties;
 import org.apache.commons.collections.MapUtils;
 
 /**
- * Provide convient method ready for Subclass to parse
+ * Provide convenient method ready for Subclass to parse
  * Command line interface options and arguments. A typical usages example:
  * 
  * <pre>
@@ -49,18 +44,18 @@ public class CliApplication extends ShortMethodsHelper{
         
     /** 
      * Simple parser for short and long style command line options and arguments. 
-     * Short option format is single dash prefix with single char flag. Anything beyong
+     * Short option format is single dash prefix with single char flag. Anything beyond
      * the first char will be treated as parameter value for it's flag.
      * Long option format is two dashes prefix with one or more chars flag. Option parameter
      * must specify with equal char.
      * 
      * @return array of argument after options parsing.
      */
-    protected static String[] parseOptions(String[] mainArgs) {
+    protected static String[] parseOptions(String[] argv) {
         opts = new Properties();
         List<String> args = new ArrayList<String>();
-        for (int i = 0,  maxIndex = mainArgs.length; i < maxIndex; i++) {
-            String arg = mainArgs[i];
+        for (int i = 0,  maxIndex = argv.length; i < maxIndex; i++) {
+            String arg = argv[i];
             if (arg.startsWith("--")) {
                 String[] s = arg.substring(2).split("=");
                 if (s.length >= 2) {
