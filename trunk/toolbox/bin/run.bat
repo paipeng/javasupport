@@ -1,3 +1,3 @@
 @echo off
-set TOOL_HOME=%~dp0..
-scala -classpath "%TOOL_HOME%\target\classes" %*
+set SCRIPT_HOME=%~dp0..
+java %JAVA_OPTS% -classpath "%JAVA_CLASSPATH%;%SCRIPT_HOME%..\lib\*" %*

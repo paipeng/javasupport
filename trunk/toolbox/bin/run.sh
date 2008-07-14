@@ -1,4 +1,4 @@
 #!/bin/sh
 SCRIPT_HOME=`dirname $0`
 SCRIPT_PARENT_HOME=`cd $SCRIPT_HOME/.. && pwd`
-scala -classpath "$SCRIPT_PARENT_HOME/target/classes" $@
+java $JAVA_OPTS -classpath "$JAVA_CLASSPATH:$SCRIPT_PARENT_HOME/lib/*" $@
