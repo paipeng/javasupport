@@ -9,7 +9,8 @@
     <Connector port="${tomcatInstance.httpPort}" protocol="HTTP/1.1" connectionTimeout="20000" />
     <Engine name="Catalina" defaultHost="localhost">
       <Realm className="org.apache.catalina.realm.UserDatabaseRealm" resourceName="UserDatabase" />
-      <Host name="localhost" appBase="[#noparse]${catalina.home}[/#noparse]/${tomcatInstanceDirname}/${tomcatInstanceName}/webapps" unpackWARs="true" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false">
+      <Host name="localhost" appBase="[#noparse]${catalina.home}[/#noparse]/${tomcatInstanceDirname}/${tomcatInstanceName}/webapps" 
+				unpackWARs="true" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false">
         <Alias>${tomcatHostIPAddress}</Alias>
         <Context path="/manager" debug="0" privileged="true" docBase="[#noparse]${catalina.home}[/#noparse]/webapps/manager" />
       </Host>
