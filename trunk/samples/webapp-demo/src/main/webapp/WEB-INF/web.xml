@@ -12,7 +12,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>UriNameActionServlet</servlet-name>
-		<servlet-class>deng.demo.UriNameActionServlet</servlet-class>
+		<servlet-class>javasupport.servlet.UriNameActionServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UriNameActionServlet</servlet-name>
