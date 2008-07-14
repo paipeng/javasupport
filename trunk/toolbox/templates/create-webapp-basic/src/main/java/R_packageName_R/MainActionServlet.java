@@ -1,4 +1,4 @@
-package deng.demo;
+package ${project.packageName};
 
 import javasupport.servlet.ActionServlet;
 
