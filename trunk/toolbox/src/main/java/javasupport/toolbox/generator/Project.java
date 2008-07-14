@@ -26,17 +26,11 @@ public class Project {
 		return templatePath;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getName() {
 		return name;
 	}
 	public String getGroupId() {
 		return groupId;
-	}
-	public void setGroupId(String groupId) {
-		this.groupId = groupId;
 	}
 	public String getArtifactId() {
 		return artifactId;
@@ -47,14 +41,7 @@ public class Project {
 	public String getJavasupportVersion() {
 		return javasupportVersion;
 	}
-	public void setJavasupportVersion(String javasupportVersion) {
-		this.javasupportVersion = javasupportVersion;
-	}
 	public String getPackageName() {
 		return packageName;
 	}
-	public void setPackageName(String packageName) {
-		this.packageName = packageName;
-	}
-	
 }
