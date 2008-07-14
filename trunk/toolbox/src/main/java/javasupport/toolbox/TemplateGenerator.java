@@ -9,6 +9,7 @@ public class TemplateGenerator extends CliApplication {
 		if(hasOpt("h") || hasOpt("help")){
 			printExitUsage();
 		}
+		System.out.println(java.util.Arrays.asList(args));
 	}
 
 	private static void printExitUsage() {
