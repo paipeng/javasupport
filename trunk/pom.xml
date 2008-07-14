@@ -6,7 +6,7 @@
 	<packaging>pom</packaging>
 	<name>javasupport-pom</name>
 	<modules>
-		<module>maven-support</module>
+		<!-- <module>maven-support</module> -->
 		<module>jdk-support</module>
 		<module>spring-support</module>
 		<module>toolbox</module>
