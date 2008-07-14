@@ -36,7 +36,7 @@
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>
-						<descriptor>src/main/assembly/package.xml</descriptor>
+						<descriptor>assembly.xml</descriptor>
 					</descriptors>
 				</configuration>
 			</plugin>
@@ -58,11 +58,6 @@
 						</manifestEntries>
 					</archive>
 				</configuration>
-			</plugin>
-            <!-- Following exec is needed if you point pluginRepository to internal! -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
