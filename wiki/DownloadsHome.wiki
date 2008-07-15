@@ -1,0 +1,7 @@
+= Latest Release =
+
+[http://javasupport.googlecode.com/files/javasupport-0.0.4-bin.zip javasupport-0.0.4-bin.zip ]
+
+[http://code.google.com/p/javasupport/source/browse/tags/javasupport-0.0.4/RELEASE.txt Release Notes]
+
+
