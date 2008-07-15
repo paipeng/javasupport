@@ -1,6 +1,7 @@
-= Documentation Home for `JavaSupport` Project =
+= Documentation for `JavaSupport` Project =
 
-== Using` JavaSupport` ==
+== Using `JavaSupport` ==
+ * [HowToInstallJavaSupport]
  * [Toolbox]
  * [JDKSupport]
  * [ServletSupport]
