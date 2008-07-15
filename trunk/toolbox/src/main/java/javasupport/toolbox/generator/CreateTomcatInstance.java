@@ -69,11 +69,6 @@ public class CreateTomcatInstance extends ProjectGenerator {
 	}
 
 	@Override
-	protected String getTemplateSetName() {
-		return "create-tomcat-instance";
-	}
-
-	@Override
 	protected String getOutputFilename(String filePathname) {
 		List<String> names = RegexUtils.findGroupsByDelimeters(filePathname, "R_", "_R", "R_");
 		//System.out.println(names);
