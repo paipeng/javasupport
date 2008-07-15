@@ -1,12 +1,11 @@
-= Documentation Home for JavaSupport Project =
+= Documentation Home for `JavaSupport` Project =
 
-== Using JavaSupport ==
+== Using` JavaSupport` ==
  * [Toolbox]
  * [JDKSupport]
  * [ServletSupport]
  * [SpringSupport]
 
-== JavaSupport Development ==
+== `JavaSupport` Development ==
  * HowToBuildJavaSupport
  * HowToSetupMavenInternalRepository
-
