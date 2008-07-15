@@ -29,7 +29,7 @@
 	<!-- Repositories -->
 	<profiles>
 	
-		<!-- Connextions -->
+		<!-- faxintelligence server profile -->
 		<profile>
 			<id>faxintelligence.server</id>
 			<activation>
