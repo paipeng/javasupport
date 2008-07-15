@@ -2,13 +2,13 @@
     <parent>
         <groupId>javasupport</groupId>
         <artifactId>javasupport</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
+        <version>0.0.4</version>
     </parent>
     
     <modelVersion>4.0.0</modelVersion>
     <groupId>javasupport.spring</groupId>
     <artifactId>spring-support</artifactId>
-    <version>0.0.4-SNAPSHOT</version>
+    <version>0.0.4</version>
     <packaging>jar</packaging>
     <name>spring-support</name>
     
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>javasupport.jdk</groupId>
             <artifactId>jdk-support</artifactId>
-            <version>0.0.4-SNAPSHOT</version>
+            <version>0.0.4</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
