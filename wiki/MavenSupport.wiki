@@ -1,5 +1,11 @@
-#summary maven-support sub project - provide maven archetype and plugin supports.
 #labels maven,archetype
+= !!! Maven Archetype Has Been Deprecated!!! =
+
+Starting javasupport-0.0.4, maven archetypes have been removed, and been replaced by [Toolbox] Template Generator instead. Read how to use Toolbox for more information.
+
+= !!! Maven Archetype Has Been Deprecated!!! =
+
+
 
 The maven2 is a great tool to manage and build java projects. Here we have extended to create easy and ready to use application templates called archetypes.
 
