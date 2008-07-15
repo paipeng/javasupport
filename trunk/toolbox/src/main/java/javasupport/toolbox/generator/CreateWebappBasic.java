@@ -15,11 +15,6 @@ public class CreateWebappBasic extends ProjectGenerator {
 		System.out.println("Creating webapp at "+outputDir.getAbsolutePath());
 	}
 
-	@Override
-	protected String getTemplateSetName() {
-		return "create-webapp-basic";
-	}	
-
 	protected String getOutputFilename(String filePathname) {
 		List<String> names = RegexUtils.findGroupsByDelimeters(filePathname, "R_", "_R", "R_");
 		//System.out.println(names);

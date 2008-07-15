@@ -7,9 +7,11 @@ public class Project {
 	private String javasupportVersion;
 	private String packageName;
 	private String templatePath;
+	private String templateSetName;
 		
-	public Project(String name, String javasupportVersion, String templatePath) {
+	public Project(String name, String javasupportVersion, String templatePath, String templateSetName) {
 		this.name = name;
+		this.templateSetName = templateSetName;
 		
 		groupId = name.toLowerCase();
 		groupId.replaceAll("-", "");
@@ -22,6 +24,10 @@ public class Project {
 		this.templatePath = templatePath;
 	}
 		
+	public String getTemplateSetName() {
+		return templateSetName;
+	}
+	
 	public String getTemplatePath() {
 		return templatePath;
 	}

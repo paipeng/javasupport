@@ -19,21 +19,23 @@ public class TemplateGenerator extends CliApplication {
 		}
 
 		String toolHome = System.getProperty("toolhome", ".");
-		String javasupportVersion = getOpt("javasupportVersion", "0.0.4-SNAPSHOT");
-		String templatePath = getOpt("templateDir", toolHome+"/templates");
+		String javasupportVersion = getOpt("v", "0.0.4");
+		String templatePath = getOpt("t", toolHome+"/templates");
 		
 		String subCommandName = args[0];
+		String templateSetName = getOpt("s", subCommandName);
+		
 		if(subCommandName.equals("create-webapp-basic")){
 			if(args.length<2){
 				throw new Exception("Invalid arguments: create-webapp-basic <project-name>");
 			}
-			Project project = new Project(args[1], javasupportVersion, templatePath);
+			Project project = new Project(args[1], javasupportVersion, templatePath, templateSetName);
 			runGenerator(new CreateWebappBasic(project, "."));			
 		}else if(subCommandName.equals("create-tomcat-instance")){
 			if(args.length<3){
 				throw new Exception("Invalid argument: craete-tomcat-instance <tomcat-path> <tomcat-intance-name>");
 			}
-			Project project = new Project(args[2], javasupportVersion, templatePath);
+			Project project = new Project(args[2], javasupportVersion, templatePath, templateSetName);
 			runGenerator(new CreateTomcatInstance(project, ".", args[1]));
 		}else{
 			throw new Exception("Unknow subCommandName " + subCommandName);
@@ -50,6 +52,10 @@ public class TemplateGenerator extends CliApplication {
 
 	private static void printExitUsage() {
 		System.out.println("template [options] <subCommand> [subCommandArguments]");
+		System.out.println("  [options]");
+		System.out.println("  -v<VERSION>  Change javasupport version.");
+		System.out.println("  -t<DIR>      Change templates directory.");
+		System.out.println("  -s<DIR>      Change templates set name.");
 		System.exit(0);
 	}
 }

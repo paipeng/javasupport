@@ -19,18 +19,20 @@
 		<connection>scm:svn:http://javasupport.googlecode.com/svn/trunk</connection>
 		<developerConnection>scm:svn:https://javasupport.googlecode.com/svn/trunk</developerConnection>
 	</scm>
+	
 	<distributionManagement>
 		<repository>
-			<id>internal</id>
-			<name>internal</name>
+			<id>faxintelligence.internal</id>
+			<name>faxintelligence.internal</name>
 			<url>${archiva.server.url}/archiva/repository/internal</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
-			<name>snapshots</name>
+			<id>faxintelligence.snapshots</id>
+			<name>faxintelligence.snapshots</name>
 			<url>${archiva.server.url}/archiva/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
 	<build>
 		<plugins>
 			<plugin>

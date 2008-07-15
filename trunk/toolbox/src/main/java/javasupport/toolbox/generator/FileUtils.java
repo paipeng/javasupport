@@ -2,7 +2,6 @@ package javasupport.toolbox.generator;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 
 public class FileUtils {
 	

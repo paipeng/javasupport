@@ -25,13 +25,6 @@ To use NetBeans with maven plugin:
 
 To build project on command line:
 1) mvn package
-
-===========================
-MAVEN-ARCHETYPE USAGE NOTES
-===========================
-* If dash is used in artifactId, rename conf/*/application.properties database name with underscore.
-  maven-archetype-springwebapp-hibernate will generate a config to connect to database, and 
-  it defualt database name with artifactId. Default mysql won't allow dash.
 	
 
 ==================

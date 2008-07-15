@@ -3,11 +3,9 @@ package javasupport.toolbox.generator;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.util.HashMap;
 
 import javasupport.toolbox.generator.FileUtils.FileProcess;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -24,14 +22,12 @@ public abstract class ProjectGenerator {
 	public ProjectGenerator(Project project, String outputPath){
 		this.project = project;
 		outputDir = new File(outputPath+"/"+project.getName());
-		templateDir = new File(project.getTemplatePath()+"/"+getTemplateSetName());	
+		templateDir = new File(project.getTemplatePath()+"/"+project.getTemplateSetName());	
 		model = new HashMap<String, Object>();
 		config = new Configuration();
 		templatePathname = FileUtils.getFilePathname(templateDir);
 	}
 	
-	protected abstract String getTemplateSetName();
-
 	protected String getOutputFilename(String filePathname){
 		return filePathname;
 	}
