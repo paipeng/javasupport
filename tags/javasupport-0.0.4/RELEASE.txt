@@ -1,0 +1,25 @@
+RELEASE NOTES
+=============
+java-support-0.0.4 [2008-07-15]
+ * Refactored toolbox to use Freemarker templates.
+ * Removed maven-support and prefer toolbox template generator instead.
+ * Add template.sh create-tomcate-instance
+ * Add template.sh create-webapp-basic
+ * Reorganized maven pom and assembly.xml
+ 
+java-support-0.0.3 [2008-04-08]
+ * Added toolbox
+
+java-support-0.0.2 [2008-03-13]
+ * [Fixed] spring-support's FieldValidator class
+ * [Updated] many minor changes for springwebapp* templates.
+	
+java-support-0.0.1 [2008-03-10]
+ * [Added] Mavenize project layout.
+ * [Added] jdk-support.
+ * [Added] spring-support.
+ * [Added] maven-archetype-javaapp.
+ * [Added] maven-archetype-webapp.
+ * [Added] maven-archetype-springwebapp.
+ * [Added] maven-archetype-springwebapp-hibernate.
+ * [Added] maven-archetype-scalaapp.
