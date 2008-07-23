@@ -7,7 +7,7 @@
 	<moduleSets>
 		<moduleSet>
 			<includes>
-				<include>javasupport.jdk:jdk-support</include>
+				<!--<include>javasupport.jdk:jdk-support</include>-->
 				<!--<include>javasupport.servlet:servlet-support</include>-->
 				<!--<include>javasupport.spring:spring-support</include>-->
 				<include>javasupport.toolbox:toolbox</include>
