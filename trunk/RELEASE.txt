@@ -1,5 +1,8 @@
 RELEASE NOTES
 =============
+java-support-0.0.5.SNAPSHOT [2008-07-29]
+ * Fixed duplicated lib in zip package
+
 java-support-0.0.4 [2008-07-15]
  * Refactored toolbox to use Freemarker templates.
  * Removed maven-support and prefer toolbox template generator instead.
