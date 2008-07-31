@@ -13,14 +13,15 @@ public class Project {
 		this.name = name;
 		this.templateSetName = templateSetName;
 		
-		groupId = name.toLowerCase();
-		groupId.replaceAll("-", "");
-		groupId.replaceAll("_", "");
+		groupId = name;
+		
+		packageName = name.toLowerCase();
+		packageName = packageName.replaceAll("-", "");
+		packageName = packageName.replaceAll("_", "");
 		
 		artifactId = groupId;
 		this.javasupportVersion = javasupportVersion;
 		
-		packageName = groupId;		
 		this.templatePath = templatePath;
 	}
 		
