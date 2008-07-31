@@ -15,27 +15,4 @@ jdk-support:
 spring-support:
   is a common library supporting spring framework. Any reuseable controller, bean factory utilities etc.
 	
-
-===========
-DEVELOPMENT
-===========
-
-To use NetBeans with maven plugin:
-1) Open projects by browse to the directory. NetBeans supports maven project natively.
-
-To build project on command line:
-1) mvn package
-	
-
-==================
-PERFORMING RELEASE
-==================
-Find and replace all version string in maven-support/bin/*.sh and *.bat files to release version.
-svn commit -m "preparing scripts for release"
-svn update .
-mvn release:prepare
-mvn release:perform
-cd target/checkout
-mvn assembly:assembly
-* Upload zip file to http://code.google.com/p/javasupport
-
+See project home: http://code.google.com/p/javasupport/ for more information.
