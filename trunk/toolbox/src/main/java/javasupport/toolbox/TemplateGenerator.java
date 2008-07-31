@@ -25,23 +25,19 @@ public class TemplateGenerator extends CliApplication {
 		String subCommandName = args[0];
 		String templateSetName = getOpt("s", subCommandName);
 		
-		if(subCommandName.equals("create-webapp-basic")){
-			if(args.length<2){
-				throw new Exception("Invalid arguments: create-webapp-basic <project-name>");
-			}
-			Project project = new Project(args[1], javasupportVersion, templatePath, templateSetName);
-			runGenerator(new CreateWebappBasic(project, "."));			
-		}else if(subCommandName.equals("create-tomcat-instance")){
+		if(subCommandName.equals("create-tomcat-instance")){
 			if(args.length<3){
 				throw new Exception("Invalid argument: craete-tomcat-instance <tomcat-path> <tomcat-intance-name>");
 			}
 			Project project = new Project(args[2], javasupportVersion, templatePath, templateSetName);
 			runGenerator(new CreateTomcatInstance(project, ".", args[1]));
 		}else{
-			throw new Exception("Unknow subCommandName " + subCommandName);
+			if(args.length<2){
+				throw new Exception("Invalid arguments: "+subCommandName+" <project-name>");
+			}
+			Project project = new Project(args[1], javasupportVersion, templatePath, templateSetName);
+			runGenerator(new CreateWebappBasic(project, "."));
 		}
-		
-		
 	}
 	
 	private static void runGenerator(ProjectGenerator gen) throws Exception{
