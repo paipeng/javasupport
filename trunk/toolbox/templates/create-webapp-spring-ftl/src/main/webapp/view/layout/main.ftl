@@ -1,4 +1,4 @@
-[#noparse][#macro main title="${Application.contextPath}"]
+[#noparse][#macro layout title="${Application.contextPath}"]
 <html>
     <head>
         <title>${title}</title>
@@ -14,7 +14,6 @@
 			<ul id="navlist">
 			    <li><a href="${Application.contextPath}/webapp/main">Main</a></li>
 			    <li><a href="${Application.contextPath}/webapp/about">About</a></li>
-			    [#-- <li><a href="${Application.contextPath}/webapp/systeminfo">SystemInfo</a></li> --]
 			</ul>
 		</div>
 		    	
