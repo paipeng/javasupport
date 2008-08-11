@@ -9,5 +9,5 @@ set SCRIPT_HOME=%~dp0
 set CATALINA_HOME=${tomcatPath}
 set CATALINA_BASE=${tomcatPath}\${tomcatInstanceDirname}\${tomcatInstanceName}
 set JAVA_OPTS="-Xmx128m"
-%CATALINA_HOME%\bin\catalina.bat $@
+%CATALINA_HOME%\bin\catalina.bat %*
 
