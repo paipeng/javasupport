@@ -1,5 +1,10 @@
 RELEASE NOTES
 =============
+java-support-0.0.6-SNAPSHOT [2008-08-11]
+ * Default spring-ftl to annotation based webapp.
+ * Switched FM main.layout instead of reverse.
+ * Fixed Windows startup catalina script.
+ 
 java-support-0.0.5 [2008-07-31]
  * Fixed duplicated lib in zip package
  * Added create-webapp-spring-ftl template.
