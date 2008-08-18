@@ -13,8 +13,8 @@ The following setup will get you started with Eclipse in web development.
   # Add your project to your ServerRuntime, and starts it.
 
 = Tool Links =
-http://maven.apache.org/
-http://tomcat.apache.org/
-http://eclipse.org/
-http://m2eclipse.codehaus.org/
-http://code.google.com/p/javasupport/wiki/DownloadsHome
+  * http://maven.apache.org/
+  * http://tomcat.apache.org/
+  * http://eclipse.org/
+  * http://m2eclipse.codehaus.org/
+  * http://code.google.com/p/javasupport/wiki/DownloadsHome
