@@ -18,7 +18,7 @@ Browse http://localhost:8080/myspringweb
 
 What's next? see HowToSetupEclipseWebDevelopement
 
-=== Generate a Basic Java Servlet WebApplication ===
+=== Generate a Basic Java Servlet Web Application ===
 This will create a Maven based web application using [ServletSupport] library.
 
 {{{
