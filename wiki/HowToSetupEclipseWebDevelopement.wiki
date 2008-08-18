@@ -1,20 +1,20 @@
 The following setup will get you started with Eclipse in web development.
 
+= Server and IDE setup =
   # Download latest Maven2 and unpack it under `/opt/maven`
   # Download latest Tomcat Server (just the zip version) and unpack it under `/opt/tomcat`
   # Download lastest Eclipse and unpack it under `/opt/eclipse`
   # Open Eclipse and install M2Ecilpse plugin
   # Open Eclipse and Setup ServerRuntime that points to /opt/tomcat
 
+= Project Setup =
   # Generate a maven project using Toolbox from this project
   # Open Eclipse, Import a Maven Project, point to your project root directory
   # Add your project to your ServerRuntime, and starts it.
 
-= Links =
+= Tool Links =
 http://maven.apache.org/
 http://tomcat.apache.org/
 http://eclipse.org/
 http://m2eclipse.codehaus.org/
 http://code.google.com/p/javasupport/wiki/DownloadsHome
-
-
