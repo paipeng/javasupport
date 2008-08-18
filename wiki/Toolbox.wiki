@@ -6,15 +6,31 @@ To see more help, use `--help` option on each command provided.
 
 == `Template` Generator Command ==
 
-=== `create-webapp-basic` ===
+=== Generate a Spring+Freemarker ready project ===
+This will create a Maven based web application using [ServletSupport] library.
+
+{{{
+$ template.sh create-webapp-spring-ftl myspringweb
+$ cd myspringweb && mvn jetty:run
+}}}
+
+Browse http://localhost:8080/myspringweb
+
+What's next? see HowToSetupEclipseWebDevelopement
+
+=== Generate a Basic Java Servlet WebApplication ===
 This will create a Maven based web application using [ServletSupport] library.
 
 {{{
 $ template.sh create-webapp-basic mywebapp
-$ cd mywebapp && mvn package
+$ cd mywebapp && mvn jetty:run
 }}}
 
-=== `create-tomcat-instance` ===
+Browse http://localhost:8080/mywebapp
+
+What's next? see HowToSetupEclipseWebDevelopement
+
+=== Setup Muti Instances of Tomcat Server ===
 This will setup a new instance of tomcat `CATALINA_BASE` from your installed Tomcat6 installation. The tool will setup and configure next available ports and provide a default ROOT context application so your new instance will be ready to run.
 
 {{{
