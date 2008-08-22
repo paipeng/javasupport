@@ -1,1 +1,1 @@
-A spring MVC base web application.
+A spring MVC + Freemarker View web application.
