@@ -13,7 +13,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>${${project.groupId}.conf.dir}/application.properties</value>
+                <value>${[/#noparse]${project.groupId}[#noparse].conf.dir}/application.properties</value>
             </list>
         </property>
     </bean> -->
