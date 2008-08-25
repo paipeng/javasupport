@@ -1,4 +1,5 @@
-<#ftl strip_whitespace=true>
+[#noparse]
+[#ftl strip_whitespace=true]
 <#--
  * spring.ftl
  *
@@ -25,7 +26,7 @@
  *
  * Macro to translate a message code into a message.
  -->
-<#macro message code>${springMacroRequestContext.getMessage(code)}</#macro>
+[#macro message code]${springMacroRequestContext.getMessage(code)}[/#macro]
 
 <#--
  * messageText
@@ -33,14 +34,14 @@
  * Macro to translate a message code into a message,
  * using the given default text if no message found.
  -->
-<#macro messageText code, text>${springMacroRequestContext.getMessage(code, text)}</#macro>
+[#macro messageText code, text]${springMacroRequestContext.getMessage(code, text)}[/#macro]
 
 <#--
  * messageArgs
  *
  * Macro to translate a message code with arguments into a message.
  -->
-<#macro messageArgs code, args>${springMacroRequestContext.getMessage(code, args)}</#macro>
+[#macro messageArgs code, args]${springMacroRequestContext.getMessage(code, args)}[/#macro]
 
 <#--
  * messageArgsText
@@ -48,14 +49,14 @@
  * Macro to translate a message code with arguments into a message,
  * using the given default text if no message found.
  -->
-<#macro messageArgsText code, args, text>${springMacroRequestContext.getMessage(code, args, text)}</#macro>
+[#macro messageArgsText code, args, text]${springMacroRequestContext.getMessage(code, args, text)}[/#macro]
 
 <#--
  * theme
  *
  * Macro to translate a theme message code into a message.
  -->
-<#macro theme code>${springMacroRequestContext.getThemeMessage(code)}</#macro>
+[#macro theme code]${springMacroRequestContext.getThemeMessage(code)}[/#macro]
 
 <#--
  * themeText
@@ -63,14 +64,14 @@
  * Macro to translate a theme message code into a message,
  * using the given default text if no message found.
  -->
-<#macro themeText code, text>${springMacroRequestContext.getThemeMessage(code, text)}</#macro>
+[#macro themeText code, text]${springMacroRequestContext.getThemeMessage(code, text)}[/#macro]
 
 <#--
  * themeArgs
  *
  * Macro to translate a theme message code with arguments into a message.
  -->
-<#macro themeArgs code, args>${springMacroRequestContext.getThemeMessage(code, args)}</#macro>
+[#macro themeArgs code, args]${springMacroRequestContext.getThemeMessage(code, args)}[/#macro]
 
 <#--
  * themeArgsText
@@ -78,7 +79,7 @@
  * Macro to translate a theme message code with arguments into a message,
  * using the given default text if no message found.
  -->
-<#macro themeArgsText code, args, text>${springMacroRequestContext.getThemeMessage(code, args, text)}</#macro>
+[#macro themeArgsText code, args, text]${springMacroRequestContext.getThemeMessage(code, args, text)}[/#macro]
 
 <#--
  * url
@@ -86,7 +87,7 @@
  * Takes a relative URL and makes it absolute from the server root by
  * adding the context root for the web application.
  -->
-<#macro url relativeUrl>${springMacroRequestContext.getContextPath()}${relativeUrl}</#macro>
+[#macro url relativeUrl]${springMacroRequestContext.getContextPath()}${relativeUrl}[/#macro]
 
 <#--
  * bind
@@ -113,20 +114,20 @@
  *   Spring defaults to a command name of "command" but this can be overridden
  *   by user config.
  -->
-<#macro bind path>
-    <#if htmlEscape?exists>
-        <#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)>
-    <#else>
-        <#assign status = springMacroRequestContext.getBindStatus(path)>
-    </#if>
+[#macro bind path]
+    [#if htmlEscape?exists]
+        [#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)]
+    [#else]
+        [#assign status = springMacroRequestContext.getBindStatus(path)]
+    [/#if]
     <#-- assign a temporary value, forcing a string representation for any
     kind of variable. This temp value is only used in this macro lib -->
-    <#if status.value?exists && status.value?is_boolean>
-        <#assign stringStatusValue=status.value?string>
-    <#else>
-        <#assign stringStatusValue=status.value?default("")>
-    </#if>
-</#macro>
+    [#if status.value?exists && status.value?is_boolean]
+        [#assign stringStatusValue=status.value?string]
+    [#else]
+        [#assign stringStatusValue=status.value?default("")]
+    [/#if]
+[/#macro]
 
 <#--
  * bindEscaped
@@ -134,16 +135,16 @@
  * Similar to spring:bind, but takes an explicit HTML escape flag rather
  * than relying on the default HTML escape setting.
  -->
-<#macro bindEscaped path, htmlEscape>
-    <#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)>
+[#macro bindEscaped path, htmlEscape]
+    [#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)]
     <#-- assign a temporary value, forcing a string representation for any
     kind of variable. This temp value is only used in this macro lib -->
-    <#if status.value?exists && status.value?is_boolean>
-        <#assign stringStatusValue=status.value?string>
-    <#else>
-        <#assign stringStatusValue=status.value?default("")>
-    </#if>
-</#macro>
+    [#if status.value?exists && status.value?is_boolean]
+        [#assign stringStatusValue=status.value?string]
+    [#else]
+        [#assign stringStatusValue=status.value?default("")]
+    [/#if]
+[/#macro]
 
 <#--
  * formInput
@@ -155,10 +156,10 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
  -->
-<#macro formInput path attributes="" fieldType="text">
-    <@bind path/>
-    <input type="${fieldType}" id="${status.expression}" name="${status.expression}" value="<#if fieldType!="password">${stringStatusValue}</#if>" ${attributes}<@closeTag/>
-</#macro>
+[#macro formInput path attributes="" fieldType="text"]
+    [@bind path/]
+    [input type="${fieldType}" id="${status.expression}" name="${status.expression}" value="<#if fieldType!="password"]${stringStatusValue}[/#if]" ${attributes}[@closeTag/]
+[/#macro]
 
 <#--
  * formPasswordInput
@@ -172,9 +173,9 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
  -->
-<#macro formPasswordInput path attributes="">
-    <@formInput path, attributes, "password"/>
-</#macro>
+[#macro formPasswordInput path attributes=""]
+    [@formInput path, attributes, "password"/]
+[/#macro]
 
 <#--
  * formHiddenInput
@@ -187,9 +188,9 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
  -->
-<#macro formHiddenInput path attributes="">
-    <@formInput path, attributes, "hidden"/>
-</#macro>
+[#macro formHiddenInput path attributes=""]
+    [@formInput path, attributes, "hidden"/]
+[/#macro]
 
 <#--
  * formTextarea
@@ -200,10 +201,10 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
  -->
-<#macro formTextarea path attributes="">
-    <@bind path/>
-    <textarea id="${status.expression}" name="${status.expression}" ${attributes}>${stringStatusValue}</textarea>
-</#macro>
+[#macro formTextarea path attributes=""]
+    [@bind path/]
+    [textarea id="${status.expression}" name="${status.expression}" ${attributes}]${stringStatusValue}[/textarea]
+[/#macro]
 
 <#--
  * formSingleSelect
@@ -216,14 +217,14 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
 -->
-<#macro formSingleSelect path options attributes="">
-    <@bind path/>
-    <select id="${status.expression}" name="${status.expression}" ${attributes}>
-        <#list options?keys as value>
-        <option value="${value?html}"<@checkSelected value/>>${options[value]?html}</option>
-        </#list>
-    </select>
-</#macro>
+[#macro formSingleSelect path options attributes=""]
+    [@bind path/]
+    [select id="${status.expression}" name="${status.expression}" ${attributes}]
+        [#list options?keys as value]
+        [option value="${value?html}"<@checkSelected value/]>${options[value]?html}[/option]
+        [/#list]
+    [/select]
+[/#macro]
 
 <#--
  * formMultiSelect
@@ -236,15 +237,15 @@
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
 -->
-<#macro formMultiSelect path options attributes="">
-    <@bind path/>
-    <select multiple="multiple" id="${status.expression}" name="${status.expression}" ${attributes}>
-        <#list options?keys as value>
-        <#assign isSelected = contains(status.value?default([""]), value)>
-        <option value="${value?html}"<#if isSelected> selected="selected"</#if>>${options[value]?html}</option>
-        </#list>
-    </select>
-</#macro>
+[#macro formMultiSelect path options attributes=""]
+    [@bind path/]
+    [select multiple="multiple" id="${status.expression}" name="${status.expression}" ${attributes}]
+        [#list options?keys as value]
+        [#assign isSelected = contains(status.value?default([""]), value)]
+        [option value="${value?html}"<#if isSelected] selected="selected"[/#if]>${options[value]?html}[/option]
+        [/#list]
+    [/select]
+[/#macro]
 
 <#--
  * formRadioButtons
@@ -254,18 +255,18 @@
  * @param path the name of the field to bind to
  * @param options a map (value=label) of all the available options
  * @param separator the html tag or other character list that should be used to
- *    separate each option. Typically '&nbsp;' or '<br>'
+ *    separate each option. Typically '&nbsp;' or '[br]'
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
 -->
-<#macro formRadioButtons path options separator attributes="">
-    <@bind path/>
-    <#list options?keys as value>
-    <#assign id="${status.expression}${value_index}">
-    <input type="radio" id="${id}" name="${status.expression}" value="${value?html}"<#if stringStatusValue == value> checked="checked"</#if> ${attributes}<@closeTag/>
-    <label for="${id}">${options[value]?html}</label>${separator}
-    </#list>
-</#macro>
+[#macro formRadioButtons path options separator attributes=""]
+    [@bind path/]
+    [#list options?keys as value]
+    [#assign id="${status.expression}${value_index}"]
+    [input type="radio" id="${id}" name="${status.expression}" value="${value?html}"<#if stringStatusValue == value] checked="checked"[/#if] ${attributes}[@closeTag/]
+    [label for="${id}"]${options[value]?html}[/label]${separator}
+    [/#list]
+[/#macro]
 
 <#--
  * formCheckboxes
@@ -275,20 +276,20 @@
  * @param path the name of the field to bind to
  * @param options a map (value=label) of all the available options
  * @param separator the html tag or other character list that should be used to
- *    separate each option. Typically '&nbsp;' or '<br>'
+ *    separate each option. Typically '&nbsp;' or '[br]'
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
 -->
-<#macro formCheckboxes path options separator attributes="">
-    <@bind path/>
-    <#list options?keys as value>
-    <#assign id="${status.expression}${value_index}">
-    <#assign isSelected = contains(status.value?default([""]), value)>
-    <input type="checkbox" id="${id}" name="${status.expression}" value="${value?html}"<#if isSelected> checked="checked"</#if> ${attributes}<@closeTag/>
-    <label for="${id}">${options[value]?html}</label>${separator}
-    </#list>
-    <input type="hidden" name="_${status.expression}" value="on"/>
-</#macro>
+[#macro formCheckboxes path options separator attributes=""]
+    [@bind path/]
+    [#list options?keys as value]
+    [#assign id="${status.expression}${value_index}"]
+    [#assign isSelected = contains(status.value?default([""]), value)]
+    [input type="checkbox" id="${id}" name="${status.expression}" value="${value?html}"<#if isSelected] checked="checked"[/#if] ${attributes}[@closeTag/]
+    [label for="${id}"]${options[value]?html}[/label]${separator}
+    [/#list]
+    [input type="hidden" name="_${status.expression}" value="on"/]
+[/#macro]
 
 <#--
  * showErrors
@@ -297,23 +298,23 @@
  * optional style attributes.
  *
  * @param separator the html tag or other character list that should be used to
- *    separate each option. Typically '<br>'.
+ *    separate each option. Typically '[br]'.
  * @param classOrStyle either the name of a CSS class element (which is defined in
  *    the template or an external CSS file) or an inline style. If the value passed in here
  *    contains a colon (:) then a 'style=' attribute will be used, else a 'class=' attribute
  *    will be used.
 -->
-<#macro showErrors separator classOrStyle="">
-    <#list status.errorMessages as error>
-    <#if classOrStyle == "">
-        <b>${error}</b>
-    <#else>
-        <#if classOrStyle?index_of(":") == -1><#assign attr="class"><#else><#assign attr="style"></#if>
-        <span ${attr}="${classOrStyle}">${error}</span>
-    </#if>
-    <#if error_has_next>${separator}</#if>
-    </#list>
-</#macro>
+[#macro showErrors separator classOrStyle=""]
+    [#list status.errorMessages as error]
+    [#if classOrStyle == ""]
+        [b]${error}[/b]
+    [#else]
+        [#if classOrStyle?index_of(":") == -1][#assign attr="class"][#else][#assign attr="style"][/#if]
+        [span ${attr}="${classOrStyle}"]${error}[/span]
+    [/#if]
+    [#if error_has_next]${separator}[/#if]
+    [/#list]
+[/#macro]
 
 <#--
  * checkSelected
@@ -325,10 +326,10 @@
  *
  * @param value the current value in a list iteration
 -->
-<#macro checkSelected value>
-    <#if stringStatusValue?is_number && stringStatusValue == value?number>selected="selected"</#if>
-    <#if stringStatusValue?is_string && stringStatusValue == value>selected="selected"</#if>
-</#macro>
+[#macro checkSelected value]
+    [#if stringStatusValue?is_number && stringStatusValue == value?number]selected="selected"[/#if]
+    [#if stringStatusValue?is_string && stringStatusValue == value]selected="selected"[/#if]
+[/#macro]
 
 <#--
  * contains
@@ -341,12 +342,12 @@
  * @param item the item to search for in the list
  * @return true if item is found in the list, false otherwise
 -->
-<#function contains list item>
-    <#list list as nextInList>
-    <#if nextInList == item><#return true></#if>
-    </#list>
-    <#return false>
-</#function>
+[#function contains list item]
+    [#list list as nextInList]
+    [#if nextInList == item][#return true][/#if]
+    [/#list]
+    [#return false]
+[/#function]
 
 <#--
  * closeTag
@@ -355,6 +356,7 @@
  * depending on the value of a 'xhtmlCompliant' variable in the namespace
  * of this library.
 -->
-<#macro closeTag>
-    <#if xhtmlCompliant?exists && xhtmlCompliant>/><#else>></#if>
-</#macro>
+[#macro closeTag]
+    [#if xhtmlCompliant?exists && xhtmlCompliant]/>[#else]>[/#if]
+[/#macro]
+[/#noparse]
