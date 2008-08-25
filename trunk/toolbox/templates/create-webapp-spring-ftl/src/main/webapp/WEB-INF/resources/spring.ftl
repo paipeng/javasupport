@@ -1,6 +1,6 @@
 [#noparse]
 [#ftl strip_whitespace=true]
-<#--
+[#--
  * spring.ftl
  *
  * This file consists of a collection of FreeMarker macros aimed at easing
@@ -19,77 +19,77 @@
  * @author Darren Davison
  * @author Juergen Hoeller
  * @since 1.1
- -->
+--]
 
-<#--
+[#--
  * message
  *
  * Macro to translate a message code into a message.
- -->
+--]
 [#macro message code]${springMacroRequestContext.getMessage(code)}[/#macro]
 
-<#--
+[#--
  * messageText
  *
  * Macro to translate a message code into a message,
  * using the given default text if no message found.
- -->
+--]
 [#macro messageText code, text]${springMacroRequestContext.getMessage(code, text)}[/#macro]
 
-<#--
+[#--
  * messageArgs
  *
  * Macro to translate a message code with arguments into a message.
- -->
+--]
 [#macro messageArgs code, args]${springMacroRequestContext.getMessage(code, args)}[/#macro]
 
-<#--
+[#--
  * messageArgsText
  *
  * Macro to translate a message code with arguments into a message,
  * using the given default text if no message found.
- -->
+--]
 [#macro messageArgsText code, args, text]${springMacroRequestContext.getMessage(code, args, text)}[/#macro]
 
-<#--
+[#--
  * theme
  *
  * Macro to translate a theme message code into a message.
- -->
+--]
 [#macro theme code]${springMacroRequestContext.getThemeMessage(code)}[/#macro]
 
-<#--
+[#--
  * themeText
  *
  * Macro to translate a theme message code into a message,
  * using the given default text if no message found.
- -->
+--]
 [#macro themeText code, text]${springMacroRequestContext.getThemeMessage(code, text)}[/#macro]
 
-<#--
+[#--
  * themeArgs
  *
  * Macro to translate a theme message code with arguments into a message.
- -->
+--]
 [#macro themeArgs code, args]${springMacroRequestContext.getThemeMessage(code, args)}[/#macro]
 
-<#--
+[#--
  * themeArgsText
  *
  * Macro to translate a theme message code with arguments into a message,
  * using the given default text if no message found.
- -->
+--]
 [#macro themeArgsText code, args, text]${springMacroRequestContext.getThemeMessage(code, args, text)}[/#macro]
 
-<#--
+[#--
  * url
  *
  * Takes a relative URL and makes it absolute from the server root by
  * adding the context root for the web application.
- -->
+--]
 [#macro url relativeUrl]${springMacroRequestContext.getContextPath()}${relativeUrl}[/#macro]
 
-<#--
+[#--
  * bind
  *
  * Exposes a BindStatus object for the given bind path, which can be
@@ -113,15 +113,15 @@
  * @param path : the path (string value) of the value required to bind to.
  *   Spring defaults to a command name of "command" but this can be overridden
  *   by user config.
- -->
+--]
 [#macro bind path]
     [#if htmlEscape?exists]
         [#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)]
     [#else]
         [#assign status = springMacroRequestContext.getBindStatus(path)]
     [/#if]
-    <#-- assign a temporary value, forcing a string representation for any
-    kind of variable. This temp value is only used in this macro lib -->
+    [#-- assign a temporary value, forcing a string representation for any
+    kind of variable. This temp value is only used in this macro lib--]
     [#if status.value?exists && status.value?is_boolean]
         [#assign stringStatusValue=status.value?string]
     [#else]
@@ -129,16 +129,16 @@
     [/#if]
 [/#macro]
 
-<#--
+[#--
  * bindEscaped
  *
  * Similar to spring:bind, but takes an explicit HTML escape flag rather
  * than relying on the default HTML escape setting.
- -->
+--]
 [#macro bindEscaped path, htmlEscape]
     [#assign status = springMacroRequestContext.getBindStatus(path, htmlEscape)]
-    <#-- assign a temporary value, forcing a string representation for any
-    kind of variable. This temp value is only used in this macro lib -->
+    [#-- assign a temporary value, forcing a string representation for any
+    kind of variable. This temp value is only used in this macro lib--]
     [#if status.value?exists && status.value?is_boolean]
         [#assign stringStatusValue=status.value?string]
     [#else]
@@ -146,7 +146,7 @@
     [/#if]
 [/#macro]
 
-<#--
+[#--
  * formInput
  *
  * Display a form input field of type 'text' and bind it to an attribute
@@ -155,13 +155,13 @@
  * @param path the name of the field to bind to
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
- -->
+--]
 [#macro formInput path attributes="" fieldType="text"]
     [@bind path/]
     [input type="${fieldType}" id="${status.expression}" name="${status.expression}" value="<#if fieldType!="password"]${stringStatusValue}[/#if]" ${attributes}[@closeTag/]
 [/#macro]
 
-<#--
+[#--
  * formPasswordInput
  *
  * Display a form input field of type 'password' and bind it to an attribute
@@ -172,12 +172,12 @@
  * @param path the name of the field to bind to
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
- -->
+--]
 [#macro formPasswordInput path attributes=""]
     [@formInput path, attributes, "password"/]
 [/#macro]
 
-<#--
+[#--
  * formHiddenInput
  *
  * Generate a form input field of type 'hidden' and bind it to an attribute
@@ -187,12 +187,12 @@
  * @param path the name of the field to bind to
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
- -->
+--]
 [#macro formHiddenInput path attributes=""]
     [@formInput path, attributes, "hidden"/]
 [/#macro]
 
-<#--
+[#--
  * formTextarea
  *
  * Display a text area and bind it to an attribute of a command or bean.
@@ -200,13 +200,13 @@
  * @param path the name of the field to bind to
  * @param attributes any additional attributes for the element (such as class
  *    or CSS styles or size
- -->
+--]
 [#macro formTextarea path attributes=""]
     [@bind path/]
     [textarea id="${status.expression}" name="${status.expression}" ${attributes}]${stringStatusValue}[/textarea]
 [/#macro]
 
-<#--
+[#--
  * formSingleSelect
  *
  * Show a selectbox (dropdown) input element allowing a single value to be chosen
@@ -226,7 +226,7 @@
     [/select]
 [/#macro]
 
-<#--
+[#--
  * formMultiSelect
  *
  * Show a listbox of options allowing the user to make 0 or more choices from
@@ -247,7 +247,7 @@
     [/select]
 [/#macro]
 
-<#--
+[#--
  * formRadioButtons
  *
  * Show radio buttons.
@@ -268,7 +268,7 @@
     [/#list]
 [/#macro]
 
-<#--
+[#--
  * formCheckboxes
  *
  * Show checkboxes.
@@ -291,7 +291,7 @@
     [input type="hidden" name="_${status.expression}" value="on"/]
 [/#macro]
 
-<#--
+[#--
  * showErrors
  *
  * Show validation errors for the currently bound field, with
@@ -316,7 +316,7 @@
     [/#list]
 [/#macro]
 
-<#--
+[#--
  * checkSelected
  *
  * Check a value in a list to see if it is the currently selected value.
@@ -331,7 +331,7 @@
     [#if stringStatusValue?is_string && stringStatusValue == value]selected="selected"[/#if]
 [/#macro]
 
-<#--
+[#--
  * contains
  *
  * Macro to return true if the list contains the scalar, false if not.
@@ -349,7 +349,7 @@
     [#return false]
 [/#function]
 
-<#--
+[#--
  * closeTag
  *
  * Simple macro to close an HTML tag that has no body with '>' or '/>',
