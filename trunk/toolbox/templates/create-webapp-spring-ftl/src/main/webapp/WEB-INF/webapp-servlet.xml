@@ -14,7 +14,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	
 	<!-- ViewResolver.prefix WILL append to freemarkerConfig.templateLoaderPath value! -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="prefix" value="/view/" />
+		<property name="prefix" value="/WEB-INF/ftl" />
 		<property name="suffix" value=".ftl" />
 	</bean>
 	
@@ -26,7 +26,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	  	<property name="freemarkerSettings">
 	  		<util:properties>
 	  			<prop key="tag_syntax">square_bracket</prop>
-	  			<prop key="auto_import">/view/layout/main.ftl as main</prop>
+	  			<prop key="auto_import">/WEB-INF/ftl/layout/main.ftl as main</prop>
 	  		</util:properties>
 	  	</property>
 	</bean>
