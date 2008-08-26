@@ -14,6 +14,7 @@
 			<ul id="navlist">
 			    <li><a href="${Application.contextPath}/webapp/main">Main</a></li>
 			    <li><a href="${Application.contextPath}/webapp/about">About</a></li>
+			    [#-- <li><a href="${Application.contextPath}/webapp/systeminfo">SystemInfo</a></li> --]
 			</ul>
 		</div>
 		    	
