@@ -2,9 +2,9 @@ package javasupport.toolbox.generator;
 
 import java.util.List;
 
-public class CreateWebappBasic extends ProjectGenerator {
+public class CreateJavaBasedProject extends ProjectGenerator {
 	
-	public CreateWebappBasic(Project project, String outputPath){
+	public CreateJavaBasedProject(Project project, String outputPath){
 		super(project, outputPath);
 	}
 	
