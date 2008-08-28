@@ -9,7 +9,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
-    <!-- Web application startup setup. -->
+  <!-- Web application startup setup. -->
 	<bean id="webappStartupConfigurer" class="${project.packageName}.WebappStartupConfigurer"></bean>
 	
 	<!-- ViewResolver for JSTL/JSP view-->

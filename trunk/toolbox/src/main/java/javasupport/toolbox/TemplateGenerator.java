@@ -32,11 +32,20 @@ public class TemplateGenerator extends CliApplication {
 			Project project = new Project(args[2], javasupportVersion, templatePath, templateSetName);
 			runGenerator(new CreateTomcatInstance(project, ".", args[1]));
 		}else{
-			if(args.length<2){
-				throw new Exception("Invalid arguments: "+subCommandName+" <project-name>");
+			if(subCommandName.startsWith("create-webapp")){
+				if(args.length<2){
+					throw new Exception("Invalid arguments: Missing <project-name>");
+				}
+				Project project = null;
+				String projName = args[1];
+				String packageName = getOpt("p", null);
+				if(packageName == null)
+					project = new Project(projName, javasupportVersion, templatePath, templateSetName);
+				else
+					project = new Project(projName, javasupportVersion, templatePath, templateSetName, packageName);
+				
+				runGenerator(new CreateWebappBasic(project, "."));
 			}
-			Project project = new Project(args[1], javasupportVersion, templatePath, templateSetName);
-			runGenerator(new CreateWebappBasic(project, "."));
 		}
 	}
 	
@@ -47,11 +56,35 @@ public class TemplateGenerator extends CliApplication {
 	}
 
 	private static void printExitUsage() {
-		System.out.println("template [options] <subCommand> [subCommandArguments]");
-		System.out.println("  [options]");
+		System.out.println("A template generator tool to create and/or setup project using a set of");
+		System.out.println("Freemarker(FTL) templates files.");
+		System.out.println("");
+		System.out.println("Usage:");
+		System.out.println("template.sh[.bat] [options] <subCommand>");
+		System.out.println("");
+		System.out.println("[options]");
 		System.out.println("  -v<VERSION>  Change javasupport version.");
 		System.out.println("  -t<DIR>      Change templates directory.");
 		System.out.println("  -s<DIR>      Change templates set name.");
+		System.out.println("");
+		System.out.println("<subCommand>");
+		System.out.println("  create-webapp-basic <project-name>");
+		System.out.println("    Create a basic Servlet webapp project.");
+		System.out.println("    [additional supported options]");
+		System.out.println("      -p<PACKAGENAME> Specify package name.");
+		System.out.println("");
+		System.out.println("  create-webapp-spring [command-options] <project-name>");
+		System.out.println("    Create a SpringMVC+Jsp View webapp project.");
+		System.out.println("    [additional supported options]");
+		System.out.println("      -p<PACKAGENAME> Specify package name.");
+		System.out.println("");
+		System.out.println("  create-webapp-spring-ftl [command-options] <project-name>");
+		System.out.println("    Create a SpringMVC+Freemarker View webapp project.");
+		System.out.println("    [additional supported options]");
+		System.out.println("      -p<PACKAGENAME> Specify package name.");
+		System.out.println("");
+		System.out.println("  create-tomcat-instance <tomcat-home-path> <new-tomcat-base-name>");
+		System.out.println("    Create and setup a new Tomcat(CATALINA_BASE) to be run as separated instance.");
 		System.exit(0);
 	}
 }

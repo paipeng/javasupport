@@ -10,14 +10,24 @@ public class Project {
 	private String templateSetName;
 		
 	public Project(String name, String javasupportVersion, String templatePath, String templateSetName) {
+		String packageName = name.toLowerCase();
+		packageName = packageName.replaceAll("-", "");
+		packageName = packageName.replaceAll("_", "");
+		
+		init(name, javasupportVersion, templatePath, templateSetName, packageName);
+	}
+	
+	public Project(String name, String javasupportVersion, String templatePath, String templateSetName, String packageName) {
+		init(name, javasupportVersion, templatePath, templateSetName, packageName);
+	}
+	
+	public void init(String name, String javasupportVersion, String templatePath, String templateSetName, String packageName) {
 		this.name = name;
 		this.templateSetName = templateSetName;
 		
-		groupId = name;
+		this.groupId = name;
 		
-		packageName = name.toLowerCase();
-		packageName = packageName.replaceAll("-", "");
-		packageName = packageName.replaceAll("_", "");
+		this.packageName = packageName;
 		
 		artifactId = groupId;
 		this.javasupportVersion = javasupportVersion;

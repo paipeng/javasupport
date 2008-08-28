@@ -1,1 +1,1 @@
-<% response.sendRedirect(request.getContextPath()+"/webapp/main"); %>
+<% response.sendRedirect(request.getContextPath()+"/webapp/main/index"); %>

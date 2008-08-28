@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>${title}</title>
-        <link href="${Application.contextPath}/view/layout/screen.css" rel="stylesheet" type="text/css" media="screen">
+        <link href="${Application.contextPath}/default_theme/style.css" rel="stylesheet" type="text/css" media="screen">
     </head>
     <body>    
     
@@ -12,9 +12,8 @@
 		
 		<div id="navcontainer">
 			<ul id="navlist">
-			    <li><a href="${Application.contextPath}/webapp/main">Main</a></li>
-			    <li><a href="${Application.contextPath}/webapp/about">About</a></li>
-			    [#-- <li><a href="${Application.contextPath}/webapp/systeminfo">SystemInfo</a></li> --]
+			    <li><a href="${Application.contextPath}/webapp/main/index">Main</a></li>
+			    <li><a href="${Application.contextPath}/webapp/main/about">About</a></li>
 			</ul>
 		</div>
 		    	
