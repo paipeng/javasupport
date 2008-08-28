@@ -30,39 +30,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<build>
-		<plugins>
-			<!-- 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>2.1</version>
-				<dependencies>
-					<dependency>
-						<groupId>mysql</groupId>
-						<artifactId>mysql-connector-java</artifactId>
-						<version>${mysql.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<components>
-						<component>
-							<name>hbm2ddl</name>
-						</component>
-					</components>
-					<componentProperties>
-						<implementation>jpaconfiguration</implementation>
-						<propertyfile>${basedir}/conf/dev/application.properties</propertyfile>
-						<persistenceunit>default-persistence-unit</persistenceunit>
-						<drop>true</drop>
-						<create>true</create>
-						<jdk5>true</jdk5>
-						<export>true</export>
-					</componentProperties>
-				</configuration>
-			</plugin>
-			-->
-			
-			
+		<plugins>			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -160,69 +128,6 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
-		</dependency> 
-		
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
-			<version>3.2.6.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.3.1.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
-		</dependency>
-				
-		<dependency>
-			<groupId>oswego-concurrent</groupId>
-			<artifactId>concurrent</artifactId>
-			<version>1.3.4</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.1</version>
-			<scope>runtime</scope>
-		</dependency>
-				
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>javasupport.spring</groupId>
-			<artifactId>spring-support</artifactId>
-			<version>0.0.4</version>
-		</dependency>
-		-->
 		
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -240,6 +145,12 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
 		</dependency>
 			
 	</dependencies>

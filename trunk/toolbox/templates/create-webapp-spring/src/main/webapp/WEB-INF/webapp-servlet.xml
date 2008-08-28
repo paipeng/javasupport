@@ -23,8 +23,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<util:map>
-				<entry key="/main" value-ref="mainController" />
-				<entry key="/about" value-ref="urlFilenameViewController" />
+				<entry key="/main/index" value-ref="mainController" />
+				<entry key="/main/about" value-ref="urlFilenameViewController" />
 			</util:map>
 		</property>
 	</bean>        

@@ -1,4 +1,4 @@
-[#noparse]<%@include file="header.inc" %>
+[#noparse]<%@include file="../header.inc" %>
 <div class="container">        	
 <div class="content">        
 	<h1>Welcome To Main Page!</h1>
@@ -6,5 +6,5 @@
 	<p>${message}.</p>
 </div>
 </div>
-<%@include file="footer.inc" %>
+<%@include file="../footer.inc" %>
 [/#noparse]
