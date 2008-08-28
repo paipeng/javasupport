@@ -1,4 +1,4 @@
-<html>
+[#noparse] <html>
     <head>
         <title>${title}</title>
         <link href="${pageContext.request.contextPath}/default_theme/screen.css" rel="stylesheet" type="text/css" media="screen">
@@ -15,3 +15,4 @@
 			    <li><a href="${pageContext.request.contextPath}/webapp/about">About</a></li>
 			</ul>
 		</div>
+[/#noparse] 

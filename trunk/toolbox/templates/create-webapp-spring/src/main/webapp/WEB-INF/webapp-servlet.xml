@@ -10,7 +10,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
     <!-- Web application startup setup. -->
-	<bean id="webappStartupConfigurer" class="springmvc.WebappStartupConfigurer"></bean>
+	<bean id="webappStartupConfigurer" class="${project.packageName}.WebappStartupConfigurer"></bean>
 	
 	<!-- ViewResolver for JSTL/JSP view-->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -34,7 +34,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 		<property name="prefix" value="/" />
 	</bean>    
 	
-	<bean id="mainController" class="springmvc.MainController">
+	<bean id="mainController" class="${project.packageName}.MainController">
 	</bean> 
 	
 </beans>
