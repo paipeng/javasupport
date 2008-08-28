@@ -25,7 +25,7 @@
 		out.println("</ul>");
 	}else{
 		out.println("<p>No web application found. You may deploy a webapp by copying a war file into dir: <pre>"+
-				webappPathname+"/webapps</pre></p>");	
+				webappPathname+"</pre></p>");	
 	}
 %>
 
