@@ -1,8 +1,10 @@
 RELEASE NOTES
 =============
-java-support-0.0.6-SNAPSHOT [2008-08-11]
- * Default spring-ftl to annotation based webapp.
- * Switched FM main.layout instead of reverse.
+java-support-0.0.6 [2008-08-28]
+ * Added -p option to template generator tool.
+ * Added spring which use JSP as default view.
+ * Restructure spring-ftl to be similar to spring+jsp style but with Freemarker view.
+ * Switched FM layout macro name to be main.layout.
  * Fixed Windows startup catalina script.
  
 java-support-0.0.5 [2008-07-31]
