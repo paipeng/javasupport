@@ -2,19 +2,22 @@ package ${project.packageName};
 
 import java.util.Date;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@Controller
-public class MainController {
-	@RequestMapping("/main")
-    public ModelMap main(){
-        return new ModelMap("message", "Welcome guest! Today date is " + new Date());
-    }
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+public class MainController extends MultiActionController{
 	
-	@RequestMapping("/about")
-	public void about(){
+	public ModelAndView index(HttpServletRequest request, HttpServletResponse response){
+        return new ModelAndView("/main/index", "message", 
+        		"Welcome guest! Today date is " + new Date());
+	}
+	
+	public String about(HttpServletRequest request, HttpServletResponse response){
+		return "/main/about";
 	}
 }
+
 
