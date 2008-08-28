@@ -1,6 +1,6 @@
-[#noparse]        <div class="footer center">
-		    <p>${appInfo.buildVersion}</p>
-		</div>
+[#noparse]    <div class="footer center">
+        <p>${appInfo.buildVersion}</p>
+    </div>
     </body>
 </html>
 [/#noparse]
