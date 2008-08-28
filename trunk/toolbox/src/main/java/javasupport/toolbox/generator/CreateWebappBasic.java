@@ -17,12 +17,13 @@ public class CreateWebappBasic extends ProjectGenerator {
 
 	protected String getOutputFilename(String filePathname) {
 		List<String> names = RegexUtils.findGroupsByDelimeters(filePathname, "R_", "_R", "R_");
-		//System.out.println(names);
 		for(String name : names){
-			if(name.equals("packageName"))
-				filePathname = filePathname.replaceAll("R_"+name+"_R", project.getPackageName());
-			else
+			if(name.equals("packageName")){
+				String packageNameToPath = project.getPackageName().replaceAll("\\.", "/");
+				filePathname = filePathname.replaceAll("R_"+name+"_R", packageNameToPath);
+			}else{
 				throw new RuntimeException("Unknown variable " + name+" in pathname.");
+			}
 		}
 		return filePathname;
 	}

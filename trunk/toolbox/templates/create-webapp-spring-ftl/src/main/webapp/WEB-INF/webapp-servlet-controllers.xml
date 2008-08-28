@@ -1,34 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 xmlns:util="http://www.springframework.org/schema/util" xmlns:lang="http://www.springframework.org/schema/lang"
+xmlns:context="http://www.springframework.org/schema/context"
 xsi:schemaLocation="
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
 http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.5.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+   
+   		        
+	<!-- Url request mappings -->
+  <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<util:map>
+				<entry key="/main/index" value-ref="mainController" />
+				<entry key="/main/about" value-ref="urlFilenameViewController" />
+			</util:map>
+		</property>
+	</bean>        
+	
+	<!-- Controllers -->
+	<bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
+		<property name="prefix" value="/" />
+	</bean>    
+	
+	<bean id="mainController" class="${project.packageName}.MainController">
+	</bean>
     
-    <!-- Annotated AutoWired Controller Mappings -->
-		<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-		<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
-		<context:component-scan base-package="springform"/>
-		
-		<!-- Url request mappings
-		<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="mappings">
-            <util:map>
-                <entry key="/main" value-ref="mainController" />
-                <entry key="/about" value-ref="urlFilenameViewController" />
-            </util:map>
-        </property>
-    </bean>-->
-        
-		<!-- Controllers 
-    <bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
-		<property name="prefix" value="/"/>
-    </bean>
-    
-    <bean id="mainController" class="${project.packageName}.MainController">
-    </bean>-->
+  <!-- Uncomment these if you want annotated autowired Controller Mappings
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+	<context:component-scan base-package="springform"/>
+	 -->
 </beans>

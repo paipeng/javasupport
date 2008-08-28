@@ -5,7 +5,7 @@
 	<artifactId>${project.artifactId}</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>${project.artifactId}</name>
+	<name>${project.name}</name>
 	
 	<properties>
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>

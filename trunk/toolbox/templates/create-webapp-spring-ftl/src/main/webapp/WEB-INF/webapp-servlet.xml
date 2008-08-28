@@ -9,28 +9,28 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     
-    <!-- Web application startup configurator. -->
-	<bean id="webappStartupConfigurer" class="${project.packageName}.WebappStartupConfigurer"></bean>
+  <!-- Web application startup configurator. -->
+	<bean id="webappStartupConfigurer" class="deng.demo.WebappStartupConfigurer"></bean>
 	
 	<!-- ViewResolver.prefix WILL append to freemarkerConfig.templateLoaderPath value! -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-		<property name="prefix" value="/WEB-INF/ftl" />
+		<property name="prefix" value="" />
 		<property name="suffix" value=".ftl" />
 	</bean>
 	
-	<!-- FTM engine configuration 
+	<!-- FreeMarker Template engine configuration 
 	See http://freemarker.org/docs/api/freemarker/template/Configuration.html#setSetting(java.lang.String,%20java.lang.String)
 	-->
 	<bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-	  	<property name="templateLoaderPath" value=""/>
+	  	<property name="templateLoaderPath" value="/WEB-INF/ftl"/>
 	  	<property name="freemarkerSettings">
 	  		<util:properties>
 	  			<prop key="tag_syntax">square_bracket</prop>
-	  			<prop key="auto_import">/WEB-INF/ftl/layout/main.ftl as main</prop>
+	  			<prop key="auto_import">/layout/main.ftl as main</prop>
 	  		</util:properties>
 	  	</property>
 	</bean>
         
-    <!-- Pull in other controllers. -->
-    <import resource="webapp-servlet-controllers.xml"/> 
+	<!-- Import other controllers. -->
+	<import resource="webapp-servlet-controllers.xml"/> 
 </beans>

@@ -13,13 +13,14 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>${[/#noparse]${project.groupId}[#noparse].conf.dir}/application.properties</value>
+                <value>${springftl1.conf.dir}/application.properties</value>
             </list>
         </property>
     </bean> -->
         
-    <!-- Pull in database access configuration
+    <!-- import JPA database access configuration
     <import resource="applicationContext-jpa.xml"/>
     -->
+		
 </beans>
 [/#noparse]
