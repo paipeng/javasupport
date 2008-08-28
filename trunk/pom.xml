@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>javasupport</groupId>
 	<artifactId>javasupport</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>javasupport-pom</name>
 	<modules>
@@ -15,8 +15,8 @@
 		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
 	</properties>
 	<scm>
-		<connection>scm:svn:http://javasupport.googlecode.com/svn/tags/javasupport-0.0.6</connection>
-		<developerConnection>scm:svn:https://javasupport.googlecode.com/svn/tags/javasupport-0.0.6</developerConnection>
+		<connection>scm:svn:http://javasupport.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://javasupport.googlecode.com/svn/trunk</developerConnection>
 	</scm>
 	
 	<distributionManagement>

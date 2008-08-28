@@ -2,13 +2,13 @@
   <parent>
     <artifactId>javasupport</artifactId>
     <groupId>javasupport</groupId>
-    <version>0.0.6</version>
+    <version>0.0.7-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>javasupport.servlet</groupId>
   <artifactId>servlet-support</artifactId>
   <name>servlet-support</name>
-  <version>0.0.6</version>
+  <version>0.0.7-SNAPSHOT</version>
   <description />
   <dependencies>
 		<dependency>
