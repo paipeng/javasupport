@@ -7,28 +7,68 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>${project.name}</name>
+	
 	<properties>
 		<spring.version>2.5.3</spring.version>
 		<mysql.version>5.1.6</mysql.version>
-		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+		<archiva.server.url>http://sweetsoftwaredesign.com/maven</archiva.server.url>
 	</properties>
+	
 	<scm>
-		<connection>scm:svn:svn://faxintelligence.com/labs/incubator/${project.groupId}/trunk</connection>
-		<developerConnection>scm:svn:svn://faxintelligence.com/labs/incubator/${project.groupId}/trunk</developerConnection>
+		<connection>scm:svn:http://sweetsoftwaredesign.com/labs/${project.artifactId}/trunk</connection>
+		<developerConnection>scm:svn:https://sweetsoftwaredesign.com/labs/${project.artifactId}/trunk</developerConnection>
 	</scm>
+	
 	[#noparse]
 	<distributionManagement>
 		<repository>
-			<id>internal</id>
-			<name>internal</name>
+			<id>sweetsoftwaredesign.archiva</id>
+			<name>sweetsoftwaredesign.archiva</name>
 			<url>${archiva.server.url}/archiva/repository/internal</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots</id>
-			<name>snapshots</name>
+			<id>sweetsoftwaredesign.archiva</id>
+			<name>sweetsoftwaredesign.archiva</name>
 			<url>${archiva.server.url}/archiva/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
+	<profiles>
+		<profile>
+			<id>sweetsoftwaredesign.archiva</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<repositories>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</repository>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral.plugins</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</pluginRepository>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots.plugins</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	[/#noparse]
+	
+	[#noparse]
 	<build>
 		<plugins>
 			<!-- 
