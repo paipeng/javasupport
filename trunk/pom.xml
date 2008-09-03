@@ -11,9 +11,11 @@
 		<module>spring-support</module>
 		<module>toolbox</module>
   </modules>
+	
 	<properties>
-		<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+		<archiva.server.url>http://sweetsoftwaredesign.com/maven</archiva.server.url>
 	</properties>
+	
 	<scm>
 		<connection>scm:svn:http://javasupport.googlecode.com/svn/trunk</connection>
 		<developerConnection>scm:svn:https://javasupport.googlecode.com/svn/trunk</developerConnection>
@@ -21,16 +23,50 @@
 	
 	<distributionManagement>
 		<repository>
-			<id>faxintelligence.internal</id>
-			<name>faxintelligence.internal</name>
+			<id>sweetsoftwaredesign.archiva</id>
+			<name>sweetsoftwaredesign.archiva</name>
 			<url>${archiva.server.url}/archiva/repository/internal</url>
 		</repository>
 		<snapshotRepository>
-			<id>faxintelligence.snapshots</id>
-			<name>faxintelligence.snapshots</name>
+			<id>sweetsoftwaredesign.archiva</id>
+			<name>sweetsoftwaredesign.archiva</name>
 			<url>${archiva.server.url}/archiva/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	
+	<profiles>
+		<profile>
+			<id>sweetsoftwaredesign.archiva</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<repositories>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</repository>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral.plugins</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</pluginRepository>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots.plugins</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
 	
 	<build>
 		<plugins>
