@@ -12,8 +12,8 @@
 	</properties>
 	
 	<scm>
-		<connection>scm:svn:http://sweetsoftwaredesign.com/labs/${project.artifactId}/trunk</connection>
-		<developerConnection>scm:svn:https://sweetsoftwaredesign.com/labs/${project.artifactId}/trunk</developerConnection>
+		<connection>scm:svn:http://${project.artifactId}.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://${project.artifactId}.googlecode.com/svn/trunk</developerConnection>
 	</scm>
 	
 	[#noparse]
