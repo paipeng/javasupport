@@ -15,17 +15,12 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<util:map>
-				<entry key="/main/index" value-ref="mainController" />
-				<entry key="/main/about" value-ref="urlFilenameViewController" />
+				<entry key="/main/*" value-ref="mainController" />
 			</util:map>
 		</property>
 	</bean>				 
 	
-	<!-- Controllers -->
-	<bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController">
-		<property name="prefix" value="/" />
-	</bean>		 
-	
+	<!-- Controllers -->	
 	<bean id="mainController" class="${project.packageName}.MainController">
 	</bean>
 		
