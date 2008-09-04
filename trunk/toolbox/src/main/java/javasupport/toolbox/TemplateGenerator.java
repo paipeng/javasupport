@@ -19,7 +19,7 @@ public class TemplateGenerator extends CliApplication {
 		}
 
 		String toolHome = System.getProperty("toolhome", ".");
-		String javasupportVersion = getOpt("v", "0.0.4");
+		String javasupportVersion = getOpt("v", "0.0.8");
 		String templatePath = getOpt("t", toolHome+"/templates");
 		
 		String subCommandName = args[0];
@@ -31,7 +31,7 @@ public class TemplateGenerator extends CliApplication {
 			}
 			Project project = new Project(args[2], javasupportVersion, templatePath, templateSetName);
 			runGenerator(new CreateTomcatInstance(project, ".", args[1]));
-		}else if(subCommandName.startsWith("create-webapp")){
+		}else if(subCommandName.startsWith("create-")){
 			if(args.length<2){
 				throw new Exception("Invalid arguments: Missing <project-name>");
 			}
@@ -75,6 +75,12 @@ public class TemplateGenerator extends CliApplication {
 		System.out.println("  -s<DIR>      Change templates set name.");
 		System.out.println("");
 		System.out.println("<subCommand>");
+		System.out.println("");
+		System.out.println("  create-javaapp <project-name>");
+		System.out.println("    Create a basic java app project.");
+		System.out.println("    [additional supported options]");
+		System.out.println("      -p<PACKAGENAME> Specify package name.");
+		System.out.println("");
 		System.out.println("  create-webapp-basic <project-name>");
 		System.out.println("    Create a basic Servlet webapp project.");
 		System.out.println("    [additional supported options]");
