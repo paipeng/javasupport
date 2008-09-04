@@ -22,13 +22,11 @@
 	<distributionManagement>
 		<repository>
 			<id>sweetsoftwaredesign.archiva</id>
-			<name>sweetsoftwaredesign.archiva</name>
-			<url>${archiva.server.url}/archiva/repository/internal</url>
+			<url>${archiva.server.url}/repository/internal</url>
 		</repository>
 		<snapshotRepository>
 			<id>sweetsoftwaredesign.archiva</id>
-			<name>sweetsoftwaredesign.archiva</name>
-			<url>${archiva.server.url}/archiva/repository/snapshots</url>
+			<url>${archiva.server.url}/repository/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	
