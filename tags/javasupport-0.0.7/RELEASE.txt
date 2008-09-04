@@ -1,0 +1,36 @@
+RELEASE NOTES
+=============
+java-support-0.0.6 [2008-08-28]
+ * Added -p option to template generator tool.
+ * Added spring which use JSP as default view.
+ * Restructure spring-ftl to be similar to spring+jsp style but with Freemarker view.
+ * Switched FM layout macro name to be main.layout.
+ * Fixed Windows startup catalina script.
+ 
+java-support-0.0.5 [2008-07-31]
+ * Fixed duplicated lib in zip package
+ * Added create-webapp-spring-ftl template.
+
+java-support-0.0.4 [2008-07-15]
+ * Refactored toolbox to use Freemarker templates.
+ * Removed maven-support and prefer toolbox template generator instead.
+ * Add template.sh create-tomcate-instance
+ * Add template.sh create-webapp-basic
+ * Reorganized maven pom and assembly.xml
+ 
+java-support-0.0.3 [2008-04-08]
+ * Added toolbox
+
+java-support-0.0.2 [2008-03-13]
+ * [Fixed] spring-support's FieldValidator class
+ * [Updated] many minor changes for springwebapp* templates.
+	
+java-support-0.0.1 [2008-03-10]
+ * [Added] Mavenize project layout.
+ * [Added] jdk-support.
+ * [Added] spring-support.
+ * [Added] maven-archetype-javaapp.
+ * [Added] maven-archetype-webapp.
+ * [Added] maven-archetype-springwebapp.
+ * [Added] maven-archetype-springwebapp-hibernate.
+ * [Added] maven-archetype-scalaapp.
