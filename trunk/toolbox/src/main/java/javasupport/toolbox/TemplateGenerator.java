@@ -19,7 +19,7 @@ public class TemplateGenerator extends CliApplication {
 		}
 
 		String toolHome = System.getProperty("toolhome", ".");
-		String javasupportVersion = getOpt("v", "0.0.8");
+		String javasupportVersion = getOpt("v", "0.0.7");
 		String templatePath = getOpt("t", toolHome+"/templates");
 		
 		String subCommandName = args[0];
