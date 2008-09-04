@@ -2,19 +2,19 @@
 	<parent>
 		<groupId>javasupport</groupId>
 		<artifactId>javasupport</artifactId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>javasupport.toolbox</groupId>
 	<artifactId>toolbox</artifactId>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.7</version>
 	<packaging>jar</packaging>
 	<name>toolbox</name>
 	<dependencies>
 		<dependency>
 			<groupId>javasupport.jdk</groupId>
 			<artifactId>jdk-support</artifactId>
-			<version>0.0.7-SNAPSHOT</version>
+			<version>0.0.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
