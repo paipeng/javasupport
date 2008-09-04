@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>${project.groupId}</groupId>
+	<artifactId>${project.artifactId}</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>${project.name}</name>
+	
+	<properties>
+		<archiva.server.url>http://sweetsoftwaredesign.com/maven</archiva.server.url>
+	</properties>
+	
+	<scm>
+		<connection>scm:svn:http://${project.artifactId}.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://${project.artifactId}.googlecode.com/svn/trunk</developerConnection>
+	</scm>
+	
+	[#noparse]
+	<distributionManagement>
+		<repository>
+			<id>sweetsoftwaredesign.archiva</id>
+			<url>${archiva.server.url}/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>sweetsoftwaredesign.archiva</id>
+			<url>${archiva.server.url}/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<profiles>
+		<profile>
+			<id>sweetsoftwaredesign.archiva</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<repositories>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</repository>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral.plugins</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases/>
+				</pluginRepository>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots.plugins</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	[/#noparse]
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.5.2</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>0.9.9</version>
+		</dependency>
+	</dependencies>
+	
+	[#noparse]
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>validate</phase>        
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>				
+				<configuration>  
+					<format>{0,date,yyyyMMddHHmm}</format>
+					<items>
+						<item>timestamp</item>
+					</items>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+						<manifestEntries>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Implementation-Name>${project.artifactId}-${project.version}.${buildNumber}</Implementation-Name>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	[/#noparse]
+</project>

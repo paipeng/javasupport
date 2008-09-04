@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<settings xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+		
+	<!-- Server auth information. -->
+	<servers>
+		
+		<!-- faxintelligence -->
+		<server>
+			<id>faxintelligence.internal</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+		<server>
+			<id>faxintelligence.snapshots</id>
+			<username>admin</username>
+			<password>secretpass</password>
+		</server>
+				
+		<!-- subversion server -->
+		<server>
+			<id>javasupport.googlecode.com</id>
+			<username>thebugslayer</username>
+			<password>secretpass</password>
+		</server>
+		
+	</servers>
+	
+	
+	<!-- Repositories -->
+	<profiles>
+	
+		<!-- faxintelligence server profile -->
+		<profile>
+			<id>faxintelligence.server</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<properties>
+				<archiva.server.url>http://faxintelligence.com:8082</archiva.server.url>
+			</properties>
+			
+			<repositories>
+				<repository>
+					<id>faxintelligence.proxycentral</id>
+					<url>${archiva.server.url}/archiva/repository/internal</url>
+					<releases/>
+				</repository>
+				<repository>
+					<id>faxintelligence.proxycentral-snapshots</id>
+					<url>${archiva.server.url}/archiva/repository/snaphots</url>
+					<snapshots />
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>faxintelligence.proxycentral.plugins</id>
+					<url>${archiva.server.url}/archiva/repository/internal</url>
+					<releases/>
+				</pluginRepository>
+				<pluginRepository>
+					<id>faxintelligence.proxycentral-snapshots.plugins</id>
+					<url>${archiva.server.url}/archiva/repository/snaphots</url>
+					<snapshots />
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+		
+	</profiles>
+	
+</settings>
+

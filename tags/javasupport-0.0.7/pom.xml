@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>javasupport</groupId>
+	<artifactId>javasupport</artifactId>
+	<version>0.0.7</version>
+	<packaging>pom</packaging>
+	<name>javasupport-pom</name>
+	
+	<modules>
+		<module>jdk-support</module>
+		<module>servlet-support</module>
+		<module>spring-support</module>
+		<module>toolbox</module>
+  </modules>
+	
+	<properties>
+		<archiva.server.url>http://sweetsoftwaredesign.com/maven</archiva.server.url>
+	</properties>
+	
+	<scm>
+		<connection>scm:svn:http://javasupport.googlecode.com/svn/tags/javasupport-0.0.7</connection>
+		<developerConnection>scm:svn:https://javasupport.googlecode.com/svn/tags/javasupport-0.0.7</developerConnection>
+	</scm>
+	
+	<distributionManagement>
+		<repository>
+			<id>sweetsoftwaredesign.archiva</id>
+			<url>${archiva.server.url}/repository/internal</url>
+		</repository>
+		<snapshotRepository>
+			<id>sweetsoftwaredesign.archiva</id>
+			<url>${archiva.server.url}/repository/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<profiles>
+		<profile>
+			<id>sweetsoftwaredesign.archiva</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<repositories>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases />
+				</repository>
+				<repository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral.plugins</id>
+					<url>${archiva.server.url}/repository/internal</url>
+					<releases />
+				</pluginRepository>
+				<pluginRepository>
+					<id>sweetsoftwaredesign.proxycentral-snapshots.plugins</id>
+					<url>${archiva.server.url}/repository/snaphots</url>
+					<snapshots />
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+	</profiles>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>assembly.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<groupId>${pom.groupId}</groupId>
+							<artifactId>${pom.artifactId}</artifactId>
+							<version>${pom.version}</version>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
