@@ -1,10 +1,17 @@
 //OptionsParserSupport
-package javademo.util;
+package deng.javademo.util;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Parsing simple command line options and arguments.
+ * 
+ * @author Zemian Deng
+ *
+ * Created on Nov 12, 2009
+ */
 public class OptionsParserSupport {
     protected static String[] parseAndSetOptionsObject(Object obj, String[] args) {
         Class<?> objClass = obj.getClass();
