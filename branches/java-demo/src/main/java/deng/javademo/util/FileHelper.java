@@ -1,5 +1,5 @@
 //FileHelper
-package javademo.util;
+package deng.javademo.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +9,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+/**
+ * Utilities that help manipulate files.
+ * 
+ * @author Zemian Deng
+ *
+ * Created on Nov 12, 2009
+ */
 public class FileHelper {
     public static interface LineAction {
         public void onLine(String line);
