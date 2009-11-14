@@ -13,20 +13,17 @@
   <fileSets>
     <fileSet>
       <includes>
-        <include>${project.basedir}/bin/**/*</include>
-        <include>${project.basedir}/docs/**/*</include>
-        <include>${project.basedir}/conf/**/*</include>
+        <include>bin/**/*</include>
       </includes>
     </fileSet>
     <fileSet>
       <includes>
-        <include>${project.basedir}/README*</include>
-        <include>${project.basedir}/LICENSE*</include>
-        <include>${project.basedir}/NOTICE*</include>
+        <include>README*</include>
+        <include>LICENSE*</include>
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.build.directory}</directory>
+      <directory>target</directory>
       <includes>
         <include>*javadoc.jar</include>
       </includes>
