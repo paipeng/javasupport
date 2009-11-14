@@ -1,0 +1,11 @@
+h1. Maven create a archetype from existing project
+
+http://maven.apache.org/plugins/maven-archetype-plugin/advanced-usage.html
+
+mvn archetype:create-from-project
+cd target/generated-sources/archetype/
+mvn install
+mkdir /tmp/archetype
+cd /tmp/archetype
+mvn archetype:generate -DarchetypeCatalog=local
+

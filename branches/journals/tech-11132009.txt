@@ -1,0 +1,83 @@
+fn1. Created on 11/13/2009 by Zemian Deng
+
+
+h1. Maven help plugin
+
+mvn help:describe -Dfull=true -Dplugin=help
+
+To list goals only
+
+mvn help:describe -Dfull=true -Dplugin=help | grep Goal
+
+To describe single goal
+
+mvn help:describe -Dfull=true -Dplugin=help -Dmojo=describe
+
+
+Bug: -Dmedium=true doesn't list the goals as described in doc?
+http://maven.apache.org/plugins/maven-help-plugin/examples/describe-configuration.html
+
+
+
+h1. Maven - Copy all dependencies into a folder for testing
+
+mvn compile dependency:copy-dependencies
+
+See target/dependency
+
+Then you can test command line program this way
+
+#Java 6 only!
+java -cp target/classes:target/dependency/* deng.javademo.LoggerDemo
+
+#Java 5, try this
+DEP=`find target/dependency | ruby -pe 'gsub(/\n/, ":")'`
+java -cp target/classes:$DEP deng.javademo.LoggerDemo
+
+
+h1. Apache log4j-1.2.15 dependencies
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.15</version>
+      <scope>runtime</scope>
+    </dependency> 
+    
+Will produce many WARNING and pull down man other dependencies!
+
+Example:
+[WARNING] POM for 'javax.jms:jms:pom:1.1:runtime' is invalid.
+
+Its dependencies (if any) will NOT be available to the current build.
+[WARNING] POM for 'com.sun.jdmk:jmxtools:pom:1.2.1:runtime' is invalid.
+
+Its dependencies (if any) will NOT be available to the current build.
+[WARNING] POM for 'com.sun.jmx:jmxri:pom:1.2.1:runtime' is invalid.
+
+Its dependencies (if any) will NOT be available to the current build.
+[INFO] [dependency:copy-dependencies {execution: default-cli}]
+[INFO] Copying jmxtools-1.2.1.jar to /Users/zemian/dev/branches/java-demo/target/dependency/jmxtools-1.2.1.jar
+[INFO] Copying jmxri-1.2.1.jar to /Users/zemian/dev/branches/java-demo/target/dependency/jmxri-1.2.1.jar
+[INFO] Copying commons-logging-1.1.1.jar to /Users/zemian/dev/branches/java-demo/target/dependency/commons-logging-1.1.1.jar
+[INFO] Copying activation-1.1.jar to /Users/zemian/dev/branches/java-demo/target/dependency/activation-1.1.jar
+[INFO] Copying jms-1.1.jar to /Users/zemian/dev/branches/java-demo/target/dependency/jms-1.1.jar
+[INFO] Copying mail-1.4.jar to /Users/zemian/dev/branches/java-demo/target/dependency/mail-1.4.jar
+[INFO] Copying junit-4.7.jar to /Users/zemian/dev/branches/java-demo/target/dependency/junit-4.7.jar
+[INFO] Copying log4j-1.2.15.jar to /Users/zemian/dev/branches/java-demo/target/dependency/log4j-1.2.15.jar
+
+If you don't need all these, stick with version 1.2.14!
+
+
+h1. Maven assembly (zip up dist)
+
+
+
+
+h1. Svn ignoring files:
+
+svn ps svn:ignore target .
+
+svn ps svn:ignore 'target
+log' .
+
