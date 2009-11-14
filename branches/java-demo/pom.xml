@@ -39,7 +39,6 @@
     </plugins>
   </build>
   <dependencies>
-    <!-- Apahce Commons Helper Libraries
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -50,7 +49,6 @@
       <artifactId>commons-collections</artifactId>
       <version>3.2.1</version>
     </dependency>
-    -->
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
