@@ -4,4 +4,10 @@ ready.
 Type this to generate a new project
 
 mvn install
+cd ..
 mvn archetype:generate -DarchetypeCatalog=local
+
+* Select simple-java-app-archetype number.
+* Type in you new project groupId, artifactId, and package name
+* Confirm with Y
+
