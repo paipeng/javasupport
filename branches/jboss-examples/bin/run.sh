@@ -7,4 +7,4 @@
 SCRIPT_DIR=`dirname $0`
 APP_DIR=`cd $SCRIPT_DIR/.. && pwd`
 DEP=`find $APP_DIR/lib | ruby -pe 'gsub(/\n/, ":")'`
-java -cp target/classes:$DEP ${package}.LoggerDemo
+java -cp target/classes:$DEP deng.jbossexamples.LoggerDemo
