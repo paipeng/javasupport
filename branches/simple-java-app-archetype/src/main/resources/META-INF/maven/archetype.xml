@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><archetype>
-  <id>java-demo-archetype</id>
+  <id>simple-java-app-archetype</id>
   <sources>
     <source>src/main/java/LoggerDemo.java</source>
   </sources>
