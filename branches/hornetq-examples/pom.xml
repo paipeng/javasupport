@@ -72,5 +72,53 @@
       <version>4.7</version>
       <scope>test</scope>
     </dependency>
+    
+    <!-- HornetQ Client -->
+	<dependency>  
+	   <groupId>org.hornetq</groupId>  
+	   <artifactId>hornetq-core-client</artifactId>  
+	   <version>2.0.0.BETA5</version>  
+	   <scope>compile</scope>  
+	</dependency>  
+	<dependency>  
+	   <groupId>org.hornetq</groupId>  
+	   <artifactId>hornetq-jms-client</artifactId>  
+	   <version>2.0.0.BETA5</version>  
+	   <scope>compile</scope>  
+	</dependency>  
+	<dependency>  
+	   <groupId>org.hornetq</groupId>  
+	   <artifactId>hornetq-transports</artifactId>  
+	   <version>2.0.0.BETA5</version>  
+	   <scope>compile</scope>  
+	</dependency>  
+	<dependency>  
+	   <groupId>org.jboss.netty</groupId>  
+	   <artifactId>netty</artifactId>  
+	   <version>3.1.0.GA</version>  
+	</dependency>  
+	<dependency>  
+	   <groupId>org.jboss.javaee</groupId>  
+	   <artifactId>jboss-jms-api</artifactId>  
+	   <version>1.1.0.GA</version>  
+	   <scope>compile</scope>  
+	</dependency>  
+
   </dependencies>
+  
+  <repositories>
+      <repository>
+         <snapshots>
+            <enabled>false</enabled>
+            <updatePolicy>never</updatePolicy>
+         </snapshots>
+         <releases>
+            <enabled>true</enabled>
+            <updatePolicy>interval:10080</updatePolicy>
+         </releases>
+         <id>jboss.release</id>
+         <name>JBoss releases</name>
+         <url>http://repository.jboss.org/maven2</url>
+      </repository>
+   </repositories>
 </project>
