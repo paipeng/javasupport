@@ -90,20 +90,44 @@
 	   <groupId>org.hornetq</groupId>  
 	   <artifactId>hornetq-transports</artifactId>  
 	   <version>2.0.0.BETA5</version>  
-	   <scope>compile</scope>  
+	   <scope>runtime</scope>  
 	</dependency>  
 	<dependency>  
 	   <groupId>org.jboss.netty</groupId>  
 	   <artifactId>netty</artifactId>  
-	   <version>3.1.0.GA</version>  
+	   <version>3.1.0.GA</version>   
+	   <scope>runtime</scope>  
 	</dependency>  
 	<dependency>  
 	   <groupId>org.jboss.javaee</groupId>  
 	   <artifactId>jboss-jms-api</artifactId>  
 	   <version>1.1.0.GA</version>  
 	   <scope>compile</scope>  
-	</dependency>  
-
+	</dependency> 
+	
+	<!-- JBoss5.x jnp-client will not work with Jboss4.x jnp-server, 
+	which HornetQ-2.0.0.BETA5 is using
+	<dependency>  
+	   <groupId>org.jboss</groupId>  
+	   <artifactId>jnp-client</artifactId>  
+	   <version>5.0.0.Beta4</version>  
+	   <scope>compile</scope>  
+	</dependency> --> 
+	
+	<!-- JBoss 4.x jnp-client -->
+	<dependency>  
+	   <groupId>jboss</groupId>  
+	   <artifactId>jnp-client</artifactId>  
+	   <version>4.2.2.GA</version>  
+	   <scope>compile</scope>  
+	</dependency>
+	<dependency>  
+	   <groupId>jboss</groupId>  
+	   <artifactId>jboss-logging-log4j</artifactId>  
+	   <version>2.0.3.GA</version>  
+	   <scope>runtime</scope>  
+	</dependency>   
+	
   </dependencies>
   
   <repositories>
