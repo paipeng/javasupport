@@ -27,7 +27,7 @@ public class JndiClient {
 		try {
 			connection = getConnection();
 			produceToQueue(connection);
-			consumeFromQueue(connection);
+			//consumeFromQueue(connection);
 		} finally {
 			if (connection != null) {
 				connection.close();
@@ -35,7 +35,7 @@ public class JndiClient {
 		}
 	}
 	
-	private Connection getConnection() throws Exception {
+	protected Connection getConnection() throws Exception {
 		// Make sure jndi.properties is in classpath!
 		ctx = new InitialContext();
 		ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
@@ -43,7 +43,7 @@ public class JndiClient {
 		return connection;
 	}
 
-	private void produceToQueue(Connection connection) throws Exception {
+	protected void produceToQueue(Connection connection) throws Exception {
 		Queue queue = (Queue)ctx.lookup("/queue/ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageProducer producer = session.createProducer(queue);
@@ -57,7 +57,7 @@ public class JndiClient {
 		session.close();
 	}
 
-	private void consumeFromQueue(Connection connection) throws Exception {
+	protected void consumeFromQueue(Connection connection) throws Exception {
 		Queue queue = (Queue)ctx.lookup("/queue/ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageConsumer messageConsumer = session.createConsumer(queue);

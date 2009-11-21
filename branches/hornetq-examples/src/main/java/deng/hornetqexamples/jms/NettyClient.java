@@ -49,7 +49,7 @@ public class NettyClient {
 		}
 	}
 
-	private Connection getConnection() throws Exception {
+	protected Connection getConnection() throws Exception {
 		Map<String, Object> connectionParams = new HashMap<String, Object>();
 		connectionParams.put(PORT_PROP_NAME, 5445);
 		TransportConfiguration transportConfiguration = new TransportConfiguration(
@@ -59,7 +59,7 @@ public class NettyClient {
 		return connection;
 	}
 
-	private void produceToQueue(Connection connection) throws Exception {
+	protected void produceToQueue(Connection connection) throws Exception {
 		Queue queue = new HornetQQueue("ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageProducer producer = session.createProducer(queue);
@@ -73,7 +73,7 @@ public class NettyClient {
 		session.close();
 	}
 
-	private void consumeFromQueue(Connection connection) throws Exception {
+	protected void consumeFromQueue(Connection connection) throws Exception {
 		Queue queue = new HornetQQueue("ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageConsumer messageConsumer = session.createConsumer(queue);
