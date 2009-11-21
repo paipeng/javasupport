@@ -1,148 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>deng.hornetq-examples</groupId>
-  <artifactId>hornetq-examples</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>java-demo</name>
-  <url>http://maven.apache.org</url>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
-        </configuration>
-      </plugin>      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <disableXmlReport>true</disableXmlReport>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>      
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration> 
-          <descriptors>
-            <descriptor>src/main/assembly/assembly-bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>1.4</version>
-    </dependency> 
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-      <scope>runtime</scope>
-    </dependency> 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.7</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <!-- HornetQ Client -->
-	<dependency>  
-	   <groupId>org.hornetq</groupId>  
-	   <artifactId>hornetq-core-client</artifactId>  
-	   <version>2.0.0.BETA5</version>  
-	   <scope>compile</scope>  
-	</dependency>  
-	<dependency>  
-	   <groupId>org.hornetq</groupId>  
-	   <artifactId>hornetq-jms-client</artifactId>  
-	   <version>2.0.0.BETA5</version>  
-	   <scope>compile</scope>  
-	</dependency>  
-	<dependency>  
-	   <groupId>org.hornetq</groupId>  
-	   <artifactId>hornetq-transports</artifactId>  
-	   <version>2.0.0.BETA5</version>  
-	   <scope>runtime</scope>  
-	</dependency>  
-	<dependency>  
-	   <groupId>org.jboss.netty</groupId>  
-	   <artifactId>netty</artifactId>  
-	   <version>3.1.0.GA</version>   
-	   <scope>runtime</scope>  
-	</dependency>  
-	<dependency>  
-	   <groupId>org.jboss.javaee</groupId>  
-	   <artifactId>jboss-jms-api</artifactId>  
-	   <version>1.1.0.GA</version>  
-	   <scope>compile</scope>  
-	</dependency> 
-	
-	<!-- JBoss5.x jnp-client will not work with Jboss4.x jnp-server, 
-	which HornetQ-2.0.0.BETA5 is using
-	<dependency>  
-	   <groupId>org.jboss</groupId>  
-	   <artifactId>jnp-client</artifactId>  
-	   <version>5.0.0.Beta4</version>  
-	   <scope>compile</scope>  
-	</dependency> --> 
-	
-	<!-- JBoss 4.x jnp-client -->
-	<dependency>  
-	   <groupId>jboss</groupId>  
-	   <artifactId>jnp-client</artifactId>  
-	   <version>4.2.2.GA</version>  
-	   <scope>compile</scope>  
-	</dependency>
-	<dependency>  
-	   <groupId>jboss</groupId>  
-	   <artifactId>jboss-logging-log4j</artifactId>  
-	   <version>2.0.3.GA</version>  
-	   <scope>runtime</scope>  
-	</dependency>   
-	
-  </dependencies>
-  
-  <repositories>
-      <repository>
-         <snapshots>
-            <enabled>false</enabled>
-            <updatePolicy>never</updatePolicy>
-         </snapshots>
-         <releases>
-            <enabled>true</enabled>
-            <updatePolicy>interval:10080</updatePolicy>
-         </releases>
-         <id>jboss.release</id>
-         <name>JBoss releases</name>
-         <url>http://repository.jboss.org/maven2</url>
-      </repository>
-   </repositories>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>deng.hornetq-examples</groupId>
+	<artifactId>hornetq-examples</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>java-demo</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<disableXmlReport>true</disableXmlReport>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly-bin.xml</descriptor>
+					</descriptors>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<!-- Lombok lib requires JDK6 compiler!
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>0.9.1</version>
+		</dependency> -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- HornetQ Client -->
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-core-client</artifactId>
+			<version>2.0.0.BETA5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-jms-client</artifactId>
+			<version>2.0.0.BETA5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hornetq</groupId>
+			<artifactId>hornetq-transports</artifactId>
+			<version>2.0.0.BETA5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.1.0.GA</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.javaee</groupId>
+			<artifactId>jboss-jms-api</artifactId>
+			<version>1.1.0.GA</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<!--
+			JBoss5.x jnp-client will not work with Jboss4.x jnp-server, which
+			HornetQ-2.0.0.BETA5 is using <dependency>
+			<groupId>org.jboss</groupId> <artifactId>jnp-client</artifactId>
+			<version>5.0.0.Beta4</version> <scope>compile</scope> </dependency>
+		-->
+
+		<!-- JBoss 4.x jnp-client -->
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jnp-client</artifactId>
+			<version>4.2.2.GA</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-logging-log4j</artifactId>
+			<version>2.0.3.GA</version>
+			<scope>runtime</scope>
+		</dependency>
+
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>projectlombok.org</id>
+			<url>http://projectlombok.org/mavenrepo</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>never</updatePolicy>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>interval:10080</updatePolicy>
+			</releases>
+			<id>jboss.release</id>
+			<name>JBoss releases</name>
+			<url>http://repository.jboss.org/maven2</url>
+		</repository>
+	</repositories>
 </project>
