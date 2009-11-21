@@ -22,12 +22,23 @@ public class QueueListenerBean implements MessageListener {
 		ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 		Queue queue = (Queue)ctx.lookup("/queue/ExampleQueue");
 		
-		// Setup bean
-		QueueListenerBean bean = new QueueListenerBean();
+		// Setup bean.
+		final QueueListenerBean bean = new QueueListenerBean();
 		bean.setConnFactory(cf);
 		bean.setQueue(queue);
 		
 		bean.start();
+		
+		// Shut it down when CTRL+C is hit.
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				bean.stop();
+			}
+		});
+		
+		while (true) {
+			Thread.sleep(5000);
+		}
 	}
 	
 	private Log log = LogFactory.getLog(this.getClass());
@@ -63,7 +74,7 @@ public class QueueListenerBean implements MessageListener {
 		closeConn();
 	}
 	
-	private void closeConn() {
+	protected void closeConn() {
 		if (connection != null) {
 			try {
 				connection.close();

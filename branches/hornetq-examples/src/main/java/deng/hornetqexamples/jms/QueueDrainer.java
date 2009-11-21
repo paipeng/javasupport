@@ -32,7 +32,7 @@ public class QueueDrainer {
 	}
 	
 	
-	private Connection getConnection() throws Exception {
+	protected Connection getConnection() throws Exception {
 		// Make sure jndi.properties is in classpath!
 		ctx = new InitialContext();
 		ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
@@ -40,7 +40,7 @@ public class QueueDrainer {
 		return connection;
 	}
 
-	private void drainQueue(Connection connection) throws Exception {
+	protected void drainQueue(Connection connection) throws Exception {
 		Queue queue = (Queue)ctx.lookup("/queue/ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageConsumer messageConsumer = session.createConsumer(queue);
