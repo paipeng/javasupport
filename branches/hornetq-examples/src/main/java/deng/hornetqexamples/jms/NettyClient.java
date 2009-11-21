@@ -32,13 +32,13 @@ import org.hornetq.jms.client.HornetQConnectionFactory;
 public class NettyClient {
 
 	public static void main(String[] args) throws Exception {
-		new NettyClient().run();
+		new NettyClient().start();
 	}
-	
-	private void run() throws Exception {
-		Connection connection = null;
+
+	private Connection connection = null;
+	public void start() throws Exception {
 		try {
-			connection = createConnection();
+			connection = getConnection();
 			produceToQueue(connection);
 			consumeFromQueue(connection);
 		} finally {
@@ -48,7 +48,7 @@ public class NettyClient {
 		}
 	}
 
-	public Connection getConnection() throws Exception {
+	private Connection getConnection() throws Exception {
 		Map<String, Object> connectionParams = new HashMap<String, Object>();
 		connectionParams.put(PORT_PROP_NAME, 5445);
 		TransportConfiguration transportConfiguration = new TransportConfiguration(
@@ -58,7 +58,7 @@ public class NettyClient {
 		return connection;
 	}
 
-	public void produceToQueue(Connection connection) throws Exception {
+	private void produceToQueue(Connection connection) throws Exception {
 		Queue queue = new HornetQQueue("ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageProducer producer = session.createProducer(queue);
@@ -72,7 +72,7 @@ public class NettyClient {
 		session.close();
 	}
 
-	public void consumeFromQueue(Connection connection) throws Exception {
+	private void consumeFromQueue(Connection connection) throws Exception {
 		Queue queue = new HornetQQueue("ExampleQueue");
 		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 		MessageConsumer messageConsumer = session.createConsumer(queue);
