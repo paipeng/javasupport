@@ -15,7 +15,8 @@ import javax.naming.InitialContext;
 public class JndiClient {
 	
 	public static void main(String[] args) throws Exception {
-		new JndiClient().start();
+		JndiClient bean = new JndiClient();
+		bean.start();
 	}
 	
 

@@ -12,7 +12,8 @@ import javax.naming.InitialContext;
 public class QueueDrainer {
 	
 	public static void main(String[] args) throws Exception {
-		new QueueDrainer().start();
+		QueueDrainer bean = new QueueDrainer();
+		bean.start();
 	}
 	
 
@@ -48,5 +49,6 @@ public class QueueDrainer {
 		while ((msg = messageConsumer.receive(5000)) != null) {
 			System.out.println("Received message: " + msg);
 		}
+		System.out.println("Done.");
 	}
 }

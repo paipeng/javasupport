@@ -32,7 +32,8 @@ import org.hornetq.jms.client.HornetQConnectionFactory;
 public class NettyClient {
 
 	public static void main(String[] args) throws Exception {
-		new NettyClient().start();
+		NettyClient bean = new NettyClient();
+		bean.start();
 	}
 
 	private Connection connection = null;
