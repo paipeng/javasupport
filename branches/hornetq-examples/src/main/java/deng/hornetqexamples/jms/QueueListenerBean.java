@@ -16,6 +16,13 @@ import org.apache.commons.logging.LogFactory;
 
 public class QueueListenerBean implements MessageListener {
 	
+	/**
+	 * Maven can start this up with:
+	 * mvn exec:java -Dexec.mainClass=deng.hornetqexamples.jms.QueueListenerBean
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		// Make sure jndi.properties is in classpath!
 		Context ctx = new InitialContext();
@@ -26,12 +33,14 @@ public class QueueListenerBean implements MessageListener {
 		final QueueListenerBean bean = new QueueListenerBean();
 		bean.setConnFactory(cf);
 		bean.setQueue(queue);
-		
+
+		System.out.println("Starting bean.");
 		bean.start();
 		
 		// Shut it down when CTRL+C is hit.
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
+				System.out.println("Stopping bean.");
 				bean.stop();
 			}
 		});
@@ -44,7 +53,9 @@ public class QueueListenerBean implements MessageListener {
 	private Log log = LogFactory.getLog(this.getClass());
 	private ConnectionFactory connFactory;
 	private Queue queue;
+	
 	private Connection connection = null;
+	private MessageConsumer messageConsumer = null;
 	
 	public void setConnFactory(ConnectionFactory connFactory) {
 		this.connFactory = connFactory;
@@ -61,9 +72,11 @@ public class QueueListenerBean implements MessageListener {
 		try {
 			connection = connFactory.createConnection();
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			MessageConsumer messageConsumer = session.createConsumer(queue);
+			messageConsumer = session.createConsumer(queue);
 			messageConsumer.setMessageListener(this);
 			connection.start();
+			
+			log.info("JMS message listener is ready.");
 		} catch (Exception e) {
 			log.error("Failed start JMS connection", e);
 			closeConn();
