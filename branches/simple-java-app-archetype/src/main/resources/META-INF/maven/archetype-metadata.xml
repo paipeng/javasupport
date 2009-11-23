@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><archetype-descriptor name="simple-java-app-archetype">
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor name="simple-java-app-archetype">
   <fileSets>
     <fileSet filtered="true" packaged="true" encoding="UTF-8">
       <directory>src/main/java</directory>
@@ -15,7 +16,7 @@
     <fileSet filtered="true" encoding="UTF-8">
       <directory>src/main/resources</directory>
       <includes>
-        <include>**/*.properties</include>
+        <include>**/*</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" packaged="true" encoding="UTF-8">
@@ -24,16 +25,22 @@
         <include>**/*.java</include>
       </includes>
     </fileSet>
+    <fileSet filtered="true" encoding="UTF-8">
+      <directory>src/test/resources</directory>
+      <includes>
+        <include>**/*</include>
+      </includes>
+    </fileSet>
     <fileSet encoding="UTF-8">
       <directory>bin</directory>
       <includes>
-        <include>**/*.sh</include>
+        <include>**/*</include>
       </includes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
       <directory></directory>
       <includes>
-        <include>README.txt</include>
+        <include>*.txt</include>
       </includes>
     </fileSet>
   </fileSets>
