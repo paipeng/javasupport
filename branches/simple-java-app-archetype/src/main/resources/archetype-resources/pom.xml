@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
   <modelVersion>4.0.0</modelVersion>
   <groupId>${groupId}</groupId>
   <artifactId>${artifactId}</artifactId>
   <packaging>jar</packaging>
   <version>${version}</version>
-  <name>java-demo</name>
-  <url>http://maven.apache.org</url>
+  <name>${artifactId}</name>
+  
   <properties>
+	<!-- All source file for this project should be encoded in UTF-8. --> 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
   <build>
     <plugins>
+	  <!-- Enable this project to be JDK6 or higher. --> 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.6</source>
+          <target>1.6</target>
         </configuration>
       </plugin>      
+	  <!-- Disable extra/duplicated test output. --> 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -28,6 +34,8 @@
           <disableXmlReport>true</disableXmlReport>
         </configuration>
       </plugin>
+	  <!-- A more typical distribution package assebly descriptor that 
+	  include all dependencies jar.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>      
         <artifactId>maven-assembly-plugin</artifactId>
@@ -36,25 +44,36 @@
             <descriptor>src/main/assembly/assembly-bin.xml</descriptor>
           </descriptors>
         </configuration>
-      </plugin>
+      </plugin> -->
     </plugins>
   </build>
-  <dependencies>
+  
+  <dependencies>  
+    <!-- Project Lombok (@Getter/@Setter) Lib 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>1.4</version>
-    </dependency> 
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>0.9.1</version>
+    </dependency> -->	
+	
+    <!-- Apache Common Lib
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
       <version>3.2.1</version>
     </dependency>
-    <dependency>
+	<dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.4</version>
+    </dependency> 
+	<dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
-    </dependency>
+    </dependency> -->
+	
+    <!-- Simple Java App Lib -->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
@@ -64,7 +83,6 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.14</version>
-      <scope>runtime</scope>
     </dependency> 
     <dependency>
       <groupId>junit</groupId>
@@ -73,4 +91,34 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <repositories>    
+    <!-- Project Lombok (@Getter/@Setter) Lib's Repository
+    <repository>
+      <id>projectlombok.org</id>
+      <url>http://projectlombok.org/mavenrepo</url>
+    </repository> -->	
+		
+    <!-- JBoss Maven Repositories
+    <repository>
+      <id>repository.jboss.org</id>
+      <url>http://repository.jboss.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>snapshots.jboss.org</id>
+      <url>http://snapshots.jboss.org/maven2</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository> -->	
+  </repositories>
 </project>
