@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition  xmlns=""  name="myprocess1">
+
+
+	<start-state name="start-state1">
+		<transition to="state1"></transition>
+	</start-state>
+
+
+	<state name="state1">
+		<transition to="end-state1"></transition>
+	</state>
+
+	<end-state name="end-state1"></end-state>
+
+</process-definition>

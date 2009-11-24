@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd" version="3.0">
+  <description>my-ejb</description>
+  <display-name>my-ejb</display-name>
+  <enterprise-beans>
+    <session>
+      <!-- Give this EJB bean a name. Same as 
+           @EJB(name="my_OrderProcessorImpl") -->
+      <ejb-name>my_OrderProcessorImpl</ejb-name>
+      <business-local>deng.myejb.OrderProcessor</business-local>
+      <ejb-class>deng.myejb.OrderProcessorImpl</ejb-class>
+      <session-type>Stateless</session-type>
+      <transaction-type>Container</transaction-type>
+    </session>
+    <message-driven>
+      <ejb-name>OrderReceiver</ejb-name>
+      <ejb-class>deng.myejb.OrderReceiver</ejb-class>
+      <transaction-type>Container</transaction-type>
+      <message-destination-type>javax.jms.Queue</message-destination-type>
+      <activation-config>
+        <activation-config-property>
+          <activation-config-property-name>destination</activation-config-property-name>
+          <activation-config-property-value>queue/ExampleQueue</activation-config-property-value>
+        </activation-config-property>
+        <activation-config-property>
+          <activation-config-property-name>acknowledgeMode</activation-config-property-name>
+          <activation-config-property-value>AUTO_ACKNOWLEDGE</activation-config-property-value>
+        </activation-config-property>
+      </activation-config>
+      
+      <ejb-local-ref>
+        <!-- In JBoss, this is just a id/name use for this ejb reference.
+             This ejb-ref-name has no effect on JBoss JNDI binding !!! 
+             
+             Other implmementation like OpenEJB will honor this, which is to
+             insert this name as JNDI name, which same as using
+             @EJB(mappedName="myjndi/my_OrderProcessorImpl")
+             -->
+        <ejb-ref-name>myjndi/my_OrderProcessorImpl</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>deng.myejb.OrderProcessor</local>
+        
+        <!-- This is only needed if there are multiple of implementation
+             to the same interface!
+             
+             This is equivalent of @EJB(beanName="my_OrderProcessorImpl")
+        <ejb-link>my_OrderProcessorImpl</ejb-link>
+        -->
+      </ejb-local-ref>
+    </message-driven>
+  </enterprise-beans>
+</ejb-jar>
