@@ -97,13 +97,13 @@
 			<groupId>org.hornetq</groupId>
 			<artifactId>hornetq-transports</artifactId>
 			<version>2.0.0.BETA5</version>
-			<scope>runtime</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.netty</groupId>
 			<artifactId>netty</artifactId>
 			<version>3.1.0.GA</version>
-			<scope>runtime</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.javaee</groupId>
@@ -130,7 +130,7 @@
 			<groupId>jboss</groupId>
 			<artifactId>jboss-logging-log4j</artifactId>
 			<version>2.0.3.GA</version>
-			<scope>runtime</scope>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
