@@ -1,0 +1,67 @@
+# number each line of a file
+ruby -ne 'puts "#{$.}\t#{$_}"' file.txt
+
+# print all non-blank lines
+ruby -pe '$_.chomp.empty? and next' file.txt
+
+# number and print all non-blank lines
+ruby -ne '$_.chomp.empty? or print $.,"\t", $_' file.txt
+
+# number and print each blank line
+ruby -ne 'puts $. if $_.chomp.empty?' file.txt
+
+# reverse order of lines (`tac` style)
+ruby -e 'puts File.open($<.filename).readlines.reverse' file.txt
+
+# print matched string from lines, matching the pattern
+ruby -ne 'puts $_.scan(/^\w+/)' /etc/passwd
+
+# triple space a file and reverse order of lines
+ruby -e '$,="\n\n\n"; puts File.readlines($<.filename).reverse.join' file.txt
+
+# print first line of a file (emulate 'head -1')
+ruby -ne 'puts $_; break' file.txt
+ruby -pe '$. == 1 or break' file.txt
+
+# print last line of a file (emulates 'tail -1')
+ruby -ne 'END{puts $_}' file.txt
+ruby -e 'loop{gets or break}; puts $.' file.txt
+
+# grep from stdin
+ruby -e "(1..10).each{ |i| puts \"line#{i}\" }" | ruby -ne "puts $_ if $_ =~ /line5/"
+
+# print only lines that match a regular expression (emulates 'grep')
+ruby -pe 'next if not /regex/' file.txt
+
+# print only lines that do not match a regular expression (emulates 'grep -v')
+ruby -pe 'next if /regex/' file.txt
+
+# print section of file between two regular expressions, /^root/ and /^nobody/
+ruby -ne 'puts $_ if /^root/../^nobody/' file.txt
+
+# print file and remove duplicate, consecutive lines from a file (emulates 'uniq')
+ruby -ne '$_.eql? $; or puts $_;$; = $_;' file.txt
+
+# print file except for blank lines
+ruby -pe 'next if $_.chomp.empty?' file.txt
+ruby -pe 'next if /^\s*$/' file.txt
+ruby -pe 'next if $_.split(/\S+/).size < 2' file.txt
+
+# print file except for lines, starting with digit (unclear and inefficient)
+ruby -pe 'next if (48..57).to_a.include?($_.split(//)[0][0])' file.txt
+
+# delete all leading blank lines at top of file
+ruby -pe '$,="$." if not $_.chomp.empty?; $, or next' file.txt
+
+# print section of file from regex to end of file
+ruby -pe '$,="$." if /regex/; $, or next' file.txt
+
+# delete leading and trailing whitespace from each line
+ruby -pe '$_.strip!.sub!(/$/, "\n")' file.txt
+ruby -ne 'puts $_.strip! + $/' file.txt
+
+# delete leading whitespace from the beginning of each line
+ruby -ne 'puts $_.lstrip! || $_' file.txt
+
+# convert DOS newlines (CR/LF) to Unix format (LF)
+ruby -i -pe 'sub(/\r\n/, "\n")' file.txt
