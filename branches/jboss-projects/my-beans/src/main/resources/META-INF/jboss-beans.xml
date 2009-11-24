@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This will only work in jboss5
+<deployment xmlns="urn:jboss:bean-deployer:2.0">
+<deployment xmlns="urn:jboss:bean-deployer:2.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:jboss:bean-deployer:2.0 http://anonsvn.jboss.org/repos/jbossas/projects/kernel/trunk/kernel/src/main/resources/schema/bean-deployer_2_0.xsd">
+            -->
+
+<!-- For jboss-4.2, use version 1 only. -->
+<deployment xmlns="urn:jboss:bean-deployer">            
+  <bean name="ticketManager" class="deng.mybeansapp.FileStoreTicketManager">
+  </bean>
+</deployment>

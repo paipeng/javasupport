@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<server>
+  <!--
+  <mbean code="org.jboss.jms.server.destination.TopicService"
+    name="jboss.messaging.destination:service=Topic,name=my-ejb-app_T1"
+    xmbean-dd="xmdesc/Topic-xmbean.xml">
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+    <attribute name="SecurityConfig">
+       <security>
+          <role name="guest" read="true" write="true"/>
+          <role name="publisher" read="true" write="true" create="false"/>
+          <role name="durpublisher" read="true" write="true" create="true"/>
+       </security>
+    </attribute>
+  </mbean>
+  -->
+
+  <mbean code="org.jboss.jms.server.destination.QueueService"
+    name="jboss.messaging.destination:service=Queue,name=my-ejb-app_Q1"
+    xmbean-dd="xmdesc/Queue-xmbean.xml">
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+  </mbean>
+  
+  <mbean code="org.jboss.jms.server.destination.QueueService"
+    name="jboss.messaging.destination:service=Queue,name=my-ejb-app_Q2"
+    xmbean-dd="xmdesc/Queue-xmbean.xml">
+    <depends optional-attribute-name="ServerPeer">jboss.messaging:service=ServerPeer</depends>
+    <depends>jboss.messaging:service=PostOffice</depends>
+  </mbean>
+
+</server>
