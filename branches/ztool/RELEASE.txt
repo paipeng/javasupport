@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.1
+Created-By: 14.2-b01 (Sun Microsystems Inc.)
+Implementation-Vendor: ztool
+Implementation-Title: ztool-1.0-20090917
+Implementation-Version: ztool-1.0-20090917
+Implementation-BuiltOn: 20090917.0759
+
+
+commit 78bb9d1f9de8d3fad8d261ccbd9f45a8dd505b1e
+Author: Zemian Deng <zemian.deng@lmco.com>
+Date:   Thu Sep 17 08:01:41 2009 -0400
+
+    Added bin readme docs and made dist in build.xml to exclude src.

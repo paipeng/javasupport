@@ -1,0 +1,6 @@
+- We can search for SOB as per 2 bytes increment because there might be
+off set by 1 byte as we parse out the individual tables
+- Need to rename TableSpect to simply Table
+- blocks to tables
+- need to check the table parsing after SOI
+
