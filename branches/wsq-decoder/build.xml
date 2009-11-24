@@ -1,0 +1,188 @@
+<project name="wsq-enc" default="dist" basedir=".">
+	<description>
+		Ant script to package scala-helper as standalone project dist.
+    </description>
+
+	<!-- Let user load properties first (they can override) -->
+	<property file="${user.home}/build.properties"/>
+	
+	<!-- set global properties for this build -->
+	<tstamp />		
+	<property name="dist-name" value="${ant.project.name}" />
+	<property name="dist-version" value="0.1-${DSTAMP}" />
+	
+	<!-- standard java project properties -->
+	<property name="bin" location="${basedir}/bin" />
+	<property name="lib" location="${basedir}/lib" />
+	<property name="src" location="${basedir}/src" />
+	<property name="src.java" location="${src}/main/java" />
+	<property name="src.test.java" location="${src}/test/java" />
+	<property name="src.resources" location="${src}/main/resources" />
+	<property name="src.test.java-resources" location="${src}/test/resources" />
+	<property name="target" location="${basedir}/target" />
+	<property name="target.classes" location="${target}/classes" />
+	<property name="target.test-classes" location="${target}/test-classes" />
+	<property name="target.dist" location="${target}" />
+	<property name="target.dist.stage" location="${target}/dist-stage" />
+	<property name="target.javadoc" location="${target}/javadoc" />
+		
+	<property name="scala.home" location="C:/opt/scala" />
+	<property name="src.scala" location="${src}/main/scala" />
+	<property name="src.test.scala" location="${src}/test/scala" />
+	<property name="target.scaladoc" location="${target}/scaladoc" />
+	
+	<path id="classpath.lib">
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+			<exclude name="${lib}/vendor/*" />
+			<exclude name="${lib}/optional/*" />
+		</fileset>
+		<fileset dir="${scala.home}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<taskdef resource="scala/tools/ant/antlib.xml">
+    	<classpath refid="classpath.lib"/>
+    </taskdef>
+	
+	<target name="compile" description="compile the source with debug info">
+		<mkdir dir="${target.classes}" />
+		<copy todir="${target.classes}">
+			<fileset dir="${src.resources}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<scalac srcdir="${src.scala}"
+            destdir="${target.classes}"
+            classpathref="classpath.lib"
+            force="changed">
+			<exclude name="**/throwaway/*.java" />
+		</scalac>
+		<!--<javac srcdir="${src.java}" 
+			destdir="${target.classes}" 
+			classpathref="classpath.lib"
+			debug="true">
+			<exclude name="**/throwaway/*.java" />
+		</javac>-->
+	</target>
+	
+	<target name="javadoc" description="generate javadoc api">
+		<mkdir dir="${target.scaladoc}" />
+		<scaladoc
+		  srcdir="${src.scala}"
+		  destdir="${target.scaladoc}"
+		  deprecation="yes" unchecked="yes"
+		  windowtitle="${dist-name}-${dist-version} API Documentation"
+		  doctitle="&lt;div&gt;${dist-name}-${dist-version}&lt;/div&gt;"
+		  classpathref="classpath.lib">
+		  <include name="**/helper/**/*.scala"   />
+		</scaladoc>
+		<!--<mkdir dir="${target.javadoc}" />
+		<javadoc
+			classpathref="classpath.lib"
+		   	destdir="${target.javadoc}"
+		   	author="true"
+		   	version="true"
+		   	use="true"
+		   	windowtitle="${dist-name}-${dist-version} API">
+		    <packageset dir="${src.java}" defaultexcludes="yes">
+				<include name="**/*.java"/>
+		    </packageset>
+		    <doctitle><![CDATA[<h1>${dist-name}-${dist-version} API Documentation</h1>]]></doctitle>
+		    <bottom><![CDATA[<i>${dist-name}-${dist-version}</i>]]></bottom>
+		</javadoc>-->
+	</target>
+	
+	<target name="test" depends="compile" description="run unit tests">
+		<mkdir dir="${target.test-classes}" />
+		<copy todir="${target.test-classes}">
+			<fileset dir="${src.test.java-resources}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		<path id="test-classpath.lib">
+			<path refid="classpath.lib"/>
+			<pathelement location="${target.classes}"/>
+			<pathelement location="${target.test-classes}"/>
+			<fileset dir="${lib}">
+				<include name="${lib}/test/*" />
+			</fileset>
+		</path>
+		<javac srcdir="${src.test.java}" 
+			destdir="${target.test-classes}" 
+			classpathref="test-classpath.lib"
+			debug="true">
+			<compilerarg value="-Xlint:unchecked"/>
+			<exclude name="**/throwaway/*.java" />
+		</javac>
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<classpath refid="test-classpath.lib">
+			</classpath>
+			
+			<formatter type="plain"/>
+			
+			<batchtest fork="yes" todir="${target.test-classes}">
+				<fileset dir="${target.test-classes}">
+					<include name="**/*Test.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="jar" depends="compile" description="create a jar file of compiled classes">
+		<mkdir dir="${target.dist.stage}/lib" />
+		<jar jarfile="${target.dist.stage}/lib/${dist-name}.jar">
+			<fileset dir="${target.classes}">
+				<include name="**/helper/**/*"/>
+				<exclude name="**/*Test.class"/>
+			</fileset>
+			<manifest>
+				 <attribute name="Implementation-Vendor" value="Zemmian Deng"/>
+				 <attribute name="Implementation-Title" value="${dist-name}"/>
+				 <attribute name="Implementation-Version" value="${dist-name}"/>
+				 <attribute name="Implementation-BuiltOn" value="${DSTAMP}.${TSTAMP}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="dist" depends="jar, javadoc" description="generate a binary distribution">
+		<!-- package up project files -->
+		<copy todir="${target.dist.stage}">
+			<fileset dir="${basedir}" >
+				<include name="bin/run-java*"/>
+				<include name="src/**/scala-helper/**/*"/>
+				<include name="lib/test/*.jar"/>	
+				<include name="lib/*.jar"/>	
+				<include name="build-scala-helper.xml"/>
+			</fileset>
+		</copy>
+		
+		<!-- zip up javadoc and remove orig files
+		<mkdir dir="${target.dist.stage}/doc" />
+		<zip destfile="${target.dist.stage}/doc/javadoc.zip">
+			<zipfileset dir="${target.javadoc}" prefix="javadoc" />
+		</zip> -->
+		<mkdir dir="${target.dist.stage}/doc" />
+		<zip destfile="${target.dist.stage}/doc/scaladoc.zip">
+			<zipfileset dir="${target.scaladoc}" prefix="scaladoc" />
+		</zip>
+		
+		<!-- create project dist package -->
+		<zip destfile="${target.dist}/${dist-name}-${dist-version}.zip">
+			<zipfileset dir="${target.dist.stage}" prefix="${dist-name}-${dist-version}" />
+		</zip>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${target}" />
+	</target>
+	
+	<target name="dist-jar-only" depends="jar">
+		<copy todir="${target.dist}">
+			<fileset dir="${target.dist.stage}/lib">
+				<include name="${dist-name}*" />
+			</fileset>
+		</copy>
+	</target>
+</project>

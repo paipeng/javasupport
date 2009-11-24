@@ -1,0 +1,445 @@
+<transaction tot="CAR">
+  <record type="1" index="0">
+    <field number="01" value="202" type="text"/>
+    <field number="02" value="0201" type="text"/>
+    <field number="03" type="subfield">
+      <subfield>
+        <item value="1"/>
+        <item value="15"/>
+      </subfield>
+      <subfield>
+        <item value="2"/>
+        <item value="00"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="01"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="02"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="03"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="04"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="05"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="06"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="07"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="08"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="09"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="10"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="11"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="12"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="13"/>
+      </subfield>
+      <subfield>
+        <item value="4"/>
+        <item value="14"/>
+      </subfield>
+    </field>
+    <field number="04" value="CAR" type="text"/>
+    <field number="05" value="19890809" type="text"/>
+    <field number="06" value="2" type="text"/>
+    <field number="07" value="DCFBIEFIP" type="text"/>
+    <field number="08" value="CT001017C" type="text"/>
+    <field number="09" value="9600105510" type="text"/>
+    <field number="11" value="19.69" type="text"/>
+    <field number="12" value="19.69" type="text"/>
+  </record>
+  <record type="2" index="1">
+    <field number="001" value="703" type="text"/>
+    <field number="002" value="00" type="text"/>
+    <field number="005" value="Y" type="text"/>
+    <field number="006" value="SA J Q SMITH, RM 4569" type="text"/>
+    <field number="007" type="subfield">
+      <subfield>
+        <item value="NY154298B"/>
+      </subfield>
+      <subfield>
+        <item value="CA4578912A"/>
+      </subfield>
+    </field>
+    <field number="009" value="18366-054" type="text"/>
+    <field number="014" value="914368FA8" type="text"/>
+    <field number="015" value="F051551" type="text"/>
+    <field number="016" type="subfield">
+      <subfield>
+        <item value="154568723"/>
+      </subfield>
+      <subfield>
+        <item value="652879104"/>
+      </subfield>
+    </field>
+    <field number="017" value="PP584026972312P" type="text"/>
+    <field number="018" value="REITER, ED AWARECO" type="text"/>
+    <field number="019" type="subfield">
+      <subfield>
+        <item value="DE STEFAMO, ALEX"/>
+      </subfield>
+      <subfield>
+        <item value="JURSA, WILLIAM, JR"/>
+      </subfield>
+    </field>
+    <field number="020" value="DR" type="text"/>
+    <field number="021" value="US" type="text"/>
+    <field number="022" value="19510515" type="text"/>
+    <field number="024" value="M" type="text"/>
+    <field number="025" value="W" type="text"/>
+    <field number="026" type="subfield">
+      <subfield>
+        <item value="TAT RF ARM"/>
+      </subfield>
+      <subfield>
+        <item value="SCAR L EYE"/>
+      </subfield>
+    </field>
+    <field number="027" value="507" type="text"/>
+    <field number="029" value="150" type="text"/>
+    <field number="031" value="BRO" type="text"/>
+    <field number="032" value="BRO" type="text"/>
+    <field number="035" value="Y" type="text"/>
+    <field number="036" value="Y" type="text"/>
+    <field number="039" value="11 BRROKSIDE RD, BROOK, NJ 10007" type="text"/>
+    <field number="040" value="CARPENTER" type="text"/>
+    <field number="041" value="295 WASHBURTON AVE, BROOK, NJ 10007" type="text"/>
+    <field number="045" value="19800809" type="text"/>
+    <field number="047" type="subfield">
+      <subfield>
+        <item value="19890808"/>
+        <item value="CONSPIRACY TO DISTB COCAINE"/>
+      </subfield>
+    </field>
+    <field number="051" type="subfield">
+      <subfield>
+        <item value="19940930"/>
+        <item value="DUI"/>
+        <item value="5 DAYS IN JAIL,  PAY COURT COSTS"/>
+      </subfield>
+      <subfield>
+        <item value="19940930"/>
+        <item value="POSSESSION OF FIREARMS"/>
+        <item value="10 DAYS JAIL, PAY COURT COSTS $50"/>
+      </subfield>
+    </field>
+    <field number="067" type="subfield">
+      <subfield>
+        <item value="UMAXPWRLOK"/>
+        <item value="95441"/>
+        <item value="153247"/>
+      </subfield>
+    </field>
+    <field number="070" value="Y" type="text"/>
+    <field number="073" value="NY0303000" type="text"/>
+  </record>
+  <record type="4" index="2">
+    <field number="1" value="33646" type="text"/>
+    <field number="2" value="1" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="1"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="33628" type="binary" extractedFilename="car.eft_Record2_Field4.9.dat"/>
+  </record>
+  <record type="4" index="3">
+    <field number="1" value="28533" type="text"/>
+    <field number="2" value="2" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="2"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="28515" type="binary" extractedFilename="car.eft_Record3_Field4.9.dat"/>
+  </record>
+  <record type="4" index="4">
+    <field number="1" value="28031" type="text"/>
+    <field number="2" value="3" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="3"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="28013" type="binary" extractedFilename="car.eft_Record4_Field4.9.dat"/>
+  </record>
+  <record type="4" index="5">
+    <field number="1" value="30054" type="text"/>
+    <field number="2" value="4" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="4"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="30036" type="binary" extractedFilename="car.eft_Record5_Field4.9.dat"/>
+  </record>
+  <record type="4" index="6">
+    <field number="1" value="26899" type="text"/>
+    <field number="2" value="5" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="5"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="26881" type="binary" extractedFilename="car.eft_Record6_Field4.9.dat"/>
+  </record>
+  <record type="4" index="7">
+    <field number="1" value="31682" type="text"/>
+    <field number="2" value="6" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="6"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="31664" type="binary" extractedFilename="car.eft_Record7_Field4.9.dat"/>
+  </record>
+  <record type="4" index="8">
+    <field number="1" value="27649" type="text"/>
+    <field number="2" value="7" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="7"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="27631" type="binary" extractedFilename="car.eft_Record8_Field4.9.dat"/>
+  </record>
+  <record type="4" index="9">
+    <field number="1" value="29908" type="text"/>
+    <field number="2" value="8" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="8"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="29890" type="binary" extractedFilename="car.eft_Record9_Field4.9.dat"/>
+  </record>
+  <record type="4" index="10">
+    <field number="1" value="29550" type="text"/>
+    <field number="2" value="9" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="9"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="29532" type="binary" extractedFilename="car.eft_Record10_Field4.9.dat"/>
+  </record>
+  <record type="4" index="11">
+    <field number="1" value="28566" type="text"/>
+    <field number="2" value="10" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="10"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="800" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="28548" type="binary" extractedFilename="car.eft_Record11_Field4.9.dat"/>
+  </record>
+  <record type="4" index="12">
+    <field number="1" value="13365" type="text"/>
+    <field number="2" value="11" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="11"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="400" type="text"/>
+    <field number="7" value="798" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="13347" type="binary" extractedFilename="car.eft_Record12_Field4.9.dat"/>
+  </record>
+  <record type="4" index="13">
+    <field number="1" value="13027" type="text"/>
+    <field number="2" value="12" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="12"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="400" type="text"/>
+    <field number="7" value="800" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="13009" type="binary" extractedFilename="car.eft_Record13_Field4.9.dat"/>
+  </record>
+  <record type="4" index="14">
+    <field number="1" value="59710" type="text"/>
+    <field number="2" value="13" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="13"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="1600" type="text"/>
+    <field number="7" value="976" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="59692" type="binary" extractedFilename="car.eft_Record14_Field4.9.dat"/>
+  </record>
+  <record type="4" index="15">
+    <field number="1" value="60472" type="text"/>
+    <field number="2" value="14" type="text"/>
+    <field number="3" value="0" type="text"/>
+    <field number="04" type="subfield">
+      <subfield>
+        <item value="14"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+        <item value="255"/>
+      </subfield>
+    </field>
+    <field number="5" value="0" type="text"/>
+    <field number="6" value="1600" type="text"/>
+    <field number="7" value="976" type="text"/>
+    <field number="8" value="1" type="text"/>
+    <field number="9" length="60454" type="binary" extractedFilename="car.eft_Record15_Field4.9.dat"/>
+  </record>
+</transaction>
