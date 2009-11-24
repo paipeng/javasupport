@@ -1,0 +1,85 @@
+=> scala.swing.test
+
+For learning, check out these classes under scala.swing.test package:
+ - HelloWorld 
+ - UIDemo(include many other demos)
+ - CountButton
+ - SwingApp
+ - SimpleApplet
+
+Bugs with demo:
+* HelloWorld will not exit when close. You have to hit CTRL+C.
+* TableSelection > Column and Cell under Selection Options doesn't work.
+
+Suggestions:
+* Is this package nessary as part of ScalaAPI doc?
+* Adding a Exit menu item to UIDemo would be nice.
+
+From exploring above, here is a quick rule to create ScalaSwing app:
+1. Create a main object that extends SimpleGUIApplication
+2. Override the top method with a MainFrame instance.
+3. Inside a MainFrame, initialize "contents" variable with an instance of a 
+   subclass of scala.swing.Panel (eg: FlowPanel, BoxPanel, GridPanel etc.)
+4. Now you may add one or more Componet to the "contents" using "+=" append operator.
+Examples:
+import scala.swing._
+object MyContents extends SimpleGUIApplication {
+  def top = new MainFrame{
+    contents = new FlowPanel{
+      contents += new Label("Simple GUI")
+      contents += new Button("Click Me")
+      contents += new ComboBox(List("Please Select One...", "Scala", "Java")) 
+    }
+  }
+}
+NOTE: The contents "+=" operator may only be used inside one of subclass of scala.swing.Panel!
+
+
+=> scala.swing
+Scala's component list:
+  Label
+  Button
+  CheckBox
+  RadioButton
+  ComboBox
+  TextField
+  FormattedTextField
+  PasswordField
+  TextArea
+  Slider
+  ProgressBar
+  ListView
+  Table
+  
+  ScrollaPane
+  SplitPane
+  TabbedPane
+  
+  Menu 
+  MenuBar 
+  MenuItem
+  Separator
+  
+  FlowPanel
+  BorderPanel
+  BoxPanel
+  GridPanel
+  GridBagPanel
+  
+Scala's top level frame and container list:  
+  MainFrame -> applciation frame, which will exit when close operation is called.
+  Frame -> a more general frame.
+  
+Scala main method ready classes:
+  SimpleGUIApplication -> subclass only needs to define top method.
+    - parent class will provide a main method.
+  GUIApplication -> subclass needs to define run method and call this inside main.
+    - parent class will place the thread using invokeLater etc.
+	- subclass my also override init method to do work there.
+	
+Questions:
+  * what happen to Tree component?
+  
+Tips:
+  * You must first define a component before using it! else you get NPE at runtime!
+  
