@@ -1,0 +1,187 @@
+<project name="simpleapp" default="dist" basedir=".">
+<!--
+Summary: Simple java project that follow maven project structure.
+Author: Zemian Deng
+-->
+
+	<!-- Let user load properties first (they can override) -->
+	<property file="${user.home}/build.properties"/>
+	<property file="${basedir}/build.properties"/>
+	
+	<!-- set global properties for this build -->
+	<tstamp />		
+	<property name="dist-name" value="${ant.project.name}" />
+	<property name="dist-version" value="1.0-${DSTAMP}" />
+	
+	<!-- standard java project properties -->
+	<property name="bin" location="${basedir}/bin" />
+	<property name="src" location="${basedir}/src" />
+	<property name="src.main.java" location="${src}/main/java" />
+	<property name="src.test.java" location="${src}/test/java" />
+	<property name="src.main.resources" location="${src}/main/resources" />
+	<property name="src.test.resources" location="${src}/test/resources" />
+	<property name="target" location="${basedir}/target" />
+	<property name="target.classes" location="${target}/classes" />
+	<property name="target.test.classes" location="${target}/test-classes" />
+	<property name="target.test.report" location="${target}/test-reports" />
+	<property name="target.dist" location="${target}" />
+	<property name="target.dist.stage" location="${target}/dist" />
+	<property name="target.javadoc" location="${target}/javadoc" />
+	<property name="m2.repository" location="${user.home}/.m2/repository" />
+	
+	<!-- path ids -->
+	<path id="lib.path">
+		<fileset dir="${m2.repository}">
+			<!--<include name="*.jar" />-->
+		</fileset>
+	</path>
+		
+	<path id="lib.test.path">
+	  <path refid="lib.path" />
+		<fileset dir="${m2.repository}">
+			<include name="junit/junit/4.7/junit-4.7.jar" />
+		</fileset>
+	</path>
+					
+	<!-- Javadoc -->
+	<target name="javadoc" description="generate javadoc api">
+		<mkdir dir="${target.javadoc}" />
+		<javadoc
+			classpathref="lib.path"
+		   	destdir="${target.javadoc}"
+		   	author="true"
+		   	version="true"
+		   	use="true"
+		   	windowtitle="${dist-name}-${dist-version} API">
+		    <packageset dir="${src.main.java}" defaultexcludes="yes">
+				<include name="**/*"/>
+		    </packageset>
+		    <doctitle><![CDATA[<h1>${dist-name}-${dist-version} API</h1>]]></doctitle>
+		    <bottom><![CDATA[<i>${dist-name}-${dist-version}</i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<!-- Compiling codes -->
+	<target name="copy-main-resources.check">
+	  <condition property="copy-main-resources.run">
+      <and>
+        <available file="${src.main.resources}" />
+      </and>
+    </condition>
+	</target>
+	<target name="copy-main-resources" depends="copy-main-resources.check" if="copy-main-resources.run">
+	  <copy todir="${target.classes}">
+			<fileset dir="${src.main.resources}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="compile" depends="copy-main-resources" description="compile the source with debug info">
+		<mkdir dir="${target.classes}" />
+		<javac srcdir="${src.main.java}" 
+			destdir="${target.classes}" 
+			classpathref="lib.path"
+			debug="true">
+			<include name="**/*.java" />
+		</javac>
+	</target>
+		
+	<!-- Test codes -->
+	<target name="copy-test-resources.check">
+	  <condition property="copy-test-resources.run">
+      <and>
+        <available file="${src.test.resources}" />
+      </and>
+    </condition>
+	</target>
+	<target name="copy-test-resources" depends="copy-test-resources.check" if="copy-test-resources.run">
+	  <copy todir="${target.test.classes}">
+			<fileset dir="${src.test.resources}">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="compile-test" depends="compile, copy-test-resources" description="compile main test sources.">
+		<mkdir dir="${target.test.classes}" />
+		<javac srcdir="${src.test.java}" 
+			destdir="${target.test.classes}"
+			debug="true">			
+			<classpath>
+			  <path refid="lib.test.path" />
+			  <pathelement location="${target.classes}" />
+			</classpath>
+			<compilerarg value="-Xlint:unchecked"/>
+			<include name="**/*Test.java" />
+		</javac>
+	</target>
+	
+	<target name="test" depends="compile-test" description="run unit tests">
+	  <mkdir dir="${target.test.report}" />
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<classpath>
+			  <path refid="lib.test.path" />
+			  <pathelement location="${target.classes}" />
+			  <pathelement location="${target.test.classes}" />
+			</classpath>			
+			<formatter type="plain"/>			
+			<batchtest fork="yes" todir="${target.test.report}">
+				<fileset dir="${target.test.classes}">
+					<include name="**/*Test.class"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<!-- Packaging project -->
+	<target name="jar" depends="compile" description="create a jar file of compiled classes">
+		<mkdir dir="${target.dist.stage}/lib" />
+		<jar jarfile="${target.dist.stage}/lib/${dist-name}.jar">
+			<fileset dir="${target.classes}">
+				<exclude name="**/*Test.class"/>
+			</fileset>
+			<manifest>
+				 <attribute name="Implementation-Vendor" value="${dist-name}"/>
+				 <attribute name="Implementation-Title" value="${dist-name}-${dist-version}"/>
+				 <attribute name="Implementation-Version" value="${dist-name}-${dist-version}"/>
+				 <attribute name="Implementation-BuiltOn" value="${DSTAMP}.${TSTAMP}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="dist" depends="jar, javadoc" description="generate a binary distribution">
+		<copy todir="${target.dist.stage}">
+			<fileset dir="${basedir}" >
+				<include name="bin/run-java*"/>
+				<include name="conf/**/*"/>
+				<include name="lib/**/*"/>	
+				<include name="src/**/*"/>
+				<include name="build.xml"/>
+				<include name="pom.xml"/>
+				<include name="README.txt"/>
+				<include name="RELEASE.txt"/>
+			</fileset>
+		</copy>
+		
+		<mkdir dir="${target.dist.stage}/doc" />
+		<zip destfile="${target.dist.stage}/doc/javadoc.zip">
+			<zipfileset dir="${target.javadoc}" prefix="javadoc" />
+		</zip>		
+		
+		<zip destfile="${target.dist}/${dist-name}-${dist-version}.zip">
+			<zipfileset dir="${target.dist.stage}" prefix="${dist-name}-${dist-version}" />
+		</zip>
+	</target>
+	
+	<target name="dist-jar-only" depends="jar">
+		<copy todir="${target.dist}">
+			<fileset dir="${target.dist.stage}/lib">
+				<include name="${dist-name}*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Clean up -->
+	<target name="clean" description="clean up">
+		<delete dir="${target}" />
+	</target>
+</project>

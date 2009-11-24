@@ -1,0 +1,1 @@
+System.getProperties.filter{ case (a : String,b) => a.contains("dir") }
