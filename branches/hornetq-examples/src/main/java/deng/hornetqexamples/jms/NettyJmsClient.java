@@ -29,17 +29,17 @@ import org.hornetq.jms.client.HornetQConnectionFactory;
  * @author zemian
  * 
  */
-public class NettyClient {
+public class NettyJmsClient {
 
 	public static void main(String[] args) throws Exception {
-		NettyClient bean = new NettyClient();
+		NettyJmsClient bean = new NettyJmsClient();
 		bean.start();
 	}
 
 	private Connection connection = null;
 	public void start() throws Exception {
 		try {
-			connection = getConnection();
+			connection = createDefaultConnection();
 			produceToQueue(connection);
 			consumeFromQueue(connection);
 		} finally {
@@ -49,7 +49,7 @@ public class NettyClient {
 		}
 	}
 
-	protected Connection getConnection() throws Exception {
+	protected Connection createDefaultConnection() throws Exception {
 		Map<String, Object> connectionParams = new HashMap<String, Object>();
 		connectionParams.put(PORT_PROP_NAME, 5445);
 		TransportConfiguration transportConfiguration = new TransportConfiguration(
