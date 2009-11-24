@@ -1,0 +1,97 @@
+fn1. Created on 11/18/2009 by Zemian Deng (Textile Format)
+
+
+
+h1. Try out a HornetQ JMS client
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+h1. jboss-5.1 start time
+
+The most time consuming is [ProfileServiceBootstrap] 36s/1m9s for server/web.
+
+
+
+h1. jboss-5.1 minimal startup process
+
+powerbookg4:jboss zemian$ bin/run.sh -c minimal
+=========================================================================
+
+  JBoss Bootstrap Environment
+
+  JBOSS_HOME: /opt/jboss
+
+  JAVA: java
+
+  JAVA_OPTS: -Dprogram.name=run.sh -Xms128m -Xmx512m -XX:MaxPermSize=256m -Dorg.jboss.resolver.warning=true -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000
+
+  CLASSPATH: /opt/jboss/bin/run.jar
+
+=========================================================================
+
+17:38:33,137 INFO  [ServerImpl] Starting JBoss (Microcontainer)...
+17:38:33,142 INFO  [ServerImpl] Release ID: JBoss [The Oracle] 5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221053)
+17:38:33,144 INFO  [ServerImpl] Bootstrap URL: null
+17:38:33,145 INFO  [ServerImpl] Home Dir: /opt/jboss-5.1.0.GA
+17:38:33,146 INFO  [ServerImpl] Home URL: file:/opt/jboss-5.1.0.GA/
+17:38:33,149 INFO  [ServerImpl] Library URL: file:/opt/jboss-5.1.0.GA/lib/
+17:38:33,215 INFO  [ServerImpl] Patch URL: null
+17:38:33,221 INFO  [ServerImpl] Common Base URL: file:/opt/jboss-5.1.0.GA/common/
+17:38:33,223 INFO  [ServerImpl] Common Library URL: file:/opt/jboss-5.1.0.GA/common/lib/
+17:38:33,226 INFO  [ServerImpl] Server Name: minimal
+17:38:33,227 INFO  [ServerImpl] Server Base Dir: /opt/jboss-5.1.0.GA/server
+17:38:33,228 INFO  [ServerImpl] Server Base URL: file:/opt/jboss-5.1.0.GA/server/
+17:38:33,231 INFO  [ServerImpl] Server Config URL: file:/opt/jboss-5.1.0.GA/server/minimal/conf/
+17:38:33,232 INFO  [ServerImpl] Server Home Dir: /opt/jboss-5.1.0.GA/server/minimal
+17:38:33,233 INFO  [ServerImpl] Server Home URL: file:/opt/jboss-5.1.0.GA/server/minimal/
+17:38:33,234 INFO  [ServerImpl] Server Data Dir: /opt/jboss-5.1.0.GA/server/minimal/data
+17:38:33,235 INFO  [ServerImpl] Server Library URL: file:/opt/jboss-5.1.0.GA/server/minimal/lib/
+17:38:33,235 INFO  [ServerImpl] Server Log Dir: /opt/jboss-5.1.0.GA/server/minimal/log
+17:38:33,236 INFO  [ServerImpl] Server Native Dir: /opt/jboss-5.1.0.GA/server/minimal/tmp/native
+17:38:33,237 INFO  [ServerImpl] Server Temp Dir: /opt/jboss-5.1.0.GA/server/minimal/tmp
+17:38:33,238 INFO  [ServerImpl] Server Temp Deploy Dir: /opt/jboss-5.1.0.GA/server/minimal/tmp/deploy
+17:38:35,768 INFO  [ServerImpl] Starting Microcontainer, bootstrapURL=file:/opt/jboss-5.1.0.GA/server/minimal/conf/bootstrap.xml
+17:38:38,374 INFO  [VFSCacheFactory] Using VFSCache [NoopVFSCache]
+17:38:38,582 INFO  [CopyMechanism] VFS temp dir: /opt/jboss-5.1.0.GA/server/minimal/tmp
+17:38:38,586 INFO  [ZipEntryContext] VFS force nested jars copy-mode is enabled.
+17:38:42,832 INFO  [ServerInfo] Java version: 1.5.0_20,Apple Inc.
+17:38:42,834 INFO  [ServerInfo] Java Runtime: Java(TM) 2 Runtime Environment, Standard Edition (build 1.5.0_20-b02-315)
+17:38:42,835 INFO  [ServerInfo] Java VM: Java HotSpot(TM) Client VM 1.5.0_20-141,Apple Inc.
+17:38:42,836 INFO  [ServerInfo] OS-System: Mac OS X 10.5.8,ppc
+17:38:42,840 INFO  [ServerInfo] VM arguments: -Dprogram.name=run.sh -Xms128m -Xmx512m -XX:MaxPermSize=256m -Dorg.jboss.resolver.warning=true -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000 -Djava.endorsed.dirs=/opt/jboss/lib/endorsed 
+17:38:43,037 INFO  [JMXKernel] Legacy JMX core initialized
+17:38:50,033 INFO  [ProfileServiceBootstrap] Loading profile: ProfileKey@ce1626[domain=default, server=default, name=minimal]
+17:38:54,267 INFO  [ServerImpl] JBoss (Microcontainer) [5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221053)] Started in 21s:21ms
+
+
+* jboss-mc => loads conf/bootstrap.xml
+* VFS
+* ProfileServiceBootstrap
+
+
+h2. Startup time is fast if conf/bootstrap.xml only loads classloader
+
+17:42:40,205 INFO  [ServerImpl] Starting Microcontainer, bootstrapURL=file:/opt/jboss-5.1.0.GA/server/minimal/conf/bootstrap.xml
+17:42:42,771 INFO  [VFSCacheFactory] Using VFSCache [NoopVFSCache]
+17:42:42,982 INFO  [CopyMechanism] VFS temp dir: /opt/jboss-5.1.0.GA/server/minimal/tmp
+17:42:42,985 INFO  [ZipEntryContext] VFS force nested jars copy-mode is enabled.
+17:42:43,247 INFO  [ServerImpl] JBoss (Microcontainer) [5.1.0.GA (build: SVNTag=JBoss_5_1_0_GA date=200905221053)] Started in 5s:431ms
+
+** this will not load beans.deployer and therefore will not even deploy 
+   hdscanner-jboss-beans.xml (hot deployment scanning)
+   
+   

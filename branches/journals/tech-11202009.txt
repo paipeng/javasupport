@@ -1,0 +1,149 @@
+h1. HornetQ run.sh script bug:
+
+powerbookg4:bin zemian$ ./run.sh
+libHornetQAIO32.so libHornetQAIO64.so libHornetQAIO_ia64.so run.bat run.sh stop.bat stop.sh
+java  -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -Xms512M -Xmx1024M -Dhornetq.config.dir=../config/stand-alone/non-clustered -Djava.util.logging.config.file=../config/stand-alone/non-clustered/logging.properties -Dorg.jboss.logging.Logger.pluginClass=org.hornetq.integration.logging.HornetQLoggerPlugin -Djava.library.path=. -classpath ../lib/netty.jar:../lib/jnpserver.jar:../lib/jboss-mc.jar:../lib/jboss-jms-api.jar:../lib/hornetq-transports.jar:../lib/hornetq-logging.jar:../lib/hornetq-jms.jar:../lib/hornetq-jboss-as-security.jar:../lib/hornetq-core.jar:../lib/hornetq-bootstrap.jar:../config/stand-alone/non-clustered:../schemas/ org.hornetq.integration.bootstrap.HornetQBootstrapServer hornetq-beans.xml
+libHornetQAIO32.so libHornetQAIO64.so libHornetQAIO_ia64.so run.bat run.sh stop.bat stop.sh
+[main] 22:03:14,530 INFO [org.hornetq.integration.bootstrap.HornetQBootstrapServer]  Starting HornetQ Server
+
+Problem: run.sh has echo asterisks without quote:
+
+echo ***********************************************************************************
+
+It should be 
+
+echo "***********************************************************************************"
+
+
+h1. HornetQ JNDIClient Error:
+
+Exception in thread "main" javax.naming.CommunicationException: Receive timed out [Root exception is java.net.SocketTimeoutException: Receive timed out]
+	at org.jnp.interfaces.NamingContext.discoverServer(NamingContext.java:1465)
+	at org.jnp.interfaces.NamingContext.checkRef(NamingContext.java:1594)
+	at org.jnp.interfaces.NamingContext.lookup(NamingContext.java:634)
+	at org.jnp.interfaces.NamingContext.lookup(NamingContext.java:627)
+	at javax.naming.InitialContext.lookup(InitialContext.java:351)
+	at deng.hornetqexamples.jms.JndiClient.run(JndiClient.java:28)
+	at deng.hornetqexamples.jms.JndiClient.main(JndiClient.java:18)
+Caused by: java.net.SocketTimeoutException: Receive timed out
+	at java.net.PlainDatagramSocketImpl.receive0(Native Method)
+	at java.net.PlainDatagramSocketImpl.receive(PlainDatagramSocketImpl.java:136)
+	at java.net.DatagramSocket.receive(DatagramSocket.java:712)
+	at org.jnp.interfaces.NamingContext.discoverServer(NamingContext.java:1435)
+	... 6 more
+
+Solution: Need to add provider url
+	
+java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+java.naming.provider.url=jnp://localhost:1099
+	
+
+
+h1. HornetQ JNDIClient Error:
+
+Exception in thread "main" javax.naming.CommunicationException: Could not obtain connection to any of these urls: localhost:1099 and discovery failed with error: javax.naming.CommunicationException: Receive timed out [Root exception is java.net.SocketTimeoutException: Receive timed out] [Root exception is javax.naming.CommunicationException: Failed to connect to server localhost:1099 [Root exception is java.lang.ClassNotFoundException: org.jnp.server.NamingServer_Stub (no security manager: RMI class loader disabled)]]
+	at org.jnp.interfaces.NamingContext.checkRef(NamingContext.java:1601)
+	at org.jnp.interfaces.NamingContext.lookup(NamingContext.java:636)
+	at org.jnp.interfaces.NamingContext.lookup(NamingContext.java:629)
+	at javax.naming.InitialContext.lookup(InitialContext.java:351)
+	at deng.hornetqexamples.jms.JndiClient.main(JndiClient.java:13)
+Caused by: javax.naming.CommunicationException: Failed to connect to server localhost:1099 [Root exception is java.lang.ClassNotFoundException: org.jnp.server.NamingServer_Stub (no security manager: RMI class loader disabled)]
+	at org.jnp.interfaces.NamingContext.getServer(NamingContext.java:276)
+	at org.jnp.interfaces.NamingContext.checkRef(NamingContext.java:1572)
+	... 4 more
+Caused by: java.lang.ClassNotFoundException: org.jnp.server.NamingServer_Stub (no security manager: RMI class loader disabled)
+	at sun.rmi.server.LoaderHandler.loadClass(LoaderHandler.java:371)
+	at sun.rmi.server.LoaderHandler.loadClass(LoaderHandler.java:165)
+	at java.rmi.server.RMIClassLoader$2.loadClass(RMIClassLoader.java:620)
+	at java.rmi.server.RMIClassLoader.loadClass(RMIClassLoader.java:247)
+	at sun.rmi.server.MarshalInputStream.resolveClass(MarshalInputStream.java:197)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1544)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1466)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:1699)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1305)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:348)
+	at java.rmi.MarshalledObject.get(MarshalledObject.java:135)
+	at org.jnp.interfaces.NamingContext.getServer(NamingContext.java:259)
+	... 5 more
+
+	
+Solution:
+Use JBoss 4.x instead of JBoss 5.x jnp-client jar
+
+See http://www.jboss.org/index.html?module=bb&op=viewtopic&p=4191016#4191016
+
+
+h1. HornetQ JNDIClient Error:
+
+Exception in thread "main" javax.jms.JMSException: Failed to initialise session factory
+	at org.hornetq.core.client.impl.ClientSessionFactoryImpl.createSessionInternal(ClientSessionFactoryImpl.java:953)
+	at org.hornetq.core.client.impl.ClientSessionFactoryImpl.createSession(ClientSessionFactoryImpl.java:721)
+	at org.hornetq.jms.client.HornetQConnection.authorize(HornetQConnection.java:710)
+	at org.hornetq.jms.client.HornetQConnectionFactory.createConnectionInternal(HornetQConnectionFactory.java:729)
+	at org.hornetq.jms.client.HornetQConnectionFactory.createConnection(HornetQConnectionFactory.java:307)
+	at org.hornetq.jms.client.HornetQConnectionFactory.createConnection(HornetQConnectionFactory.java:302)
+	at deng.hornetqexamples.jms.JndiClient.run(JndiClient.java:33)
+	at deng.hornetqexamples.jms.JndiClient.main(JndiClient.java:18)
+Caused by: HornetQException[errorCode=0 message=Failed to initialise session factory]
+	... 8 more
+Caused by: java.lang.NullPointerException
+	at org.hornetq.core.client.impl.ClientSessionFactoryImpl.initialise(ClientSessionFactoryImpl.java:290)
+	at org.hornetq.core.client.impl.ClientSessionFactoryImpl.createSessionInternal(ClientSessionFactoryImpl.java:949)
+	... 7 more
+
+Solution: 
+Not sure what the problem is, but the server is built from trunk.
+
+Don't use the built from trunk, and use the offical download instead
+
+It should HornetQ-2.0.0.BETA5.zip
+
+
+
+
+h1. HornetQ NettyClient Error:
+
+powerbookg4:bin zemian$ ./run.sh
+***********************************************************************************
+java  -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -Xms512M -Xmx1024M -Dhornetq.config.dir=../config/stand-alone/non-clustered -Djava.util.logging.config.file=../config/stand-alone/non-clustered/logging.properties -Djava.library.path=. -classpath ../lib/netty.jar:../lib/jnpserver.jar:../lib/jboss-mc.jar:../lib/jboss-jms-api.jar:../lib/hornetq-transports.jar:../lib/hornetq-logging.jar:../lib/hornetq-jms.jar:../lib/hornetq-jboss-as-integration.jar:../lib/hornetq-core.jar:../lib/hornetq-bootstrap.jar:../config/stand-alone/non-clustered:../schemas/ org.hornetq.integration.bootstrap.HornetQBootstrapServer hornetq-beans.xml
+***********************************************************************************
+[main] 21:27:18,241 INFO [org.hornetq.integration.bootstrap.HornetQBootstrapServer]  Starting HornetQ Server
+[main] 21:27:23,375 INFO [org.hornetq.core.server.impl.HornetQServerImpl]  live server is starting..
+[main] 21:27:23,407 WARNING [org.hornetq.core.management.impl.ManagementServiceImpl]  It has been detected that the cluster admin user and password which are used to replicate management operation from one node to the other have not been changed from the installation default. Please see the HornetQ user guide for instructions on how to do this.
+[main] 21:27:23,692 INFO [org.hornetq.core.persistence.impl.journal.JournalStorageManager]  AIO journal selected
+[main] 21:27:23,732 WARNING [org.hornetq.core.persistence.impl.journal.JournalStorageManager]  AIO wasn't located on this platform, it will fall back to using pure Java NIO. If your platform is Linux, install LibAIO to enable the AIO journal
+[main] 21:27:27,584 INFO [org.hornetq.integration.transports.netty.NettyAcceptor]  Started Netty Acceptor version 3.1.5.GA-r1772
+[main] 21:27:27,589 INFO [org.hornetq.core.server.impl.HornetQServerImpl]  HornetQ Server version 2.0.0.BETA5 (hornet-baby, 108) started
+[New I/O server worker #1-1] 21:52:20,577 SEVERE [org.hornetq.integration.transports.netty.HornetQChannelHandler]  Got exception on Netty channel
+java.lang.OutOfMemoryError: Java heap space
+	at org.hornetq.integration.transports.netty.ChannelBufferWrapper.readSimpleString(ChannelBufferWrapper.java:275)
+	at org.hornetq.core.remoting.impl.wireformat.SessionCreateConsumerMessage.decodeBody(SessionCreateConsumerMessage.java:123)
+	at org.hornetq.core.remoting.impl.wireformat.PacketImpl.decode(PacketImpl.java:222)
+	at org.hornetq.core.remoting.impl.PacketDecoder.decode(PacketDecoder.java:478)
+	at org.hornetq.core.remoting.impl.RemotingConnectionImpl.bufferReceived(RemotingConnectionImpl.java:330)
+	at org.hornetq.core.remoting.server.impl.RemotingServiceImpl$DelegatingBufferHandler.bufferReceived(RemotingServiceImpl.java:416)
+	at org.hornetq.integration.transports.netty.HornetQChannelHandler.messageReceived(HornetQChannelHandler.java:64)
+	at org.jboss.netty.channel.Channels.fireMessageReceived(Channels.java:391)
+	at org.jboss.netty.handler.codec.frame.FrameDecoder.unfoldAndFireMessageReceived(FrameDecoder.java:317)
+	at org.jboss.netty.handler.codec.frame.FrameDecoder.callDecode(FrameDecoder.java:299)
+	at org.jboss.netty.handler.codec.frame.FrameDecoder.messageReceived(FrameDecoder.java:216)
+	at org.jboss.netty.channel.Channels.fireMessageReceived(Channels.java:345)
+	at org.jboss.netty.channel.Channels.fireMessageReceived(Channels.java:332)
+	at org.jboss.netty.channel.socket.nio.NioWorker.read(NioWorker.java:323)
+	at org.jboss.netty.channel.socket.nio.NioWorker.processSelectedKeys(NioWorker.java:275)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:196)
+	at org.jboss.netty.util.internal.IoWorkerRunnable.run(IoWorkerRunnable.java:46)
+	at org.jboss.netty.util.VirtualExecutorService$ChildExecutorRunnable.run(VirtualExecutorService.java:179)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:651)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:676)
+	at java.lang.Thread.run(Thread.java:613)
+	
+
+Solution: 
+Not sure what the problem is, but the server is built from trunk.
+
+Don't use the built from trunk, and use the offical download instead
+
+It should HornetQ-2.0.0.BETA5.zip	
+

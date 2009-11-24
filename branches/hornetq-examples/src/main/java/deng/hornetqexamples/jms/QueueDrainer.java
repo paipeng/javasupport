@@ -9,46 +9,49 @@ import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 public class QueueDrainer {
 	
 	public static void main(String[] args) throws Exception {
 		QueueDrainer bean = new QueueDrainer();
-		bean.start();
+		String queueName = args[0];
+		bean.drainQueue(queueName);
 	}
 	
-
-	private Context ctx = null;
-	private Connection connection = null;
-	
-	public void start() throws Exception {
+	public void drainQueue(String queueName) throws Exception {
+		Connection connection = null;
+		Context ctx = new InitialContext();
 		try {
-			connection = getConnection();
-			drainQueue(connection);
+			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
+			connection = cf.createConnection();
+			Queue queue = (Queue)ctx.lookup(queueName);
+			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+			System.out.println("Start to drain queue: " + queueName);
+			int count = 0;
+			MessageConsumer messageConsumer = session.createConsumer(queue);
+			Message msg = null;
+			while ((msg = messageConsumer.receive(5000)) != null) {
+				String msgStr = ToStringBuilder.reflectionToString(msg, ToStringStyle.MULTI_LINE_STYLE);
+				System.out.println("=== msg#" + (count + 1) + " ===");
+				System.out.println(msgStr);
+				System.out.println("===============================");
+
+				count ++;
+			}
+			System.out.println(count + " msgs removed from queue: " + queueName);
+			
+			session.close();
 		} finally {
 			if (connection != null) {
 				connection.close();
 			}
+			if (ctx != null) {
+				ctx.close();
+			}
 		}
-	}
-	
-	
-	protected Connection getConnection() throws Exception {
-		// Make sure jndi.properties is in classpath!
-		ctx = new InitialContext();
-		ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
-		Connection connection = cf.createConnection();
-		return connection;
 	}
 
-	protected void drainQueue(Connection connection) throws Exception {
-		Queue queue = (Queue)ctx.lookup("/queue/ExampleQueue");
-		Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		MessageConsumer messageConsumer = session.createConsumer(queue);
-		
-		Message msg = null;
-		while ((msg = messageConsumer.receive(5000)) != null) {
-			System.out.println("Received message: " + msg);
-		}
-		System.out.println("Done.");
-	}
 }
