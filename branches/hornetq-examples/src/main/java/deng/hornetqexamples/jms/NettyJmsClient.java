@@ -20,8 +20,10 @@ import org.hornetq.jms.HornetQQueue;
 import org.hornetq.jms.client.HornetQConnectionFactory;
 
 /**
+ * This example is based on blog entry here:
+ * http://hornetq.blogspot.com/2009/09/hornetq-simple-example-using-maven.html
  * 
- * This example do not use JNDI server! and it connect directly to HornetQ
+ * This example client does not need to connect to JNDI server! It connects directly to HornetQ
  * server using Netty transport.
  * 
  * We can use a jconsole to verify message sent in the MBean view!
