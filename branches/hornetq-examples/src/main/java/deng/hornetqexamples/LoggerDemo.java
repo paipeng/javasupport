@@ -11,15 +11,18 @@ import org.apache.commons.logging.LogFactory;
  * Created on Nov 12, 2009
  */
 public class LoggerDemo {
-	private static Log log = LogFactory.getLog(LoggerDemo.class);
+	private Log logger = LogFactory.getLog(getClass());
 	
 	public static void main(String[] args) {
-		log.trace("I am in trace mode.");
-		log.debug("I am in debug mode.");
-		log.info("I am in info mode.");
-		log.warn("I am in warn mode.");
-		log.error("I am in error mode.");
-		log.fatal("I am in fatal mode.");
+	  new LoggerDemo().logAllLevels();
 	}
-
+	
+	public void logAllLevels() { 
+		logger.trace("A message from logger.");
+		logger.debug("A message from logger.");
+		logger.info("A message from logger.");
+		logger.warn("A message from logger.");
+		logger.error("A message from logger.");
+		logger.fatal("A message from logger.");
+	}
 }
