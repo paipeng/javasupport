@@ -1,11 +1,11 @@
-simple-java-app-archetype
+logger-java-app-archetype
 =========================
 This maven archetype will generate a simple Java 6 ready application with log4j
 framework configuration ready.
 
 How to generating a new project
 ===============================
-$ cd simple-java-app-archetype
+$ cd logger-java-app-archetype
 $ mvn install
 $ cd ..
 $ mvn archetype:generate -DarchetypeCatalog=local
@@ -25,7 +25,7 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 [INFO] Generating project in Interactive mode
 [INFO] No archetype defined. Using maven-archetype-quickstart (org.apache.maven.archetypes:maven-archetype-quickstart:1.0)
 Choose archetype:
-1: local -> simple-java-app-archetype (simple-java-app-archetype)
+1: local -> logger-java-app-archetype (logger-java-app-archetype)
 Choose a number:  (1): 1
 Define value for groupId: : deng.my-first-java-app
 Define value for artifactId: : my-first-java-app

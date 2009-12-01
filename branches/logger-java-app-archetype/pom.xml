@@ -5,10 +5,10 @@
 	
   <modelVersion>4.0.0</modelVersion>
   <groupId>deng.archetype</groupId>
-  <artifactId>simple-java-app-archetype</artifactId>
+  <artifactId>logger-java-app-archetype</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>maven-archetype</packaging>
-  <name>simple-java-app-archetype</name>
+  <name>logger-java-app-archetype</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
