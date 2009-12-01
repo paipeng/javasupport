@@ -15,21 +15,22 @@
 	<!--
 		Services
 	-->
-	<bean class="deng.simplespringapp.containerservices.SysPropsService" id="sysPropsService">
+	<bean class="deng.simplespringapp.container.services.SysPropsService" id="sysPropsService">
 	</bean>	
-	<bean class="deng.simplespringapp.containerservices.PingService" id="pingService">
+	<bean class="deng.simplespringapp.container.services.PingService" id="pingService">
 		<property name="pingHost" value="localhost" />
-		<property name="pingInterval" value="3000" />	
+		<property name="pingInterval" value="1000" />	
 	</bean>
 	
 	<!--
 		A service container
 	-->
-	<bean class="deng.simplespringapp.containerservices.ServiceContainer" id="serviceContainer" init-method="start" destroy-method="stop">
-		<property name="services">			
+	<bean class="deng.simplespringapp.container.ServiceContainer" id="serviceContainer">
+		<property name="threadPoolSize" value="4" />		
+		<property name="services">		
 			<list>
 				<ref bean="sysPropsService"/>
-				<ref bean="pingService"/>
+				<ref bean="pingService"/> 
 			</list>
 		</property>
 	</bean>
