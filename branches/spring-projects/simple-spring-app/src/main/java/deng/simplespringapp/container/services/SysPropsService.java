@@ -1,4 +1,4 @@
-package deng.simplespringapp.containerservices;
+package deng.simplespringapp.container.services;
 
 import java.util.Properties;
 import java.util.Set;
@@ -6,6 +6,15 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import deng.simplespringapp.container.Service;
+
+/**
+ * A simple service that dumps out the Java System Properties to logger
+ * when run is called.
+ * 
+ * @author dengz1
+ *
+ */
 public class SysPropsService implements Service {
 	private Log logger = LogFactory.getLog(getClass());
 	
