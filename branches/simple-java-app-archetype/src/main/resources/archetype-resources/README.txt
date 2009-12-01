@@ -1,20 +1,28 @@
 #set( $symbol_pound = '#' )
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
-${artifactId} project created by Zemian Deng
+${artifactId}
+=========================
+This is a simple Java 6 application with log4j framework configuration ready.
 
-To developers with the sources you may build the project with Maven.
+How to build it from source
+===========================
+\$ mvn compile
 
-To compile
-mvn compile
+How to run it
+=============
+\$ cd ${artifactId}
+\$ mvn compile
+\$ mvn exec:java -Dexec.mainClass=${package}.LoggerDemo
 
-To generate ${artifactId} jar
-mvn package
+How to build it from source
+===========================
+To generate a jar file only
+\$ mvn package
 
 To generate javadoc
-mvn javadoc:jar
+\$ mvn javadoc:jar
 
-To clean up and then create a binary distribution
-mvn clean javadoc:jar assembly:assembly
-
+To clean up and then create a binary distribution package
+\$ mvn clean javadoc:jar assembly:assembly
 
