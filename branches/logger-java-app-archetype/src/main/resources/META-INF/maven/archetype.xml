@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype>
+  <id>simple-java-app-archetype</id>
+  <sources>
+    <source>src/main/java/LoggerDemo.java</source>
+  </sources>
+  <testSources>
+  </testSources>
+  <resources>
+    <resource>src/main/assembly/assembly-bin.xml</resource>
+    <resource>src/main/resources/log4j.properties</resource>
+    <resource>bin/run.sh</resource>
+    <resource>README.txt</resource>
+  </resources>
+</archetype>
