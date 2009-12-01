@@ -34,6 +34,7 @@ public class ContainerRunner extends FileSystemXmlApplicationContext {
 		
 		// store all container instances that registered in Spring context
 		containers = getBeansOfType(Container.class);
+		logger.info(containers.size() + " container beans found.");
 		if (containers.size() == 0) {
 			throw new RuntimeException("Missing Container beans in " + config);
 		}
@@ -52,6 +53,7 @@ public class ContainerRunner extends FileSystemXmlApplicationContext {
 	protected void doClose() {	
 		// Let's stop all containers if user didn't configure them so 
 		// in spring with init/destroy-method attrs.
+		logger.info("Closing down " + containers.size() + " container beans.");
 		for (Map.Entry<String, Container> pair : containers.entrySet()) {
 			String beanName = pair.getKey();
 			Container container = pair.getValue();
