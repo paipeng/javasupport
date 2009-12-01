@@ -18,4 +18,4 @@ How to run it
 =============
 ${symbol_dollar} cd ${artifactId}
 ${symbol_dollar} mvn compile
-${symbol_dollar} mvn exec:java -Dexec.mainClass=${package}.LoggerDemo
+${symbol_dollar} mvn exec:java -Dexec.mainClass=${package}.LoggerDemo -Djava.util.logging.config.file=src/main/resources/logging.properties
