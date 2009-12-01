@@ -7,9 +7,7 @@
   <testSources>
   </testSources>
   <resources>
-    <resource>src/main/assembly/assembly-bin.xml</resource>
-    <resource>src/main/resources/log4j.properties</resource>
-    <resource>bin/run.sh</resource>
+    <resource>src/main/resources/logging.properties</resource>
     <resource>README.txt</resource>
   </resources>
 </archetype>

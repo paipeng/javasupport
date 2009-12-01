@@ -3,8 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package};
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.*;
 
 /**
  * Demo of using a Logger.
@@ -14,18 +13,19 @@ import org.apache.commons.logging.LogFactory;
  * Created on Nov 12, 2009
  */
 public class LoggerDemo {
-	private Log logger = LogFactory.getLog(getClass());
+	private Logger logger = Logger.getLogger(getClass().getName());
 	
 	public static void main(String[] args) {
 	  new LoggerDemo().logAllLevels();
 	}
 	
 	public void logAllLevels() { 
-		logger.trace("A message from logger.");
-		logger.debug("A message from logger.");
+		logger.severe("A message from logger.");
+		logger.warning("A message from logger.");
 		logger.info("A message from logger.");
-		logger.warn("A message from logger.");
-		logger.error("A message from logger.");
-		logger.fatal("A message from logger.");
+		logger.config("A message from logger.");
+		logger.fine("A message from logger.");
+		logger.finer("A message from logger.");
+		logger.finest("A message from logger.");
 	}
 }

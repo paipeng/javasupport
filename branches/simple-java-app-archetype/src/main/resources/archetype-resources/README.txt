@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 ${artifactId}
 =========================
-This is a simple Java 6 application with log4j framework configuration ready.
+This is a simple Java 6 application.
 
 How to build it from source
 ===========================
@@ -13,12 +13,6 @@ ${symbol_dollar} mvn compile
 
 To generate a jar file
 ${symbol_dollar} mvn package
-
-To generate javadoc
-${symbol_dollar} mvn javadoc:jar
-
-To clean up and then create a binary distribution package
-${symbol_dollar} mvn clean javadoc:jar assembly:assembly
 
 How to run it
 =============
