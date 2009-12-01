@@ -14,10 +14,9 @@ public class SpringBootstrap {
 		
 		ctx.start();
 		
+		// Test getting beans from context
 		MyBean myBean = ctx.getBean("myBean", MyBean.class);
 		System.out.println("myBean.name: " + myBean.getName());
-		
-
 		MyCollectionBean myCollectionBean = ctx.getBean("myCollectionBean", MyCollectionBean.class);
 		System.out.println("myCollectionBean.myList: " + myCollectionBean.getMyList());
 		System.out.println("myCollectionBean.myMap: " + myCollectionBean.getMyMap());

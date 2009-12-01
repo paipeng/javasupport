@@ -29,15 +29,6 @@
 					<disableXmlReport>true</disableXmlReport>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/assembly-bin.xml</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
