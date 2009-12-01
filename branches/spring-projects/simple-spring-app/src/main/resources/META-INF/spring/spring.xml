@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!--
+		This will automatically locate any and all property files you have
+		within your classpath, provided they fall under the META-INF/spring
+		directory. The located property files are parsed and their values can
+		then be used within application context files in the form of
+		${propertyKey}.
+	-->
+	<context:property-placeholder location="classpath*:META-INF/spring/*.properties" />
+
+	<!--
+		A simple bean 
+	-->
+	<bean class="deng.simplespringapp.MyBean" id="myBean">
+		<property name="name" value="${myBean.name}" />
+	</bean>
+
+	<!--
+		A simple bean with map and list fields. 
+	-->
+	<bean class="deng.simplespringapp.MyCollectionBean" id="myCollectionBean">
+		<property name="myMap">
+			<props>
+				<prop key="k1">v1</prop>
+				<prop key="k2">v2</prop>
+				<prop key="k3">v3</prop>
+			</props>
+		</property>
+		<property name="myList">
+			<list>
+				<value>list1</value>
+				<value>list2</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>
