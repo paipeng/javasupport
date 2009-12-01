@@ -23,3 +23,14 @@ $ cd simple-spring-app
 $ mvn compile
 $ mvn exec:java -Dexec.mainClass=deng.simplespringapp.LoggerDemo
 
+OR 
+$ mvn dependency:copy-dependencies
+$ CP='target\classes;target\dependency\*'
+$ java -cp $CP deng.simplespringapp.LoggerDemo
+
+More Tools
+==========
+$ # A service container runner program
+$ java -cp $CP deng.simplespringapp.containerservices.ContainerRunner conf/service-container.xml
+
+

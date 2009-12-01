@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<!--
+		This will automatically locate any and all property files you have
+		within your classpath. The located property files are parsed and their values can
+		then be used within application context files in the form of
+		${propertyKey}.
+	-->
+	<context:property-placeholder location="classpath*:*.properties" />
+	
+	<!--
+		Services
+	-->
+	<bean class="deng.simplespringapp.containerservices.SysPropsService" id="sysPropsService">
+	</bean>	
+	<bean class="deng.simplespringapp.containerservices.PingService" id="pingService">
+		<property name="pingHost" value="localhost" />
+		<property name="pingInterval" value="3000" />	
+	</bean>
+	
+	<!--
+		A service container
+	-->
+	<bean class="deng.simplespringapp.containerservices.ServiceContainer" id="serviceContainer" init-method="start" destroy-method="stop">
+		<property name="services">			
+			<list>
+				<ref bean="sysPropsService"/>
+				<ref bean="pingService"/>
+			</list>
+		</property>
+	</bean>
+
+</beans>
