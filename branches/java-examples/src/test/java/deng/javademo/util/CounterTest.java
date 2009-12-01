@@ -7,6 +7,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import deng.javaexamples.util.Counter;
+
 /**
  * @author Zemian Deng
  *

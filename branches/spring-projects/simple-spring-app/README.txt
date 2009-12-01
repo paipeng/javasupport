@@ -5,7 +5,7 @@ This is a simple Java 6 application with log4j framework configuration ready.
 How to build it from source
 ===========================
 To compile source
-$ cd test2
+$ cd simple-spring-app
 $ mvn compile
 
 To generate a jar file
@@ -19,7 +19,7 @@ $ mvn clean javadoc:jar assembly:assembly
 
 How to run it
 =============
-$ cd test2
+$ cd simple-spring-app
 $ mvn compile
 $ mvn exec:java -Dexec.mainClass=deng.simplespringapp.LoggerDemo
 

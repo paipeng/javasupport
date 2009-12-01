@@ -18,40 +18,6 @@
   <build>
     <plugins>
     
-	  <!-- ActiveMQ Maven plugin (It's not released yet, so you need to build from source.
-	       To start a broker server, run: mvn activemq:run
-      <plugin>
-        <groupId>org.apache.activemq.tooling</groupId>
-        <artifactId>maven-activemq-plugin</artifactId>
-        <version>5.1</version>
-        <configuration>
-          <fork>false</fork>
-          <systemProperties>
-            <property>
-              <name>org.apache.activemq.default.directory.prefix</name>
-              <value>./target/</value>
-            </property>
-          </systemProperties>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.5</version>
-          </dependency>
-          <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty-xbean</artifactId>
-            <version>6.1.11</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-activemq</artifactId>
-            <version>1.1.0</version>
-          </dependency>
-        </dependencies>
-      </plugin> -->
-	
 	  <!-- Enable this project to be JDK6 or higher. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -61,6 +27,7 @@
           <target>1.6</target>
         </configuration>
       </plugin>      
+      
 	  <!-- Disable extra/duplicated test output. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -69,91 +36,41 @@
           <disableXmlReport>true</disableXmlReport>
         </configuration>
       </plugin>
-	  <!-- A more typical distribution package assebly descriptor that 
-	  include all dependencies jar.
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>      
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration> 
-          <descriptors>
-            <descriptor>src/main/assembly/assembly-bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin> -->
     </plugins>
   </build>
 
-  <dependencies> 
-    <!-- ActiveMQ Lib -->
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-all</artifactId>
-      <version>5.3.0</version>
-    </dependency>    
-    
-    <!-- ActiveMQ/Camel Lib
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-camel</artifactId>
-      <version>5.3.0</version>
-    </dependency>  -->
-    
-    <!-- Project Lombok (@Getter/@Setter) Lib -->
+  <dependencies>     
+    <!-- Project Lombok (@Getter/@Setter) Lib 
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>0.9.1</version>
     </dependency>
+    -->
 	
     <!-- Apache Common Lib
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
-    </dependency>
-	<dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>1.4</version>
-    </dependency>  -->
 	<dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
     </dependency>
+    -->
 	
-    <!-- Simple Java App Lib -->
+    <!-- Simple Java App Lib
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <version>1.1.1</version>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-    </dependency>
+    </dependency> 
+    -->
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.7</version>
       <scope>test</scope>
     </dependency>
-	
-	<!-- Java Evolution Lib -->
-	<dependency>
-	  <groupId>javolution</groupId>
-	  <artifactId>javolution</artifactId>
-	  <version>5.3.1</version>
-	</dependency>
-	
-	<!-- Database -->
-	<dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.6</version>
-    </dependency>
-    
+        
   </dependencies>
 
   <repositories>    
@@ -161,36 +78,6 @@
     <repository>
       <id>projectlombok.org</id>
       <url>http://projectlombok.org/mavenrepo</url>
-    </repository> -->	
-		
-    <!-- JBoss Maven Repositories
-    <repository>
-      <id>repository.jboss.org</id>
-      <url>http://repository.jboss.org/maven2</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>snapshots.jboss.org</id>
-      <url>http://snapshots.jboss.org/maven2</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
     </repository> -->
-	
-	<!-- Java.net Repository for Maven -->
-    <repository>
-	  <id>maven2-repository.dev.java.net</id>
-	  <name>Java.net Repository for Maven</name>
-	  <url>http://download.java.net/maven/2/</url>
-	  <layout>default</layout>
-	</repository>
   </repositories>
 </project>
