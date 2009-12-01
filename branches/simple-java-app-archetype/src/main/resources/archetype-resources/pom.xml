@@ -15,8 +15,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	
-	<build>
+	<build>	
 		<plugins>
+		
 			<!-- Enable this project to be JDK6 or higher. --> 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,7 +52,8 @@
 		</plugins>
 	</build>
 	
-	<dependencies>			
+	<dependencies>		
+	
 		<!-- Simple Java App Lib -->
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -93,13 +95,16 @@
 			<artifactId>lombok</artifactId>
 			<version>0.9.1</version>
 		</dependency> --> 
+		
 	</dependencies>
 	
 	<repositories>		
+	
 		<!-- Project Lombok (@Getter/@Setter) Lib's Repository
 		<repository>
 			<id>projectlombok.org</id>
 			<url>http://projectlombok.org/mavenrepo</url>
 		</repository> --> 
+	
 	</repositories>
 </project>

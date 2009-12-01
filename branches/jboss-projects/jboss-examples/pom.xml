@@ -6,7 +6,7 @@
   <artifactId>jboss-examples</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>java-demo</name>
+  <name>java-examples</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -72,5 +72,42 @@
       <version>4.7</version>
       <scope>test</scope>
     </dependency>
+    
+    <!-- Project Lombok (@Getter/@Setter) Lib -->	
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>0.9.1</version>
+    </dependency> 
   </dependencies>
+  
+  <repositories>    
+    <!-- Project Lombok (@Getter/@Setter) Lib's Repository -->	
+    <repository>
+      <id>projectlombok.org</id>
+      <url>http://projectlombok.org/mavenrepo</url>
+    </repository> 
+		
+    <!-- JBoss Maven Repositories -->	
+    <repository>
+      <id>repository.jboss.org</id>
+      <url>http://repository.jboss.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>snapshots.jboss.org</id>
+      <url>http://snapshots.jboss.org/maven2</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
 </project>
