@@ -50,4 +50,4 @@ Test your new project
 =====================
 $ cd my-first-java-app
 $ mvn compile
-$ mvn exec:java -Dexec.mainClass=deng.myfirstjavaapp.LoggerDemo
+$ mvn exec:java -Dexec.mainClass=deng.myfirstjavaapp.LoggerDemo -Djava.util.logging.config.file=src/main/resources/logging.properties
