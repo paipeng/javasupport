@@ -1,0 +1,14 @@
+= Database Sample
+
+https://launchpad.net/test-db/
+http://dev.mysql.com/doc/employee/en/employee.html
+
+
+= Database SQL GUI Analyzer Tools
+
+ExecuteQuery
+http://executequery.org/index.jsp
+
+DBVisualizer
+?
+
