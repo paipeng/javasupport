@@ -7,7 +7,6 @@
   <testSources>
   </testSources>
   <resources>
-    <resource>src/main/resources/logging.properties</resource>
     <resource>README.txt</resource>
   </resources>
 </archetype>
