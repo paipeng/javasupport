@@ -23,7 +23,7 @@ ${symbol_dollar} mvn exec:java -Dexec.mainClass=${package}.LoggerDemo
 OR if you have quiet a few dependencies and want to run standalone java, try:
 ${symbol_dollar} mvn dependency:copy-dependencies
 ${symbol_dollar} CP='target/classes;target/dependency/*'
-${symbol_dollar} java -cp $CP deng.simplespringapp.LoggerDemo
+${symbol_dollar} java -cp ${symbol_dollar}CP deng.simplespringapp.LoggerDemo
 
 How to enable JUL logging
 =========================
