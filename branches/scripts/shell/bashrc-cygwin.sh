@@ -1,26 +1,87 @@
-export PATH=$PATH:/apps/groovy-1.6.7/bin
 
-function wpath { 
-  cygpath -wl $(ruby -e "puts File.expand_path(ARGV[0])" $1) 
+###############################
+## Typical Cygwin/Linux helpers
+###############################
+
+# Move/Remove files into a trash can dir.
+function bak {
+  mv -vf $1 ${1}.`ts`.bak
 }
-export wpath
+export -f bak
+
+# Same as bak, but use copy instead of move.
+function bakc {
+  cp -rf $1 ${1}.`ts`.bak
+}
+export -f bakc
+
+# Convert a cygwin unix path into Windows path.
+function wpath {
+  cygpath -wl $(ruby -e "puts File.expand_path(ARGV[0])" $1)
+}
+export -f wpath
+
+# Open any file or dir using system's open or explorer command.
 function open {
   explorer $(wpath $1)
 }
-export open
+export -f open
 
+# Use this insetad of rm command.
+function trash {
+  TRASHCAN=~/.trash/`ts`
+  if [ -e $TRASHCAN ]; then
+		echo "Renaming existing trash can: $TRASHCAN"
+    mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
+  fi
+	mkdir -p $TRASHCAN
+  echo "Deleting to trash can: $TRASHCAN"
+  mv -f $* $TRASHCAN
+}
+export -f trash
+
+# Quicky command aliases
+alias e='/apps/jEdit/jedit.bat'
+alias eb='e $(wpath ~/.bashrc)'
+alias ej='e $(wpath /source/journals/tech-`date "+%m%d%Y"`.txt)'
+alias rb='exec bash'
+alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
-alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
 
-function mvngenjava {
-  PREF=deng
-  PKG=$(echo $1 | ruby -pe "gsub(/[^[:alnum:]]/, '')")
-  CMD="mvn archetype:generate -DinteractiveMode=false \
-  -DarchetypeCatalog=local -DarchetypeArtifactId=simple-java-app-archetype -DarchetypeGroupId=deng.archetype \
-  -DgroupId=$PREF.$1 -DartifactId=$1 -Dpackage=$PREF.$PKG"
-  echo $CMD
-  $CMD
+
+###############################
+## Java Development helpers
+###############################
+
+# Display all the failed tests under maven surefire-reports dir.
+function failedtests {
+  wc -l target/surefire-reports/* | ruby -ane 'puts $F[1] if $F[1] != "total" && $F[0].to_i > 4'
 }
-export mvngenjava
+export -f failedtests
+
+# Create a java project using a local catalog of Maven's archetype.
+function mvngenjava {
+  PKG=$(echo $1 | ruby -pe "gsub(/[^[:alnum:]]/, '')")
+  mvn archetype:generate -DinteractiveMode=false -DarchetypeCatalog=local \
+  -DarchetypeGroupId=deng.archetypes -DarchetypeArtifactId=simple-java-app-archetype -DarchetypeVersion=1.0-SNAPSHOT \
+  -DgroupId=deng.$1 -DartifactId=$1 -Dpackage=deng.$PKG
+}
+export -f mvngenjava
+
+# Some quicky command aliases.
+alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
+alias mvnpkg='mvn -Dmaven.test.skip package'
+alias mvnins='mvn -Dmaven.test.skip install'
+alias finds='find src | grep'
+
+
+###############################
+## For creating cygwin xterm terminal
+###############################
+
+#export DISPLAY=:0.0
+#alias xterm='xterm -sb -rightbar -sl 5000 -e bash --login &'
+alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login -i &'
+
 
