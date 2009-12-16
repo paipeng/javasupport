@@ -48,6 +48,7 @@ alias rb='exec bash'
 alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
+alias openports='netstat -a | grep LISTENING'
 
 
 ###############################
@@ -80,8 +81,6 @@ alias finds='find src | grep'
 ## For creating cygwin xterm terminal
 ###############################
 
-#export DISPLAY=:0.0
-#alias xterm='xterm -sb -rightbar -sl 5000 -e bash --login &'
-alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login -i &'
-
+#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash &'
+alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash &'
 
