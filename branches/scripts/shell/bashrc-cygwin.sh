@@ -56,13 +56,13 @@ export -f trash
 alias e=/apps/jEdit/jedit.bat
 alias eb='e $(wpath ~/.bashrc)'
 alias ebc='e $(wpath /source/javasupport/branches/scripts/shell/bashrc-cygwin.sh)'
-alias ej='e $(wpath /source/journals/tech-`date "+%m%d%Y"`.txt)'
+alias ej='e $(wpath /source/journals/`date "+%m%d%Y"`.txt)'
 alias rb='exec bash'
 alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
 alias openports='netstat -a | grep LISTENING'
-alias cdjs='cd /source/javasupport/branches'
+alias cds='cd /source/javasupport/branches/scripts/ruby'
 
 
 ###############################
