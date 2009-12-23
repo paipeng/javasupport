@@ -3,10 +3,10 @@ require 'java'
 import java.util.concurrent.Executors
 
 class Task
+  include java.lang.Runnable
   def initialize(taskDuration)
     @taskDuration = taskDuration
   end
-  include java.lang.Runnable
   def run
     t = java.lang.Thread.currentThread
     puts "#{t} I am running. This will take #{@taskDuration}s."
