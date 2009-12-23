@@ -57,7 +57,7 @@ alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
 alias openports='netstat -a | grep LISTENING'
-alias cds='cd /source/javasupport/branches/scripts/ruby'
+alias cdjs='cd /source/javasupport/branches'
 alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 function e() {
 	/apps/jEdit/jedit.bat $(wpath "$@") &
