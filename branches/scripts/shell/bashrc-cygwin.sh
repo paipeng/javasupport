@@ -57,7 +57,6 @@ alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
 alias openports='netstat -a | grep LISTENING'
-alias cdjs='cd /source/javasupport/branches'
 alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 function e() {
 	/apps/jEdit/jedit.bat $(wpath "$@") &
@@ -81,6 +80,7 @@ function svnrm() {
 export -f svnrm
 alias svnall='svnadd && svnrm'
 alias svnci='svn commit -m ""'
+alias svnig='svn ps svn:ignore'
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -114,11 +114,12 @@ alias mvncpdp='mvn dependency:copy-dependencies'
 alias finds='find src | grep'
 alias todot='ruby -pe "gsub(/\//, \".\")"'
 function mkcp() {
-	export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
-	echo "export CP=$CP"
+  export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+  echo "export CP=$CP"
 }
 export -f mkcp
 alias javacp='java -cp $CP'
+alias mkcptarget='mkcp target/classes "target/dependency/*"'
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
 
 ###############################
