@@ -4,6 +4,7 @@ Poll target/input directory for text files.
 NOTE: 
 * You can't routeBuilder = RouteBuilder.new because RouteBuilder is abstract, and
 ruby exception doesn't say so!
+* CTRL+C will only work if you let the server run at least few millis seconds?
 
 =end
 require 'java'
