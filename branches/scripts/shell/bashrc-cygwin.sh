@@ -53,20 +53,20 @@ function trash {
 export -f trash
 
 # Quicky command aliases
-function e() {
-	/apps/jEdit/jedit.bat $(wpath "$@") &
-}
-export -f e
-alias eb='e $(wpath ~/.bashrc)'
-alias ebc='e $(wpath /source/javasupport/branches/scripts/shell/bashrc-cygwin.sh)'
-alias ej='e $(wpath /source/journals/`date "+%m%d%Y"`.txt)'
-alias rb='exec bash'
 alias ts="date '+%m%d%Y-%H%M'"
 alias ll='ls -lA'
 alias findx='find . -name'
 alias openports='netstat -a | grep LISTENING'
 alias cds='cd /source/javasupport/branches/scripts/ruby'
 alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
+function e() {
+	/apps/jEdit/jedit.bat $(wpath "$@") &
+}
+export -f e
+alias eb='e ~/.bashrc'
+alias ebc='e /source/javasupport/branches/scripts/shell/bashrc-cygwin.sh'
+alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
+alias rb='exec bash'
 
 ###############################
 ## Java Development helpers
