@@ -81,6 +81,15 @@ export -f svnrm
 alias svnall='svnadd && svnrm'
 alias svnci='svn commit -m ""'
 alias svnig='svn ps svn:ignore'
+alias svnpig='svn pl . -v'
+alias svns='svn status'
+alias svnup='svn update .'
+function svnigproj() {
+svnig 'target
+.settings
+.classpath
+.project' .
+}
 
 # Open a javadoc file under java.lang package.
 function jdoc {
