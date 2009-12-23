@@ -71,12 +71,16 @@ alias rb='exec bash'
 ###############################
 ## Java Development helpers
 ###############################
-
-function svnall() {
-	svn add `svn st | ruby -ane 'puts $F[1] if $F[0]=="?"'` &&
-	svn rm `svn st | ruby -ane 'puts $F[1] if $F[0]=="!"'`
+function svnadd() {
+  svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn add
 }
-export -f svnall
+export -f svnadd
+function svnrm() {
+  svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="!"' | xargs svn rm
+}
+export -f svnrm
+alias svnall='svnadd && svnrm'
+alias svnci='svn commit -m ""'
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -100,6 +104,10 @@ function mvngenjava {
 export -f mvngenjava
 
 # Some quicky command aliases.
+alias mvnc='mvn compile'
+alias mvnp='mvn package'
+alias mvnt='mvn test'
+alias mvnt1='mvn test -Dtest='
 alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
 alias mvnnt='mvn -Dmaven.test.skip' # no test / skip test
 alias mvncpdp='mvn dependency:copy-dependencies'
