@@ -1,5 +1,10 @@
 require 'java'
 puts Kernel.methods.grep /java/
+puts '-' * 10
+puts Module#ancestors  
+puts '-' * 10
+puts ObjectSpace::each_object.to_a.join(", ")
+puts '-' * 10
 
 __END__
 
