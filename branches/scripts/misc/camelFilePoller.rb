@@ -1,5 +1,10 @@
 =begin rdoc
 Poll target/input directory for text files.
+
+NOTE: 
+* You can't routeBuilder = RouteBuilder.new because RouteBuilder is abstract, and
+ruby exception doesn't say so!
+
 =end
 require 'java'
 include_class 'java.lang.Runtime'
@@ -8,8 +13,7 @@ include_class('java.lang.String') { |p,n| 'J' + n }
 include_class 'org.apache.camel.impl.DefaultCamelContext'
 include_class 'org.apache.camel.builder.RouteBuilder'
 
-routeBuilder = RouteBuilder.new
-class << routeBuilder
+class RouteBuilder1 < RouteBuilder
   def configure
     from("file://./target/input").process do |exchange|
       msg = exchange.in
@@ -23,7 +27,7 @@ end
 
 camelCtx = DefaultCamelContext.new
 Runtime.getRuntime.addShutdownHook(JThread.new { camelCtx.stop })
-camelCtx.addRoutes(routeBuilder)
+camelCtx.addRoutes(RouteBuilder1.new)
 camelCtx.start
 
 # putting the main thread in wait mode
