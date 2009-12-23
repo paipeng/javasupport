@@ -6,7 +6,7 @@
   <artifactId>jboss-examples</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>java-examples</name>
+  <name>jboss-examples</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,28 +28,11 @@
           <disableXmlReport>true</disableXmlReport>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>      
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration> 
-          <descriptors>
-            <descriptor>src/main/assembly/assembly-bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>1.4</version>
-    </dependency> 
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.1</version>
-    </dependency>
+  
+  	<!-- Basic Java App lib
     <dependency>
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
@@ -71,6 +54,14 @@
       <artifactId>junit</artifactId>
       <version>4.7</version>
       <scope>test</scope>
+    </dependency> -->
+    
+    <!-- JBoss -->    
+    <dependency>
+      <groupId>org.jboss.jbossas</groupId>
+      <artifactId>jboss-as-client</artifactId>
+      <version>5.1.0.GA</version>
+      <type>pom</type>
     </dependency>
     
     <!-- Project Lombok (@Getter/@Setter) Lib -->	
@@ -99,6 +90,7 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+    <!-- 
     <repository>
       <id>snapshots.jboss.org</id>
       <url>http://snapshots.jboss.org/maven2</url>
@@ -109,5 +101,6 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
+    -->
   </repositories>
 </project>
