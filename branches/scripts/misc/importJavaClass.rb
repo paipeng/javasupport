@@ -18,8 +18,8 @@ def ex1c
 end
 def ex1d
   # import multiple class names and rename it.
-  include_class("java.lang") { |pkg, name| "J" + name }
-  puts JThrea.currentThread
+  include_class(["Thread", "Integer"].map{ |e| "java.lang." + e}) { |pkg, name| "J" + name }
+  puts JThread.currentThread
   puts JInteger::MAX_VALUE
   puts JInteger::MIN_VALUE
 end
