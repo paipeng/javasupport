@@ -11,7 +11,5 @@ mvn package
 To generate javadoc
 mvn javadoc:jar
 
-To clean up and then create a binary distribution
-mvn clean javadoc:jar assembly:assembly
 
 

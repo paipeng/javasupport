@@ -29,7 +29,7 @@ export -f bakc
 
 # Convert a cygwin unix path into Windows path.
 function wpath {
-  cygpath -wl $(ruby -e "puts File.expand_path(ARGV[0])" $1)
+  cygpath -wlp "$@"
 }
 export -f wpath
 
@@ -53,7 +53,10 @@ function trash {
 export -f trash
 
 # Quicky command aliases
-alias e=/apps/jEdit/jedit.bat
+function e() {
+	/apps/jEdit/jedit.bat $(wpath "$@") &
+}
+export -f e
 alias eb='e $(wpath ~/.bashrc)'
 alias ebc='e $(wpath /source/javasupport/branches/scripts/shell/bashrc-cygwin.sh)'
 alias ej='e $(wpath /source/journals/`date "+%m%d%Y"`.txt)'
@@ -63,11 +66,17 @@ alias ll='ls -lA'
 alias findx='find . -name'
 alias openports='netstat -a | grep LISTENING'
 alias cds='cd /source/javasupport/branches/scripts/ruby'
-
+alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 
 ###############################
 ## Java Development helpers
 ###############################
+
+function svnall() {
+	svn add `svn st | ruby -ane 'puts $F[1] if $F[0]=="?"'` &&
+	svn rm `svn st | ruby -ane 'puts $F[1] if $F[0]=="!"'`
+}
+export -f svnall
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -92,10 +101,17 @@ export -f mvngenjava
 
 # Some quicky command aliases.
 alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
-alias mvnpkg='mvn -Dmaven.test.skip package'
-alias mvnins='mvn -Dmaven.test.skip install'
+alias mvnnt='mvn -Dmaven.test.skip' # no test / skip test
+alias mvncpdp='mvn dependency:copy-dependencies'
 alias finds='find src | grep'
-
+alias todot='ruby -pe "gsub(/\//, \".\")"'
+function mkcp() {
+	export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+	echo "export CP=$CP"
+}
+export -f mkcp
+alias javacp='java -cp $CP'
+alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
 
 ###############################
 ## For creating cygwin xterm terminal
