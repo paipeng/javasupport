@@ -13,7 +13,7 @@ include_class('java.lang.String') { |p,n| 'J' + n }
 include_class 'org.apache.camel.impl.DefaultCamelContext'
 include_class 'org.apache.camel.builder.RouteBuilder'
 
-class RouteBuilder1 < RouteBuilder
+class FilePollerRouteBuilder < RouteBuilder
   def configure
     from("file://./target/input").process do |exchange|
       msg = exchange.in
@@ -27,7 +27,7 @@ end
 
 camelCtx = DefaultCamelContext.new
 Runtime.getRuntime.addShutdownHook(JThread.new { camelCtx.stop })
-camelCtx.addRoutes(RouteBuilder1.new)
+camelCtx.addRoutes(FilePollerRouteBuilder.new)
 camelCtx.start
 
 # putting the main thread in wait mode
