@@ -3,9 +3,31 @@
 require 'java'
 
 def ex1
-  #example1 : Overshadown ruby's Thread class!
-  import java.lang.Thread
+  import java.lang.Thread # This will overshadown ruby's Thread class!
   puts Thread.currentThread
+end
+def ex1b
+  # include_class is same as import
+  include_class "java.lang.Thread" # This will overshadown ruby's Thread class!
+  puts Thread.currentThread
+end
+def ex1c
+  # include/import and change it's name!
+  include_class("java.lang.Thread") { |pkg, name| "J" + name }
+  puts JThread.currentThread
+end
+def ex1d
+  # import multiple class names and rename it.
+  include_class("java.lang") { |pkg, name| "J" + name }
+  puts JThrea.currentThread
+  puts JInteger::MAX_VALUE
+  puts JInteger::MIN_VALUE
+end
+module JLang
+  include_package 'java.lang'
+end
+def ex1e
+  puts JLang::Thread.currentThread
 end
 
 def ex2
@@ -30,8 +52,7 @@ def ex3
   end
 end
 
-# Pick and run the main example here
-def main
-  ex3
-end
-main
+# Let user pick a method to run, or default ot ex1
+method = ARGV.shift || "ex1"
+send method
+
