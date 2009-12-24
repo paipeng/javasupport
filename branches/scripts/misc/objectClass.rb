@@ -189,6 +189,27 @@ end
 
 # Implementing Java interface like Java anonymous class style
 module Ex7
+  class Task
+    include java.lang.Runnable
+    def run
+      puts "A Java interface method"
+    end
+  end
+  def self.test
+    puts Task.ancestors.join(", ")
+
+    task2 = java.lang.Object.new
+    class << task2
+      include java.lang.Runnable
+      def run
+        puts "A Java interface method - with anonymous class definition"
+      end
+    end
+    puts task2.class.ancestors.join(", ")
+  end
+end
+
+module Ex7b
   def self.testFailed
     task = Object.new
     class << task
@@ -229,27 +250,6 @@ module Ex7
   def self.test
     puts Task.ancestors.join(", ")  
     
-    task2 = java.lang.Object.new
-    class << task2
-      include java.lang.Runnable
-      def run
-        puts "A Java interface method - with anonymous class definition"
-      end
-    end
-    puts task2.class.ancestors.join(", ")
-  end
-end
-
-module Ex7b
-  class Task
-    include java.lang.Runnable
-    def run
-      puts "A Java interface method"
-    end
-  end
-  def self.test
-    puts Task.ancestors.join(", ")
-
     task2 = java.lang.Object.new
     class << task2
       include java.lang.Runnable
