@@ -1,3 +1,7 @@
+# Very short frequently used commands
+alias f=findx
+alias rjb='/jb/bin/run.bat -c default'
+alias t=trash
 
 ###############################
 ## Typical Cygwin/Linux helpers
@@ -90,6 +94,7 @@ svnig 'target
 .classpath
 .project' .
 }
+alias lnto='ln -s $(pwd)'
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -135,6 +140,6 @@ alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/clien
 ## For creating cygwin xterm terminal
 ###############################
 
-#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash &'
-alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash &'
+#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
+alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
 

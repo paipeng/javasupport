@@ -1,9 +1,13 @@
 =begin rdoc
 $ cd /s
 $ mvncpdp -f pom-active-camel.xml
+
 $ mkcptarget
 export CP=target\classes;target\dependency\*
 $ jruby camelDemo.rb
+
+OR
+$ jruby -J-cp 'target/dependency/*' camelDemo.rb
 Dec 23, 2009 11:48:13 AM org.apache.camel.impl.DefaultCamelContext doStart
 INFO: Apache Camel 2.1.0 (CamelContext:camel-1) is starting
 Dec 23, 2009 11:48:13 AM org.apache.camel.impl.DefaultCamelContext createManagementStrategy
