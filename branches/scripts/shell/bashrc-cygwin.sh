@@ -120,6 +120,7 @@ alias rb='exec bash'                   # reload bashrc
 alias f='find . -name'
 
 # Longer Commands
+alias link='ln -s'
 alias openports='netstat -a | grep LISTENING'
 alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 #alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
@@ -153,7 +154,7 @@ svnig 'target
 ###############################
 ## Java Development Helpers
 ###############################
-alias lnto='ln -s $(pwd)'
+export JAVA_HOME=/apps/jdk
 
 # Open a javadoc file under java.lang package.
 function jdoc {
