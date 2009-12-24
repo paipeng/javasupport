@@ -1,10 +1,17 @@
-# Very short frequently used commands
-alias f=findx
-alias rjb='/jb/bin/run.bat -c default'
-alias t=trash
+# BASH RC Script for Cygwin Shell
+# Created by Zemian Deng on 12/24/2009
+
 
 ###############################
-## Typical Cygwin/Linux helpers
+## Default Cygwin Bash RC file
+###############################
+# To pick up the latest recommended .bashrc content,
+if [ -e "/etc/defaults/etc/skel/.bashrc" ] ; then
+  source "/etc/defaults/etc/skel/.bashrc"
+fi
+
+###############################
+## PATH Setup
 ###############################
 
 # append to path without repeating.
@@ -18,6 +25,15 @@ function pathmunge {
         fi
 }
 export -f pathmunge
+
+pathmunge /apps/jdk/bin
+pathmunge /apps/jruby/bin
+pathmunge /apps/maven/bin
+pathmunge /apps/ant/bin
+
+###############################
+## Shell Helper Functions
+###############################
 
 # Move/Remove files into a trash can dir.
 function bak {
@@ -48,31 +64,70 @@ function trash {
   TRASHCAN=~/.trash/`ts`
   if [ -e $TRASHCAN ]; then
 		echo "Renaming existing trash can: $TRASHCAN"
-    mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
+    \mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
   fi
 	mkdir -p $TRASHCAN
   echo "Deleting to trash can: $TRASHCAN"
-  mv -f $* $TRASHCAN
+  \mv -f $* $TRASHCAN
 }
 export -f trash
 
-# Quicky command aliases
-alias ts="date '+%m%d%Y-%H%M'"
-alias ll='ls -lA'
-alias findx='find . -name'
-alias openports='netstat -a | grep LISTENING'
-alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 function e() {
 	/apps/jEdit/jedit.bat $(wpath "$@") &
 }
 export -f e
-alias eb='e ~/.bashrc'
-alias ebc='e /source/javasupport/branches/scripts/shell/bashrc-cygwin.sh'
-alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
-alias rb='exec bash'
 
 ###############################
-## Java Development helpers
+## Aliases For Shorter Commands
+###############################
+
+# Some example alias instructions
+# If these are enabled they will be used instead of any instructions
+# they may mask.  For example, alias rm='rm -i' will mask the rm
+# application.  To override the alias instruction use a \ before, ie
+# \rm will call the real rm not the alias.
+
+# Interactive operation...
+#alias rm='rm -i'
+alias rm=trash
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Default to human readable figures
+alias df='df -h'
+alias du='du -h'
+
+# Misc :)
+alias less='less -r'                          # raw control characters
+alias whence='type -a'                        # where, of a sort
+alias grep='grep --color'                     # show differences in colour
+
+# Some shortcuts for different directory listings
+alias ls='ls -hF --color=tty'                 # classify files in colour
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
+alias ll='ls -l'                              # long list
+alias la='ls -A'                              # all but . and ..
+alias l='ls -CF'                              #
+
+
+# Very short and frequently used commands
+alias t=trash                          # trashing file
+alias ts="date '+%m%d%Y-%H%M'"         # timestamp label
+alias eb='e ~/.bashrc'                 # edit bashrc file
+alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
+alias rb='exec bash'                   # reload bashrc
+alias f='find . -name'
+
+# Longer Commands
+alias openports='netstat -a | grep LISTENING'
+alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
+#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
+alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
+
+
+###############################
+## Subversion Helpers
 ###############################
 function svnadd() {
   svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn add
@@ -94,6 +149,10 @@ svnig 'target
 .classpath
 .project' .
 }
+
+###############################
+## Java Development Helpers
+###############################
 alias lnto='ln -s $(pwd)'
 
 # Open a javadoc file under java.lang package.
@@ -102,11 +161,13 @@ function jdoc {
 }
 export jdoc
 
-# Display all the failed tests under maven surefire-reports dir.
-function failedtests {
-  wc -l target/surefire-reports/* | ruby -ane 'puts $F[1] if $F[1] != "total" && $F[0].to_i > 4'
+function mkcp() {
+  export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+  echo "export CP=$CP"
 }
-export -f failedtests
+export -f mkcp
+alias javacp='java -cp $CP'
+alias todot='ruby -pe "gsub(/\//, \".\")"'
 
 # Create a java project using a local catalog of Maven's archetype.
 function mvngenjava {
@@ -117,7 +178,8 @@ function mvngenjava {
 }
 export -f mvngenjava
 
-# Some quicky command aliases.
+# Short Maven Commands
+alias finds='find src | grep'
 alias mvnc='mvn compile'
 alias mvnp='mvn package'
 alias mvnt='mvn test'
@@ -125,21 +187,18 @@ alias mvnt1='mvn test -Dtest='
 alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
 alias mvnnt='mvn -Dmaven.test.skip' # no test / skip test
 alias mvncpdp='mvn dependency:copy-dependencies'
-alias finds='find src | grep'
-alias todot='ruby -pe "gsub(/\//, \".\")"'
-function mkcp() {
-  export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
-  echo "export CP=$CP"
-}
-export -f mkcp
-alias javacp='java -cp $CP'
 alias mkcptarget='mkcp target/classes "target/dependency/*"'
+
+# Display all the failed tests under maven surefire-reports dir.
+function failedtests {
+  wc -l target/surefire-reports/* | ruby -ane 'puts $F[1] if $F[1] != "total" && $F[0].to_i > 4'
+}
+export -f failedtests
+
+###############################
+## JBoss Dev Helpers
+###############################
+alias rjb='/jb/bin/run.bat -c'   # run jboss
+alias rjbd='rjb default'         # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
-
-###############################
-## For creating cygwin xterm terminal
-###############################
-
-#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
-alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
 
