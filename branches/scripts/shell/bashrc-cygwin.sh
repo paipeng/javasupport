@@ -9,6 +9,7 @@
 if [ -e "/etc/defaults/etc/skel/.bashrc" ] ; then
   source "/etc/defaults/etc/skel/.bashrc"
 fi
+export TMP=${TMP:=/tmp}
 
 ###############################
 ## PATH Setup
