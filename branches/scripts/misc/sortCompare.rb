@@ -26,6 +26,30 @@ end
 
 =begin
 
+## Ruby 1.9.1 testing:
+Zemian@Zemian-PC /s
+$ ruby -v
+ruby 1.9.1p376 (2009-12-07 revision 26041) [i386-cygwin]
+
+Zemian@Zemian-PC /s
+$ time ruby -e 'puts "hello"'
+hello
+
+real    0m0.179s
+user    0m0.031s
+sys     0m0.093s
+
+Zemian@Zemian-PC /tmp
+$ time ruby -e 'File.readlines("nums.txt").sort { |a,b| a.to_i <=> b.to_i }.each { |e| puts e }'
+
+real    0m0.242s
+user    0m0.093s
+sys     0m0.076s
+
+
+
+
+
 ## Startup time compare.
 
 $ python -V
