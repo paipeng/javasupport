@@ -21,7 +21,7 @@ public class Checksum extends CliBase {
 		setOption("method=<algorithm>",  "Change the checksum method. Default MD5.").
 		setOption("listMethods",         "List available algorithm methods.").
 		setSummary("Calculate a checksum value for each given file.\n").
-		setUsage("ztool Checksum [Options] [hostname ...]\n").
+		setUsage("ztool Checksum [Options] [file ...]\n").
 		setExamples(
 			"  ztool Checksum file1\n" +
 			"  ztool Checksum file1 file2\n" +

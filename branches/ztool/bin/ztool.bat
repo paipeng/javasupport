@@ -1,3 +1,3 @@
 @echo off
 set SCRIPT_DIR=%~dp0
-%SCRIPT_DIR%\run-java ztool.Run %*
+java -cp "%SCRIPT_DIR%..\target\classes;%SCRIPT_DIR%..\target\*" ztool.Run %*
