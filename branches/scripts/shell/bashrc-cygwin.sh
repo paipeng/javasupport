@@ -132,14 +132,21 @@ alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2
 ## Subversion Helpers
 ###############################
 function svnadd() {
-  svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn add
+  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn rm
+  FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="?"'`
+  if [[ -nz $FILES ]]; then
+  	svn add "$FILES"
+  fi
 }
 export -f svnadd
 function svnrm() {
-  svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="!"' | xargs svn rm
+  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="!"' | xargs svn rm
+  FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="!"'`
+  if [[ -nz $FILES ]]; then
+  	svn rm "$FILES"
+  fi
 }
 export -f svnrm
-alias svnall='svnadd && svnrm'
 alias svnci='svn commit -m ""'
 alias svnig='svn ps svn:ignore'
 alias svnpig='svn pl . -v'
@@ -151,6 +158,7 @@ svnig 'target
 .classpath
 .project' .
 }
+alias svnall='svnadd && svnrm && svnci'
 
 ###############################
 ## Java Development Helpers
