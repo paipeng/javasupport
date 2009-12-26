@@ -41,6 +41,11 @@ jruby 1.4.0 (ruby 1.8.7 patchlevel 174) (2009-11-02 69fbfa3) (Java HotSpot(TM) C
 $ ruby -v
 ruby 1.8.7 (2008-08-11 patchlevel 72) [i386-cygwin]
 
+$ java -version
+java version "1.6.0_17"
+Java(TM) SE Runtime Environment (build 1.6.0_17-b04)
+Java HotSpot(TM) Client VM (build 14.3-b01, mixed mode, sharing)
+
 
 $ time python -c 'print("hello\n")'
 hello
@@ -76,6 +81,14 @@ hello
 real    0m2.184s
 user    0m0.122s
 sys     0m0.427s
+
+Zemian@Zemian-PC /s/myjava
+$ time java -cp target/classes deng.myjava.Hello
+hello
+
+real    0m0.184s
+user    0m0.015s
+sys     0m0.031s
 
 
 ## Compare numeric sorting from file
@@ -130,6 +143,13 @@ $ time jruby --1.9 -e 'File.readlines("nums.txt").sort { |a,b| a.to_i <=> b.to_i
 real    0m2.476s
 user    0m0.151s
 sys     0m0.381s
+
+Zemian@Zemian-PC /s/myjava
+$ time java -cp target/classes deng.myjava.SortNumsFile $(wpath /tmp/nums.txt)
+
+real    0m0.353s
+user    0m0.030s
+sys     0m0.076s
 
 =end
 

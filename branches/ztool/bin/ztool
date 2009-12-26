@@ -1,4 +1,16 @@
 #!/bin/bash
-SCRIPT_HOME=`dirname $0`
-$SCRIPT_HOME/run-java.sh -Dhttp.proxyHost=proxy2.lmco.com ztool."$@"
 
+#JAVA_OPTS=-Dhttp.proxyHost=proxy2.myhost.com
+
+cygwin=false;
+case "`uname`" in
+  CYGWIN*) cygwin=true ;;
+esac
+
+if $cygwin ; then
+	SCRIPT_DIR=`dirname $0`
+	SCRIPT_DIR=`cd $SCRIPT_DIR && pwd`
+	$SCRIPT_DIR/ztool.bat "$@"
+else
+	java -cp 'target/classes;target/*' ztool."$@"
+fi

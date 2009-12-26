@@ -14,7 +14,8 @@
 	
 	<!-- standard java project properties -->
 	<property name="bin" location="${basedir}/bin" />
-	<property name="lib" location="${basedir}/lib" />
+        <!-- ztool will not use external lib, so make it current dir instead. -->
+	<property name="lib" location="${basedir}/" />
 	<property name="src" location="${basedir}/src" />
 	<property name="src.main.java" location="${src}/main/java" />
 	<property name="src.test.java" location="${src}/test/java" />
