@@ -56,7 +56,13 @@ export -f wpath
 
 # Open any file or dir using system's open or explorer command.
 function open {
-  explorer $(wpath $1)
+	IN="$@"
+	ruby -e 'exit(1) if ARGV[0] =~ /^(https{0,1}:|file:)/' "$@"
+	if [ "$?" -eq 0 ] ; then
+  	 IN=$(wpath "$@")
+  fi
+  echo $IN
+  explorer $IN
 }
 export -f open
 
@@ -167,9 +173,10 @@ export JAVA_HOME=/apps/jdk
 
 # Open a javadoc file under java.lang package.
 function jdoc {
-  open "http://java.sun.com/javase/6/docs/api/java/lang/$1.html"
+	CLS=`ruby -e 'c=ARGV[0]; if c.include?("."); puts c.gsub(/\./, "/") else puts "java/lang/#{c}" end' "$@"`
+  open "http://java.sun.com/javase/6/docs/api/$CLS.html"
 }
-export jdoc
+export -f jdoc
 
 function mkcp() {
   export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
