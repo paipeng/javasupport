@@ -5,6 +5,7 @@ NOTE:
 * You can't routeBuilder = RouteBuilder.new because RouteBuilder is abstract, and
 ruby exception doesn't say so!
 * CTRL+C will only work if you let the server run at least few millis seconds?
+  I think this has to do with the CamelContext stop is not being implemented propertly.
 
 =end
 require 'java'
@@ -14,7 +15,7 @@ include_class('java.lang.String') { |p,n| 'J' + n }
 include_class 'org.apache.camel.impl.DefaultCamelContext'
 include_class 'org.apache.camel.builder.RouteBuilder'
 
-class FilePollerRouteBuilder < RouteBuilder
+builder = Class.new(RouteBuilder) {
   def configure
     from("file://./target/input").process do |exchange|
       msg = exchange.in
@@ -24,11 +25,12 @@ class FilePollerRouteBuilder < RouteBuilder
       puts "Received exchange: #{msg.getBody(JString.java_class)}"
     end
   end
-end
+}.new
 
 camelCtx = DefaultCamelContext.new
+camelCtx.addRoutes(builder)
+
 Runtime.getRuntime.addShutdownHook(JThread.new { camelCtx.stop })
-camelCtx.addRoutes(FilePollerRouteBuilder.new)
 camelCtx.start
 
 # putting the main thread in wait mode
