@@ -20,9 +20,17 @@ module Ex7
       end
     end
     puts task2.class.ancestors.join(", ")
+    
+    puts (class << task2
+      include RRunnable
+      def run
+        puts "A Ruby module method - with anonymous class definition"
+      end
+      self
+    end).ancestors.join(", ")
   end
 end
 
-method = ARGV.shift || "Ex1::test"
+method = ARGV.shift || "Ex7::test"
 eval method
 
