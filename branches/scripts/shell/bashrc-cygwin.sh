@@ -138,10 +138,10 @@ alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2
 ## Subversion Helpers
 ###############################
 function svnadd() {
-  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn rm
+  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn add
   FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="?"'`
   if [[ -nz $FILES ]]; then
-  	svn add "$FILES"
+  	echo $FILES | xargs svn add
   fi
 }
 export -f svnadd
@@ -149,7 +149,7 @@ function svnrm() {
   #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="!"' | xargs svn rm
   FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="!"'`
   if [[ -nz $FILES ]]; then
-  	svn rm "$FILES"
+  	echo $FILES | xargs svn rm
   fi
 }
 export -f svnrm
