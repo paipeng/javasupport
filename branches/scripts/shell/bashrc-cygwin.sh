@@ -243,8 +243,8 @@ export -f failedtests
 ###############################
 ## JBoss Dev Helpers
 ###############################
-alias rjb='/jb/bin/run.sh -c'   # run jboss
-alias rjbd='rjb default'         # run jboss with default server config
+alias rjb='/apps/jboss/bin/run.sh'   # run jboss
+alias rjbd='rjb -c default'                                          # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
 
 ###############################
