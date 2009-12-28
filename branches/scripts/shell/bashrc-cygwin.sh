@@ -1,16 +1,6 @@
 # BASH RC Script for Cygwin Shell
 # Created by Zemian Deng on 12/24/2009
 
-
-###############################
-## Default Cygwin Bash RC file
-###############################
-# To pick up the latest recommended .bashrc content,
-if [ -e "/etc/defaults/etc/skel/.bashrc" ] ; then
-  source "/etc/defaults/etc/skel/.bashrc"
-fi
-export TMP=${TMP:=/tmp}
-
 ###############################
 ## PATH Setup
 ###############################
@@ -31,6 +21,8 @@ pathmunge /apps/jdk/bin
 pathmunge /apps/jruby/bin
 pathmunge /apps/maven/bin
 pathmunge /apps/ant/bin
+pathmunge /apps/groovy/bin
+
 
 ###############################
 ## Shell Helper Functions
@@ -218,4 +210,12 @@ export -f failedtests
 alias rjb='/jb/bin/run.bat -c'   # run jboss
 alias rjbd='rjb default'         # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
+
+###############################
+## Source Additional files
+###############################
+
+if [ -e "~/.bashrc-extra" ] ; then
+  source "~/.bashrc-extra"
+fi
 
