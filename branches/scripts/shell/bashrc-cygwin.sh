@@ -2,13 +2,6 @@
 # Created by Zemian Deng on 12/24/2009
 
 ###############################
-## Allow Extra Custom User Bashrc
-###############################
-if [ -e ~/.bashrc-extra ] ; then
-  source ~/.bashrc-extra
-fi
-
-###############################
 # Environment Variables
 ###############################
 
@@ -22,7 +15,7 @@ unset TEMP
 # or to any other tmp directory of your choice
 export TMP=/tmp
 export TEMP=/tmp
-
+export EDITOR=/apps/jEdit/jedit.bat
 
 ###############################
 ## PATH Setup
@@ -40,11 +33,11 @@ function pathmunge {
 }
 export -f pathmunge
 
-pathmunge /apps/jdk/bin
-pathmunge /apps/jruby/bin
-pathmunge /apps/maven/bin
-pathmunge /apps/ant/bin
-pathmunge /apps/groovy/bin
+pathmunge /apps/jdk/bin # Make this path in front so it overwrite default Window's path version.
+pathmunge /apps/ant/bin after
+pathmunge /apps/maven/bin after
+pathmunge /apps/jruby/bin after
+pathmunge /apps/groovy/bin after
 
 
 ###############################
@@ -99,7 +92,8 @@ function trash {
 export -f trash
 
 function e() {
-	/apps/jEdit/jedit.bat $(wpath "$@") &
+  EDITOR=${EDITOR:=/cygdrive/c/WINDOWS/notepad.exe}
+	$EDITOR $(wpath "$@") &
 }
 export -f e
 
@@ -140,7 +134,8 @@ alias l='ls -CF'                              #
 # Very short and frequently used commands
 alias t=trash                          # trashing file
 alias ts="date '+%m%d%Y-%H%M'"         # timestamp label
-alias eb='e ~/.bashrc'                 # edit bashrc file
+alias eb='e ~/.bashrc'                 # edit .bashrc file
+alias ebx='e ~/.bashrc-extra'          # edit .bashrc-extra file
 alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
 alias rb='exec bash'                   # reload bashrc
 alias f='find . -name'
@@ -252,3 +247,9 @@ alias rjb='/jb/bin/run.bat -c'   # run jboss
 alias rjbd='rjb default'         # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
 
+###############################
+## Allow User Custom Overwrite
+###############################
+if [ -e ~/.bashrc-extra ] ; then
+  source ~/.bashrc-extra
+fi
