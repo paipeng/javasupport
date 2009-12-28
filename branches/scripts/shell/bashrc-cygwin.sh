@@ -113,8 +113,8 @@ export -f e
 # Interactive operation...
 #alias rm='rm -i'
 alias rm=trash
-alias cp='cp -iv'
-alias mv='mv -iv'
+alias cp='cp -i'
+alias mv='mv -i'
 
 # Default to human readable figures
 alias df='df -h'
