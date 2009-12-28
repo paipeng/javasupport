@@ -93,7 +93,7 @@ export -f trash
 
 function e() {
   EDITOR=${EDITOR:=/cygdrive/c/WINDOWS/notepad.exe}
-	$EDITOR $(wpath "$@") &
+	$EDITOR $(wpath "$@")
 }
 export -f e
 
