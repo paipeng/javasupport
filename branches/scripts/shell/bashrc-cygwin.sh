@@ -2,6 +2,13 @@
 # Created by Zemian Deng on 12/24/2009
 
 ###############################
+## Allow Extra Custom User Bashrc
+###############################
+if [ -e ~/.bashrc-extra ] ; then
+  source ~/.bashrc-extra
+fi
+
+###############################
 # Environment Variables
 ###############################
 
@@ -182,7 +189,8 @@ export JAVA_HOME=/apps/jdk
 # Open a javadoc file under java.lang package.
 function jdoc {
 	CLS=`ruby -e 'c=ARGV[0]; if c.include?("."); puts c.gsub(/\./, "/") else puts "java/lang/#{c}" end' "$@"`
-  open "http://java.sun.com/javase/6/docs/api/$CLS.html"
+	JDOC=${JDOC:=http://java.sun.com/javase/6/docs/api}
+  open "$JDOC/$CLS.html"
 }
 export -f jdoc
 
@@ -226,12 +234,4 @@ export -f failedtests
 alias rjb='/jb/bin/run.bat -c'   # run jboss
 alias rjbd='rjb default'         # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
-
-###############################
-## Source Additional files
-###############################
-
-if [ -e "~/.bashrc-extra" ] ; then
-  source "~/.bashrc-extra"
-fi
 
