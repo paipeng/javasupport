@@ -157,21 +157,34 @@ alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2
 ## Subversion Helpers
 ###############################
 function svnadd() {
-  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="?"' | xargs svn add
-  FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="?"'`
-  if [[ -nz $FILES ]]; then
-  	echo $FILES | xargs svn add
-  fi
+  ruby -e '
+    files = []
+    `svn status`.each do |ln|
+      words = ln.split
+      files << words[1] if words[0].strip == "?"
+    end
+    `svn add #{files.join(" ")}` unless files.size == 0
+  ' "$@"
 }
 export -f svnadd
 function svnrm() {
-  #svn st | ruby -ane 'puts $F[1].gsub(/\\/, "/") if $F[0].strip=="!"' | xargs svn rm
-  FILES=`svn st | ruby -ane 'puts $F[1] if $F[0].strip=="!"'`
-  if [[ -nz $FILES ]]; then
-  	echo $FILES | xargs svn rm
-  fi
+  ruby -e '
+    files = []
+    `svn status`.each do |ln|
+      words = ln.split
+      files << words[1] if words[0].strip == "!"
+    end
+    `svn remove #{files.join(" ")}` unless files.size == 0
+  ' "$@"
 }
 export -f svnrm
+function svnmove() {
+  ruby -e '
+    to_dir=ARGV.pop # last element
+    ARGV.each { |n| `svn move #{n} #{to_dir}` }
+  ' "$@"
+}
+export -f svnmove
 alias svnci='svn commit -m ""'
 alias svnig='svn ps svn:ignore'
 alias svnpig='svn pl . -v'
