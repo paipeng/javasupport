@@ -70,14 +70,18 @@ function wpath {
 export -f wpath
 
 # Open any file or dir using system's open or explorer command.
-function open {
-	IN="$@"
+function open {                
+	ARGS="$@"
+	LAUNCHER=explorer
 	ruby -e 'exit(1) if ARGV[0] =~ /^(https{0,1}:|file:)/' "$@"
 	if [ "$?" -eq 0 ] ; then
-  	 IN=$(wpath "$@")
+  	ARGS=$(wpath "$@")
+  else
+    BROWSER=${BROWSER:=explorer}
+  	LAUNCHER=${BROWSER}
   fi
-  echo $IN
-  explorer $IN
+  echo $ARGS
+  "$LAUNCHER" $ARGS
 }
 export -f open
 
