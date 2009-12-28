@@ -58,7 +58,7 @@ export -f bakc
 
 # Convert a cygwin unix path into Windows path.
 function wpath {
-  cygpath -wlp "$@"
+  cygpath -wl "$@"
 }
 export -f wpath
 
