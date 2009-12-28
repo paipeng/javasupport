@@ -163,7 +163,7 @@ function svnadd() {
       words = ln.split
       files << words[1] if words[0].strip == "?"
     end
-    `svn add #{files.join(" ")}` unless files.size == 0
+    system(svn add #{files.join(" ")}) unless files.size == 0
   ' "$@"
 }
 export -f svnadd
@@ -174,14 +174,14 @@ function svnrm() {
       words = ln.split
       files << words[1] if words[0].strip == "!"
     end
-    `svn remove #{files.join(" ")}` unless files.size == 0
+    system(svn remove #{files.join(" ")}) unless files.size == 0
   ' "$@"
 }
 export -f svnrm
 function svnmove() {
   ruby -e '
     to_dir=ARGV.pop # last element
-    ARGV.each { |n| `svn move #{n} #{to_dir}` }
+    ARGV.each { |n| system(svn move #{n} #{to_dir}) }
   ' "$@"
 }
 export -f svnmove
