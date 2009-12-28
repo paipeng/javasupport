@@ -18,7 +18,7 @@ export TEMP=/tmp
 export EDITOR=/apps/jEdit/jedit.bat
 
 # Change propmt string and color
-#PS1='\e[0;32m\u@\h:\w\e[m\n\$ '
+#PS1='\e[0;32m\u@\h:\e[0;33m\w\e[m\n\$ '
 
 ###############################
 ## PATH Setup
