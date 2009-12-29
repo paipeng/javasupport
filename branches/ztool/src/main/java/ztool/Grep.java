@@ -20,9 +20,9 @@ public class Grep extends CliBase {
 		setOption("debug",               "Show extra debug info.").
 		setOption("recursive",           "Walk directory recursively.").
 		setOption("name=<regex>",        "Search only these matched file names when walk dir.").
-		setOption("showGroup=<indexes>", "If regex is used, display the matched group only.").
+		setOption("groups=<indexes>",    "If regex is used, display the matched group only.").
 		setOption("regex",               "Use Java regular expression as search_text.").
-		setOption("showPrefix",          "Print filename or line number as prefix to result.").
+		setOption("noFilename",          "Do not print filename or line number as prefix to result.").
 		setOption("trim",                "Trim found result before displaying.").
 		setOption("joinSep",             "Use this sep if showGroup has more than two indexes.").
 		setSummary("Grep for search_text in one or more files. If no file are given, then use STDIN.\n").
@@ -30,15 +30,15 @@ public class Grep extends CliBase {
 		setExamples(
 			"  ztool Grep private *.java\n" +
 			"  ztool Grep --regex \"private (void|String)\" *.java\n" +
-			"  ztool Grep --regex --noPrefix --showGroup=1 \"private (void|String)\" *.java\n" +
+			"  ztool Grep --regex --noFilename --showGroup=1 \"private (void|String)\" *.java\n" +
 			"  ztool Grep --regex \"void (set[A-Z]\\w+)\" *.java\n" +
 			"");
 	}
 
 	private boolean regex = false;
-	private boolean showPrefix = false;
+	private boolean noFilename = false;
 	private boolean trim = false;
-	private List<Integer> showGroup;
+	private List<Integer> groups;
 	private Greper greper;
 	private String joinSep;
 	private boolean recursive = false;
@@ -48,13 +48,13 @@ public class Grep extends CliBase {
 	public void run(Options opts) {
 		recursive = opts.has("recursive");
 		regex = opts.has("regex");
-		showPrefix = opts.has("showPrefix");
+		noFilename = opts.has("noFilename");
 		trim = opts.has("trim");
 		joinSep = opts.get("joinSep", "\t");
 		name = opts.get("name", ".*");
 		
 		//If showGrup=0, then show all groups
-		showGroup = Range.IntRangeList.makeFrom(opts.get("showGroup", "0")).toList();
+		groups = Range.IntRangeList.makeFrom(opts.get("groups", "0")).toList();
 		
 
 		String search = opts.getArg(0);
@@ -122,7 +122,7 @@ public class Grep extends CliBase {
 			lineCount++;
 			String resultLine = greper.processGrep(line);
 			if (resultLine != null) {
-				String prefix = showPrefix ? (defaultPrefix + lineCount + ": ") : "" ;
+				String prefix = noFilename ? "" : (defaultPrefix + lineCount + ": ");
 				System.out.print(prefix);
 				String outLine = trim ? resultLine.trim() : resultLine;
 				System.out.println(outLine);
@@ -148,19 +148,19 @@ public class Grep extends CliBase {
 			if (!found) {
 				return null;
 			} else {
-				if (showGroup.size() == 1 && showGroup.get(0) == 0) {
+				if (groups.size() == 1 && groups.get(0) == 0) {
 					StringBuilder sb = new StringBuilder();
 					int len = matcher.groupCount();
 					for (int i = 1; i <= len; i++) {
 						sb.append(matcher.group(i) + joinSep);
 					}
 					return sb.toString();
-				} else if (showGroup.size() > 0) {
+				} else if (groups.size() > 0) {
 					StringBuilder sb = new StringBuilder();
-					if (showGroup.size() == 1) {
-						sb.append(matcher.group(showGroup.get(0)));
+					if (groups.size() == 1) {
+						sb.append(matcher.group(groups.get(0)));
 					} else {
-						for (int i : showGroup) {
+						for (int i : groups) {
 							sb.append(matcher.group(i) + joinSep);
 						}
 					}
