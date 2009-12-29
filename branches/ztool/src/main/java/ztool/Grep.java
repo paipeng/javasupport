@@ -30,10 +30,11 @@ public class Grep extends CliBase {
 		setSummary("Grep for search_text in one or more files. If no file are given, then use STDIN.\n").
 		setUsage("ztool Grep [Options] <search_text> [file ...]").
 		setExamples(
-			"  ztool Grep private *.java\n" +
-			"  ztool Grep --regex \"private (void|String)\" *.java\n" +
-			"  ztool Grep --regex --noFilename --showGroup=1 \"private (void|String)\" *.java\n" +
-			"  ztool Grep --regex \"void (set[A-Z]\\w+)\" *.java\n" +
+			"  ztool grep private *.java\n" +
+			"  ztool grep --regex \"private (void|String)\" *.java\n" +
+			"  ztool grep --regex --noFilename --showGroup=1 \"private (void|String)\" *.java\n" +
+			"  ztool grep --regex \"void (set[A-Z]\\w+)\" *.java\n" +
+			"  ztool grep -f -n='\\.xml$' -r DefaultDS /apps/jboss/server/default\n" +
 			"");
 	}
 
