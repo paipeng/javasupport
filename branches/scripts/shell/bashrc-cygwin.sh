@@ -141,7 +141,12 @@ alias eb='e ~/.bashrc'                 # edit .bashrc file
 alias ebx='e ~/.bashrc-extra'          # edit .bashrc-extra file
 alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
 alias rb='exec bash'                   # reload bashrc
-alias f='find . -name'
+function f() {
+  TEXT=$1
+  DIR=.
+  if (( $# > 1 )); then DIR=$2; fi
+  find $DIR -name "*${TEXT}*" | grep -v .svn
+}
 
 # Longer Commands
 alias link='ln -s'
