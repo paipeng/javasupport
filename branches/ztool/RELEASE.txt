@@ -1,3 +1,8 @@
-Author: Zemian Deng <thebugslayer@gmail.com>
-Date:   Thu Sep 17 08:01:41 2009 -0400
+Release Notes for ztool project. See README.txt for more info.
 
+ztool-1.0
+  * First release (SVN revision 454)
+
+ztool-1.1-SNAPSHOT
+  * Latest development.
+  
