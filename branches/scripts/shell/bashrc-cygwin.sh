@@ -155,6 +155,8 @@ alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 #alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
 alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
 
+# ztool alias (assume you link /js to /source/javasupport/branches)
+alias ztool='/js/ztool/bin/ztool'
 
 ###############################
 ## Subversion Helpers
