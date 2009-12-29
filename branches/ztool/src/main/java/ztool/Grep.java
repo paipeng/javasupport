@@ -23,7 +23,8 @@ public class Grep extends CliBase {
 		setOption("groups=<indexes>",    "If regex is used, display the matched group only.").
 		setOption("regex",               "Use Java regular expression as search_text.").
 		setOption("noFilename",          "Do not print filename or line number as prefix to result.").
-		setOption("trim",                "Trim found result before displaying.").
+		setOption("filenameWidth=<int>", "Format the filename prefix width.").
+		setOption("noTrim",              "Do not trim result before displaying.").
 		setOption("joinSep",             "Use this sep if showGroup has more than two indexes.").
 		setSummary("Grep for search_text in one or more files. If no file are given, then use STDIN.\n").
 		setUsage("ztool Grep [Options] <search_text> [file ...]").
@@ -37,21 +38,24 @@ public class Grep extends CliBase {
 
 	private boolean regex = false;
 	private boolean noFilename = false;
-	private boolean trim = false;
+	private boolean noTrim = false;
 	private List<Integer> groups;
 	private Greper greper;
 	private String joinSep;
 	private boolean recursive = false;
 	private String name;
-
+	
+	private int filenameWidth;
+	private String linePrefixFormat = ":%-3d ";
 	@Override
 	public void run(Options opts) {
 		recursive = opts.has("recursive");
 		regex = opts.has("regex");
 		noFilename = opts.has("noFilename");
-		trim = opts.has("trim");
+		noTrim = opts.has("noTrim");
 		joinSep = opts.get("joinSep", "\t");
 		name = opts.get("name", ".*");
+		filenameWidth = opts.getInt("filenameWidth", 40);
 		
 		//If showGrup=0, then show all groups
 		groups = Range.IntRangeList.makeFrom(opts.get("groups", "0")).toList();
@@ -63,12 +67,12 @@ public class Grep extends CliBase {
 
 		if (opts.getArgsSize() == 1) {
 			debug("Grepping from STDIN.");
-			LineAction lineAction = new GrepLineAction("Line ");
+			LineAction lineAction = new GrepLineAction(linePrefixFormat);
 			eachLine(System.in, lineAction);
 		} if (opts.getArgsSize() == 2) {
 			String fn = opts.getArg(1);
 			debug("Grepping from :" + fn);
-			LineAction lineAction = new GrepLineAction("Line ");
+			LineAction lineAction = new GrepLineAction(linePrefixFormat);
 			
 			File file = new File(fn);
 			if (file.isDirectory()) {
@@ -80,7 +84,7 @@ public class Grep extends CliBase {
 			//Process each file from argument
 			for (int i = 1; i < opts.getArgsSize(); i++) {
 				String fn = opts.getArg(i);
-				LineAction lineAction = new GrepLineAction(fn + " Line ");
+				LineAction lineAction = new GrepLineAction(fn + linePrefixFormat);
 				debug("Grepping from file: " + fn);
 
 				File file = new File(fn);
@@ -104,7 +108,8 @@ public class Grep extends CliBase {
 			} else {
 				Matcher m = namePattern.matcher(file.getPath());
 				if (m.find()) {
-					LineAction lineAction = new GrepLineAction(file.getPath() + " Line ");
+			    String prefix = String.format("%-" + filenameWidth + "s", file.getPath());
+					LineAction lineAction = new GrepLineAction(prefix + linePrefixFormat);
 					eachLine(file, lineAction);
 				}
 			}
@@ -122,9 +127,11 @@ public class Grep extends CliBase {
 			lineCount++;
 			String resultLine = greper.processGrep(line);
 			if (resultLine != null) {
-				String prefix = noFilename ? "" : (defaultPrefix + lineCount + ": ");
-				System.out.print(prefix);
-				String outLine = trim ? resultLine.trim() : resultLine;
+			  if (!noFilename) {
+			    String prefix = String.format(defaultPrefix, lineCount);
+			    System.out.print(prefix);
+			  }
+				String outLine = noTrim ? resultLine : resultLine.trim();
 				System.out.println(outLine);
 			}
 		}
