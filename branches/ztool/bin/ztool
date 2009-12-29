@@ -12,5 +12,5 @@ if $cygwin ; then
 	SCRIPT_DIR=`cd $SCRIPT_DIR && pwd`
 	$SCRIPT_DIR/ztool.bat "$@"
 else
-	java -cp 'target/classes;target/*' ztool."$@"
+	java -cp 'target/classes;dist/*' ztool."$@"
 fi
