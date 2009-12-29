@@ -23,7 +23,8 @@ public class Grep extends CliBase {
 		setOption("groups=<indexes>",    "If regex is used, display the matched group only.").
 		setOption("regex",               "Use Java regular expression as search_text.").
 		setOption("noFilename",          "Do not print filename or line number as prefix to result.").
-		setOption("filenameWidth=<int>", "Format the filename prefix width.").
+		setOption("filenameOnly",        "Do not show found text result but just the filename and line number only.").
+		setOption("width=<int>",         "Width of the filename prefix.").
 		setOption("noTrim",              "Do not trim result before displaying.").
 		setOption("joinSep",             "Use this sep if showGroup has more than two indexes.").
 		setSummary("Grep for search_text in one or more files. If no file are given, then use STDIN.\n").
@@ -43,19 +44,21 @@ public class Grep extends CliBase {
 	private Greper greper;
 	private String joinSep;
 	private boolean recursive = false;
-	private String name;
-	
-	private int filenameWidth;
+	private String name;	
+	private int width;
 	private String linePrefixFormat = ":%-3d ";
+	private boolean filenameOnly = false;
+	
 	@Override
 	public void run(Options opts) {
 		recursive = opts.has("recursive");
 		regex = opts.has("regex");
 		noFilename = opts.has("noFilename");
+		filenameOnly = opts.has("filenameOnly");
 		noTrim = opts.has("noTrim");
 		joinSep = opts.get("joinSep", "\t");
 		name = opts.get("name", ".*");
-		filenameWidth = opts.getInt("filenameWidth", 40);
+		width = opts.getInt("width", 40);
 		
 		//If showGrup=0, then show all groups
 		groups = Range.IntRangeList.makeFrom(opts.get("groups", "0")).toList();
@@ -108,7 +111,7 @@ public class Grep extends CliBase {
 			} else {
 				Matcher m = namePattern.matcher(file.getPath());
 				if (m.find()) {
-			    String prefix = String.format("%-" + filenameWidth + "s", file.getPath());
+			    String prefix = String.format("%-" + width + "s", file.getPath());
 					LineAction lineAction = new GrepLineAction(prefix + linePrefixFormat);
 					eachLine(file, lineAction);
 				}
@@ -127,12 +130,16 @@ public class Grep extends CliBase {
 			lineCount++;
 			String resultLine = greper.processGrep(line);
 			if (resultLine != null) {
-			  if (!noFilename) {
+			  if (filenameOnly || !noFilename) {
 			    String prefix = String.format(defaultPrefix, lineCount);
 			    System.out.print(prefix);
 			  }
-				String outLine = noTrim ? resultLine : resultLine.trim();
-				System.out.println(outLine);
+			  if (filenameOnly) {
+			    System.out.println();
+			  } else {
+          String outLine = noTrim ? resultLine : resultLine.trim();
+          System.out.println(outLine);
+        }
 			}
 		}
 	}
