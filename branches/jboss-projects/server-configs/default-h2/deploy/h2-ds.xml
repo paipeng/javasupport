@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <local-tx-datasource>
+    <jndi-name>DefaultDS</jndi-name>
+    <connection-url>jdbc:h2:tcp://localhost/jboss</connection-url>
+    <driver-class>org.h2.Driver</driver-class>
+    <user-name>sa</user-name>
+    <password></password>
+    <!-- Can't find one online for H2DB type-mapping, let's use HSQLDB for now and it seems to work! -->
+    <metadata>
+      <type-mapping>Hypersonic SQL</type-mapping>
+    </metadata>
+    </local-tx-datasource>
+</datasources>
+
