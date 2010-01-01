@@ -26,13 +26,13 @@ export EDITOR=/apps/jEdit/jedit.bat
 
 # append to path without repeating.
 function pathmunge {
-        if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
-           if [ "$2" = "after" ] ; then
-              PATH=$PATH:$1
-           else
-              PATH=$1:$PATH
-           fi
-        fi
+	if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
+		 if [ "$2" = "after" ] ; then
+				PATH=$PATH:$1
+		 else
+				PATH=$1:$PATH
+		 fi
+	fi
 }
 export -f pathmunge
 
@@ -90,7 +90,7 @@ function trash {
   fi
 	mkdir -p $TRASHCAN
   echo "Deleting to trash can: $TRASHCAN"
-  \mv -f $* $TRASHCAN
+  \mv -f "$@" $TRASHCAN
 }
 export -f trash
 
@@ -145,8 +145,13 @@ function f() {
   TEXT=$1
   DIR=.
   if (( $# > 1 )); then DIR=$2; fi
-  find $DIR -name "*${TEXT}*" | grep -v .svn
+  find $DIR -iname "*${TEXT}*" | grep -v .svn
 }
+#alias top5bigfiles='find . -type f -exec ls -s {} \; | sort -n -r | head -5'
+#alias top5smallfiles='find . -type f -exec ls -s {} \; | sort -n | head -5'
+#alias findlasthour='find . -mmin -60'
+#alias findlastday='find . -mtime -1'
+
 
 # Longer Commands
 alias link='ln -s'
