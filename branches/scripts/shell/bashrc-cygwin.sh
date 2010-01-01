@@ -169,7 +169,7 @@ alias ztool='/js/ztool/bin/ztool'
 function svnadd() {
   ruby -e '
     files = []
-    `svn status`.each do |ln|
+    `svn status`.each_line do |ln|
       words = ln.split
       files << words[1] if words[0].strip == "?"
     end
@@ -180,7 +180,7 @@ export -f svnadd
 function svnrm() {
   ruby -e '
     files = []
-    `svn status`.each do |ln|
+    `svn status`.each_line do |ln|
       words = ln.split
       files << words[1] if words[0].strip == "!"
     end
