@@ -61,7 +61,7 @@ export -f bakc
 
 # Convert a cygwin unix path into Windows path.
 function wpath {
-  cygpath -wl "$@"
+	cygpath -wl "$@"
 }
 export -f wpath
 
@@ -222,7 +222,7 @@ function jdoc {
 export -f jdoc
 
 function mkcp() {
-  export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+  export CP=`cygpath --path --windows $(ruby -e 'puts ARGV.map{ |e| e.gsub(%r(/), %q(\\\)) }.join(";")' "$@")`
   echo "export CP=$CP"
 }
 export -f mkcp
