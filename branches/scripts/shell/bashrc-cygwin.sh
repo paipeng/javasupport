@@ -211,7 +211,15 @@ alias svnall='svnadd && svnrm && svnci'
 ###############################
 ## Java Development Helpers
 ###############################
-export JAVA_HOME=/apps/jdk
+export JAVA_HOME=${JAVA_HOME:=/apps/jdk}
+function setwjhome() {
+	JAVA_HOME=`wpath $JAVA_HOME` # set JAVA_HOME to a Windows PATH.
+}
+export -f setwjhome
+function setjhome() {
+	JAVA_HOME=`cygpath --unix $JAVA_HOME` # set JAVA_HOME to a unix PATH.
+}
+export -f setjhome
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -258,6 +266,7 @@ export -f failedtests
 ###############################
 ## JBoss Dev Helpers
 ###############################
+#export JBOSS_HOME=`wpath /apps/jboss`
 alias rjb='cd /apps/jboss; bin/run.sh'   # run jboss
 alias rjbd='rjb -c default'                                          # run jboss with default server config
 alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
