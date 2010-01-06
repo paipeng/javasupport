@@ -100,6 +100,8 @@ function e() {
 }
 export -f e
 
+alias joinlines='ruby -e "a=[]; sep=ARGV.shift||\" \"; while(gets); a<<\$_.chomp;end; puts a.join(sep)"'
+
 ###############################
 ## Aliases For Shorter Commands
 ###############################
@@ -230,7 +232,7 @@ function jdoc {
 export -f jdoc
 
 function mkcp() {
-  export CP=`cygpath --path --windows $(ruby -e 'puts ARGV.map{ |e| e.gsub(%r(/), %q(\\\)) }.join(";")' "$@")`
+	export CP=`cygpath --path --windows "$@" | joinlines ';'`
   echo "export CP=$CP"
 }
 export -f mkcp
