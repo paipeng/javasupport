@@ -1,6 +1,10 @@
 // NOTE: The groovy.bat -cp option will not take wildcard "*"!
+         The -cp and --classpath is parsed by wrapper script, and not by GroovyStarter?
+         to use wildcard, set CLASSPATH var instead.
+         
+         In Cygwin, you MUST use export VAR to be seen by batch file!
 
-// Load required libraries
+// Load required libraries manually.
 // =============================================================================
 def loadJar(name) {
 	def loader = this.class.classLoader.rootLoader
