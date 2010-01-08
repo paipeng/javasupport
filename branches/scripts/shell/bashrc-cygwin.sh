@@ -233,7 +233,7 @@ export -f jdoc
 
 function mkcp() {
 	export CP=`cygpath --path --windows "$@" | joinlines ';'`
-  echo "export CP=$CP"
+  echo "export CP=\"$CP\""
 }
 export -f mkcp
 alias javacp='java -cp $CP'
