@@ -39,7 +39,6 @@ export -f pathmunge
 pathmunge /apps/jdk/bin # Make this path in front so it overwrite default Window's path version.
 pathmunge /apps/ant/bin after
 pathmunge /apps/maven/bin after
-pathmunge /apps/jruby/bin after
 pathmunge /apps/groovy/bin after
 
 
@@ -271,7 +270,7 @@ export -f failedtests
 #export JBOSS_HOME=`wpath /apps/jboss`
 alias rjb='cd /apps/jboss; bin/run.sh'   # run jboss
 alias rjbd='rjb -c default'              # run jboss with default server config
-alias mkcpjb='mkcp "/apps/jboss/client/*" "/apps/common/lib/*" "target/dependency/*" target/classes'
+alias mkcpjb='mkcp "/apps/jboss/client/*" "/apps/common/lib/*" "target/dependency/*" target/classes ./'
 
 ###############################
 ## Allow User Custom Overwrite
