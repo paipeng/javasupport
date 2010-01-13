@@ -103,7 +103,7 @@ public class CliHelper {
 	}
 	public static void eachLine(InputStream ins, final LineAction action) {
 		withReader(ins, new ReaderAction() {			
-			@Override
+			//@Override
 			public void onReader(BufferedReader reader) throws IOException {
 				String line = null;
 				while((line = reader.readLine()) != null) {
