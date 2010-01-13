@@ -9,15 +9,15 @@ import javax.naming.*
 def list(ctx) {
 	println()
 	println("Namespace: ${ctx.nameInNamespace}")
-	names = ctx.list("")
-	sorted = names.toList().sort { a, b -> 
+	//names sorted by className, then binding name. The element is a NameClassPair
+	names = ctx.list("").toList().sort { a, b -> 
 		def ret = a.className.compareTo(b.className)
 		if (ret == 0) {
 			ret = a.name.compareTo(b.name)
 		}
 		return ret
 	}
-	sorted.each { nameClassPair ->
+	names.each { nameClassPair ->
 		if (nameClassPair.className.contains("org.jnp.interfaces.NamingContext")) {
 			list(ctx.lookup(nameClassPair.name))
 		} else {
