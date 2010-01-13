@@ -61,7 +61,7 @@ export -f bakc
 
 # Convert a cygwin unix path into Windows path.
 function wpath {
-	cygpath -wl "$@"
+	cygpath -wl -- "$@"
 }
 export -f wpath
 
@@ -232,8 +232,8 @@ function jdoc {
 export -f jdoc
 
 function mkcp() {
-	export CP=`cygpath --path --windows "$@" | joinlines ';'`
-  echo "export CP=\"$CP\""
+	export CLASSPATH=`cygpath --path --windows "$@" | joinlines ';'`
+  echo "export CLASSPATH=\"$CLASSPATH\""
 }
 export -f mkcp
 alias javacp='java -cp $CP'
@@ -270,8 +270,8 @@ export -f failedtests
 ###############################
 #export JBOSS_HOME=`wpath /apps/jboss`
 alias rjb='cd /apps/jboss; bin/run.sh'   # run jboss
-alias rjbd='rjb -c default'                                          # run jboss with default server config
-alias mkcpjbclient='mkcp target/classes "target/dependency/*" "/apps/jboss/client/*"'
+alias rjbd='rjb -c default'              # run jboss with default server config
+alias mkcpjb='mkcp "/apps/jboss/client/*" "/apps/common/lib/*" "target/dependency/*" target/classes'
 
 ###############################
 ## Allow User Custom Overwrite
