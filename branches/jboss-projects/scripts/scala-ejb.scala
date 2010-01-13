@@ -1,4 +1,6 @@
-// $ /apps/scala-2.8.0.Beta1-RC5/bin/scalac -d target -cp $CLASSPATH nestedAnnotation.scala
+// $ /apps/scala-2.8.0.Beta1-RC5/bin/scalac -d 'C:\apps\jboss-5.1.0.GA\server\default\deploy\myapps\scala-ejb.jar' -cp $CLASSPATH nestedAnnotation.scala
+
+// You need to create ExampleQueue in deploy/messaging/destination-service.xml file.
 
 package deng.nestedAnnotation
 
@@ -12,6 +14,7 @@ trait OrderProcessor {
 	def process(order: String) : Unit
 }
 
+@Local(value=Array(classOf[OrderProcessor]))
 @Stateless
 //@org.jboss.annotation.ejb.LocalBinding(jndiBinding="custom/OrderProcessorImpl")
 class OrderProcessorImpl extends OrderProcessor {
