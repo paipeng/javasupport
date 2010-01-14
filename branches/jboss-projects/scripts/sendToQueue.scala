@@ -34,7 +34,7 @@ object SendToQueue {
 		conn.close
 	}
 	
-	def readFile(fname : String) = scala.io.Source.fromString(fname).getLines().mkString
+	def readFile(fname : String) = scala.io.Source.fromFile(new java.io.File(fname)).mkString
 
 	def main(args : Array[String]) {
 		val (opts, args2) = args.partition { e => e.startsWith("--") }
@@ -42,6 +42,6 @@ object SendToQueue {
 		val text = if (opts.exists { e => e == "--file" }) readFile(args2(1)) else args2(1)
 		send(qname, text)
 		println("msg sent.")
-		println(text)
+		println(text) 
 	}
 }
