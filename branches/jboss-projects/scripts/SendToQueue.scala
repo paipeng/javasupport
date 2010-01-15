@@ -5,7 +5,7 @@
 
 /*
 Zemian@Zemian-PC /jbs
-$ scalac -cp $CLASSPATH -d "target\classes" sendToQueue.scala 
+$ scalac -cp $CLASSPATH -d "target\classes" SendToQueue.scala 
 
 Zemian@Zemian-PC /jbs
 $ scala -cp $CLASSPATH SendToQueue ExampleQueue "just a test"
