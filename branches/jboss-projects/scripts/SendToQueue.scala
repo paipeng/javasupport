@@ -36,7 +36,7 @@ object SendToQueue {
 		}
 	}
 	
-	def readFile(fname : String) = scala.io.Source.fromFile(new java.io.File(fname)).mkString
+	def readFile(fname : String) = scala.io.Source.fromPath(fname).mkString
 
 	def main(args : Array[String]) {
 		val (opts, args2) = args.partition { e => e.startsWith("--") }
