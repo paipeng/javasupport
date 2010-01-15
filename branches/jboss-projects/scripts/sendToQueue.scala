@@ -23,15 +23,17 @@ object SendToQueue {
 		val ctx = new InitialContext()
 		val cf = ctx.lookup("ConnectionFactory").asInstanceOf[ConnectionFactory]
 		val conn = cf.createConnection()
-		val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
-		val queue = session.createQueue(qname)
-		val producer = session.createProducer(queue)
-		val msg = session.createTextMessage(text)
 		
-		producer.send(msg)
-		
-		session.close
-		conn.close
+		try {
+			val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
+			val queue = session.createQueue(qname)
+			val producer = session.createProducer(queue)
+			val msg = session.createTextMessage(text)			
+			producer.send(msg)			
+			session.close
+		} finally {
+			conn.close
+		}
 	}
 	
 	def readFile(fname : String) = scala.io.Source.fromFile(new java.io.File(fname)).mkString
