@@ -232,9 +232,7 @@ export -f jdoc
 
 function mkcp() {
 	#export CLASSPATH=`cygpath --path --windows "$@" | joinlines ';'`
-  export CP=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
-  export CLASSPATH=$CP
-  echo "export CP=\"$CP\""
+  export CLASSPATH=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
   echo "export CLASSPATH=\"$CLASSPATH\""
 }
 export -f mkcp
