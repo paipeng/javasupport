@@ -113,9 +113,11 @@ alias joinlines='ruby -e "a=[]; sep=ARGV.shift||\" \"; while(gets); a<<\$_.chomp
 
 # Interactive operation...
 #alias rm='rm -i'
+#alias cp='cp -i'
+#alias mv='mv -i'
+
+# Overwrite rm to use trash function instead so we have a safe delete.
 alias rm=trash
-alias cp='cp -i'
-alias mv='mv -i'
 
 # Default to human readable figures
 alias df='df -h'
