@@ -265,6 +265,11 @@ function failedtests {
 }
 export -f failedtests
 
+# zip a directory recursively with the same name
+function zipdir {
+  zip -r $1.zip $1
+}
+
 ###############################
 ## JBoss Dev Helpers
 ###############################
