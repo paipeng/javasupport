@@ -46,17 +46,17 @@ pathmunge /apps/groovy/bin after
 ## Shell Helper Functions
 ###############################
 
-# Move/Remove files into a trash can dir.
+# Backup a directory with timestamp.
 function bak {
-  mv -vf $1 ${1}.`ts`.bak
+  cp -rf $1 ${1}.`ts`.bak
 }
 export -f bak
 
-# Same as bak, but use copy instead of move.
-function bakc {
-  cp -rf $1 ${1}.`ts`.bak
+# Backup a directory with timestamp and delete the original directory.
+function bakd {
+  mv -vf $1 ${1}.`ts`.bak
 }
-export -f bakc
+export -f bakd
 
 # Convert a cygwin unix path into Windows path.
 function wpath {
