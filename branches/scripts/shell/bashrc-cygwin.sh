@@ -41,20 +41,35 @@ pathmunge /apps/ant/bin after
 pathmunge /apps/maven/bin after
 pathmunge /apps/groovy/bin after
 
-
 ###############################
 ## Shell Helper Functions
 ###############################
 
+# zip a directory recursively with the same name
+function zipdir {
+  zip -r $1.zip $1
+}
+
 # Backup a directory with timestamp.
 function bak {
-  cp -rf $1 ${1}.`ts`.bak
+  BAK=${1}.`ts`.bak
+  cp -rf $1 $BAK
+}
+export -f bak
+
+# Backup a directory with timestamp and zip it.
+function bak {
+  BAK=${1}.`ts`.bak
+  cp -rf $1 $BAK
+  zipdir $BAK
+  rm -rf $BAK
 }
 export -f bak
 
 # Backup a directory with timestamp and delete the original directory.
 function bakd {
-  mv -vf $1 ${1}.`ts`.bak
+  BAK=${1}.`ts`.bak
+  mv -vf $1 $BAK
 }
 export -f bakd
 
@@ -266,11 +281,6 @@ function failedtests {
   wc -l target/surefire-reports/* | ruby -ane 'puts $F[1] if $F[1] != "total" && $F[0].to_i > 4'
 }
 export -f failedtests
-
-# zip a directory recursively with the same name
-function zipdir {
-  zip -r $1.zip $1
-}
 
 ###############################
 ## JBoss Dev Helpers
