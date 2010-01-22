@@ -47,13 +47,14 @@ pathmunge /apps/groovy/bin after
 
 # zip a directory recursively with the same name
 function zipdir {
-  zip -r $1.zip $1
+  zip -qr $1.zip $1
 }
 
 # Backup a directory with timestamp.
 function bak {
   BAK=${1}.`ts`.bak
   cp -rf $1 $BAK
+  echo "Backup to $BAK"
 }
 export -f bak
 
@@ -63,6 +64,7 @@ function bak {
   cp -rf $1 $BAK
   zipdir $BAK
   rm -rf $BAK
+  echo "Backup to $BAK.zip"
 }
 export -f bak
 
@@ -70,6 +72,7 @@ export -f bak
 function bakd {
   BAK=${1}.`ts`.bak
   mv -vf $1 $BAK
+  echo "Backup to $BAK and deleted original $1"
 }
 export -f bakd
 
