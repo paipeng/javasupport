@@ -15,7 +15,7 @@ unset TEMP
 # or to any other tmp directory of your choice
 export TMP=/tmp
 export TEMP=/tmp
-export EDITOR=/apps/jEdit/jedit.bat
+export GUI_EDITOR=/apps/jEdit/jedit.bat
 
 # Change propmt string and color
 #PS1='\e[0;32m\u@\h:\e[0;33m\w\e[m\n\$ '
@@ -44,6 +44,48 @@ pathmunge /apps/groovy/bin after
 ###############################
 ## Shell Helper Functions
 ###############################
+
+# Display information
+#alias printopenports='netstat -a | grep LISTENING'
+alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
+
+# Create a timestamp label.
+alias ts="date '+%m%d%Y-%H%M'"    
+
+# Join each line on STDIN into a one long line.
+alias joinlines='ruby -e "a=[]; sep=ARGV.shift||\" \"; while(gets); a<<\$_.chomp;end; puts a.join(sep)"'
+
+#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
+alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
+
+# ztool java utilities command
+alias ztool='/source/javasupport/branches/ztool/bin/ztool'
+
+# Create file link FROM TO
+function link {
+  ln -s $1 $2  
+}
+
+# Trash and remove files into a trash directory in user home directory.
+# Use this instead of rm command so you have history of deleted files.
+function trash {
+  TRASHCAN=~/.trash/`ts`
+  if [ -e $TRASHCAN ]; then
+		echo "Renaming existing trash can: $TRASHCAN"
+    \mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
+  fi
+	mkdir -p $TRASHCAN
+  echo "Deleting to trash can: $TRASHCAN"
+  \mv -f "$@" $TRASHCAN
+}
+export -f trash
+
+# A graphical editor
+function guiedit() {
+  GUI_EDITOR=${GUI_EDITOR:=/cygdrive/c/WINDOWS/notepad.exe}
+	$GUI_EDITOR $(wpath "$@")
+}
+export -f guiedit
 
 # zip a directory recursively with the same name
 function zipdir {
@@ -98,27 +140,6 @@ function open {
 }
 export -f open
 
-# Use this insetad of rm command.
-function trash {
-  TRASHCAN=~/.trash/`ts`
-  if [ -e $TRASHCAN ]; then
-		echo "Renaming existing trash can: $TRASHCAN"
-    \mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
-  fi
-	mkdir -p $TRASHCAN
-  echo "Deleting to trash can: $TRASHCAN"
-  \mv -f "$@" $TRASHCAN
-}
-export -f trash
-
-function e() {
-  EDITOR=${EDITOR:=/cygdrive/c/WINDOWS/notepad.exe}
-	$EDITOR $(wpath "$@")
-}
-export -f e
-
-alias joinlines='ruby -e "a=[]; sep=ARGV.shift||\" \"; while(gets); a<<\$_.chomp;end; puts a.join(sep)"'
-
 ###############################
 ## Aliases For Shorter Commands
 ###############################
@@ -143,26 +164,25 @@ alias du='du -h'
 
 # Misc :)
 alias less='less -r'                          # raw control characters
-alias whence='type -a'                        # where, of a sort
+#alias whence='type -a'                        # where, of a sort
 alias grep='grep --color'                     # show differences in colour
 
 # Some shortcuts for different directory listings
-alias ls='ls -hF --color=tty'                 # classify files in colour
-alias dir='ls --color=auto --format=vertical'
-alias vdir='ls --color=auto --format=long'
+#alias ls='ls -hF --color=tty'                 # classify files in colour
+#alias dir='ls --color=auto --format=vertical'
+#alias vdir='ls --color=auto --format=long'
+#alias la='ls -A'                              # all but . and ..
 alias ll='ls -l'                              # long list
-alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
 
 
 # Very short and frequently used commands
-alias t=trash                          # trashing file
-alias ts="date '+%m%d%Y-%H%M'"         # timestamp label
-alias eb='e ~/.bashrc'                 # edit .bashrc file
-alias ebx='e ~/.bashrc-extra'          # edit .bashrc-extra file
-alias ej='e /source/journals/`date "+%m%d%Y"`.txt'
-alias rb='exec bash'                   # reload bashrc
-function f() {
+alias eb='guiedit ~/.bashrc'                             # edit .bashrc file
+alias ebx='guiedit ~/.bashrc-extra'                      # edit .bashrc-extra file
+alias ej='guiedit /source/journals/`date "+%m%d%Y"`.txt' # edit today's journal file
+alias rb='exec bash'                                     # reload bashrc
+# a quick find
+function f() { 
   TEXT=$1
   DIR=.
   if (( $# > 1 )); then DIR=$2; fi
@@ -172,17 +192,6 @@ function f() {
 #alias top5smallfiles='find . -type f -exec ls -s {} \; | sort -n | head -5'
 #alias findlasthour='find . -mmin -60'
 #alias findlastday='find . -mtime -1'
-
-
-# Longer Commands
-alias link='ln -s'
-alias openports='netstat -a | grep LISTENING'
-alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
-#alias xterm='xterm -display :0.0 -bd white -bg black -fg white -geometry 120x35 -sb -rightbar -sl 5000 -e bash --login &'
-alias xterm='cmd /c `wpath /bin/rxvt` -bg black -fg white -geometry 120x35 -sl 2000 -sr -fn "Courier New-16" -e bash --login &'
-
-# ztool alias (assume you link /js to /source/javasupport/branches)
-alias ztool='/js/ztool/bin/ztool'
 
 ###############################
 ## Subversion Helpers
