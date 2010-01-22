@@ -63,7 +63,7 @@ alias ztool='/source/javasupport/branches/ztool/bin/ztool'
 
 # Create file link FROM TO
 function link {
-  ln -s $1 $2  
+  ln -vfs $1 $2
 }
 
 # Trash and remove files into a trash directory in user home directory.
