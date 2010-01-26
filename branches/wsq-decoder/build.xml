@@ -34,8 +34,6 @@
 	<path id="classpath.lib">
 		<fileset dir="${lib}">
 			<include name="**/*.jar" />
-			<exclude name="${lib}/vendor/*" />
-			<exclude name="${lib}/optional/*" />
 		</fileset>
 		<fileset dir="${scala.home}/lib">
 			<include name="**/*.jar" />

@@ -144,6 +144,9 @@ export -f open
 ## Aliases For Shorter Commands
 ###############################
 
+# Gui Editor
+alias e=guiedit
+
 # Some example alias instructions
 # If these are enabled they will be used instead of any instructions
 # they may mask.  For example, alias rm='rm -i' will mask the rm
