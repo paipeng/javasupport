@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<bean id="propertyPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="file:${appHome}/conf/beans.properties"></property>
+	</bean>
+	
+	<bean id="main" class="deng.myrunbean.RunnableBeanExecutor" init-method="init" destroy-method="destroy">
+		<property name="taskExecutor">
+			<bean class="org.springframework.core.task.SimpleAsyncTaskExecutor"></bean>
+		</property>
+		<property name="runnableBeans">
+			<list>
+				<ref bean="helloWorld"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="helloWorld" class="deng.myrunbean.HelloWorld">
+		<property name="message" value="Hello World!"></property>
+	</bean>
+</beans>

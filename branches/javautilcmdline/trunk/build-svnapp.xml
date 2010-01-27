@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- :tabSize=2:indentSize=2: -->
+<project name="svnapp" default="compile-main" basedir=".">
+	<description>
+	Subversion supported application build script. You need subversion's anttasks 
+	jars install into ant's lib	to be able to run all targets.
+  </description>
+	
+	<!--+
+	    | Setup properties
+	    +-->	
+	  
+	<!-- Import sub build script. -->
+	<import file="${basedir}/build-app.xml"/>
+	
+	
+	<!--+
+	    | Override Targets for building project
+	    +-->	
+	<!-- Prepare -->
+	<target name="release-init" description="Initialize build.">
+		<!-- Create timestamp. -->
+		<tstamp>
+			<format property="timestamp" pattern="MMddyykkmm"/>
+			<format property="timestamp.long" pattern="MM.dd.yyyy G 'at' HH:mm:ss z"/>
+		</tstamp>
+		<taskdef name="svn" classname="org.tigris.subversion.svnant.SvnTask"/>
+		<svn>
+			<status path ="${basedir}" lastChangedRevisionProperty="svn.info.rev"/>
+		</svn>
+		<condition property="version.build" value=".${svn.info.rev}">
+			<isset property="svn.info.rev"/>
+		</condition>
+		<property name="version.build" value=".${timestamp}"/>
+	</target>
+	
+	
+	<!--+
+	    | Targets for svn release management
+	    +-->
+	<target name="release" description="Make project release."
+			depends="clean-current, javadoc, dist, release-tag">
+	</target>
+
+	<target name="release-tag" description="Tagging release sources."
+			depends="release-init" if="svn.release.path">
+		<!-- svn Tag/branch the source for release. -->
+		<svn>
+			<update file="${basedir}/project.properties"/>
+			<copy srcPath="${basedir}" destUrl="${svn.release.path}/${version}${version.build}" 
+				message="Release ${version}${version.build}"/>
+		</svn>
+	</target>
+
+	<target name="release-dist" description="Transfer distribution package to server."
+	 		if="dist.path">
+		<scp todir="${dist.path}" 
+			keyfile="${dist.ssh.keyfile}" passphrase="${dist.ssh.pass}">
+			<fileset dir="${dist}">
+				<include name="${version}${version.build}.zip"/>
+				<include name="${version}-*.zip"/>
+				<include name="${version}${version.build}.jar"/>
+			</fileset>
+		</scp>
+	</target>
+	
+</project>

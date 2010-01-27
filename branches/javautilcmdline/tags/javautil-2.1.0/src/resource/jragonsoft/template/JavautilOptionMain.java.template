@@ -1,0 +1,76 @@
+/*
+ *	  ${__RES_TEMPLATE_YEAR} Zemian Deng
+ * 
+ *	  Licensed under the Apache License, Version 2.0 (the "License");
+ *	  you may not use this file except in compliance with the License.
+ *	  You may obtain a copy of the License at
+ * 
+ *		  http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ *	  Unless required by applicable law or agreed to in writing, software
+ *	  distributed under the License is distributed on an "AS IS" BASIS,
+ *	  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *	  See the License for the specific language governing permissions and
+ *	  limitations under the License.
+ *																				 
+ */
+ 
+${__RES_TEMPLATE_PACKAGE_DECLARE}
+
+import deng.javautil.util.*;
+import deng.javautil.support.*;
+
+/**
+ * A sample of Main program entry Class with javautil's option parser.
+ *	
+ * @author Zemian Deng
+ */
+public class ${__RES_TEMPLATE_MAIN_CLASS} {	   
+	/** Program options after it's been parsed. */
+	private GetOpt opt;
+
+	private boolean isDebug = false;
+	private String filename = "default.txt";
+	
+	/** Instantiate main program and parse args then run. */
+	public static void main(String[] args) {
+		${__RES_TEMPLATE_MAIN_CLASS} main = new ${__RES_TEMPLATE_MAIN_CLASS}();
+		main.opt = new GetLongOpt(args);
+		main.run();
+	}
+	
+	/** Run the main program logic. */
+	public void run(){
+		if(opt.getArgsCount() <1 || opt.isOpt("h") || opt.isOpt("help"))
+			printExitHelp();
+		
+		if(opt.isOpt("d") || opt.isOpt("debug"))
+			isDebug = true;
+		filename = opt.getOpt("file", "default.txt");
+		
+		if(isDebug){
+			System.out.println("Option values: ");
+			System.out.println("  " + opt);
+			System.out.println("Argument values: ");
+			for(int i = 0; i < opt.getArgsCount(); i++){
+				System.out.println("  " + opt.getArg(i));
+			}
+		}
+		
+		System.out.println();
+		System.out.println("Debug mode is " + (isDebug? "ON": "OFF"));
+		System.out.println("Filename is " + filename);	   
+	}
+	
+	/** Print helppage then exit program. */
+	public void printExitHelp(){
+		System.out.println("USAGE: ${__RES_TEMPLATE_MAIN_CLASS} [options] ARGS");
+		System.out.println("[options]");
+		System.out.println("  -h, --help	Display help page.");
+		System.out.println("  -d, --debug	Turn debug flag on.");
+		System.out.println("  --file=NAME	Specify a file");
+		System.out.println("JavaUtil By Zemian Deng.");
+		
+		System.exit(0);
+	}
+}

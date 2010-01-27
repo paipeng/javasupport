@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  - You may configure webapp with context file for resource such as Datasource.
+	- Datasource may be setup using Tomcat's admin webapp into server.xm and 
+	- simply reference here in your specific webapp context.
+	- 
+	- For references, here are some common connection URLs format and it's 
+	- Driver name with various database vendors:	
+	- Hsqldb
+	- 	DriverName:    org.hsqldb.jdbcDriver
+	- 	ConnectionUrl: jdbc:hsqldb:hsql://localhost/sampledb
+	-   TestQuery:     select count(*) from information_schema.system_tables
+	- Mysql
+	- 	DriverName:    com.mysql.jdbc.Driver
+	- 	ConnectionUrl: jdbc:mysql://localhost:3306/sampledb?autoReconnect=true
+	-   TestQuery:     select version()
+	- Oracle
+	- 	DriverName:    oracle.jdbc.OracleDriver
+	- 	ConnectionUrl: jdbc:oracle:thin:username/password@localhost:1521:sampledb
+	-   TestQuery:     select count(*) from dual
+	- Informix
+	- 	DriverName:    com.informix.jdbc.IfxDriver
+	- 	ConnectionUrl: jdbc:informix-sqli://localhost:1526/sampledb:INFORMIXSERVER=localhost
+	-   TestQuery:     SELECT count(*) from systables
+  -->		 
+<Context reloadable="true" %CONTEXT_ATTR%>	
+	<!-- 
+	  - Relink or bring global references into this webapp scope. 
+		-->
+	<ResourceLink name="simpleValue" global="simpleValue" type="java.lang.Integer"/>	
+	<ResourceLink name="jdbc/sampledb" global="jdbc/sampledb" type="javax.sql.DataSource"/>
+
+	<!-- 
+		- Sample of datasource with pooling setup.
+		
+	<Resource name="sampledb" auth="Container" type="javax.sql.DataSource"
+		maxActive="8" maxIdle="4" maxWait="10000"
+		username="tester" password="tester" driverClassName="org.hsqldb.jdbcDriver"
+		url="jdbc:hsqldb:hsql://localhost/sampledb"/>-->
+		 
+</Context>
+<!-- :tabSize=2:indentSize=2: -->
+

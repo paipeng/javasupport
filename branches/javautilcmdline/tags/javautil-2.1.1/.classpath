@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/test/manualtest"/>
+	<classpathentry kind="src" path="src/test/unittest"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/commons-net-1.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/jsch-20071002.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/svnClientAdapter.jar"/>
+	<classpathentry kind="lib" path="lib/svnant.jar"/>
+	<classpathentry kind="lib" path="lib/svnjavahl.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.5.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
