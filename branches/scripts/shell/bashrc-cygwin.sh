@@ -250,15 +250,36 @@ alias svnall='svnadd && svnrm && svnci'
 ###############################
 ## Java Development Helpers
 ###############################
+
+# Set java home if it's not already set. (eg: echo $CLASSPATH | unixpath )
 export JAVA_HOME=${JAVA_HOME:=/apps/jdk}
-function setwjhome() {
-	JAVA_HOME=`wpath $JAVA_HOME` # set JAVA_HOME to a Windows PATH.
+
+# Convert Windows Classpath string into unix.
+alias unixpath='ruby -pe "gsub(/;/, \":\")" | ruby -pe "gsub(/\\\\/, \"/\")" | xargs cygpath -p'
+
+# Expand a wild card classpath to explicit full paths. (eg: mkcpjb; expandcp)
+# this is good for tool such as groovy doesn't support wild card classpath yet!
+function expandcp {
+  CP=${CLASSPATH:$1}
+  CP=$(ruby -e '
+    puts ARGV[0].split(";").map { |e|
+      files = `ls #{e.gsub(/\\/, "/")}`
+      parts = files.split("\n")
+      if (parts.grep(/.*\.jar$/).size > 0) 
+        e = parts.join(";")
+      end
+      e
+    }.join(";")
+  ' $CP)
+  echo "export CLASSPATH=$CP"
+  export CLASSPATH=$CP
 }
-export -f setwjhome
-function setjhome() {
-	JAVA_HOME=`cygpath --unix $JAVA_HOME` # set JAVA_HOME to a unix PATH.
-}
-export -f setjhome
+
+# Set Window's java home path
+#function setwjhome() {
+#	JAVA_HOME=`wpath $JAVA_HOME` # set JAVA_HOME to a Windows PATH.
+#}
+#export -f setwjhome
 
 # Open a javadoc file under java.lang package.
 function jdoc {
@@ -268,13 +289,15 @@ function jdoc {
 }
 export -f jdoc
 
+# Create a CLASSPATH string and export by it's variable in shell.
 function mkcp() {
 	#export CLASSPATH=`cygpath --path --windows "$@" | joinlines ';'`
   export CLASSPATH=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
   echo "export CLASSPATH=\"$CLASSPATH\""
 }
 export -f mkcp
-alias javacp='java -cp $CP'
+
+# Convert / to . on given string. (eg: convert output of jar into full class name.)
 alias todot='ruby -pe "gsub(/\//, \".\")"'
 
 # Create a java project using a local catalog of Maven's archetype.
@@ -309,7 +332,7 @@ export -f failedtests
 #export JBOSS_HOME=`wpath /apps/jboss`
 alias rjb='cd /apps/jboss; bin/run.sh'   # run jboss
 alias rjbd='rjb -c default'              # run jboss with default server config
-alias mkcpjb='mkcp "/apps/jboss/client/*" "/apps/common/lib/*" "target/dependency/*" target/classes ./'
+alias mkcpjb='mkcp "/apps/jboss/client/*" "/apps/jboss/common/lib/*" "target/dependency/*" target/classes ./'
 
 ###############################
 ## Allow User Custom Overwrite
