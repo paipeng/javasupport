@@ -1,0 +1,32 @@
+
+================================================================================
+RELEASE NOTE
+================================================================================
+{{{
+javautil-2.1
+- Found new home at http://jragonsoft.com/javautil
+- Changed source control repository using SourceJammer!
+}}}
+
+{{{
+javautil-2.0
+- Moved source code repos into a portable thumb drive(until I can find a real home).
+- Added prevent.clean condition on clean target for build-app.xml
+- Command Line Utilies:
+    bin/sync            --Synchronize a local dir from a local or remote zip file.
+    bin/tail            --Print last portion of a file content. Like tail command. "-f" option is supported.
+    bin/sort            --Sort input text
+    bin/unique          --group text into unique strings.
+    bin/mkjava          --Quickly generate java template class files with main() in it.
+- Updated build-app.xml template to have more flexable javadoc target.
+- Added StringUtils.toString() for boolean, double, int conversion
+- Added StringUtils.toInt(), toBoolean(), toDouble() from string conversion
+- Added StringUtils.round() for decimals with arbitury decimal places.
+- Fixed JDBCUtils.resultsetToString() to NOT close out ResultSet after use.
+- Added much more simplier wrapper scripst as defualt for JavaWrapper utility.
+- Added getTodayXXX() methods into DateUtils class.
+- Added bin/test deng.javautil.Test for quick testing. Eclipse ENV proves to be the quickest test.
+- Added and moved all command tools into new package under deng.javautil.cmdtool
+- Renamed all wrapper script to follow more like in Unix commands
+}}}
+

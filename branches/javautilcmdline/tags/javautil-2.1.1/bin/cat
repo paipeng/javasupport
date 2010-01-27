@@ -1,0 +1,60 @@
+#!/bin/sh
+
+#
+# A wrapper script to jump start Java program
+# $Id: cattext 4 2006-03-16 15:27:19Z zemian $
+# :tabSize=2:indentSize=2:
+#
+
+#===============================================================================
+# Java main class
+#===============================================================================
+MAIN_CLASS=jragonsoft.javautil.cmdtool.CatText
+
+#===============================================================================
+# Resolve application HOME directory
+#===============================================================================
+if [ -z $PROGRAM_HOME ] ; then
+	SCRITP_HOME=`dirname $0`
+	PROGRAM_HOME=`dirname $0`/.. # backup one dir. assume script is in bin dir.
+	PROGRAM_HOME=`cd $PROGRAM_HOME && pwd` # make it absolute path
+fi
+
+#===============================================================================
+# Source custom env script
+#===============================================================================
+if [ -e $SCRITP_HOME/setenv.sh ]; then	
+	source $SCRITP_HOME/setenv.sh; 
+fi
+
+#===============================================================================
+# Build java classpath
+#===============================================================================
+# add jar files from lib
+LOCALCLASSPATH=${LOCALCLASSPATH=.} ## default to current directory.
+for file in $PROGRAM_HOME/lib/*.jar; do
+	if [[ -f $file ]]; then LOCALCLASSPATH=$LOCALCLASSPATH:$file; fi
+done
+
+#===============================================================================
+# Run Java command with options settings
+#===============================================================================
+## Let's the system pick which ever java that's set in PATH
+if [[ $JAVA_HOME ]]; then
+	JAVA_CMD=$JAVA_HOME/bin/java
+else	
+	JAVA_CMD=${JAVA_CMD=java}
+fi
+
+## Preset any program's arguments
+PROGRAM_ARGS=${PROGRAM_ARGS=}
+
+## Configure Apache Common-Logging System Properties
+JAVA_OPTS=${JAVA_OPTS=}
+#JAVA_OPTS="$JAVA_OPTS -Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger"
+#JAVA_OPTS="$JAVA_OPTS -Dlog4j.configuration=file:///${PROGRAM_HOME}/conf/log4j.properties"
+#JAVA_OPTS="$JAVA_OPTS -Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog"
+#JAVA_OPTS="$JAVA_OPTS -Dorg.apache.commons.logging.simplelog.defaultlog=debug"
+
+# run IT! -- use echo instead of exec to debug
+exec $JAVA_CMD $JAVA_OPTS -classpath $LOCALCLASSPATH $MAIN_CLASS $PROGRAM_ARGS "$@"

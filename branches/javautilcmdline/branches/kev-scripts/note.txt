@@ -1,0 +1,27 @@
+Updates to javautil-2.1.1
+
+What I did:
+- Created utility scripts
+	runjava		UNIX
+	runjava.bat	Windows / DOS
+  These scripts contain the vast bulk of the other scripts
+  
+  All the other scripts were updated to use these utility scripts
+
+Space savings
+
+187,023 (182.6 KB)  Original
+ 10,048 (  9.8 KB)  After createing runjava and runjava.bat and shortening other scripts
+-------
+176,975 (172.8 KB)  space saved
+
+Files
+  list           List of lines from *.bat (see mklist.bat)
+  mklist.bat     Create the file/Java Class list using grep
+
+  mkscripts.awk  Awk script to read list and generate new batch/script files
+  mkunix.awk     Awk script to create alternate UNIX script
+                 This awk script creates an 'all' UNIX script and outputs
+			     sh links to create links from the actuall scripts to 
+			     this script.  This would further save space, but only
+			     works on systems that support lines

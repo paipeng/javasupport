@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- 
+	javautil project itself do not need any third party library to run, but to 
+	build this project successfully with unit testing, ftp utility for release
+	management, you will need the following dependencies files downloaded
+	and install into ant's lib directory.
+-->
+
+<project name="getdep" default="getdep" basedir=".">
+	<description>
+  This script will help you download and get the depended lib
+	for building this project.
+  </description>	
+     
+  <!-- Load User settings -->
+	<property file="build.properties"/>	
+     
+  <!-- Project directories -->
+	<property name="down.dest" location="${user.home}/download/java"/>
+	<property name="copy.dest" location="${ant.home}/lib"/>
+	<property name="down.repos" value="http://jragonsoft.com/jsweb/fileList.go?rootDirId=tools&amp;getFile="/>	
+	
+	<property name="commons-net" value="commons-net-1.4.1.zip"/>
+	<property name="jsch" value="jsch-0.1.28.zip"/>
+	<property name="junit" value="junit4.0.zip"/>
+	<property name="svnant" value="svnant-1.0.0-rc1.zip"/>
+    	
+ 	<!-- Targets for Build -->
+	<target name="clean" description="Clean up downloaded dirs.">
+		<delete dir="${down.dest}" includeEmptyDirs="true"/>
+	</target>
+
+	<!-- Download. -->
+	<target name="getdep" description="Download dependecy files.">	
+		<mkdir dir="${down.dest}"/>
+		<get src="${down.repos}/${commons-net}" dest="${down.dest}/${commons-net}" verbose="true"/>
+		<get src="${down.repos}/${jsch}" dest="${down.dest}/${jsch}" verbose="true"/>
+		<get src="${down.repos}/${junit}"	dest="${down.dest}/${junit}" verbose="true"/>
+		<get src="${down.repos}/${svnant}" dest="${down.dest}/${svnant}" verbose="true"/>
+	</target>
+	
+	<!-- Copy jar into Ant's lib -->
+	<target name="install" description="Install/copy libraries into current Ant's lib dir."
+			depends="getdep">
+		<mkdir dir="${copy.dest}"/>
+		<unzip src="${down.dest}/${commons-net}" dest="${down.dest}"/>
+		<unzip src="${down.dest}/${jsch}" dest="${down.dest}"/>
+		<unzip src="${down.dest}/${junit}" dest="${down.dest}"/>
+		<unzip src="${down.dest}/${svnant}" dest="${down.dest}"/>	
+		<copy todir="${copy.dest}" flatten="true" preservelastmodified="true">
+				<fileset dir="${down.dest}">
+					<include name="**/*.jar"/>
+					<exclude name="**/*src.jar"/>
+					<exclude name="**/*test.jar"/>
+				</fileset>
+		</copy>
+	</target>
+</project>
+
+<!-- :tabSize=2:indentSize=2: -->

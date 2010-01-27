@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	<appender name="STDOUT"
+			class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%-5level [%20.20logger:%-4line] - %msg%n</pattern>
+		</layout>
+	</appender>
+
+    <!--Daily rolling file appender
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>logFile.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${appHome}/logs/logFile.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%date %-5level [%20.20logger:%-4line] - %msg%n</Pattern>
+		</layout>
+	</appender> -->
+	
+	
+	<logger name="deng.myrunbean">
+		<level value="debug" />
+	</logger>
+	
+	<logger name="org.springframework">
+		<level value="error" />
+	</logger>
+	
+	<root>
+		<level value="error" />
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

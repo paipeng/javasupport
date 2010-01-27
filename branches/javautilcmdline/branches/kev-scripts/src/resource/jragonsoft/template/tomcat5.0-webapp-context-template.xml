@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- + 
+		 | Tomcat Webapp Context File. 
+		 -->
+
+<Context path="%tomcat.context.path%" docBase="%tomcat.context.docbase%" reloadable="true">
+
+<!--
+	JDBC Datasource Help: Common Connection URL format and it's Driver name:	
+	Hsqldb
+		org.hsqldb.jdbcDriver
+		jdbc:hsqldb:hsql://localhost/sampledb
+	Mysql
+		com.mysql.jdbc.Driver
+		jdbc:mysql://localhost:3306/sampledb?autoReconnect=true
+	Oracle
+		oracle.jdbc.OracleDriver
+		jdbc:oracle:thin:username/password@localhost:1521:sampledb
+	Informix
+		com.informix.jdbc.IfxDriver
+		jdbc:informix-sqli://localhost:1526/sampledb:INFORMIXSERVER=localhost
+-->
+
+    <!-- Tomcat 5.5 version of DataSource Resource name setup  
+    <Resource name="sampledb" auth="Container" type="javax.sql.DataSource"
+              maxActive="8" maxIdle="4" maxWait="10000"
+              username="tester" password="tester" driverClassName="org.hsqldb.jdbcDriver"
+              url="jdbc:hsqldb:hsql://localhost/sampledb"/>-->
+</Context>
+<!-- :tabSize=2:indentSize=2: -->

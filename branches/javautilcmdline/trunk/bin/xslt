@@ -1,0 +1,9 @@
+#!/bin/sh
+# A wrapper script to jump start Java program
+
+MAIN_CLASS=jragonsoft.javautil.cmdtool.TransformXslt
+PROGRAM_HOME=`dirname $0`/.. # backup one dir. assume script is in bin dir.
+PROGRAM_HOME=`cd $PROGRAM_HOME && pwd` # make it absolute path
+LOCALCLASSPATH=.:build/classes:$PROGRAM_HOME/lib/javautil.jar
+JAVA_CMD=java
+exec "$JAVA_CMD" -classpath "$LOCALCLASSPATH" $MAIN_CLASS "$@"

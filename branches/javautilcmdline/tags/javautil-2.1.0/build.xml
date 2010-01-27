@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="javautil" default="compile-main" basedir=".">
+	<description>
+	javautil build script.
+	</description>
+	<!--+
+	    | Setup properties
+	    +-->	
+	<!-- User properties -->
+	<property file="${basedir}/build.properties"/>	
+	<property file="${basedir}/project.properties"/>	
+		
+	<!-- Import sub build script. -->
+	<import file="${basedir}/build-app.xml"/>
+	
+	<target name="ftpsf" description="Ftp releases to sourceforge.net site"
+			depends="dist">
+			<!-- <ftp action="del"
+				server="upload.sourceforge.net"
+				userid="anonymous" password=""
+				binary="yes" remotedir="incoming">
+				<fileset>
+					<include name="${version}.${version.build}-bin.zip"/>
+					<include name="${version}.${version.build}-src.zip"/>
+				</fileset>
+			</ftp>-->
+			
+			<ftp action="put"
+				server="upload.sourceforge.net"
+				userid="anonymous" password=""
+				binary="yes" remotedir="incoming">
+				<fileset dir="${dist}">
+					<include name="${version}.${version.build}-bin.zip"/>
+					<include name="${version}.${version.build}-src.zip"/>
+				</fileset>
+			</ftp>
+	</target>
+	
+	<!--+
+	    | Overload Targets
+	    +-->	
+			
+	<!-- override default compile-main to set JDK1.4 compability. -->
+	<target name="compile-main" description="Compile main sources.">
+		<mkdir dir="${build.classes}"/>
+		<javac srcdir="${src.main}" destdir="${build.classes}" debug="true" includes="**/*.java"
+			target="1.4" source="1.4">
+			<classpath>
+				<path refid="classpath.lib"/>
+			</classpath>
+		</javac>
+		
+		<copy todir="${build.classes}" preservelastmodified="true">
+			<fileset dir="${src.resource}"/>
+		</copy>
+	</target>
+	
+	<!-- override default dist to build javadoc, and package src and rename bin dist. -->
+	<target name="dist" description="Package binary distribution."
+			depends="dist-jar, javadoc">
+		<!-- copy everything into current dir. -->
+		<copy todir="${dist.current}">
+			<fileset dir="${basedir}">
+				<include name="bin/**"/>
+				<include name="doc/**"/>
+				<include name="lib/*.jar"/>
+			</fileset>
+		</copy>
+		<chmod perm="ugo+x" dir="${dist.current}" includes="bin/**"/>
+				
+		<!-- Binrary package -->
+		<zip destfile="${dist}/${version}.${version.build}-bin.zip">
+			<fileset dir="${dist.current}"/>
+		</zip>
+		
+		<!-- Source package -->
+		<zip destfile="${dist}/${version}.${version.build}-src.zip">
+			<fileset dir="${basedir}">
+				<exclude name="build/**"/>
+				<exclude name="dist/**"/>
+				<exclude name="release-label*"/>
+				<exclude name="**/.source.jam"/>
+				<exclude name="**/.svn/**"/>
+			</fileset>
+		</zip>
+	</target> 
+		
+</project>
+<!-- :tabSize=2:indentSize=2: -->

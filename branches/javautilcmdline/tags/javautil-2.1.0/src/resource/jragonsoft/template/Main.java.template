@@ -1,0 +1,36 @@
+/* 
+ * ${__RES_TEMPLATE_YEAR} Zemian Deng
+ *
+ */
+
+${__RES_TEMPLATE_PACKAGE_DECLARE}
+
+import java.util.*;
+import java.io.*;
+
+/**
+ * A sample of Main program entry Class.
+ */
+public class ${__RES_TEMPLATE_MAIN_CLASS}{
+	/** Program main entry point. */
+	public static void main(String[] args){
+		out("How may I serve you today?"));
+	}
+	
+	/** stdout print wrapper */
+	public static void out(Object val){
+		System.out.println(val);
+	}
+	/** stdout print wrapper */
+	public static void out(int val){
+		System.out.println(val);
+	}
+	/** stdout print wrapper */
+	public static void out(double val){
+		System.out.println(val);
+	}
+	/** stdout print wrapper */
+	public static void out(boolean val){
+		System.out.println(val);
+	}
+}

@@ -1,0 +1,67 @@
+/* 
+ * ${__RES_TEMPLATE_YEAR} Zemian Deng
+ *
+ * Licensed under the Apache License, * Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *	   http://www.apache.org/licenses/LICENSE-2.0 
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+ 
+${__RES_TEMPLATE_PACKAGE_DECLARE}
+
+import java.util.*;
+import junit.framework.*;
+
+/**
+ * A test case for ${__RES_TEMPLATE_MAIN_CLASS} Class.
+ *	
+ * @author Zemian Deng
+ */
+public class ${__RES_TEMPLATE_MAIN_CLASS}Test extends TestCase{ 
+	protected void setUp(){
+		${__RES_TEMPLATE_MAIN_CLASS} main = new ${__RES_TEMPLATE_MAIN_CLASS}();
+	}	
+	protected void tearDown(){
+	}
+	
+	public void testParseOpt(){
+		String[] inputArgs1 = {};	
+		String[] inputArgs2 = { "-d" };
+		String[] inputArgs3 = { "-d", "-file=MyFile.txt"};
+		String[] inputArgs4 = {"a", "b", "c"};	 
+		String[] inputArgs5 = { "-d", "-file=MyFile.txt", "a", "b", "c"};
+		
+		Properties opt;
+		String[] actualArgs;
+		
+		opt = new Properties();
+		actualArgs = main.parseOpt(inputArgs1, opt);
+		assertTrue(opt.size()==0 && Arrays.equals(actualArgs, inputArgs1));
+		
+		opt = new Properties();
+		actualArgs = main.parseOpt(inputArgs2, opt);
+		assertTrue(opt.size()==1 && Arrays.equals(actualArgs, inputArgs1));
+		assertTrue(opt.containsKey("d"));
+		
+		opt = new Properties();
+		actualArgs = main.parseOpt(inputArgs3, opt);
+		assertTrue(opt.size()==2 && Arrays.equals(actualArgs, inputArgs1));
+		assertTrue(opt.containsKey("d"));
+		assertTrue(opt.get("file").equals("MyFile.txt"));
+		
+		opt = new Properties();
+		actualArgs = main.parseOpt(inputArgs4, opt);
+		assertTrue(opt.size()==0 && Arrays.equals(actualArgs, inputArgs4));
+		
+		opt = new Properties();
+		actualArgs = main.parseOpt(inputArgs5, opt);
+		assertTrue(opt.size()==2 && Arrays.equals(actualArgs, inputArgs4));
+		assertTrue(opt.containsKey("d"));
+		assertTrue(opt.get("file").equals("MyFile.txt"));
+	}
+}
+

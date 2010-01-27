@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="app" default="compile-main" basedir=".">
+	<description>
+  Application build script.
+  </description>
+	
+	<!--+
+	    | Setup properties
+	    +-->	
+	<!-- Project variables -->
+  <property name="project.name" value="${ant.project.name}"/>
+  <property name="version" value="${project.name}-0.0"/>  
+	
+  <!-- Project directories -->
+	<property name="bin" location="${basedir}/bin"/>
+	<property name="doc" location="${basedir}/doc"/>
+	<property name="lib" location="${basedir}/lib"/>
+	<property name="build" location="${basedir}/build"/>
+	<property name="build.classes" location="${build}/classes"/>
+	<property name="build.unittest" location="${build}/unittest"/>
+	<property name="build.doc" location="${build}/doc"/>
+	<property name="src" location="${basedir}/src"/>
+	<property name="src.main" location="${src}/main"/>
+	<property name="src.resource" location="${src}/resource"/>
+	<property name="src.unittest" location="${src}/test/unittest"/>
+	<property name="dist" location="${basedir}/dist"/>
+	<property name="dist.current" location="${dist}/${project.name}"/>
+	
+	<!-- Java CLASSPATH -->
+	<path id="classpath.lib">
+		<fileset dir="${lib}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+    	
+  <!--+
+	    | Targets for building project
+	    +-->
+	<!-- Clean up -->
+	<target name="clean" description="Clean up all auto generated build files." unless="prevent.clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+	</target>
+	
+	<target name="clean-current" description="Clean up but leave dist package alone.">
+		<delete dir="${build}"/>
+		<delete dir="${dist.current}"/>
+	</target>
+	
+	<!-- Compile -->
+	<target name="compile" description="Compile all sources."
+			depends="compile-main, compile-test">
+	</target>
+	<target name="compile-main" description="Compile main sources.">
+		<mkdir dir="${build.classes}"/>
+		<javac srcdir="${src.main}" destdir="${build.classes}" debug="true" includes="**/*.java">
+			<classpath>
+				<path refid="classpath.lib"/>
+			</classpath>
+		</javac>
+		
+		<copy todir="${build.classes}" preservelastmodified="true">
+			<fileset dir="${src.resource}"/>
+		</copy>
+	</target>
+	
+	<target name="compile-test" description="Compile test sources."
+			depends="compile-main">
+		<mkdir dir="${build.unittest}"/>
+		<javac srcdir="${src.unittest}" destdir="${build.unittest}" debug="true" includes="**/*.java">
+			<classpath>
+				<path refid="classpath.lib"/>
+				<pathelement location="${build.classes}"/>
+			</classpath>
+		</javac>
+	</target>
+	
+	<!-- Test -->
+	<target name="test" description="Run unit testing."
+			depends="compile-test">
+		<junit printsummary="withOutAndErr" fork="yes" haltonfailure="yes">
+			<classpath>
+				<path refid="classpath.lib"/>
+				<pathelement location="${build.classes}"/>
+				<pathelement location="${build.unittest}"/>
+			</classpath>
+			<formatter type="plain" usefile="false"/>
+			<batchtest>
+				<fileset dir="${src.unittest}">
+					<include name="**/*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<!-- Documentation -->
+	<target name="javadoc" description="Generate main source's javadoc api set.">
+		<mkdir dir="${dist.current}/doc/javadoc"/>
+		<javadoc destdir="${dist.current}/doc/javadoc"
+				author="true" version="true" use="true"
+				windowtitle="${version} Javadoc API">
+			<classpath refid="classpath.lib"/>
+			<fileset dir="${src.main}" includes="**/*.java"/>
+			<doctitle><![CDATA[<h1>${version}</h1>]]></doctitle>
+			<bottom><![CDATA[<i>${company.productline} by ${company.projectteam} - ${company.name}</i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<!-- Packages -->
+	<target name="dist" description="Package binary distribution."
+			depends="dist-jar">
+		<!-- copy everything into current dir. -->
+		<copy todir="${dist.current}">
+			<fileset dir="${basedir}">
+				<include name="bin/**"/>
+				<include name="doc/**"/>
+				<include name="lib/*.jar"/>
+			</fileset>
+		</copy>
+		<chmod perm="ugo+x" dir="${dist.current}" includes="bin/**"/>
+				
+		<!-- Package distribute zip files . -->
+		<zip destfile="${dist}/${version}${version.build}.zip">
+			<fileset dir="${dist.current}"/>
+		</zip>
+	</target> 
+		
+	<target name="dist-jar" description="Package all classes into jar files."
+			depends="release-init, compile-main">
+		<mkdir dir="${dist.current}/lib"/>
+		
+		<jar jarfile="${dist.current}/lib/${project.name}.jar" basedir="${build.classes}">
+			<manifest>
+				<attribute name="Project" value="${version}${version.build}"/>
+				<attribute name="Date" value="${timestamp.long}"/>
+				<!-- 
+				<attribute name="Main-Class" value="Main"/>
+				<attribute name="Class-Path" value="."/>
+				-->
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- Prepare -->
+	<target name="release-init" description="Initialize build.">
+		<!-- Create timestamp. -->
+		<tstamp>
+			<format property="timestamp" pattern="MMddyykkmm"/>
+			<format property="timestamp.long" pattern="MM.dd.yyyy G 'at' HH:mm:ss z"/>
+		</tstamp>
+		<property name="version.build" value=".${timestamp}"/>
+	</target>
+	
+</project>
+<!-- :tabSize=2:indentSize=2: -->

@@ -1,0 +1,61 @@
+#!/bin/sh
+
+# Copyright ${__RES_TEMPLATE_YEAR} Zemian Deng
+# 
+# Licensed under the Apache License, * Version 2.0 (the "License"); you may not
+# use this file except in compliance with the License. You may obtain a copy of
+# the License at
+#     http://www.apache.org/licenses/LICENSE-2.0 
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+
+#
+# A wrapper script to jump start Java program
+# $Id: template.sh 2954 2006-02-02 13:36:55Z zemian $
+# :tabSize=2:indentSize=2:
+#
+
+#===============================================================================
+# Java main class
+#===============================================================================
+MAIN_CLASS=jragonsoft.javautil.cmdtool.UniqueText
+
+#===============================================================================
+# Resolve application HOME directory
+#===============================================================================
+if [ -z $PROGRAM_HOME ] ; then
+	SCRITP_HOME=`dirname $0`
+	PROGRAM_HOME=`dirname $0`/.. # backup one dir. assume script is in bin dir.
+	PROGRAM_HOME=`cd $PROGRAM_HOME && pwd` # make it absolute path
+fi
+
+#===============================================================================
+# Source custom env script
+#===============================================================================
+if [ -e $SCRITP_HOME/setenv.sh ]; then	
+	source $SCRITP_HOME/setenv.sh; 
+fi
+
+#===============================================================================
+# Build java classpath
+#===============================================================================
+# add jar files from lib
+LOCALCLASSPATH=${LOCALCLASSPATH=.:build/classes} ## default to current directory.
+for file in $PROGRAM_HOME/lib/*.jar; do
+	if [[ -f $file ]]; then LOCALCLASSPATH=$LOCALCLASSPATH:$file; fi
+done
+
+#===============================================================================
+# Run Java command with options settings
+#===============================================================================
+## Let's the system pick which ever java that's set in PATH
+if [[ $JAVA_HOME ]]; then
+	JAVA_CMD=$JAVA_HOME/bin/java
+else	
+	JAVA_CMD=${JAVA_CMD=java}
+fi
+
+# run IT! -- use echo instead of exec to debug
+exec "$JAVA_CMD" $JAVA_OPTS -classpath "$LOCALCLASSPATH" $MAIN_CLASS $PROGRAM_ARGS "$@"

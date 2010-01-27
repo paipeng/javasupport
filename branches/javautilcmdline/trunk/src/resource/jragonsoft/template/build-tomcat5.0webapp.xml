@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  - 
+  - Copyright ${__RES_TEMPLATE_YEAR} Zemian Deng
+  - 
+  - Licensed under the Apache License, * Version 2.0 (the "License"); you may not
+  - use this file except in compliance with the License. You may obtain a copy of
+  - the License at
+  -     http://www.apache.org/licenses/LICENSE-2.0 
+  - Unless required by applicable law or agreed to in writing, software distributed
+  - under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+  - CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  - specific language governing permissions and limitations under the License.
+  -->
+<project name="tomcatwebapp" default="reload" basedir=".">
+	<description>
+	Tomcat5.0.28 web application build script. You need tomcat anttasks jars install into
+	ant's lib	to be able to run all targets.
+	</description>
+	
+	<!-- Import sub build script. -->
+	<import file="${basedir}/build-tomcatwebapp.xml"/>
+	
+	<!--+
+			| Override targets
+			+-->
+			
+	<!-- install using a Tomcat-5.0 context file.-->	
+	<target name="install" description="Install application to servlet container"
+					depends="compile-main">
+			<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask"/>
+			<deploy url="${tomcat.manager.url}"
+							username="${tomcat.manager.user}"
+							password="${tomcat.manager.pass}"
+							path="${tomcat.context.path}"
+							localWar ="file://${web}"
+							config="file://${tomcat.context.file}"/>
+	</target>
+		
+</project>
+<!-- :tabSize=2:indentSize=2: -->
