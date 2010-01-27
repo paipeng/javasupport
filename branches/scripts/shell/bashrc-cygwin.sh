@@ -89,32 +89,38 @@ export -f guiedit
 
 # zip a directory recursively with the same name
 function zipdir {
-  zip -qr $1.zip $1
+  \zip -qr $1.zip $1
 }
 
 # Backup a directory with timestamp.
 function bak {
-  BAK=${1}.`ts`.bak
-  cp -rf $1 $BAK
-  echo "Backup to $BAK"
+  for x in "$@"; do
+    BAK=${x}.`ts`.bak
+    \cp -rf $x $BAK
+    echo "Backup $x to $BAK"
+  done
 }
 export -f bak
 
 # Backup a directory with timestamp and zip it.
 function bakzip {
-  BAK=${1}.`ts`.bak
-  cp -rf $1 $BAK
-  zipdir $BAK
-  rm -rf $BAK
-  echo "Backup to $BAK.zip"
+  for x in "$@"; do
+    BAK=${x}.`ts`.bak
+    cp -rf $x $BAK
+    zipdir $BAK
+    \rm -rf $BAK
+    echo "Backup $x to $BAK.zip"
+  done
 }
 export -f bakzip
 
 # Backup a directory with timestamp and delete the original directory.
 function bakd {
-  BAK=${1}.`ts`.bak
-  mv -vf $1 $BAK
-  echo "Backup to $BAK and deleted original $1"
+  for x in "$@"; do
+    BAK=${x}.`ts`.bak
+    \mv -vf $x $BAK
+    echo "Backup and deleted $x to $BAK."
+  done
 }
 export -f bakd
 
