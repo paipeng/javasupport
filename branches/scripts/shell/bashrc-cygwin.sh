@@ -255,7 +255,12 @@ alias svnall='svnadd && svnrm && svnci'
 export JAVA_HOME=${JAVA_HOME:=/apps/jdk}
 
 # Convert Windows Classpath string into unix.
-alias unixpath='ruby -pe "gsub(/;/, \":\")" | ruby -pe "gsub(/\\\\/, \"/\")" | xargs cygpath -p'
+#alias unixpath='ruby -pe "gsub(/;/, \":\")" | ruby -pe "gsub(/\\\\/, \"/\")" | xargs cygpath -p'
+function mkcpunix {
+  CP=`echo $CLASSPATH | ruby -pe 'gsub(/;/, ":")' | ruby -pe 'gsub(/\\\\/, "/")' | xargs cygpath -p`
+  echo "export CLASSPATH=$CP"
+  export CLASSPATH=$CP
+}
 
 # Expand a wild card classpath to explicit full paths. (eg: mkcpjb; expandcp)
 # this is good for tool such as groovy doesn't support wild card classpath yet!
