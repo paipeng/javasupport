@@ -101,14 +101,14 @@ function bak {
 export -f bak
 
 # Backup a directory with timestamp and zip it.
-function bak {
+function bakzip {
   BAK=${1}.`ts`.bak
   cp -rf $1 $BAK
   zipdir $BAK
   rm -rf $BAK
   echo "Backup to $BAK.zip"
 }
-export -f bak
+export -f bakzip
 
 # Backup a directory with timestamp and delete the original directory.
 function bakd {
