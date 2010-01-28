@@ -21,6 +21,13 @@ object IO {
     }
   }
   
+  /** Read the entire file into a string. */
+  def getText(file : String) {
+    val sb = new StringBuffer
+    eachLine { ln => sb.append(ln) }
+    sb.toString
+  }  
+  
   /** Run action on each block of bytes from an input stream object. 
    * The block array pass to action can be vary in lenght. User can not assume
    * they are same length. User may optional specify the max block size though,
