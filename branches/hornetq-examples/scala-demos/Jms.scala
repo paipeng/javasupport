@@ -169,18 +169,24 @@ object JmsTest {
   }
   
   /** Let's setup msg listener */
-  def testMsgListener {
-    def process(msg : Message) = msg match {
-      case m : TextMessage => 
-        println("Received msg in msg listener: " + m.getText)
-      case _ => 
-        println("Received msg in msg listener: " + msg)
-    }
-    
+  def testMesssageListener {
     Jms.fromJndi().withSession { session =>
       val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
-        consumer.setMessageListener(Jms.createMessageListener { msg => process(msg) })        
+        var count = 0
+        var t = System.currentTimeMillis
+        val listener = Jms.createMessageListener { msg =>
+          count += 1
+          // print rate every min or 1000 msgs.
+          if (count % 1000 == 0 || System.currentTimeMillis - t > (60 * 1000)) {
+            val startT = t
+            t = System.currentTimeMillis
+            count = 0
+            val rate = count / ((t - startT) / 1000.0)
+            printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)  
+          }
+        }
+        consumer.setMessageListener(listener)        
         println("Listener started on " + q)
         println("wait for msg...")
         this.synchronized { this.wait }
