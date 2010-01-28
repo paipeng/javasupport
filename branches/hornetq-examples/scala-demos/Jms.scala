@@ -169,8 +169,9 @@ object JmsTest {
   }
   
   /** Let's setup msg listener */
-  def testMesssageListener {
-    Jms.fromJndi().withSession { session =>
+  def testMesssageListener(cf : ConnectionFactory) {
+    println("Started: " + new java.util.Date)
+    new Jms(cf).withSession { session =>
       val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
         var totalCount = 0
@@ -198,8 +199,9 @@ object JmsTest {
     }
   }
   
-  def testBurstMsg(n: Int) {
-    Jms.fromJndi().withSession { session => 
+  def testBurstMsg(n: Int, cf : ConnectionFactory) {
+    println("Started: " + new java.util.Date)
+    new Jms(cf).withSession { session => 
       var totalCount = 0
       var count = 0
       var t = System.currentTimeMillis
@@ -221,6 +223,7 @@ object JmsTest {
       }
       println(totalCount + " msgs sent.")  
     }
+    println("Stopped: " + new java.util.Date)
   }
 }
 
