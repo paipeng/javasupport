@@ -1,12 +1,16 @@
 import javax.jms._
 import javax.naming._
 
-/** A facade class that let user to quickly access JMS resources. 
- * This class assume to be given a session is opened (its connection started)
- * End user needs to close session as after usage of this class.
+/** A facade class that let user to quickly access JMS resources and process
+ * messages in Queue or Topic. This class will take a opened session that
+ * is ready for use (eg its connection should already be started.)
  *
- * See Jms#withJms for auto create a Jms instance with one time opened session
- * for action processing.
+ * Use Jms#withJms to process any action (closure) that will have a Jms instance 
+ * created for you as parameter, and it contains a opened session ready for use. 
+ * The session is created by connection from a JNDI ConnectionFactory lookup. The 
+ * Jms#withJms will auto clean up the session after the method is completed. 
+ * Many helper methods in Jms class will use this opened session for further 
+ * processing, so that you dont' have to re-open new session.
  *
  * See JmsTest for more usage and examples.
  */
