@@ -1,0 +1,6 @@
+D:\source\groovy\ws\myscala\bin;D:\opt\eclipse\configuration\org.eclipse.osgi\bundles\1044\1\.cp\lib\scala-library.jar;D:\opt\eclipse\configuration\org.eclipse.osgi\bundles\1044\1\.cp\lib\scala-dbc.jar;D:\opt\eclipse\configuration\org.eclipse.osgi\bundles\1044\1\.cp\lib\scala-swing.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\resources.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\rt.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\jce.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.6.0_18\jre\lib\ext\sunpkcs11.jar
+-------
+-------
+D:\source\groovy\ws\myscala\src\test.scala -> D:\source\groovy\ws\myscala\bin\test.class
+D:\source\groovy\ws\myscala\src\hello.scala -> D:\source\groovy\ws\myscala\bin\hello$.class
+D:\source\groovy\ws\myscala\src\hello.scala -> D:\source\groovy\ws\myscala\bin\hello.class
