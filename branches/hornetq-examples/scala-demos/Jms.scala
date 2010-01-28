@@ -8,7 +8,7 @@ import javax.naming._
  * See Jms#withJms for auto create a Jms instance with one time opened session
  * for action processing.
  *
- * See JmsTest for usage examples.
+ * See JmsTest for more usage and examples.
  */
 class Jms(val session : Session) {
   def withTempQ(action : TemporaryQueue => Unit) {    
@@ -143,11 +143,4 @@ object JmsTest {
     }
   }
 }
-
-// Run as script (first start hornetq server)
-// mkcp '/apps/hornetq/lib/*' './'
-// scala Jms.scala                
-JmsTest.testSession        
-JmsTest.testTempQ
-JmsTest.testSendToTempQ
 
