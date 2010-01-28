@@ -22,7 +22,7 @@ object IO {
   }
   
   /** Read the entire file into a string. */
-  def getText(file : String) {
+  def getText(file : String) : String = {
     val sb = new StringBuffer
     eachLine(file) { ln => sb.append(ln) }
     sb.toString
