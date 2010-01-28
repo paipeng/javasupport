@@ -27,7 +27,11 @@ class Jms(val session : Session) {
   def toQueue(name : String) = session.createQueue(name)
   def toTopic(name : String) = session.createTopic(name)
   
-  def createTextMsg(text : String) = session.createTextMessage(text)  
+  def createTextMsg(text : String) = session.createTextMessage(text)
+  
+  def addMsgProps[T](msg : Message, props : Map[String, T]) = {
+    props.foreach { case (k,v) => msg.setObjectProperty(k, v) }
+  } 
   
   def createMapMsg[T](map : Map[String, T]) = {
     val msg = session.createMapMessage
@@ -41,12 +45,7 @@ class Jms(val session : Session) {
   }   
   def createBytesMsg(input : java.io.InputStream) = {
     val msg = session.createBytesMessage
-    val BUFF_SIZE = 1024 * 8
-    var len = -1
-    var data = new Array[Byte](BUFF_SIZE)
-    while ({ len = input.read(data, 0, BUFF_SIZE); len != -1 }) {
-      msg.writeBytes(data, 0, len)
-    }
+    IO.eachBytesBlock(input) { block => msg.writeBytes(block) }
     msg
   }
   def createObjectMsg(obj : java.io.Serializable) = {
@@ -55,8 +54,12 @@ class Jms(val session : Session) {
     msg
   }
   
-  def send(dest : Destination, text : String) {
-    withProducer(dest) { producer => producer.send(createTextMsg(text)) }
+  def send(dest : Destination, text : String, props : Map[String, String] = Map()) {
+    withProducer(dest) { producer =>
+      val msg = createTextMsg(text)
+      addMsgProps(msg, props)
+      producer.send(msg) 
+    }
   }
 }
 
@@ -116,19 +119,22 @@ object JmsTest {
   
   def testSendToTempQ {
     // Let's create a temp q and try to send and receive msg on it.
+    def process(msg : Message) = msg match {
+      case m : TextMessage => 
+        println("Received msg from TempQ: " + m.getText + ", props['from'] " + m.getStringProperty("from"))
+      case _ => 
+        println("Received msg from TempQ: " + msg)
+    }
+          
     Jms.withJms { jms => 
       jms.withTempQ { q => 
         println("Created TempQ: " + q.getClass) 
         jms.send(q, "test msg")
-        println("Msg sent to TempQ. Will try to receive it now...")
+        jms.send(q, "test2 msg", Map("from" -> "Zemian"))
+        println("2 msgs sent to TempQ. Will try to receive it now...")
         jms.withConsumer(q) { consumer => 
-          val msg = consumer.receive
-          msg match {
-            case m : TextMessage => 
-              println("Received msg from TempQ: " + m.getText)
-            case _ => 
-              println("Received msg from TempQ: " + msg)
-          }
+          process(consumer.receive)
+          process(consumer.receive)          
         }
       } 
     }
