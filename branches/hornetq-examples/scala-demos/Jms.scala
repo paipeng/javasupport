@@ -17,16 +17,9 @@ class Jms(connectionFactory : ConnectionFactory) {
       conn.stop
     }
   }
-  
-  def withRichSessionFrom(conn : Connection)(func : RichSession => Unit) {      
-    withSessionFrom(conn) { session => func(new RichSession(session)) }
-  }  
-  
+    
   def withSession(func : Session => Unit) { 
     withConnection { conn => withSessionFrom(conn) { jmsSession => func(jmsSession) } }
-  }
-  def withRichSession(func : RichSession => Unit) {  
-    withConnection { conn => withRichSessionFrom(conn) { richSession => func(richSession) } } 
   }
 }
 
@@ -55,6 +48,8 @@ object Jms {
   def createMsgListener(func : Message => Unit) = new MessageListener { 
     def onMessage(msg : Message) = func(msg)
   }
+  
+  implicit def jmsToRichSession(session: Session) = new RichSession(session)
 }
 
 class RichSession(val jmsSession : Session) {
@@ -79,15 +74,7 @@ class RichSession(val jmsSession : Session) {
     val producer = jmsSession.createProducer(dest)
     try { func(producer) } finally { producer.close }
   }
-  
-  /** Get a instance of queue Destination from session. Some broker requires the
-   * queue to be created (or setup during server startup) first. */
-  def toQueue(name : String) = jmsSession.createQueue(name)
-  
-  /** Get a instance of topic Destination from session. Some broker requires the
-   * topic to be created (or setup during server startup) first. */
-  def toTopic(name : String) = jmsSession.createTopic(name)
-  
+    
   /** Wrapper to session create message call */
   def createTextMsg(text : String) = jmsSession.createTextMessage(text)
     
@@ -131,11 +118,11 @@ class RichSession(val jmsSession : Session) {
 }
 
 object JmsTest {  
+  import Jms.jmsToRichSession
   
   /** Let's see some message implementation class names. */
   def testSession {
-    Jms().withRichSession { session =>      
-      val jmsSession = session.jmsSession
+    Jms().withSession { session =>
       println("createTextMessage " + session.createTextMsg("foo").getClass)
       println("createMapMessage " + session.createMapMsg(Map("a"->"A", "b"->"B")).getClass)      
       println("createObjectMessage " + session.createObjectMsg(new java.util.Date).getClass)     
@@ -144,14 +131,14 @@ object JmsTest {
       val ins = new java.io.ByteArrayInputStream(Array[Byte](0,1,2,3))
       try { println("createBytesMsg_fromStream " + session.createBytesMsg(ins).getClass) } finally { ins.close }
       
-      println("createMessage " + jmsSession.createMessage.getClass)
-      println("createStreamMessage " + jmsSession.createStreamMessage.getClass)
+      println("createMessage " + session.createMessage.getClass)
+      println("createStreamMessage " + session.createStreamMessage.getClass)
     }
   }
   
   /** Note that we have create two temp queues under the same jms session. */
   def testTempQ {
-    Jms().withRichSession { session => 
+    Jms().withSession { session => 
       session.withTempQ { q => println("TempQ1: " + q.getClass) } 
       session.withTempQ { q => println("TempQ2: " + q.getClass) } 
     }
@@ -166,7 +153,7 @@ object JmsTest {
         println("Received msg from TempQ: " + msg)
     }
           
-    Jms().withRichSession { session => 
+    Jms().withSession { session => 
       session.withTempQ { q => 
         println("Created TempQ: " + q.getClass) 
         session.send(q, "test msg")
@@ -189,9 +176,8 @@ object JmsTest {
         println("Received msg in msg listener: " + msg)
     }
     
-    val jms = Jms()
-    jms.withRichSession { session =>
-      val q = session.toQueue("ExampleQueue")
+    Jms().withSession { session =>
+      val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
         consumer.setMessageListener(Jms.createMsgListener { msg => process(msg) })        
         println("Listener started on " + q)
@@ -202,8 +188,8 @@ object JmsTest {
   }
   
   def testBurstMsg(n: Int) {
-    Jms().withRichSession { session => 
-      val q = session.toQueue("ExampleQueue")
+    Jms().withSession { session => 
+      val q = session.createQueue("ExampleQueue")
       (1 to n).foreach { i => 
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
       }
