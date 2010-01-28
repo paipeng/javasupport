@@ -182,7 +182,7 @@ object JmsTest {
         // print rate every min or 1000 msgs.
         var t = System.currentTimeMillis
         while (true) {
-          if (count % 1000 == 0 || System.currentTimeMillis - t > (60 * 1000)) {
+          if ((count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (30 * 1000)) {
             val startT = t
             t = System.currentTimeMillis
             val rate = count / ((t - startT) / 1000.0)
@@ -201,10 +201,11 @@ object JmsTest {
       var count = 0
       var t = System.currentTimeMillis
       (1 to n).foreach { i => 
+        count + 1
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
         
         // print rate every min or 1000 msgs.
-        if (count % 1000 == 0 || System.currentTimeMillis - t > (60 * 1000)) {
+        if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (60 * 1000)) {
           val startT = t
           t = System.currentTimeMillis
           val rate = count / ((t - startT) / 1000.0)
