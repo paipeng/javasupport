@@ -119,6 +119,7 @@ object JmsTest {
   
   def testSendToTempQ {
     // Let's create a temp q and try to send and receive msg on it.
+    
     def process(msg : Message) = msg match {
       case m : TextMessage => 
         println("Received msg from TempQ: " + m.getText + ", props['from'] " + m.getStringProperty("from"))
