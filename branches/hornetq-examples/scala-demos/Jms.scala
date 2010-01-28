@@ -1,59 +1,7 @@
 import javax.jms._
 import javax.naming._
 
-class Jms(connectionFactory : ConnectionFactory) {  
-  def withConnection(func : Connection => Unit) {
-    val conn = connectionFactory.createConnection
-    try { func(conn) } finally { conn.close }
-  }
-  
-  def withSessionFrom(conn : Connection)(func : Session => Unit) {    
-    val jmsSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)      
-    try {
-      conn.start
-      func(jmsSession)
-    } finally {
-      jmsSession.close
-      conn.stop
-    }
-  }
-    
-  def withSession(func : Session => Unit) { 
-    withConnection { conn => withSessionFrom(conn) { jmsSession => func(jmsSession) } }
-  }
-}
-
-/** A companion object to Jms class that lookup and create JMS session */
-object Jms {
-  val DEFAULT_CONNECTION_FACTORY_NAME = "ConnectionFactory"
-  
-  def apply() = new Jms(getJndiConnectionFactory(DEFAULT_CONNECTION_FACTORY_NAME))
-  
-  /** Create a ConnectionFactory object from JNDI.
-   */
-  def getJndiConnectionFactory(name : String) = {
-    lookupJndi[ConnectionFactory](name) 
-  } 
-  
-  /** Convert and set a map values into a JMS message properties. */
-  def addMsgProps[T](msg : Message, props : Map[String, T]) = {
-    props.foreach { case (k,v) => msg.setObjectProperty(k, v) }
-  } 
-  
-  /** Lookup object from JNDI by default in initial context. */
-  def lookupJndi[T](name : String, jndiCtx : Context = new InitialContext) : T = {
-    try { jndiCtx.lookup(name).asInstanceOf[T] } finally { jndiCtx.close }
-  }
-  
-  def createMsgListener(func : Message => Unit) = new MessageListener { 
-    def onMessage(msg : Message) = func(msg)
-  }
-  
-  implicit def jmsToRichSession(session: Session) = new RichSession(session)
-}
-
 class RichSession(val jmsSession : Session) {
-  
   /** Create a temporary queue for processing. 
    * The queue will be deleted after func is complete. */
   def withTempQ(func : TemporaryQueue => Unit) {    
@@ -111,10 +59,63 @@ class RichSession(val jmsSession : Session) {
   def send(dest : Destination, text : String, props : Map[String, String] = Map()) {
     withProducer(dest) { producer =>
       val msg = createTextMsg(text)
-      Jms.addMsgProps(msg, props)
+      Jms.addMapToMsgProps(msg, props)
       producer.send(msg) 
     }
   }
+}
+
+class Jms(connectionFactory : ConnectionFactory) {  
+  def withConnection(func : Connection => Unit) {
+    val conn = connectionFactory.createConnection
+    try { func(conn) } finally { conn.close }
+  }
+  
+  def withSessionFrom(conn : Connection)(func : Session => Unit) {    
+    val jmsSession = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)      
+    try {
+      conn.start
+      func(jmsSession)
+    } finally {
+      jmsSession.close
+      conn.stop
+    }
+  }
+    
+  def withSession(func : Session => Unit) { 
+    withConnection { conn => withSessionFrom(conn) { jmsSession => func(jmsSession) } }
+  }
+}
+
+/** A companion object to Jms class. */
+object Jms {
+  val DEFAULT_CONNECTION_FACTORY_NAME = "ConnectionFactory"
+  
+  def fromJndi(name : String = DEFAULT_CONNECTION_FACTORY_NAME) = {
+    val cf = lookupJndi[ConnectionFactory](name)
+    new Jms(cf)
+  }
+  
+  def fromClassName(name : String) = {
+    val cf = java.lang.Class.forName(name).newInstance().asInstanceOf[ConnectionFactory]
+    new Jms(cf)
+  }
+  
+  /** Convert and set a map values into a JMS message properties. */
+  def addMapToMsgProps[T](msg : Message, props : Map[String, T]) = {
+    props.foreach { case (k,v) => msg.setObjectProperty(k, v) }
+  } 
+  
+  /** Lookup object from JNDI by default in initial context. */
+  def lookupJndi[T](name : String, jndiCtx : Context = new InitialContext) : T = {
+    try { jndiCtx.lookup(name).asInstanceOf[T] } finally { jndiCtx.close }
+  }
+  
+  def createMessageListener(func : Message => Unit) = new MessageListener { 
+    def onMessage(msg : Message) = func(msg)
+  }
+  
+  implicit def jmsToRichSession(session: Session) = new RichSession(session)
 }
 
 object JmsTest {  
@@ -122,7 +123,7 @@ object JmsTest {
   
   /** Let's see some message implementation class names. */
   def testSession {
-    Jms().withSession { session =>
+    Jms.fromJndi().withSession { session =>
       println("createTextMessage " + session.createTextMsg("foo").getClass)
       println("createMapMessage " + session.createMapMsg(Map("a"->"A", "b"->"B")).getClass)      
       println("createObjectMessage " + session.createObjectMsg(new java.util.Date).getClass)     
@@ -138,7 +139,7 @@ object JmsTest {
   
   /** Note that we have create two temp queues under the same jms session. */
   def testTempQ {
-    Jms().withSession { session => 
+    Jms.fromJndi().withSession { session => 
       session.withTempQ { q => println("TempQ1: " + q.getClass) } 
       session.withTempQ { q => println("TempQ2: " + q.getClass) } 
     }
@@ -153,7 +154,7 @@ object JmsTest {
         println("Received msg from TempQ: " + msg)
     }
           
-    Jms().withSession { session => 
+    Jms.fromJndi().withSession { session => 
       session.withTempQ { q => 
         println("Created TempQ: " + q.getClass) 
         session.send(q, "test msg")
@@ -176,10 +177,10 @@ object JmsTest {
         println("Received msg in msg listener: " + msg)
     }
     
-    Jms().withSession { session =>
+    Jms.fromJndi().withSession { session =>
       val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
-        consumer.setMessageListener(Jms.createMsgListener { msg => process(msg) })        
+        consumer.setMessageListener(Jms.createMessageListener { msg => process(msg) })        
         println("Listener started on " + q)
         println("wait for msg...")
         this.synchronized { this.wait }
@@ -188,7 +189,7 @@ object JmsTest {
   }
   
   def testBurstMsg(n: Int) {
-    Jms().withSession { session => 
+    Jms.fromJndi().withSession { session => 
       val q = session.createQueue("ExampleQueue")
       (1 to n).foreach { i => 
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
