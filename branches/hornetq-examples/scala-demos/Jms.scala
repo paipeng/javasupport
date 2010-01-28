@@ -207,18 +207,24 @@ object JmsTest {
       var t = System.currentTimeMillis
       
       val q = session.createQueue("ExampleQueue")
-      (1 to n).foreach { i => 
-        totalCount += 1
-        count += 1
-        session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
-        
-        // print rate every 5 secs or 1000 msgs.
-        if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
-          val startT = t
-          t = System.currentTimeMillis
-          val rate = count / ((t - startT) / 1000.0)
-          printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
-          count = 0
+      
+      session.withProducer(q) { producer =>         
+        (1 to n).foreach { i => 
+          totalCount += 1
+          count += 1
+          
+          // session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
+          val msg = session.createTextMsg("test" + i + ", time=" + System.currentTimeMillis)
+          producer.send(msg)
+          
+          // print rate every 5 secs or 1000 msgs.
+          if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
+            val startT = t
+            t = System.currentTimeMillis
+            val rate = count / ((t - startT) / 1000.0)
+            printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
+            count = 0
+          }
         }
       }
       println(totalCount + " msgs sent.")  
