@@ -173,8 +173,12 @@ object JmsTest {
     Jms.fromJndi().withSession { session =>
       val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
+        var totalCount = 0
         var count = 0
-        val listener = Jms.createMessageListener { msg => count += 1  }
+        val listener = Jms.createMessageListener { msg => 
+          totalCount += 1
+          count += 1  
+        }
         consumer.setMessageListener(listener)        
         println("Listener started on " + q)
         println("wait for msg...")        
@@ -186,7 +190,7 @@ object JmsTest {
             val startT = t
             t = System.currentTimeMillis
             val rate = count / ((t - startT) / 1000.0)
-            printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)
+          printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
             count = 0  
           } else { java.lang.Thread.sleep(3000) }          
         }
@@ -196,11 +200,13 @@ object JmsTest {
   
   def testBurstMsg(n: Int) {
     Jms.fromJndi().withSession { session => 
-      val q = session.createQueue("ExampleQueue")
-      
+      var totalCount = 0
       var count = 0
       var t = System.currentTimeMillis
+      
+      val q = session.createQueue("ExampleQueue")
       (1 to n).foreach { i => 
+        totalCount += 1
         count += 1
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
         
@@ -209,11 +215,11 @@ object JmsTest {
           val startT = t
           t = System.currentTimeMillis
           val rate = count / ((t - startT) / 1000.0)
-          printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)  
+          printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
           count = 0
         }
       }
-      println(n + " msgs sent.")
+      println(totalCount + " msgs sent.")  
     }
   }
 }
