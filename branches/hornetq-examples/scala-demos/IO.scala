@@ -24,7 +24,7 @@ object IO {
   /** Read the entire file into a string. */
   def getText(file : String) {
     val sb = new StringBuffer
-    eachLine { ln => sb.append(ln) }
+    eachLine(file) { ln => sb.append(ln) }
     sb.toString
   }  
   
