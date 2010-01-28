@@ -6,11 +6,6 @@ import java.io._
  */
 object IO {
   
-  /** Run action on each line from a text file. */
-  def eachLine(file : String)(action : String => Unit) : Unit = {
-    eachLine(new FileReader(file))(action)
-  }
-  
   /** Run action on each line from the reader object. */
   def eachLine(reader : Reader)(action : String => Unit) : Unit = {
     val sb = new StringBuffer
@@ -19,6 +14,11 @@ object IO {
     while ({ line = breader.readLine; line != null }) {
       action(line)
     }
+  }
+  
+  /** Run action on each line from a text file. */
+  def eachLine(file : String)(action : String => Unit) : Unit = {
+    eachLine(new FileReader(file))(action)
   }
   
   /** Read the entire file into a string. */
