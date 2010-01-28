@@ -24,12 +24,39 @@ class Jms(val session : Session) {
     try { action(producer) } finally { producer.close }
   }
   
-  def toQueue(qname : String) = session.createQueue(qname)
+  def toQueue(name : String) = session.createQueue(name)
+  def toTopic(name : String) = session.createTopic(name)
   
-  def createMsg(text : String) = session.createTextMessage(text)
+  def createTextMsg(text : String) = session.createTextMessage(text)  
+  
+  def createMapMsg[T](map : Map[String, T]) = {
+    val msg = session.createMapMessage
+    map.foreach { case (k,v) => msg.setObject(k, v) }
+    msg
+  }  
+  def createBytesMsg(data : Array[Byte]) = {
+    val msg = session.createBytesMessage
+    msg.writeBytes(data)
+    msg
+  }   
+  def createBytesMsg(input : java.io.InputStream) = {
+    val msg = session.createBytesMessage
+    val BUFF_SIZE = 1024 * 8
+    var len = -1
+    var data = new Array[Byte](BUFF_SIZE)
+    while ({ len = input.read(data, 0, BUFF_SIZE); len != -1 }) {
+      msg.writeBytes(data, 0, len)
+    }
+    msg
+  }
+  def createObjectMsg(obj : java.io.Serializable) = {
+    val msg = session.createObjectMessage
+    msg.setObject(obj)
+    msg
+  }
   
   def send(dest : Destination, text : String) {
-    withProducer(dest) { producer => producer.send(createMsg(text)) }
+    withProducer(dest) { producer => producer.send(createTextMsg(text)) }
   }
 }
 
@@ -68,12 +95,14 @@ object JmsTest {
     // Let's see some message implementation class names.
     Jms.withJms { jms =>      
       val session = jms.session
-      println("1. createMessage " + session.createMessage.getClass)
-      println("2. createObjectMessage " + session.createObjectMessage.getClass)
-      println("3. createBytesMessage " + session.createBytesMessage.getClass)
-      println("4. createTextMessage " + session.createTextMessage.getClass)
-      println("5. createMapMessage " + session.createMapMessage.getClass)
-      println("6. createStreamMessage " + session.createStreamMessage.getClass)
+      println("createTextMessage " + jms.createTextMsg("foo").getClass)
+      println("createMapMessage " + jms.createMapMsg(Map("a"->"A", "b"->"B")).getClass)      
+      println("createObjectMessage " + jms.createObjectMsg(new java.util.Date).getClass)     
+      println("createBytesMsg " + jms.createBytesMsg(Array[Byte](0,1,2,3)).getClass)     
+      println("createBytesMsg_fromStream " + jms.createBytesMsg(new java.io.ByteArrayInputStream(Array[Byte](0,1,2,3))).getClass)
+      
+      println("createMessage " + session.createMessage.getClass)
+      println("createStreamMessage " + session.createStreamMessage.getClass)
     }
   }
   
