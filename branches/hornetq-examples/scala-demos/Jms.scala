@@ -52,44 +52,8 @@ object Jms {
     try { jndiCtx.lookup(name).asInstanceOf[T] } finally { jndiCtx.close }
   }
   
-  /** A process holder for message listener instance that setup by #withMsgListener */
-  class ListenerProc(
-    val conn : Connection, 
-    val session : Session, 
-    val consumer : MessageConsumer,
-    val dest : Destination) {
-      
-    def stop {
-      try { 
-        consumer.close
-        session.close
-      } finally {
-        conn.close
-      }
-    }
-  }
-  
-  /** Create and setup an instance of MessageListener and delegate process to func.
-   * The return object will contain the JMS connection, session, and the MessageListener
-   * implementation intance. These can be use to stop and end the listener process. */
-  def createListenerProc(dest : Destination, conn : Connection)(func : Message => Unit) : ListenerProc = {
-    try {
-      val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
-      val consumer = session.createConsumer(dest)
-      val msgListener = new MessageListener {
-        def onMessage(msg : Message) = func(msg)
-      }
-      consumer.setMessageListener(msgListener)      
-      conn.start
-      
-      // return new proc instance.
-      new ListenerProc(conn, session, consumer, dest)  
-    } catch {
-      case e : Exception => { 
-        conn.close // close out connection if there are errors.
-        throw e
-      }
-    }
+  def createMsgListener(func : Message => Unit) = new MessageListener { 
+    def onMessage(msg : Message) = func(msg)
   }
 }
 
@@ -226,11 +190,11 @@ object JmsTest {
     }
     
     val jms = Jms()
-    jms.withConnection { conn =>
-      jms.withSessionFrom(conn) { jmsSession =>
-        val q = jmsSession.createQueue("ExampleQueue")
-        val proc = Jms.createListenerProc(q, conn) { msg => process(msg) }
-        println("Listener started on " + proc.dest)
+    jms.withRichSession { session =>
+      val q = session.toQueue("ExampleQueue")
+      session.withConsumer(q) { consumer =>
+        consumer.setMessageListener(Jms.createMsgListener { msg => process(msg) })        
+        println("Listener started on " + q)
         println("wait for msg...")
         this.synchronized { this.wait }
       }
