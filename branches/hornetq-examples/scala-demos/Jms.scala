@@ -102,7 +102,9 @@ object JmsTest {
       println("createMapMessage " + jms.createMapMsg(Map("a"->"A", "b"->"B")).getClass)      
       println("createObjectMessage " + jms.createObjectMsg(new java.util.Date).getClass)     
       println("createBytesMsg " + jms.createBytesMsg(Array[Byte](0,1,2,3)).getClass)     
-      println("createBytesMsg_fromStream " + jms.createBytesMsg(new java.io.ByteArrayInputStream(Array[Byte](0,1,2,3))).getClass)
+      
+      val ins = new java.io.ByteArrayInputStream(Array[Byte](0,1,2,3))
+      try { println("createBytesMsg_fromStream " + jms.createBytesMsg(ins).getClass) } finally { ins.close }
       
       println("createMessage " + session.createMessage.getClass)
       println("createStreamMessage " + session.createStreamMessage.getClass)
