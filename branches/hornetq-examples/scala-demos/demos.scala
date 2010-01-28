@@ -4,4 +4,5 @@
 JmsTest.testSession        
 JmsTest.testTempQ
 JmsTest.testSendToTempQ
+JmsTest.testMsgListener
 

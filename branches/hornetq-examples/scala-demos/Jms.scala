@@ -5,7 +5,7 @@ import javax.naming._
  * messages in Queue or Topic. This class will take a opened session that
  * is ready for use (eg its connection should already be started.)
  *
- * Use Jms#withJms to process any action (closure) that will have a Jms instance 
+ * Use Jms#withJms to process any func (closure) that will have a Jms instance 
  * created for you as parameter, and it contains a opened session ready for use. 
  * The session is created by connection from a JNDI ConnectionFactory lookup. The 
  * Jms#withJms will auto clean up the session after the method is completed. 
@@ -17,24 +17,24 @@ import javax.naming._
 class Jms(val session : Session) {
   
   /** Create a temporary queue for processing. 
-   * The queue will be deleted after action is complete. */
-  def withTempQ(action : TemporaryQueue => Unit) {    
+   * The queue will be deleted after func is complete. */
+  def withTempQ(func : TemporaryQueue => Unit) {    
     val queue = session.createTemporaryQueue
-    try { action(queue) } finally { queue.delete }
+    try { func(queue) } finally { queue.delete }
   }  
   
-  /** Create a message consumer and close it after action processing. 
+  /** Create a message consumer and close it after func processing. 
    * You may use #toQueue or #toTopic to convert string into Destination object. */ 
-  def withConsumer(dest : Destination)(action : MessageConsumer => Unit) {
+  def withConsumer(dest : Destination)(func : MessageConsumer => Unit) {
     val consumer = session.createConsumer(dest)
-    try { action(consumer) } finally { consumer.close }
+    try { func(consumer) } finally { consumer.close }
   }  
   
-  /** Create a message producer and close it after action processing. 
+  /** Create a message producer and close it after func processing. 
    * You may use #toQueue or #toTopic to convert string into Destination object. */ 
-  def withProducer(dest : Destination)(action : MessageProducer => Unit) {
+  def withProducer(dest : Destination)(func : MessageProducer => Unit) {
     val producer = session.createProducer(dest)
-    try { action(producer) } finally { producer.close }
+    try { func(producer) } finally { producer.close }
   }
   
   /** Get a instance of queue Destination from session. Some broker requires the
@@ -94,39 +94,71 @@ class Jms(val session : Session) {
 
 /** A companion object to Jms class that lookup and create JMS session */
 object Jms {
+  val DEFAULT_CONNECTION_FACTORY_NAME = "ConnectionFactory"
   
-  /** Create an instance of Jms and call #withJndiJmsSession to create a session
-   * object for action processing. Note that session will auto close after action
-   * is completed. */
-  def withJms(action : Jms => Unit) {
-    withJndiJmsSession("ConnectionFactory") { session => action(new Jms(session)) }  
+  def withJms(func : Jms => Unit) {
+    withConnFactJms(getJndiConnFact())(func)
   }
   
-  /** Create z new instance of JMS session by looking for ConnectionFactory in 
-   * a JNDI server. It assume jndi.properties is in classpath and have correct
-   * settings. The session created will be auto close after the action function
-   * is completed. */
-  def withJndiJmsSession(connFactoryName : String)(action : Session => Unit) {
-    val ctx = new InitialContext
+  def withConnFactJms(connFact : ConnectionFactory)(func : Jms => Unit) {
+    val conn = connFact.createConnection
+    try { 
+      withSession(conn) { session => func(new Jms(session)) }
+    } finally { conn.close }
+  }
+   
+  /** Create a ConnectionFactory object from JNDI.
+   */
+  def getJndiConnFact(name : String = DEFAULT_CONNECTION_FACTORY_NAME) = {
+    lookupJndi[ConnectionFactory](name) 
+  }
+  
+  /** Create new instance of JMS session from the connection. It will start
+   * the connection object and stop it after func is fished. session will also
+   * be close after func finished. */
+  def withSession(conn : Connection)(func : Session => Unit) {      
+    val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)      
     try {
-      val cf = ctx.lookup(connFactoryName).asInstanceOf[ConnectionFactory]
-      val conn = cf.createConnection
-      try {
-        val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
-        try {
-          conn.start
-          action(session)
-        } finally {
-          session.close
-        }
-      } finally {
-        conn.stop
-        conn.close
-      }
-    } finally { 
-      ctx.close  
+      conn.start
+      func(session)
+    } finally {
+      session.close
+      conn.stop
     }
   }  
+  
+  /** Lookup object from JNDI by default in initial context. */
+  def lookupJndi[T](name : String, jndiCtx : Context = new InitialContext) : T = {
+    try { jndiCtx.lookup(name).asInstanceOf[T] } finally { jndiCtx.close }
+  }
+  
+  
+  /** A process holder for message listener instance that setup by #withMsgListener */
+  class ListenerProc(val conn : Connection, val session : Session, val consumer : MessageConsumer)
+  
+  /** Create and setup an instance of MessageListener and delegate process to func.
+   * The return object will contain the JMS connection, session, and the MessageListener
+   * implementation intance. These can be use to stop and end the listener process. */
+  def createListenerProc(connFact : ConnectionFactory, dest : Destination)(func : Message => Unit) : ListenerProc = {
+    val conn = connFact.createConnection
+    try {
+      val session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE)
+      val consumer = session.createConsumer(dest)
+      val msgListener = new MessageListener() {
+        def onMessage(msg : Message) = func(msg)
+      }
+      consumer.setMessageListener(msgListener)      
+      conn.start
+      
+      // return new proc instance.
+      new ListenerProc(conn, session, consumer)  
+    } catch {
+      case e : Exception => { 
+        conn.close // close out connection if there are errors.
+        throw e
+      }
+    }
+  }
 }
 
 object JmsTest {  
@@ -176,6 +208,16 @@ object JmsTest {
           process(consumer.receive)          
         }
       } 
+    }
+  }
+  
+  /** Let's setup msg listener */
+  def testMsgListener {
+    Jms.withJms { jms =>
+      jms.withTempQ { tempQ => 
+        val connFact = Jms.getJndiConnFact
+        val proc = Jms.createListenerProc(connFact, tempQ)
+      }
     }
   }
 }
