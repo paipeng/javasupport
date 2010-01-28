@@ -201,7 +201,7 @@ object JmsTest {
       var count = 0
       var t = System.currentTimeMillis
       (1 to n).foreach { i => 
-        count =+ 1
+        count += 1
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
         
         // print rate every 5 secs or 1000 msgs.
