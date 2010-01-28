@@ -179,10 +179,10 @@ object JmsTest {
         println("Listener started on " + q)
         println("wait for msg...")        
         
-        // print rate every min or 1000 msgs.
+        // print rate every 5 secs or 1000 msgs.
         var t = System.currentTimeMillis
         while (true) {
-          if ((count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (30 * 1000)) {
+          if ((count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
             val startT = t
             t = System.currentTimeMillis
             val rate = count / ((t - startT) / 1000.0)
@@ -204,8 +204,8 @@ object JmsTest {
         count + 1
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
         
-        // print rate every min or 1000 msgs.
-        if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (60 * 1000)) {
+        // print rate every 5 secs or 1000 msgs.
+        if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
           val startT = t
           t = System.currentTimeMillis
           val rate = count / ((t - startT) / 1000.0)
