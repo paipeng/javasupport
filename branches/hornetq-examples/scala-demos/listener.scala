@@ -1,2 +1,2 @@
-JmsTest.testMesssageListener
+JmsTest.testMesssageListener(Jms.fromJndi())
 
