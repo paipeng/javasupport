@@ -174,22 +174,22 @@ object JmsTest {
       val q = session.createQueue("ExampleQueue")
       session.withConsumer(q) { consumer =>
         var count = 0
+        val listener = Jms.createMessageListener { msg => count += 1  }
+        consumer.setMessageListener(listener)        
+        println("Listener started on " + q)
+        println("wait for msg...")        
+        
+        // print rate every min or 1000 msgs.
         var t = System.currentTimeMillis
-        val listener = Jms.createMessageListener { msg =>
-          count += 1
-          // print rate every min or 1000 msgs.
+        while (true) {
           if (count % 1000 == 0 || System.currentTimeMillis - t > (60 * 1000)) {
             val startT = t
             t = System.currentTimeMillis
-            count = 0
             val rate = count / ((t - startT) / 1000.0)
-            printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)  
-          }
+            printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)
+            count = 0  
+          } else { java.lang.Thread.sleep(3000) }          
         }
-        consumer.setMessageListener(listener)        
-        println("Listener started on " + q)
-        println("wait for msg...")
-        this.synchronized { this.wait }
       }
     }
   }
@@ -197,8 +197,20 @@ object JmsTest {
   def testBurstMsg(n: Int) {
     Jms.fromJndi().withSession { session => 
       val q = session.createQueue("ExampleQueue")
+      
+      var count = 0
+      var t = System.currentTimeMillis
       (1 to n).foreach { i => 
         session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
+        
+        // print rate every min or 1000 msgs.
+        if (count % 1000 == 0 || System.currentTimeMillis - t > (60 * 1000)) {
+          val startT = t
+          t = System.currentTimeMillis
+          val rate = count / ((t - startT) / 1000.0)
+          printf(new java.util.Date() + "> rate: %.2f msgs / sec\n", rate)  
+          count = 0
+        }
       }
       println(n + " msgs sent.")
     }
