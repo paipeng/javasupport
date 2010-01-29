@@ -225,7 +225,7 @@ class JmsTest(val jms : Jms) {
 							
 							// Print only if it not zeros more than maxZeros times
 							if (zeroCount <= maxZeros) {
-								printf(new java.util.Date() + "> rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+								printf(new java.util.Date() + "> received rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
 							}
 							
 							// Reset cycle values
@@ -274,7 +274,7 @@ class JmsTest(val jms : Jms) {
 							val tstamp = Utils.ts
 							val elapse = tstamp - t
 							val rate = if (elapse == 0) 0.0 else (count / (elapse / 1000.0))
-							printf(new java.util.Date() + "> rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+							printf(new java.util.Date() + "> sent rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
 							count = 0
 							t = tstamp
 						}
