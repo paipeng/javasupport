@@ -169,9 +169,12 @@ class JmsTest(val jms : Jms) {
   }
   
   /** Listen and consume messages from a q. */
-  def testMesssageListener(qname : String = "ExampleQueue") {
-    println("Started: " + new java.util.Date)
+  def testMesssageListener(qname : String) {
+  	val started = Utils.ts
+    println("Started: " + new java.util.Date(started))
         
+		var totalCount = 0   // Total number of messages received
+	  var maxRate = 0.0    // Max rate recorded per session
     jms.withConnection { conn =>
     	// Allow user hit CTRL+C to bring down listener
     	var isRunning = true
@@ -179,12 +182,18 @@ class JmsTest(val jms : Jms) {
     		println("Shutting down listener.")
     		conn.stop
     		isRunning = false
+    		
+    		val stopped = Utils.ts
+				println("Stopped: " + new java.util.Date(stopped))
+				println()
+				printf("Total Message Sent: %d\n", totalCount)
+				printf("Total Elapsed: %.2f secs\n", (stopped - started) / (1000.0))       
+				printf("Max Rate: %.2f msg/sec\n", maxRate)
     	}
     	
 			jms.withSessionFrom(conn) { session =>
 				val q = session.createQueue(qname)
 				session.withConsumer(q) { consumer =>
-					var totalCount = 0   // Total number of messages received
 					var count = 0        // Number of messages received within a print repeat cycle.
 					var zeroCount = 0    // Number of consecutive rate == 0.0 counts
 					val maxZeros = 3     // We allow max of 3 zero rate line printed, then supress until rate > 0.
@@ -222,10 +231,11 @@ class JmsTest(val jms : Jms) {
 								zeroCount = 0
 								count / (elapse / 1000.0)
 							}
+							if (rate > maxRate) maxRate = rate
 							
 							// Print only if it not zeros more than maxZeros times
 							if (zeroCount <= maxZeros) {
-								printf(new java.util.Date() + "> received rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+								printf(new java.util.Date() + "> received rate: %.2f msgs/sec, maxRate %.2f\n, totalMsg: %d", rate, maxRate, totalCount)  
 							}
 							
 							// Reset cycle values
@@ -239,20 +249,28 @@ class JmsTest(val jms : Jms) {
   }
   
   /** Create burst of messages to a q */
-  def testBurstMsg(qname : String = "ExampleQueue", n: Int = 100) {
-    println("Started: " + new java.util.Date)
+  def testBurstMsg(qname : String, n: Int) {
+  	val started = Utils.ts
+		println("Started: " + new java.util.Date(started))
     
+		var totalCount = 0  // Total number of message sent.
+  	var maxRate = 0.0   // Max rate recorded per session
     jms.withConnection { conn =>				
     	// Allow user hit CTRL+C to bring down listener
     	var isRunning = true
     	Utils.shutdownHook {
     		println("Shutting down producer.")
     		isRunning = false
-    		Thread.sleep(1000) // allow main thread to clean up work
+    		    		
+				val stopped = Utils.ts
+				println("Stopped: " + new java.util.Date(stopped))
+				println()
+				printf("Total Message Sent: %d\n", totalCount)
+				printf("Total Elapsed: %.2f secs\n", (stopped - started) / (1000.0))    
+				printf("Max Rate: %.2f msg/sec\n", maxRate) 
     	}
     	
 			jms.withSessionFrom(conn) { session =>
-				var totalCount = 0
 				var count = 0
 				var t = Utils.ts
 				
@@ -274,16 +292,16 @@ class JmsTest(val jms : Jms) {
 							val tstamp = Utils.ts
 							val elapse = tstamp - t
 							val rate = if (elapse == 0) 0.0 else (count / (elapse / 1000.0))
-							printf(new java.util.Date() + "> sent rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+							printf(new java.util.Date() + "> sent rate: %.2f msgs/sec, maxRate %.2f\n, totalMsg: %d", rate, maxRate, totalCount) 
 							count = 0
 							t = tstamp
+							if (rate > maxRate) maxRate = rate
 						}
 					}					
 					println(totalCount + " msgs sent.")  
 				}
 			}
     }
-    println("Stopped: " + new java.util.Date)
   }
 }
 
