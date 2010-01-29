@@ -336,6 +336,7 @@ alias mvnt1='mvn test -Dtest='
 alias mvngen='mvn archetype:generate -DarchetypeCatalog=local'
 alias mvnnt='mvn -Dmaven.test.skip' # no test / skip test
 alias mvncpdp='mvn dependency:copy-dependencies'
+alias mkcpout='mkcp . out'
 alias mkcptarget='mkcp target/classes "target/dependency/*"'
 
 # Display all the failed tests under maven surefire-reports dir.
