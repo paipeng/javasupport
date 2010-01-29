@@ -1,10 +1,6 @@
 import java.io._
 
-/**
- * IO object provides first-class func function object (closure) for typical 
- * IO processing such as files and streams.
- */
-object IO {
+object Utils {
     
   /** Run func with a PrintWriter that will write output to file. */
   def withPrintWriter(file : String)(func : PrintWriter => Unit) : Unit = {
@@ -54,6 +50,16 @@ object IO {
       System.arraycopy(buf, 0, data, 0, len)
       func(data)
     }
+  }
+  
+  /** Get sys timestamp */
+  def ts = System.currentTimeMillis
+  
+  /** Add fubc as a shutdown hook thread. */
+  def shutdownHook(func : () => Unit) {
+    Runtime.getRuntime.addShutdownHook(new Thread {
+      def run = func
+    })
   }
 }
 
