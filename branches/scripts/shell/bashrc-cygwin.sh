@@ -176,24 +176,24 @@ alias df='df -h'
 alias du='du -h'
 
 # Misc :)
-alias less='less -r'                          # raw control characters
+alias less='less -r'                           # raw control characters
 #alias whence='type -a'                        # where, of a sort
-alias grep='grep --color'                     # show differences in colour
+alias grep='grep --color'                      # show differences in colour
 
 # Some shortcuts for different directory listings
 #alias ls='ls -hF --color=tty'                 # classify files in colour
 #alias dir='ls --color=auto --format=vertical'
 #alias vdir='ls --color=auto --format=long'
 #alias la='ls -A'                              # all but . and ..
-alias ll='ls -l'                              # long list
-alias l='ls -CF'                              #
+alias ll='ls -l'                               # long list
+alias l='ls -CF'                               #
 
 
 # Very short and frequently used commands
 alias eb='guiedit ~/.bashrc'                             # edit .bashrc file
 alias ebx='guiedit ~/.bashrc-extra'                      # edit .bashrc-extra file
 alias ej='guiedit /source/journals/`date "+%m%d%Y"`.txt' # edit today's journal file
-alias rb='exec bash'                                     # reload bashrc
+alias rb='exec bash --login'                             # reload bashrc
 # a quick find
 function f() { 
   TEXT=$1
