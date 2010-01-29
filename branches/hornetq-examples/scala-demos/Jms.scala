@@ -191,7 +191,7 @@ class JmsTest(val jms : Jms) {
         val repeatN = 1000
         var t = System.currentTimeMillis
         while (true) {
-          if (zeroCount < maxZeros && (count > 0 && count % repeatN == 0) || System.currentTimeMillis - t > period) {
+          if (zeroCount <= maxZeros && (count > 0 && count % repeatN == 0) || System.currentTimeMillis - t > period) {
             val startT = t
             t = System.currentTimeMillis
             val elapse = t - startT
@@ -202,7 +202,7 @@ class JmsTest(val jms : Jms) {
               zeroCount = 0
               rate = count / (elapse / 1000.0)
             }
-            if (zeroCount < maxZeros) {
+            if (zeroCount <= maxZeros) {
               printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
             }
             count = 0  
