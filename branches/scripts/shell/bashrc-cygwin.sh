@@ -24,15 +24,19 @@ export GUI_EDITOR=/apps/jEdit/jedit.bat
 ## PATH Setup
 ###############################
 
-# append to path without repeating.
+# Append path to before or after PATH without repeating.
 function pathmunge {
-	if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
-		 if [ "$2" = "after" ] ; then
-				PATH=$PATH:$1
-		 else
-				PATH=$1:$PATH
-		 fi
-	fi
+	export PATH=`ruby -W0 -e '
+	  p,b=ARGV
+	  s=File::PATH_SEPARATOR
+	  a=ENV["PATH"].split(s).uniq.delete_if{|x| x=="" || x==p}
+	  if(b=="after")
+	    a.push(p)
+	  else 
+	    a=[p] + a 
+	  end
+	  puts a.join(s)' "$@"`
+
 }
 export -f pathmunge
 
