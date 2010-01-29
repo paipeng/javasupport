@@ -1,0 +1,442 @@
+Current Time             : Fri Jan 29 14:30:46 EST 2010, millis=1264793446883
+OS Name                  : Windows 7
+OS Version               : 6.1
+CPU Name                 : pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86
+CPU Archecture           : x86
+CPU Count                : 2
+Java VM Vendor           : Sun Microsystems Inc.
+Java Version             : 1.6.0_18
+
+== ActiveMQ burst tests
+$ scala burst.scala 5000 ExampleQueue "org.apache.activemq.ActiveMQConnectionFactory"
+Started: Fri Jan 29 14:29:14 EST 2010
+Jan 29, 2010 2:29:14 PM org.apache.activemq.transport.failover.FailoverTransport doReconnect
+INFO: Successfully connected to tcp://localhost:61616
+Fri Jan 29 14:29:19 EST 2010> sent rate: 51.46 msgs/sec, maxRate 0.00, totalMsg: 258
+Fri Jan 29 14:29:24 EST 2010> sent rate: 45.64 msgs/sec, maxRate 51.46, totalMsg: 487
+Fri Jan 29 14:29:29 EST 2010> sent rate: 51.75 msgs/sec, maxRate 51.46, totalMsg: 749
+Fri Jan 29 14:29:34 EST 2010> sent rate: 51.26 msgs/sec, maxRate 51.75, totalMsg: 1006
+Fri Jan 29 14:29:39 EST 2010> sent rate: 51.22 msgs/sec, maxRate 51.75, totalMsg: 1264
+Fri Jan 29 14:29:44 EST 2010> sent rate: 45.56 msgs/sec, maxRate 51.75, totalMsg: 1492
+Fri Jan 29 14:29:49 EST 2010> sent rate: 39.97 msgs/sec, maxRate 51.75, totalMsg: 1692
+Fri Jan 29 14:29:54 EST 2010> sent rate: 42.50 msgs/sec, maxRate 51.75, totalMsg: 1905
+Fri Jan 29 14:29:59 EST 2010> sent rate: 44.57 msgs/sec, maxRate 51.75, totalMsg: 2128
+Fri Jan 29 14:30:04 EST 2010> sent rate: 41.08 msgs/sec, maxRate 51.75, totalMsg: 2334
+Fri Jan 29 14:30:09 EST 2010> sent rate: 52.04 msgs/sec, maxRate 51.75, totalMsg: 2595
+Fri Jan 29 14:30:14 EST 2010> sent rate: 50.03 msgs/sec, maxRate 52.04, totalMsg: 2846
+Fri Jan 29 14:30:19 EST 2010> sent rate: 52.27 msgs/sec, maxRate 52.04, totalMsg: 3108
+Fri Jan 29 14:30:24 EST 2010> sent rate: 53.26 msgs/sec, maxRate 52.27, totalMsg: 3375
+Fri Jan 29 14:30:29 EST 2010> sent rate: 53.36 msgs/sec, maxRate 53.26, totalMsg: 3642
+Fri Jan 29 14:30:34 EST 2010> sent rate: 42.28 msgs/sec, maxRate 53.36, totalMsg: 3855
+Fri Jan 29 14:30:39 EST 2010> sent rate: 41.94 msgs/sec, maxRate 53.36, totalMsg: 4066
+Fri Jan 29 14:30:44 EST 2010> sent rate: 42.42 msgs/sec, maxRate 53.36, totalMsg: 4279
+Fri Jan 29 14:30:49 EST 2010> sent rate: 43.70 msgs/sec, maxRate 53.36, totalMsg: 4498
+Fri Jan 29 14:30:54 EST 2010> sent rate: 46.79 msgs/sec, maxRate 53.36, totalMsg: 4732
+Fri Jan 29 14:30:59 EST 2010> sent rate: 50.47 msgs/sec, maxRate 53.36, totalMsg: 4985
+Fri Jan 29 14:30:59 EST 2010> sent rate: 57.92 msgs/sec, maxRate 53.36, totalMsg: 5000
+5000 msgs sent.
+Shutting down producer.
+Stopped: Fri Jan 29 14:30:59 EST 2010
+Total Elapsed: 105.90 secs
+Total Message Sent: 5000
+Max Rate: 57.92 msg/sec
+
+$ scala listener.scala ExampleQueue "org.apache.activemq.ActiveMQConnectionFactory"
+Started: Fri Jan 29 14:29:01 EST 2010
+Jan 29, 2010 2:29:01 PM org.apache.activemq.transport.failover.FailoverTransport doReconnect
+INFO: Successfully connected to tcp://localhost:61616
+Listener started on queue://ExampleQueue. Hit CTRL+C to stop.
+wait for msg...
+Fri Jan 29 14:29:07 EST 2010> received rate: 0.00 msgs/sec, maxRate 0.00, totalMsg: 0
+Fri Jan 29 14:29:13 EST 2010> received rate: 0.00 msgs/sec, maxRate 0.00, totalMsg: 0
+Fri Jan 29 14:29:19 EST 2010> received rate: 44.83 msgs/sec, maxRate 44.83, totalMsg: 269
+Fri Jan 29 14:29:25 EST 2010> received rate: 45.33 msgs/sec, maxRate 45.33, totalMsg: 541
+Fri Jan 29 14:29:31 EST 2010> received rate: 52.82 msgs/sec, maxRate 52.82, totalMsg: 858
+Fri Jan 29 14:29:37 EST 2010> received rate: 52.67 msgs/sec, maxRate 52.82, totalMsg: 1174
+Fri Jan 29 14:29:43 EST 2010> received rate: 46.46 msgs/sec, maxRate 52.82, totalMsg: 1453
+Fri Jan 29 14:29:49 EST 2010> received rate: 40.83 msgs/sec, maxRate 52.82, totalMsg: 1698
+Fri Jan 29 14:29:55 EST 2010> received rate: 43.17 msgs/sec, maxRate 52.82, totalMsg: 1957
+Fri Jan 29 14:30:01 EST 2010> received rate: 44.83 msgs/sec, maxRate 52.82, totalMsg: 2226
+Fri Jan 29 14:30:07 EST 2010> received rate: 47.33 msgs/sec, maxRate 52.82, totalMsg: 2510
+Fri Jan 29 14:30:13 EST 2010> received rate: 49.67 msgs/sec, maxRate 52.82, totalMsg: 2808
+Fri Jan 29 14:30:19 EST 2010> received rate: 50.50 msgs/sec, maxRate 52.82, totalMsg: 3111
+Fri Jan 29 14:30:25 EST 2010> received rate: 54.32 msgs/sec, maxRate 54.32, totalMsg: 3437
+Fri Jan 29 14:30:31 EST 2010> received rate: 50.00 msgs/sec, maxRate 54.32, totalMsg: 3737
+Fri Jan 29 14:30:37 EST 2010> received rate: 41.83 msgs/sec, maxRate 54.32, totalMsg: 3988
+Fri Jan 29 14:30:43 EST 2010> received rate: 41.83 msgs/sec, maxRate 54.32, totalMsg: 4239
+Fri Jan 29 14:30:49 EST 2010> received rate: 42.67 msgs/sec, maxRate 54.32, totalMsg: 4495
+Fri Jan 29 14:30:55 EST 2010> received rate: 46.48 msgs/sec, maxRate 54.32, totalMsg: 4774
+Fri Jan 29 14:31:01 EST 2010> received rate: 37.66 msgs/sec, maxRate 54.32, totalMsg: 5000
+Fri Jan 29 14:31:07 EST 2010> received rate: 0.00 msgs/sec, maxRate 54.32, totalMsg: 5000
+Fri Jan 29 14:31:13 EST 2010> received rate: 0.00 msgs/sec, maxRate 54.32, totalMsg: 5000
+Fri Jan 29 14:31:19 EST 2010> received rate: 0.00 msgs/sec, maxRate 54.32, totalMsg: 5000
+Shutting down listener.
+Stopped: Fri Jan 29 14:31:50 EST 2010
+Total Elapsed: 169.30 secs
+Total Message Sent: 5000
+Max Rate: 54.32 msg/sec
+
+== JBoss 6.0.0.M1 (JBoss Messaging) default server
+Zemian@Zemian-PC /js/hornetq-examples/scala-demos
+$ scala burst.scala 5000 ExampleQueue
+Started: Fri Jan 29 14:34:43 EST 2010
+Fri Jan 29 14:34:45 EST 2010> sent rate: 841.75 msgs/sec, maxRate 0.00, totalMsg: 1000
+Fri Jan 29 14:34:46 EST 2010> sent rate: 1291.99 msgs/sec, maxRate 841.75, totalMsg: 2000
+Fri Jan 29 14:34:47 EST 2010> sent rate: 1785.71 msgs/sec, maxRate 1291.99, totalMsg: 3000
+Fri Jan 29 14:34:47 EST 2010> sent rate: 1757.47 msgs/sec, maxRate 1785.71, totalMsg: 4000
+Fri Jan 29 14:34:48 EST 2010> sent rate: 1582.28 msgs/sec, maxRate 1785.71, totalMsg: 5000
+5000 msgs sent.
+Shutting down producer.
+Stopped: Fri Jan 29 14:34:48 EST 2010
+Total Elapsed: 4.39 secs
+Total Message Sent: 5000
+Max Rate: 1785.71 msg/sec
+
+Zemian@Zemian-PC /js/hornetq-examples/scala-demos
+$ scala burst.scala 100000 ExampleQueue
+Started: Fri Jan 29 14:35:10 EST 2010
+Fri Jan 29 14:35:11 EST 2010> sent rate: 1834.86 msgs/sec, maxRate 0.00, totalMsg: 1000
+Fri Jan 29 14:35:12 EST 2010> sent rate: 2012.07 msgs/sec, maxRate 1834.86, totalMsg: 2000
+Fri Jan 29 14:35:12 EST 2010> sent rate: 2873.56 msgs/sec, maxRate 2012.07, totalMsg: 3000
+Fri Jan 29 14:35:12 EST 2010> sent rate: 2457.00 msgs/sec, maxRate 2873.56, totalMsg: 4000
+Fri Jan 29 14:35:13 EST 2010> sent rate: 2114.16 msgs/sec, maxRate 2873.56, totalMsg: 5000
+Fri Jan 29 14:35:14 EST 2010> sent rate: 1512.86 msgs/sec, maxRate 2873.56, totalMsg: 6000
+Fri Jan 29 14:35:14 EST 2010> sent rate: 3663.00 msgs/sec, maxRate 2873.56, totalMsg: 7000
+Fri Jan 29 14:35:14 EST 2010> sent rate: 4032.26 msgs/sec, maxRate 3663.00, totalMsg: 8000
+Fri Jan 29 14:35:14 EST 2010> sent rate: 3676.47 msgs/sec, maxRate 4032.26, totalMsg: 9000
+Fri Jan 29 14:35:15 EST 2010> sent rate: 3816.79 msgs/sec, maxRate 4032.26, totalMsg: 10000
+Fri Jan 29 14:35:15 EST 2010> sent rate: 3937.01 msgs/sec, maxRate 4032.26, totalMsg: 11000
+Fri Jan 29 14:35:15 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4032.26, totalMsg: 12000
+Fri Jan 29 14:35:15 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4405.29, totalMsg: 13000
+Fri Jan 29 14:35:16 EST 2010> sent rate: 4291.85 msgs/sec, maxRate 4444.44, totalMsg: 14000
+Fri Jan 29 14:35:16 EST 2010> sent rate: 4347.83 msgs/sec, maxRate 4444.44, totalMsg: 15000
+Fri Jan 29 14:35:16 EST 2010> sent rate: 3921.57 msgs/sec, maxRate 4444.44, totalMsg: 16000
+Fri Jan 29 14:35:16 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4444.44, totalMsg: 17000
+Fri Jan 29 14:35:16 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 4444.44, totalMsg: 18000
+Fri Jan 29 14:35:17 EST 2010> sent rate: 4424.78 msgs/sec, maxRate 4444.44, totalMsg: 19000
+Fri Jan 29 14:35:17 EST 2010> sent rate: 1692.05 msgs/sec, maxRate 4444.44, totalMsg: 20000
+Fri Jan 29 14:35:18 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4444.44, totalMsg: 21000
+Fri Jan 29 14:35:18 EST 2010> sent rate: 4424.78 msgs/sec, maxRate 4444.44, totalMsg: 22000
+Fri Jan 29 14:35:18 EST 2010> sent rate: 4329.00 msgs/sec, maxRate 4444.44, totalMsg: 23000
+Fri Jan 29 14:35:18 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4444.44, totalMsg: 24000
+Fri Jan 29 14:35:18 EST 2010> sent rate: 3968.25 msgs/sec, maxRate 4444.44, totalMsg: 25000
+Fri Jan 29 14:35:19 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4444.44, totalMsg: 26000
+Fri Jan 29 14:35:19 EST 2010> sent rate: 4484.30 msgs/sec, maxRate 4444.44, totalMsg: 27000
+Fri Jan 29 14:35:19 EST 2010> sent rate: 4504.50 msgs/sec, maxRate 4484.30, totalMsg: 28000
+Fri Jan 29 14:35:19 EST 2010> sent rate: 3968.25 msgs/sec, maxRate 4504.50, totalMsg: 29000
+Fri Jan 29 14:35:20 EST 2010> sent rate: 3891.05 msgs/sec, maxRate 4504.50, totalMsg: 30000
+Fri Jan 29 14:35:20 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4504.50, totalMsg: 31000
+Fri Jan 29 14:35:20 EST 2010> sent rate: 4524.89 msgs/sec, maxRate 4504.50, totalMsg: 32000
+Fri Jan 29 14:35:20 EST 2010> sent rate: 4504.50 msgs/sec, maxRate 4524.89, totalMsg: 33000
+Fri Jan 29 14:35:21 EST 2010> sent rate: 3649.64 msgs/sec, maxRate 4524.89, totalMsg: 34000
+Fri Jan 29 14:35:21 EST 2010> sent rate: 4464.29 msgs/sec, maxRate 4524.89, totalMsg: 35000
+Fri Jan 29 14:35:21 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 36000
+Fri Jan 29 14:35:21 EST 2010> sent rate: 4347.83 msgs/sec, maxRate 4524.89, totalMsg: 37000
+Fri Jan 29 14:35:21 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 38000
+Fri Jan 29 14:35:22 EST 2010> sent rate: 4016.06 msgs/sec, maxRate 4524.89, totalMsg: 39000
+Fri Jan 29 14:35:22 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 40000
+Fri Jan 29 14:35:22 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4524.89, totalMsg: 41000
+Fri Jan 29 14:35:22 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 42000
+Fri Jan 29 14:35:23 EST 2010> sent rate: 3952.57 msgs/sec, maxRate 4524.89, totalMsg: 43000
+Fri Jan 29 14:35:23 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4524.89, totalMsg: 44000
+Fri Jan 29 14:35:23 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4524.89, totalMsg: 45000
+Fri Jan 29 14:35:23 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 46000
+Fri Jan 29 14:35:24 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4524.89, totalMsg: 47000
+Fri Jan 29 14:35:24 EST 2010> sent rate: 4016.06 msgs/sec, maxRate 4524.89, totalMsg: 48000
+Fri Jan 29 14:35:24 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4524.89, totalMsg: 49000
+Fri Jan 29 14:35:24 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 4524.89, totalMsg: 50000
+Fri Jan 29 14:35:24 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4524.89, totalMsg: 51000
+Fri Jan 29 14:35:25 EST 2010> sent rate: 4000.00 msgs/sec, maxRate 4524.89, totalMsg: 52000
+Fri Jan 29 14:35:25 EST 2010> sent rate: 3968.25 msgs/sec, maxRate 4524.89, totalMsg: 53000
+Fri Jan 29 14:35:25 EST 2010> sent rate: 4504.50 msgs/sec, maxRate 4524.89, totalMsg: 54000
+Fri Jan 29 14:35:25 EST 2010> sent rate: 4424.78 msgs/sec, maxRate 4524.89, totalMsg: 55000
+Fri Jan 29 14:35:26 EST 2010> sent rate: 4464.29 msgs/sec, maxRate 4524.89, totalMsg: 56000
+Fri Jan 29 14:35:26 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 57000
+Fri Jan 29 14:35:26 EST 2010> sent rate: 4032.26 msgs/sec, maxRate 4524.89, totalMsg: 58000
+Fri Jan 29 14:35:26 EST 2010> sent rate: 4424.78 msgs/sec, maxRate 4524.89, totalMsg: 59000
+Fri Jan 29 14:35:27 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 4524.89, totalMsg: 60000
+Fri Jan 29 14:35:27 EST 2010> sent rate: 1494.77 msgs/sec, maxRate 4524.89, totalMsg: 61000
+Fri Jan 29 14:35:27 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 62000
+Fri Jan 29 14:35:28 EST 2010> sent rate: 4000.00 msgs/sec, maxRate 4524.89, totalMsg: 63000
+Fri Jan 29 14:35:28 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 64000
+Fri Jan 29 14:35:28 EST 2010> sent rate: 4464.29 msgs/sec, maxRate 4524.89, totalMsg: 65000
+Fri Jan 29 14:35:28 EST 2010> sent rate: 4424.78 msgs/sec, maxRate 4524.89, totalMsg: 66000
+Fri Jan 29 14:35:29 EST 2010> sent rate: 4115.23 msgs/sec, maxRate 4524.89, totalMsg: 67000
+Fri Jan 29 14:35:29 EST 2010> sent rate: 4237.29 msgs/sec, maxRate 4524.89, totalMsg: 68000
+Fri Jan 29 14:35:29 EST 2010> sent rate: 4405.29 msgs/sec, maxRate 4524.89, totalMsg: 69000
+Fri Jan 29 14:35:29 EST 2010> sent rate: 4347.83 msgs/sec, maxRate 4524.89, totalMsg: 70000
+Fri Jan 29 14:35:30 EST 2010> sent rate: 4291.85 msgs/sec, maxRate 4524.89, totalMsg: 71000
+Fri Jan 29 14:35:30 EST 2010> sent rate: 3773.58 msgs/sec, maxRate 4524.89, totalMsg: 72000
+Fri Jan 29 14:35:30 EST 2010> sent rate: 4310.34 msgs/sec, maxRate 4524.89, totalMsg: 73000
+Fri Jan 29 14:35:30 EST 2010> sent rate: 4201.68 msgs/sec, maxRate 4524.89, totalMsg: 74000
+Fri Jan 29 14:35:31 EST 2010> sent rate: 4219.41 msgs/sec, maxRate 4524.89, totalMsg: 75000
+Fri Jan 29 14:35:31 EST 2010> sent rate: 4098.36 msgs/sec, maxRate 4524.89, totalMsg: 76000
+Fri Jan 29 14:35:31 EST 2010> sent rate: 4184.10 msgs/sec, maxRate 4524.89, totalMsg: 77000
+Fri Jan 29 14:35:31 EST 2010> sent rate: 4347.83 msgs/sec, maxRate 4524.89, totalMsg: 78000
+Fri Jan 29 14:35:32 EST 2010> sent rate: 4291.85 msgs/sec, maxRate 4524.89, totalMsg: 79000
+Fri Jan 29 14:35:32 EST 2010> sent rate: 4291.85 msgs/sec, maxRate 4524.89, totalMsg: 80000
+Fri Jan 29 14:35:32 EST 2010> sent rate: 4347.83 msgs/sec, maxRate 4524.89, totalMsg: 81000
+Fri Jan 29 14:35:32 EST 2010> sent rate: 4273.50 msgs/sec, maxRate 4524.89, totalMsg: 82000
+Fri Jan 29 14:35:32 EST 2010> sent rate: 4310.34 msgs/sec, maxRate 4524.89, totalMsg: 83000
+Fri Jan 29 14:35:33 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 4524.89, totalMsg: 84000
+Fri Jan 29 14:35:33 EST 2010> sent rate: 4291.85 msgs/sec, maxRate 4524.89, totalMsg: 85000
+Fri Jan 29 14:35:33 EST 2010> sent rate: 4273.50 msgs/sec, maxRate 4524.89, totalMsg: 86000
+Fri Jan 29 14:35:33 EST 2010> sent rate: 4166.67 msgs/sec, maxRate 4524.89, totalMsg: 87000
+Fri Jan 29 14:35:34 EST 2010> sent rate: 4273.50 msgs/sec, maxRate 4524.89, totalMsg: 88000
+Fri Jan 29 14:35:34 EST 2010> sent rate: 4273.50 msgs/sec, maxRate 4524.89, totalMsg: 89000
+Fri Jan 29 14:35:34 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 90000
+Fri Jan 29 14:35:34 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 91000
+Fri Jan 29 14:35:35 EST 2010> sent rate: 4132.23 msgs/sec, maxRate 4524.89, totalMsg: 92000
+Fri Jan 29 14:35:35 EST 2010> sent rate: 3952.57 msgs/sec, maxRate 4524.89, totalMsg: 93000
+Fri Jan 29 14:35:35 EST 2010> sent rate: 4132.23 msgs/sec, maxRate 4524.89, totalMsg: 94000
+Fri Jan 29 14:35:35 EST 2010> sent rate: 4310.34 msgs/sec, maxRate 4524.89, totalMsg: 95000
+Fri Jan 29 14:35:36 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 4524.89, totalMsg: 96000
+Fri Jan 29 14:35:36 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 4524.89, totalMsg: 97000
+Fri Jan 29 14:35:36 EST 2010> sent rate: 4366.81 msgs/sec, maxRate 4524.89, totalMsg: 98000
+Fri Jan 29 14:35:36 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 4524.89, totalMsg: 99000
+Fri Jan 29 14:35:36 EST 2010> sent rate: 4310.34 msgs/sec, maxRate 4524.89, totalMsg: 100000
+100000 msgs sent.
+Shutting down producer.
+Stopped: Fri Jan 29 14:35:36 EST 2010
+Total Elapsed: 26.48 secs
+Total Message Sent: 100000
+Max Rate: 4524.89 msg/sec
+
+$ scala listener.scala ExampleQueue
+Started: Fri Jan 29 14:34:31 EST 2010
+Listener started on JBossQueue[ExampleQueue]. Hit CTRL+C to stop.
+wait for msg...
+Fri Jan 29 14:34:37 EST 2010> received rate: 0.00 msgs/sec, maxRate 0.00, totalMsg: 0
+Fri Jan 29 14:34:43 EST 2010> received rate: 0.00 msgs/sec, maxRate 0.00, totalMsg: 0
+Fri Jan 29 14:34:49 EST 2010> received rate: 831.26 msgs/sec, maxRate 831.26, totalMsg: 5000
+Fri Jan 29 14:34:55 EST 2010> received rate: 0.00 msgs/sec, maxRate 831.26, totalMsg: 5000
+Fri Jan 29 14:35:01 EST 2010> received rate: 0.00 msgs/sec, maxRate 831.26, totalMsg: 5000
+Fri Jan 29 14:35:07 EST 2010> received rate: 0.00 msgs/sec, maxRate 831.26, totalMsg: 5000
+Fri Jan 29 14:35:13 EST 2010> received rate: 894.85 msgs/sec, maxRate 894.85, totalMsg: 10370
+Fri Jan 29 14:35:15 EST 2010> received rate: 3996.00 msgs/sec, maxRate 3996.00, totalMsg: 18374
+Fri Jan 29 14:35:21 EST 2010> received rate: 4023.66 msgs/sec, maxRate 4023.66, totalMsg: 42528
+Fri Jan 29 14:35:27 EST 2010> received rate: 3980.84 msgs/sec, maxRate 4023.66, totalMsg: 66432
+Fri Jan 29 14:35:33 EST 2010> received rate: 4247.46 msgs/sec, maxRate 4247.46, totalMsg: 91924
+Fri Jan 29 14:35:39 EST 2010> received rate: 2177.74 msgs/sec, maxRate 4247.46, totalMsg: 105000
+Fri Jan 29 14:35:45 EST 2010> received rate: 0.00 msgs/sec, maxRate 4247.46, totalMsg: 105000
+Fri Jan 29 14:35:51 EST 2010> received rate: 0.00 msgs/sec, maxRate 4247.46, totalMsg: 105000
+Shutting down listener.
+Stopped: Fri Jan 29 14:35:56 EST 2010
+Total Elapsed: 85.44 secs
+Total Message Sent: 105000
+Max Rate: 4247.46 msg/sec
+
+
+== JBoss 5.0.1.GA (JBoss Messaging) default server
+
+$ scala burst.scala 100000 ExampleQueue
+Started: Fri Jan 29 14:38:28 EST 2010
+Fri Jan 29 14:38:29 EST 2010> sent rate: 880.28 msgs/sec, maxRate 0.00, totalMsg: 1000
+Fri Jan 29 14:38:30 EST 2010> sent rate: 1124.86 msgs/sec, maxRate 880.28, totalMsg: 2000
+Fri Jan 29 14:38:31 EST 2010> sent rate: 1851.85 msgs/sec, maxRate 1124.86, totalMsg: 3000
+Fri Jan 29 14:38:32 EST 2010> sent rate: 1324.50 msgs/sec, maxRate 1851.85, totalMsg: 4000
+Fri Jan 29 14:38:32 EST 2010> sent rate: 2057.61 msgs/sec, maxRate 1851.85, totalMsg: 5000
+Fri Jan 29 14:38:33 EST 2010> sent rate: 1872.66 msgs/sec, maxRate 2057.61, totalMsg: 6000
+Fri Jan 29 14:38:33 EST 2010> sent rate: 3424.66 msgs/sec, maxRate 2057.61, totalMsg: 7000
+Fri Jan 29 14:38:33 EST 2010> sent rate: 3311.26 msgs/sec, maxRate 3424.66, totalMsg: 8000
+Fri Jan 29 14:38:34 EST 2010> sent rate: 3610.11 msgs/sec, maxRate 3424.66, totalMsg: 9000
+Fri Jan 29 14:38:34 EST 2010> sent rate: 2487.56 msgs/sec, maxRate 3610.11, totalMsg: 10000
+Fri Jan 29 14:38:35 EST 2010> sent rate: 1141.55 msgs/sec, maxRate 3610.11, totalMsg: 11000
+Fri Jan 29 14:38:35 EST 2010> sent rate: 5025.13 msgs/sec, maxRate 3610.11, totalMsg: 12000
+Fri Jan 29 14:38:35 EST 2010> sent rate: 4975.12 msgs/sec, maxRate 5025.13, totalMsg: 13000
+Fri Jan 29 14:38:35 EST 2010> sent rate: 5102.04 msgs/sec, maxRate 5025.13, totalMsg: 14000
+Fri Jan 29 14:38:36 EST 2010> sent rate: 5000.00 msgs/sec, maxRate 5102.04, totalMsg: 15000
+Fri Jan 29 14:38:36 EST 2010> sent rate: 5263.16 msgs/sec, maxRate 5102.04, totalMsg: 16000
+Fri Jan 29 14:38:36 EST 2010> sent rate: 5076.14 msgs/sec, maxRate 5263.16, totalMsg: 17000
+Fri Jan 29 14:38:36 EST 2010> sent rate: 5291.01 msgs/sec, maxRate 5263.16, totalMsg: 18000
+Fri Jan 29 14:38:36 EST 2010> sent rate: 5263.16 msgs/sec, maxRate 5291.01, totalMsg: 19000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 5000.00 msgs/sec, maxRate 5291.01, totalMsg: 20000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 5102.04 msgs/sec, maxRate 5291.01, totalMsg: 21000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 4975.12 msgs/sec, maxRate 5291.01, totalMsg: 22000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 5025.13 msgs/sec, maxRate 5291.01, totalMsg: 23000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 5235.60 msgs/sec, maxRate 5291.01, totalMsg: 24000
+Fri Jan 29 14:38:37 EST 2010> sent rate: 6711.41 msgs/sec, maxRate 5291.01, totalMsg: 25000
+Fri Jan 29 14:38:38 EST 2010> sent rate: 6369.43 msgs/sec, maxRate 6711.41, totalMsg: 26000
+Fri Jan 29 14:38:38 EST 2010> sent rate: 5102.04 msgs/sec, maxRate 6711.41, totalMsg: 27000
+Fri Jan 29 14:38:38 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 28000
+Fri Jan 29 14:38:38 EST 2010> sent rate: 2309.47 msgs/sec, maxRate 6711.41, totalMsg: 29000
+Fri Jan 29 14:38:39 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 30000
+Fri Jan 29 14:38:39 EST 2010> sent rate: 4629.63 msgs/sec, maxRate 6711.41, totalMsg: 31000
+Fri Jan 29 14:38:39 EST 2010> sent rate: 3906.25 msgs/sec, maxRate 6711.41, totalMsg: 32000
+Fri Jan 29 14:38:39 EST 2010> sent rate: 4504.50 msgs/sec, maxRate 6711.41, totalMsg: 33000
+Fri Jan 29 14:38:40 EST 2010> sent rate: 4385.96 msgs/sec, maxRate 6711.41, totalMsg: 34000
+Fri Jan 29 14:38:40 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 6711.41, totalMsg: 35000
+Fri Jan 29 14:38:40 EST 2010> sent rate: 4219.41 msgs/sec, maxRate 6711.41, totalMsg: 36000
+Fri Jan 29 14:38:40 EST 2010> sent rate: 4444.44 msgs/sec, maxRate 6711.41, totalMsg: 37000
+Fri Jan 29 14:38:41 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 38000
+Fri Jan 29 14:38:41 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 39000
+Fri Jan 29 14:38:41 EST 2010> sent rate: 4739.34 msgs/sec, maxRate 6711.41, totalMsg: 40000
+Fri Jan 29 14:38:41 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 41000
+Fri Jan 29 14:38:41 EST 2010> sent rate: 4901.96 msgs/sec, maxRate 6711.41, totalMsg: 42000
+Fri Jan 29 14:38:42 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 43000
+Fri Jan 29 14:38:42 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 44000
+Fri Jan 29 14:38:42 EST 2010> sent rate: 4608.29 msgs/sec, maxRate 6711.41, totalMsg: 45000
+Fri Jan 29 14:38:42 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 46000
+Fri Jan 29 14:38:42 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 47000
+Fri Jan 29 14:38:43 EST 2010> sent rate: 4739.34 msgs/sec, maxRate 6711.41, totalMsg: 48000
+Fri Jan 29 14:38:43 EST 2010> sent rate: 3787.88 msgs/sec, maxRate 6711.41, totalMsg: 49000
+Fri Jan 29 14:38:43 EST 2010> sent rate: 3344.48 msgs/sec, maxRate 6711.41, totalMsg: 50000
+Fri Jan 29 14:38:43 EST 2010> sent rate: 3802.28 msgs/sec, maxRate 6711.41, totalMsg: 51000
+Fri Jan 29 14:38:44 EST 2010> sent rate: 4255.32 msgs/sec, maxRate 6711.41, totalMsg: 52000
+Fri Jan 29 14:38:44 EST 2010> sent rate: 4784.69 msgs/sec, maxRate 6711.41, totalMsg: 53000
+Fri Jan 29 14:38:44 EST 2010> sent rate: 4784.69 msgs/sec, maxRate 6711.41, totalMsg: 54000
+Fri Jan 29 14:38:44 EST 2010> sent rate: 4651.16 msgs/sec, maxRate 6711.41, totalMsg: 55000
+Fri Jan 29 14:38:45 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 56000
+Fri Jan 29 14:38:45 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 57000
+Fri Jan 29 14:38:45 EST 2010> sent rate: 4878.05 msgs/sec, maxRate 6711.41, totalMsg: 58000
+Fri Jan 29 14:38:45 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 59000
+Fri Jan 29 14:38:45 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 60000
+Fri Jan 29 14:38:46 EST 2010> sent rate: 4878.05 msgs/sec, maxRate 6711.41, totalMsg: 61000
+Fri Jan 29 14:38:46 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 62000
+Fri Jan 29 14:38:46 EST 2010> sent rate: 4784.69 msgs/sec, maxRate 6711.41, totalMsg: 63000
+Fri Jan 29 14:38:46 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 64000
+Fri Jan 29 14:38:46 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 65000
+Fri Jan 29 14:38:47 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 66000
+Fri Jan 29 14:38:47 EST 2010> sent rate: 4651.16 msgs/sec, maxRate 6711.41, totalMsg: 67000
+Fri Jan 29 14:38:47 EST 2010> sent rate: 4651.16 msgs/sec, maxRate 6711.41, totalMsg: 68000
+Fri Jan 29 14:38:47 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 69000
+Fri Jan 29 14:38:47 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 70000
+Fri Jan 29 14:38:48 EST 2010> sent rate: 4651.16 msgs/sec, maxRate 6711.41, totalMsg: 71000
+Fri Jan 29 14:38:48 EST 2010> sent rate: 4739.34 msgs/sec, maxRate 6711.41, totalMsg: 72000
+Fri Jan 29 14:38:48 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 73000
+Fri Jan 29 14:38:49 EST 2010> sent rate: 1709.40 msgs/sec, maxRate 6711.41, totalMsg: 74000
+Fri Jan 29 14:38:49 EST 2010> sent rate: 3367.00 msgs/sec, maxRate 6711.41, totalMsg: 75000
+Fri Jan 29 14:38:49 EST 2010> sent rate: 3521.13 msgs/sec, maxRate 6711.41, totalMsg: 76000
+Fri Jan 29 14:38:49 EST 2010> sent rate: 4237.29 msgs/sec, maxRate 6711.41, totalMsg: 77000
+Fri Jan 29 14:38:50 EST 2010> sent rate: 4629.63 msgs/sec, maxRate 6711.41, totalMsg: 78000
+Fri Jan 29 14:38:50 EST 2010> sent rate: 4587.16 msgs/sec, maxRate 6711.41, totalMsg: 79000
+Fri Jan 29 14:38:50 EST 2010> sent rate: 3984.06 msgs/sec, maxRate 6711.41, totalMsg: 80000
+Fri Jan 29 14:38:50 EST 2010> sent rate: 4830.92 msgs/sec, maxRate 6711.41, totalMsg: 81000
+Fri Jan 29 14:38:51 EST 2010> sent rate: 4651.16 msgs/sec, maxRate 6711.41, totalMsg: 82000
+Fri Jan 29 14:38:51 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 83000
+Fri Jan 29 14:38:51 EST 2010> sent rate: 4878.05 msgs/sec, maxRate 6711.41, totalMsg: 84000
+Fri Jan 29 14:38:51 EST 2010> sent rate: 4878.05 msgs/sec, maxRate 6711.41, totalMsg: 85000
+Fri Jan 29 14:38:51 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 86000
+Fri Jan 29 14:38:52 EST 2010> sent rate: 4672.90 msgs/sec, maxRate 6711.41, totalMsg: 87000
+Fri Jan 29 14:38:52 EST 2010> sent rate: 4830.92 msgs/sec, maxRate 6711.41, totalMsg: 88000
+Fri Jan 29 14:38:52 EST 2010> sent rate: 4830.92 msgs/sec, maxRate 6711.41, totalMsg: 89000
+Fri Jan 29 14:38:52 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 90000
+Fri Jan 29 14:38:52 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 91000
+Fri Jan 29 14:38:53 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 92000
+Fri Jan 29 14:38:53 EST 2010> sent rate: 4629.63 msgs/sec, maxRate 6711.41, totalMsg: 93000
+Fri Jan 29 14:38:53 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 94000
+Fri Jan 29 14:38:53 EST 2010> sent rate: 4854.37 msgs/sec, maxRate 6711.41, totalMsg: 95000
+Fri Jan 29 14:38:53 EST 2010> sent rate: 4878.05 msgs/sec, maxRate 6711.41, totalMsg: 96000
+Fri Jan 29 14:38:54 EST 2010> sent rate: 4807.69 msgs/sec, maxRate 6711.41, totalMsg: 97000
+Fri Jan 29 14:38:54 EST 2010> sent rate: 4739.34 msgs/sec, maxRate 6711.41, totalMsg: 98000
+Fri Jan 29 14:38:54 EST 2010> sent rate: 4761.90 msgs/sec, maxRate 6711.41, totalMsg: 99000
+Fri Jan 29 14:38:54 EST 2010> sent rate: 4716.98 msgs/sec, maxRate 6711.41, totalMsg: 100000
+100000 msgs sent.
+Shutting down producer.
+Stopped: Fri Jan 29 14:38:54 EST 2010
+Total Elapsed: 26.69 secs
+Total Message Sent: 100000
+Max Rate: 6711.41 msg/sec
+
+$ scala listener.scala ExampleQueue
+Started: Fri Jan 29 14:38:19 EST 2010
+Listener started on JBossQueue[ExampleQueue]. Hit CTRL+C to stop.
+wait for msg...
+Fri Jan 29 14:38:27 EST 2010> received rate: 0.00 msgs/sec, maxRate 0.00, totalMsg: 0
+Fri Jan 29 14:38:33 EST 2010> received rate: 1030.94 msgs/sec, maxRate 1030.94, totalMsg: 6264
+Fri Jan 29 14:38:39 EST 2010> received rate: 3588.90 msgs/sec, maxRate 3588.90, totalMsg: 27805
+Fri Jan 29 14:38:45 EST 2010> received rate: 4858.38 msgs/sec, maxRate 4858.38, totalMsg: 56970
+Fri Jan 29 14:38:51 EST 2010> received rate: 4275.91 msgs/sec, maxRate 4858.38, totalMsg: 82637
+Fri Jan 29 14:38:57 EST 2010> received rate: 2892.85 msgs/sec, maxRate 4858.38, totalMsg: 100000
+Fri Jan 29 14:39:03 EST 2010> received rate: 0.00 msgs/sec, maxRate 4858.38, totalMsg: 100000
+Fri Jan 29 14:39:09 EST 2010> received rate: 0.00 msgs/sec, maxRate 4858.38, totalMsg: 100000
+Shutting down listener.
+Stopped: Fri Jan 29 14:39:10 EST 2010
+Total Elapsed: 50.53 secs
+Total Message Sent: 100000
+Max Rate: 4858.38 msg/sec
+
+== Hornetq 2.0.0.GA default non-cluster
+$ scala burst.scala 5000 ExampleQueue
+Started: Fri Jan 29 14:41:08 EST 2010
+Fri Jan 29 14:41:13 EST 2010> sent rate: 30.88 msgs/sec, maxRate 0.00, totalMsg: 155
+Fri Jan 29 14:41:19 EST 2010> sent rate: 32.51 msgs/sec, maxRate 30.88, totalMsg: 322
+Fri Jan 29 14:41:24 EST 2010> sent rate: 32.55 msgs/sec, maxRate 32.51, totalMsg: 485
+Fri Jan 29 14:41:29 EST 2010> sent rate: 29.17 msgs/sec, maxRate 32.55, totalMsg: 631
+Fri Jan 29 14:41:34 EST 2010> sent rate: 29.22 msgs/sec, maxRate 32.55, totalMsg: 778
+Fri Jan 29 14:41:39 EST 2010> sent rate: 27.35 msgs/sec, maxRate 32.55, totalMsg: 916
+Fri Jan 29 14:41:44 EST 2010> sent rate: 26.69 msgs/sec, maxRate 32.55, totalMsg: 1050
+Fri Jan 29 14:41:49 EST 2010> sent rate: 32.75 msgs/sec, maxRate 32.55, totalMsg: 1214
+Fri Jan 29 14:41:54 EST 2010> sent rate: 30.59 msgs/sec, maxRate 32.75, totalMsg: 1367
+Fri Jan 29 14:41:59 EST 2010> sent rate: 31.32 msgs/sec, maxRate 32.75, totalMsg: 1524
+Fri Jan 29 14:42:04 EST 2010> sent rate: 30.98 msgs/sec, maxRate 32.75, totalMsg: 1679
+Fri Jan 29 14:42:09 EST 2010> sent rate: 32.67 msgs/sec, maxRate 32.75, totalMsg: 1843
+Fri Jan 29 14:42:14 EST 2010> sent rate: 31.58 msgs/sec, maxRate 32.75, totalMsg: 2001
+Fri Jan 29 14:42:19 EST 2010> sent rate: 30.59 msgs/sec, maxRate 32.75, totalMsg: 2154
+Fri Jan 29 14:42:24 EST 2010> sent rate: 30.56 msgs/sec, maxRate 32.75, totalMsg: 2308
+Fri Jan 29 14:42:29 EST 2010> sent rate: 32.62 msgs/sec, maxRate 32.75, totalMsg: 2472
+Fri Jan 29 14:42:34 EST 2010> sent rate: 31.83 msgs/sec, maxRate 32.75, totalMsg: 2632
+Fri Jan 29 14:42:39 EST 2010> sent rate: 33.01 msgs/sec, maxRate 32.75, totalMsg: 2798
+Fri Jan 29 14:42:44 EST 2010> sent rate: 29.38 msgs/sec, maxRate 33.01, totalMsg: 2945
+Fri Jan 29 14:42:49 EST 2010> sent rate: 31.71 msgs/sec, maxRate 33.01, totalMsg: 3104
+Fri Jan 29 14:42:54 EST 2010> sent rate: 28.70 msgs/sec, maxRate 33.01, totalMsg: 3248
+Fri Jan 29 14:42:59 EST 2010> sent rate: 26.38 msgs/sec, maxRate 33.01, totalMsg: 3380
+Fri Jan 29 14:43:04 EST 2010> sent rate: 25.38 msgs/sec, maxRate 33.01, totalMsg: 3508
+Fri Jan 29 14:43:09 EST 2010> sent rate: 23.49 msgs/sec, maxRate 33.01, totalMsg: 3626
+Fri Jan 29 14:43:14 EST 2010> sent rate: 26.18 msgs/sec, maxRate 33.01, totalMsg: 3757
+Fri Jan 29 14:43:19 EST 2010> sent rate: 25.61 msgs/sec, maxRate 33.01, totalMsg: 3886
+Fri Jan 29 14:43:24 EST 2010> sent rate: 33.71 msgs/sec, maxRate 33.01, totalMsg: 4055
+Fri Jan 29 14:43:29 EST 2010> sent rate: 30.89 msgs/sec, maxRate 33.71, totalMsg: 4210
+Fri Jan 29 14:43:34 EST 2010> sent rate: 32.50 msgs/sec, maxRate 33.71, totalMsg: 4373
+Fri Jan 29 14:43:39 EST 2010> sent rate: 30.89 msgs/sec, maxRate 33.71, totalMsg: 4528
+Fri Jan 29 14:43:44 EST 2010> sent rate: 33.63 msgs/sec, maxRate 33.71, totalMsg: 4697
+Fri Jan 29 14:43:49 EST 2010> sent rate: 32.97 msgs/sec, maxRate 33.71, totalMsg: 4862
+Fri Jan 29 14:43:53 EST 2010> sent rate: 33.63 msgs/sec, maxRate 33.71, totalMsg: 5000
+5000 msgs sent.
+Shutting down producer.
+Stopped: Fri Jan 29 14:43:53 EST 2010
+Total Elapsed: 165.01 secs
+Total Message Sent: 5000
+Max Rate: 33.71 msg/sec
+
+$ scala listener.scala ExampleQueue
+Started: Fri Jan 29 14:41:03 EST 2010
+Listener started on HornetQQueue[ExampleQueue]. Hit CTRL+C to stop.
+wait for msg...
+Fri Jan 29 14:41:09 EST 2010> received rate: 148.14 msgs/sec, maxRate 148.14, totalMsg: 889
+Fri Jan 29 14:41:15 EST 2010> received rate: 32.41 msgs/sec, maxRate 148.14, totalMsg: 1087
+Fri Jan 29 14:41:21 EST 2010> received rate: 31.66 msgs/sec, maxRate 148.14, totalMsg: 1277
+Fri Jan 29 14:41:27 EST 2010> received rate: 30.99 msgs/sec, maxRate 148.14, totalMsg: 1463
+Fri Jan 29 14:41:33 EST 2010> received rate: 27.97 msgs/sec, maxRate 148.14, totalMsg: 1632
+Fri Jan 29 14:41:39 EST 2010> received rate: 28.17 msgs/sec, maxRate 148.14, totalMsg: 1801
+Fri Jan 29 14:41:45 EST 2010> received rate: 27.33 msgs/sec, maxRate 148.14, totalMsg: 1965
+Fri Jan 29 14:41:51 EST 2010> received rate: 32.00 msgs/sec, maxRate 148.14, totalMsg: 2157
+Fri Jan 29 14:41:57 EST 2010> received rate: 32.17 msgs/sec, maxRate 148.14, totalMsg: 2350
+Fri Jan 29 14:42:03 EST 2010> received rate: 30.00 msgs/sec, maxRate 148.14, totalMsg: 2530
+Fri Jan 29 14:42:09 EST 2010> received rate: 33.00 msgs/sec, maxRate 148.14, totalMsg: 2728
+Fri Jan 29 14:42:15 EST 2010> received rate: 31.50 msgs/sec, maxRate 148.14, totalMsg: 2917
+Fri Jan 29 14:42:21 EST 2010> received rate: 30.16 msgs/sec, maxRate 148.14, totalMsg: 3098
+Fri Jan 29 14:42:27 EST 2010> received rate: 32.17 msgs/sec, maxRate 148.14, totalMsg: 3291
+Fri Jan 29 14:42:33 EST 2010> received rate: 31.67 msgs/sec, maxRate 148.14, totalMsg: 3481
+Fri Jan 29 14:42:39 EST 2010> received rate: 32.83 msgs/sec, maxRate 148.14, totalMsg: 3678
+Fri Jan 29 14:42:45 EST 2010> received rate: 30.17 msgs/sec, maxRate 148.14, totalMsg: 3859
+Fri Jan 29 14:42:51 EST 2010> received rate: 30.00 msgs/sec, maxRate 148.14, totalMsg: 4039
+Fri Jan 29 14:42:57 EST 2010> received rate: 27.32 msgs/sec, maxRate 148.14, totalMsg: 4203
+Fri Jan 29 14:43:03 EST 2010> received rate: 25.50 msgs/sec, maxRate 148.14, totalMsg: 4356
+Fri Jan 29 14:43:09 EST 2010> received rate: 23.83 msgs/sec, maxRate 148.14, totalMsg: 4499
+Fri Jan 29 14:43:15 EST 2010> received rate: 25.50 msgs/sec, maxRate 148.14, totalMsg: 4652
+Fri Jan 29 14:43:21 EST 2010> received rate: 28.33 msgs/sec, maxRate 148.14, totalMsg: 4822
+Fri Jan 29 14:43:27 EST 2010> received rate: 32.83 msgs/sec, maxRate 148.14, totalMsg: 5019
+Fri Jan 29 14:43:33 EST 2010> received rate: 31.99 msgs/sec, maxRate 148.14, totalMsg: 5211
+Fri Jan 29 14:43:39 EST 2010> received rate: 31.66 msgs/sec, maxRate 148.14, totalMsg: 5402
+Fri Jan 29 14:43:45 EST 2010> received rate: 33.00 msgs/sec, maxRate 148.14, totalMsg: 5600
+Fri Jan 29 14:43:51 EST 2010> received rate: 33.33 msgs/sec, maxRate 148.14, totalMsg: 5800
+Fri Jan 29 14:43:57 EST 2010> received rate: 10.17 msgs/sec, maxRate 148.14, totalMsg: 5861
+Fri Jan 29 14:44:03 EST 2010> received rate: 0.00 msgs/sec, maxRate 148.14, totalMsg: 5861
+Fri Jan 29 14:44:09 EST 2010> received rate: 0.00 msgs/sec, maxRate 148.14, totalMsg: 5861
+Shutting down listener.
+Stopped: Fri Jan 29 14:44:11 EST 2010
+Total Elapsed: 188.40 secs
+Total Message Sent: 5861
+Max Rate: 148.14 msg/sec
+
