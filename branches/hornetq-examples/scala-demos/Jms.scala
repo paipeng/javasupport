@@ -118,12 +118,12 @@ object Jms {
   implicit def jmsToRichSession(session: Session) = new RichSession(session)
 }
 
-object JmsTest {  
+class JmsTest(val jms : Jms) {  
   import Jms.jmsToRichSession
   
-  /** Let's see some message implementation class names. */
+  /** See some message implementation class names. */
   def testSession {
-    Jms.fromJndi().withSession { session =>
+    jms.withSession { session =>
       println("createTextMessage " + session.createTextMsg("foo").getClass)
       println("createMapMessage " + session.createMapMsg(Map("a"->"A", "b"->"B")).getClass)      
       println("createObjectMessage " + session.createObjectMsg(new java.util.Date).getClass)     
@@ -139,13 +139,13 @@ object JmsTest {
   
   /** Note that we have create two temp queues under the same jms session. */
   def testTempQ {
-    Jms.fromJndi().withSession { session => 
+    jms.withSession { session => 
       session.withTempQ { q => println("TempQ1: " + q.getClass) } 
       session.withTempQ { q => println("TempQ2: " + q.getClass) } 
     }
   }
   
-  /** Let's create a temp q and try to send and receive msg on it. */
+  /** Create a temp q and try to send and receive msg on it. */
   def testSendToTempQ {
     def process(msg : Message) = msg match {
       case m : TextMessage => 
@@ -154,7 +154,7 @@ object JmsTest {
         println("Received msg from TempQ: " + msg)
     }
           
-    Jms.fromJndi().withSession { session => 
+    jms.withSession { session => 
       session.withTempQ { q => 
         println("Created TempQ: " + q.getClass) 
         session.send(q, "test msg")
@@ -168,14 +168,16 @@ object JmsTest {
     }
   }
   
-  /** Let's setup msg listener */
-  def testMesssageListener(cf : ConnectionFactory) {
+  /** Listen and consume messages from a q. */
+  def testMesssageListener(qname : String = "ExampleQueue") {
     println("Started: " + new java.util.Date)
-    new Jms(cf).withSession { session =>
-      val q = session.createQueue("ExampleQueue")
+    jms.withSession { session =>
+      val q = session.createQueue(qname)
       session.withConsumer(q) { consumer =>
         var totalCount = 0
         var count = 0
+        var zeroCount = 0
+        val maxZeros = 3
         val listener = Jms.createMessageListener { msg => 
           totalCount += 1
           count += 1  
@@ -185,13 +187,24 @@ object JmsTest {
         println("wait for msg...")        
         
         // print rate every 5 secs or 1000 msgs.
+        val period = 5 * 1000
+        val repeatN = 1000
         var t = System.currentTimeMillis
         while (true) {
-          if ((count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
+          if (zeroCount < maxZeros && (count > 0 && count % repeatN == 0) || System.currentTimeMillis - t > period) {
             val startT = t
             t = System.currentTimeMillis
-            val rate = count / ((t - startT) / 1000.0)
-          printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
+            val elapse = t - startT
+            var rate = 0.0
+            if (count == 0 || elapse == 0) {
+              zeroCount += 1
+            } else {
+              zeroCount = 0
+              rate = count / (elapse / 1000.0)
+            }
+            if (zeroCount < maxZeros) {
+              printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
+            }
             count = 0  
           } else { java.lang.Thread.sleep(3000) }          
         }
@@ -199,14 +212,15 @@ object JmsTest {
     }
   }
   
-  def testBurstMsg(n: Int, cf : ConnectionFactory) {
+  /** Create burst of messages to a q */
+  def testBurstMsg(qname : String = "ExampleQueue", n: Int = 100) {
     println("Started: " + new java.util.Date)
-    new Jms(cf).withSession { session => 
+    jms.withSession { session => 
       var totalCount = 0
       var count = 0
       var t = System.currentTimeMillis
       
-      val q = session.createQueue("ExampleQueue")
+      val q = session.createQueue(qname)
       
       session.withProducer(q) { producer =>         
         (1 to n).foreach { i => 
