@@ -43,7 +43,7 @@ class RichSession(val jmsSession : Session) {
   /** Wrapper to session create message call */
   def createBytesMsg(input : java.io.InputStream) = {
     val msg = jmsSession.createBytesMessage
-    IO.eachBytesBlock(input) { block => msg.writeBytes(block) }
+    Utils.eachBytesBlock(input) { block => msg.writeBytes(block) }
     msg
   }
   
