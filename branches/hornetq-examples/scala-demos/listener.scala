@@ -1,3 +1,5 @@
+// Eg: scala listner.scala ExampleQueue "org.apache.activemq.ActiveMQConnectionFactory"
+
 val q = if (args.length >=1) args(0) else "ExampleQueue"
 val jms = if (args.length >= 3) Jms.fromClassName(args(2)) else Jms.fromJndi()
 
