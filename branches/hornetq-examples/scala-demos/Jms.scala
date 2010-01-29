@@ -185,9 +185,8 @@ class JmsTest(val jms : Jms) {
     		
     		val stopped = Utils.ts
 				println("Stopped: " + new java.util.Date(stopped))
-				println()
-				printf("Total Message Sent: %d\n", totalCount)
-				printf("Total Elapsed: %.2f secs\n", (stopped - started) / (1000.0))       
+				printf("Total Elapsed: %.2f secs\n", (stopped - started) / (1000.0))    
+				printf("Total Message Sent: %d\n", totalCount)   
 				printf("Max Rate: %.2f msg/sec\n", maxRate)
     	}
     	
@@ -264,9 +263,8 @@ class JmsTest(val jms : Jms) {
     		    		
 				val stopped = Utils.ts
 				println("Stopped: " + new java.util.Date(stopped))
-				println()
-				printf("Total Message Sent: %d\n", totalCount)
 				printf("Total Elapsed: %.2f secs\n", (stopped - started) / (1000.0))    
+				printf("Total Message Sent: %d\n", totalCount)
 				printf("Max Rate: %.2f msg/sec\n", maxRate) 
     	}
     	
