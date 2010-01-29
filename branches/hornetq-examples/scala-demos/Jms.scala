@@ -171,77 +171,117 @@ class JmsTest(val jms : Jms) {
   /** Listen and consume messages from a q. */
   def testMesssageListener(qname : String = "ExampleQueue") {
     println("Started: " + new java.util.Date)
-    jms.withSession { session =>
-      val q = session.createQueue(qname)
-      session.withConsumer(q) { consumer =>
-        var totalCount = 0
-        var count = 0
-        var zeroCount = 0
-        val maxZeros = 3
-        val listener = Jms.createMessageListener { msg => 
-          totalCount += 1
-          count += 1  
-        }
-        consumer.setMessageListener(listener)        
-        println("Listener started on " + q)
-        println("wait for msg...")        
         
-        // print rate every 5 secs or 1000 msgs.
-        val period = 5 * 1000
-        val repeatN = 1000
-        var t = System.currentTimeMillis
-        while (true) {
-          if (zeroCount <= maxZeros && (count > 0 && count % repeatN == 0) || System.currentTimeMillis - t > period) {
-            val startT = t
-            t = System.currentTimeMillis
-            val elapse = t - startT
-            var rate = 0.0
-            if (count == 0 || elapse == 0) {
-              zeroCount += 1
-            } else {
-              zeroCount = 0
-              rate = count / (elapse / 1000.0)
-            }
-            if (zeroCount <= maxZeros) {
-              printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
-            }
-            count = 0  
-          } else { java.lang.Thread.sleep(3000) }          
-        }
-      }
-    }
+    jms.withConnection { conn =>
+    	// Allow user hit CTRL+C to bring down listener
+    	var isRunning = true
+    	Utils.shutdownHook {
+    		println("Shutting down listener.")
+    		conn.stop
+    		isRunning = false
+    	}
+    	
+			jms.withSessionFrom(conn) { session =>
+				val q = session.createQueue(qname)
+				session.withConsumer(q) { consumer =>
+					var totalCount = 0   // Total number of messages received
+					var count = 0        // Number of messages received within a print repeat cycle.
+					var zeroCount = 0    // Number of consecutive rate == 0.0 counts
+					val maxZeros = 3     // We allow max of 3 zero rate line printed, then supress until rate > 0.
+					
+					// Prepare an instance of jms MessageListener: it will be run on a separate thread.
+					val listener = Jms.createMessageListener { msg => 
+						totalCount += 1
+						count += 1  
+					}
+					consumer.setMessageListener(listener)
+					
+					// Listener is ready.
+					println("Listener started on " + q + ". Hit CTRL+C to stop.")
+					println("wait for msg...")        
+					
+					// The main thread will check on message count and print rate every 5 secs or 1000 msgs.
+					val period = 5 * 1000   //Max time period before print the rate value.
+					val repeatN = 1000      //Max number of message received before print the rate value.
+					var t = Utils.ts        //current timestamp
+					
+					while (isRunning) {
+						val tstamp = Utils.ts
+						//printf("zeroCount %d, count mod repeatN %d, elapse %d\n", zeroCount, (count % repeatN), (Utils.ts - t))
+						// Let's print rate if:
+						//   1. There no more than maxZeros rate of zero consecutively
+						//   2. Or there are more than repeatN number of message received since last printed rate
+						//   3. Or time elapsed longer than period amount.
+						if (zeroCount <= maxZeros && (count > 0 && count % repeatN == 0) || (Utils.ts - t) > period) {
+							// Calculate rate value on this period cycle.
+							val elapse = tstamp - t
+							var rate = if (count == 0 || elapse == 0) {
+								zeroCount += 1
+								0.0
+							} else {
+								zeroCount = 0
+								count / (elapse / 1000.0)
+							}
+							
+							// Print only if it not zeros more than maxZeros times
+							if (zeroCount <= maxZeros) {
+								printf(new java.util.Date() + "> rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+							}
+							
+							// Reset cycle values
+							count = 0  
+							t = tstamp
+						} else { java.lang.Thread.sleep(2000) } // freq to check rate.						
+					} // end while
+				} // withConsumer
+			} // withSessionFrom
+    } // withConnection
   }
   
   /** Create burst of messages to a q */
   def testBurstMsg(qname : String = "ExampleQueue", n: Int = 100) {
     println("Started: " + new java.util.Date)
-    jms.withSession { session => 
-      var totalCount = 0
-      var count = 0
-      var t = System.currentTimeMillis
-      
-      val q = session.createQueue(qname)
-      
-      session.withProducer(q) { producer =>         
-        (1 to n).foreach { i => 
-          totalCount += 1
-          count += 1
-          
-          // session.send(q, "test" + i + ", time=" + System.currentTimeMillis)
-          val msg = session.createTextMsg("test" + i + ", time=" + System.currentTimeMillis)
-          producer.send(msg)
-          
-          // print rate every 5 secs or 1000 msgs.
-          if (i == n || (count > 0 && count % 1000 == 0) || System.currentTimeMillis - t > (5 * 1000)) {
-            val startT = t
-            t = System.currentTimeMillis
-            val rate = count / ((t - startT) / 1000.0)
-            printf(new java.util.Date() + "> rate: %.2f msgs / sec, totalCount: %d\n", rate, totalCount)  
-            count = 0
-          }
-        }
-      }
-      println(totalCount + " msgs sent.")  
+    
+    jms.withConnection { conn =>				
+    	// Allow user hit CTRL+C to bring down listener
+    	var isRunning = true
+    	Utils.shutdownHook {
+    		println("Shutting down producer.")
+    		isRunning = false
+    		Thread.sleep(1000) // allow main thread to clean up work
+    	}
+    	
+			jms.withSessionFrom(conn) { session =>
+				var totalCount = 0
+				var count = 0
+				var t = Utils.ts
+				
+				val q = session.createQueue(qname)
+				
+				session.withProducer(q) { producer =>      
+					var i = 0
+					while (isRunning && i < n) {
+						i += 1
+						totalCount += 1
+						count += 1
+						
+						// session.send(q, "test" + i + ", time=" + Utils.ts)
+						val msg = session.createTextMsg("test" + i + ", time=" + Utils.ts)
+						producer.send(msg)
+						
+						// print rate every 5 secs or 1000 msgs.
+						if (i == n || (count > 0 && count % 1000 == 0) || Utils.ts - t > (5 * 1000)) {
+							val tstamp = Utils.ts
+							val elapse = tstamp - t
+							val rate = if (elapse == 0) 0.0 else (count / (elapse / 1000.0))
+							printf(new java.util.Date() + "> rate: %.2f msgs/sec, totalCount: %d\n", rate, totalCount)  
+							count = 0
+							t = tstamp
+						}
+					}					
+					println(totalCount + " msgs sent.")  
+				}
+			}
     }
     println("Stopped: " + new java.util.Date)
   }
