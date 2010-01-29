@@ -50,7 +50,8 @@ object IO {
     var len = -1
     var buf = new Array[Byte](maxSize)
     while ({ len = input.read(buf, 0, maxSize); len != -1 }) {
-      val data = java.util.Arrays.copyOf(buf, len)
+      val data = new Array[Byte](len)
+      System.arraycopy(buf, 0, data, 0, len)
       func(data)
     }
   }
