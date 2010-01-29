@@ -301,7 +301,16 @@ export -f jdoc
 # Create a CLASSPATH string and export by it's variable in shell.
 function mkcp() {
 	#export CLASSPATH=`cygpath --path --windows "$@" | joinlines ';'`
-  export CLASSPATH=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+  #export CLASSPATH=`ruby -e 'puts ARGV.join(";")' $(wpath "$@")`
+  export CLASSPATH=$(ruby -e '
+  	puts ARGV.map {|p| 
+  		if p =~ /\*$/
+  		  (`cygpath -w #{p[0..-2]}`).strip + "*"
+  		else
+  		  p
+  		end
+  	}.join(";")
+  ' "$@")
   echo "export CLASSPATH=\"$CLASSPATH\""
 }
 export -f mkcp

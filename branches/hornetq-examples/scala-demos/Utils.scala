@@ -56,9 +56,9 @@ object Utils {
   def ts = System.currentTimeMillis
   
   /** Add fubc as a shutdown hook thread. */
-  def shutdownHook(func : () => Unit) {
+  def shutdownHook(func : => Unit) {
     Runtime.getRuntime.addShutdownHook(new Thread {
-      def run = func
+      override def run = func
     })
   }
 }
