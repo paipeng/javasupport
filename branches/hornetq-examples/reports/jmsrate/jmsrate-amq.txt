@@ -1,0 +1,30 @@
+Sending 500 messages to ExampleQueue
+Producer: Current sample rate=38.10 msgs/sec, maxRate=0.00, totalCount=78
+Consumer: Current sample rate=38.40 msgs/sec, maxRate=0.00, totalCount=78
+Producer: Current sample rate=37.20 msgs/sec, maxRate=38.10, totalCount=153
+Consumer: Current sample rate=37.20 msgs/sec, maxRate=38.40, totalCount=153
+Producer: Current sample rate=50.32 msgs/sec, maxRate=38.10, totalCount=256
+Consumer: Current sample rate=50.32 msgs/sec, maxRate=38.40, totalCount=256
+Producer: Current sample rate=24.62 msgs/sec, maxRate=50.32, totalCount=306
+Consumer: Current sample rate=24.13 msgs/sec, maxRate=50.32, totalCount=305
+Producer: Current sample rate=38.00 msgs/sec, maxRate=50.32, totalCount=382
+Consumer: Current sample rate=38.50 msgs/sec, maxRate=50.32, totalCount=382
+Producer: Current sample rate=12.00 msgs/sec, maxRate=50.32, totalCount=406
+Consumer: Current sample rate=12.00 msgs/sec, maxRate=50.32, totalCount=406
+Producer: Current sample rate=29.50 msgs/sec, maxRate=50.32, totalCount=465
+Consumer: Current sample rate=29.50 msgs/sec, maxRate=50.32, totalCount=465
+Consumer: Start time: Mon Feb 01 10:36:37 EST 2010
+Producer: Start time: Mon Feb 01 10:36:37 EST 2010
+Producer: Stop time: Mon Feb 01 10:36:52 EST 2010
+Producer: Ellapsed time: 15.13 secs
+Producer: Sample interval: 2000 ms
+Producer: Message count: 500
+Producer: Max rate 50.32 msg/sec
+Consumer: Stop time: Mon Feb 01 10:36:52 EST 2010
+Consumer: Ellapsed time: 15.09 secs
+Consumer: Sample interval: 2000 ms
+Consumer: Message count: 501
+Consumer: Max rate 50.32 msg/sec
+===================================================
+500 samples completed in 15.72 secs
+Total average send/receive rate 31.81 msg/sec

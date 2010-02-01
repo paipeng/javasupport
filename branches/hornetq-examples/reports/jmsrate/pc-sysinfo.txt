@@ -1,0 +1,9 @@
+Current Time             : Mon Feb 01 10:44:11 EST 2010, millis=1265039051196
+OS Name                  : Windows XP
+OS Version               : 5.1
+OS Path Level            : Service Pack 3
+CPU Name                 : 
+CPU Archecture           : x86
+CPU Count                : 2
+Java VM Vendor           : Sun Microsystems Inc.
+Java Version             : 1.6.0_18
