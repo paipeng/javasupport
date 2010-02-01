@@ -32,7 +32,7 @@ public class MeasureRate {
 		if (args.length >= 1) { qname = args[0]; }
 		if (args.length >= 2) { nSamples = Integer.parseInt(args[1]); }
 		if (args.length >= 3) { 
-			cf = Utils.newInstanceFromClassName(args[0]);
+			cf = Utils.newInstanceFromClassName(args[2]);
 		} else {				
 			cf = Utils.lookupJndi("ConnectionFactory");
 		}
