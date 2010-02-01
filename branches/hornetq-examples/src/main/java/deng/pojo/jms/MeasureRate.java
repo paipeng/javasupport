@@ -92,12 +92,14 @@ public class MeasureRate {
 			connection = connectionFactory.createConnection();
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Queue dest = session.createQueue(queueName);
-			MessageProducer prodcuer = session.createProducer(dest);
+			MessageProducer producer = session.createProducer(dest);
 			
 			System.out.printf("Sending %d messages to %s\n", numberOfSamples, queueName);
 			for (int i = 0; i < numberOfSamples; i++) {
-				prodcuer.send(createSampleMessage(session, i));
+				producer.send(createSampleMessage(session, i));
 			}
+			producer.close();
+			session.close();
 		} catch (JMSException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -123,6 +125,8 @@ public class MeasureRate {
 			
 			// Wait until it's done.
 			listener.getLastMsgLatch().await();
+			consumer.close();
+			session.close();
 			connection.stop();
 		} catch (JMSException e) {
 			throw new RuntimeException(e);
