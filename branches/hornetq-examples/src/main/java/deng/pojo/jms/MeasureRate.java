@@ -98,7 +98,7 @@ public class MeasureRate {
 			
 			RateMeasurement rateMeasurement = new RateMeasurement("Producer");
 			rateMeasurement.start();
-			System.out.printf("Sending %d messages to %s\n", numberOfSamples, queueName);
+			
 			for (int i = 0; i < numberOfSamples; i++) {
 				Message msg = createSampleMessage(session, i);
 				rateMeasurement.sample(msg);
