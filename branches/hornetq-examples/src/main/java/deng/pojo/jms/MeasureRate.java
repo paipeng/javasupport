@@ -82,7 +82,8 @@ public class MeasureRate {
 		
 		long t2 = System.currentTimeMillis();
 		double elapsed = (t2 - t1) / 1000.0;
-				
+
+		System.out.printf("===================================================\n");
 		System.out.printf("%d samples completed in %.2f secs\n", numberOfSamples, elapsed);
 		System.out.printf("Total average send/receive rate %.2f msg/sec\n", (numberOfSamples /elapsed));
 	}
@@ -178,11 +179,17 @@ public class MeasureRate {
 		}
 	}
 	
+	/**
+	 * Default will sample rate on every 1000 msgs or 3 seconds, which ever comes first.
+	 * 
+	 * @author dengz1
+	 *
+	 */
 	private class RateMeasurement {
 		private String name;
 		private int count;
 		private long maxSampleInterval = 3000; // in millis
-		private long maxMsgPerSampleInterval = 100; 
+		private long maxMsgPerSampleInterval = 1000; 
 		private long startTime;
 		private long stopTime;
 		private double maxRate;
@@ -211,7 +218,8 @@ public class MeasureRate {
 			if (currentCount >= maxMsgPerSampleInterval || (currentSampleTime - lastSampleTime) >= maxSampleInterval) {				
 				double ellapsedSecs = (currentSampleTime - lastSampleTime) / 1000.0;				
 				currentRate = currentCount / ellapsedSecs;
-				System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, sampleEllapsedTime=%.2f secs, sampleCount=%d, totalCount=%d\n", currentRate, maxRate, ellapsedSecs, currentCount, count);
+				//System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, sampleEllapsedTime=%.2f secs, sampleCount=%d, totalCount=%d\n", currentRate, maxRate, ellapsedSecs, currentCount, count);
+				System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, totalCount=%d\n", currentRate, maxRate, count);
 				if (currentRate > maxRate) {
 					maxRate = currentRate;
 				}				
@@ -221,14 +229,12 @@ public class MeasureRate {
 		}
 		public void printRates() {
 			double ellapsedSecs = (stopTime - startTime) / 1000.0;
-			System.out.printf(name + ":======================================\n");
 			System.out.printf(name + ": Start time: %s\n", new Date(startTime));
 			System.out.printf(name + ": Stop time: %s\n", new Date(stopTime));
 			System.out.printf(name + ": Ellapsed time: %.2f secs\n", ellapsedSecs);
 			System.out.printf(name + ": Sample interval: %d ms\n", maxSampleInterval);
 			System.out.printf(name + ": Message count: %d\n", count);
 			System.out.printf(name + ": Max rate %.2f msg/sec\n", maxRate);
-			System.out.printf(name + ":======================================\n");
 		}
 	}
 }
