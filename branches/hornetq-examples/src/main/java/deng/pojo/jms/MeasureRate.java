@@ -211,7 +211,7 @@ public class MeasureRate {
 			if (currentCount >= maxMsgPerSampleInterval || (currentSampleTime - lastSampleTime) >= maxSampleInterval) {				
 				double ellapsedSecs = (currentSampleTime - lastSampleTime) / 1000.0;				
 				currentRate = currentCount / ellapsedSecs;
-				System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, msgCount=%d\n", currentRate, maxRate, count);
+				System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, sampleEllapsedTime=%.2f secs, sampleCount=%d, totalCount=%d\n", currentRate, maxRate, ellapsedSecs, currentCount, count);
 				if (currentRate > maxRate) {
 					maxRate = currentRate;
 				}				
