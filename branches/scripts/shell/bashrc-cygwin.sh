@@ -54,7 +54,7 @@ pathmunge /apps/groovy/bin after
 alias printpath='echo $PATH | ruby -pe "gsub(/:/, \"\n\")"'
 
 # Create a timestamp label.
-alias ts="date '+%m%d%Y-%H%M'"    
+alias tstamp="date '+%m%d%Y-%H%M'"    
 
 # Join each line on STDIN into a one long line.
 alias joinlines='ruby -e "a=[]; sep=ARGV.shift||\" \"; while(gets); a<<\$_.chomp;end; puts a.join(sep)"'
@@ -73,10 +73,10 @@ function link {
 # Trash and remove files into a trash directory in user home directory.
 # Use this instead of rm command so you have history of deleted files.
 function trash {
-  TRASHCAN=~/.trash/`ts`
+  TRASHCAN=~/.trash/`tstamp`
   if [ -e $TRASHCAN ]; then
 		echo "Renaming existing trash can: $TRASHCAN"
-    \mv -vf $TRASHCAN ${TRASHCAN}.`date "+%N"`
+    \mv -vf $TRASHCAN ${TRASHCAN}.`tsdate "+%N"`
   fi
 	mkdir -p $TRASHCAN
   echo "Deleting to trash can: $TRASHCAN"
@@ -99,7 +99,7 @@ function zipdir {
 # Backup a directory with timestamp.
 function bak {
   for x in "$@"; do
-    BAK=${x}.`ts`.bak
+    BAK=${x}.`tstamp`.bak
     \cp -rf $x $BAK
     echo "Backup $x to $BAK"
   done
@@ -109,7 +109,7 @@ export -f bak
 # Backup a directory with timestamp and zip it.
 function bakzip {
   for x in "$@"; do
-    BAK=${x}.`ts`.bak
+    BAK=${x}.`tstamp`.bak
     cp -rf $x $BAK
     zipdir $BAK
     \rm -rf $BAK
@@ -121,7 +121,7 @@ export -f bakzip
 # Backup a directory with timestamp and delete the original directory.
 function bakd {
   for x in "$@"; do
-    BAK=${x}.`ts`.bak
+    BAK=${x}.`tstamp`.bak
     \mv -vf $x $BAK
     echo "Backup and deleted $x to $BAK."
   done
@@ -307,7 +307,7 @@ function mkcp() {
   		if p =~ /\*$/
   		  (`cygpath -w #{p[0..-2]}`).strip + "*"
   		else
-  		  p
+  		  (`cygpath -w #{p}`).strip
   		end
   	}.join(";")
   ' "$@")
