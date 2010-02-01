@@ -1,5 +1,6 @@
 package deng.pojo.jms;
 
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import javax.jms.Connection;
@@ -15,10 +16,10 @@ import javax.jms.TextMessage;
 
 /**
  * Usage (using default JNDI "ConnectionFactory" lookup by jndi.properties) 
- *   java MeasureRate ExampleQueue 10000
+ *   java MeasureRate ExampleQueue 100
  *
  * Usage (using using explicit ConnectionFactory class name) 
- *        java MeasureRate ExampleQueue 10000 org.apache.activemq.ActiveMQConnectionFactory
+ *        java MeasureRate ExampleQueue 100 org.apache.activemq.ActiveMQConnectionFactory
  * 
  * @author Zemian Deng
  *
@@ -94,10 +95,17 @@ public class MeasureRate {
 			Queue dest = session.createQueue(queueName);
 			MessageProducer producer = session.createProducer(dest);
 			
+			RateMeasurement rateMeasurement = new RateMeasurement("Producer");
+			rateMeasurement.start();
 			System.out.printf("Sending %d messages to %s\n", numberOfSamples, queueName);
 			for (int i = 0; i < numberOfSamples; i++) {
-				producer.send(createSampleMessage(session, i));
+				Message msg = createSampleMessage(session, i);
+				rateMeasurement.sample(msg);
+				producer.send(msg);
 			}
+			rateMeasurement.stop();
+			rateMeasurement.printRates();
+			
 			producer.close();
 			session.close();
 		} catch (JMSException e) {
@@ -121,10 +129,18 @@ public class MeasureRate {
 			Queue dest = session.createQueue(queueName);
 			MessageConsumer consumer = session.createConsumer(dest);
 			consumer.setMessageListener(listener);
+			RateMeasurement rateMeasurement = listener.getRateMeasurement();
+			rateMeasurement.start();
+			
 			connection.start();
 			
 			// Wait until it's done.
 			listener.getLastMsgLatch().await();
+			
+			// We are done.
+			rateMeasurement.stop();
+			rateMeasurement.printRates();
+			
 			consumer.close();
 			session.close();
 			connection.stop();
@@ -139,20 +155,80 @@ public class MeasureRate {
 	
 	private class RateMessageListener implements MessageListener {
 		private CountDownLatch lastMsgLatch = new CountDownLatch(numberOfSamples);
+		private RateMeasurement rateMeasurement = new RateMeasurement("Consumer");
+		
+		public RateMeasurement getRateMeasurement() {
+			return rateMeasurement;
+		}
+		
 		public CountDownLatch getLastMsgLatch() {
 			return lastMsgLatch;
 		}
 		public void onMessage(Message msg) {
 			try {
-				// collect msg rate data.	
 				TextMessage txtMsg = (TextMessage)msg;
-				String txt = txtMsg.getText();
-				//System.out.println(txt);				
-				
-				lastMsgLatch.countDown();
+				String txt = txtMsg.getText();				
+				if(txt.startsWith("Test msg #")) {
+					rateMeasurement.sample(msg);																
+					lastMsgLatch.countDown();
+				}
 			} catch (JMSException e) {
 				throw new RuntimeException(e);
 			}			
+		}
+	}
+	
+	private class RateMeasurement {
+		private String name;
+		private int count;
+		private long maxSampleInterval = 3000; // in millis
+		private long maxMsgPerSampleInterval = 100; 
+		private long startTime;
+		private long stopTime;
+		private double maxRate;
+		private double currentRate;
+		private int currentCount;
+		private long lastSampleTime;
+		
+		public RateMeasurement(String name) {
+			this.name = name;
+		}
+		
+		public void start() {
+			startTime = System.currentTimeMillis();
+			lastSampleTime = startTime;
+		}
+		public void stop() {
+			stopTime = System.currentTimeMillis();
+		}
+		
+		public void sample(Message msg) {		
+			count ++;
+			currentCount ++;
+
+			// Calculate sample rate
+			long currentSampleTime = System.currentTimeMillis();
+			if (currentCount >= maxMsgPerSampleInterval || (currentSampleTime - lastSampleTime) >= maxSampleInterval) {				
+				double ellapsedSecs = (currentSampleTime - lastSampleTime) / 1000.0;				
+				currentRate = currentCount / ellapsedSecs;
+				System.out.printf(name + ": Current sample rate=%.2f msgs/sec, maxRate=%.2f, msgCount=%d\n", currentRate, maxRate, count);
+				if (currentRate > maxRate) {
+					maxRate = currentRate;
+				}				
+				lastSampleTime = currentSampleTime;
+				currentCount = 0;
+			}
+		}
+		public void printRates() {
+			double ellapsedSecs = (stopTime - startTime) / 1000.0;
+			System.out.printf(name + ":======================================\n");
+			System.out.printf(name + ": Start time: %s\n", new Date(startTime));
+			System.out.printf(name + ": Stop time: %s\n", new Date(stopTime));
+			System.out.printf(name + ": Ellapsed time: %.2f secs\n", ellapsedSecs);
+			System.out.printf(name + ": Sample interval: %d ms\n", maxSampleInterval);
+			System.out.printf(name + ": Message count: %d\n", count);
+			System.out.printf(name + ": Max rate %.2f msg/sec\n", maxRate);
+			System.out.printf(name + ":======================================\n");
 		}
 	}
 }
