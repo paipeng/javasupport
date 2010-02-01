@@ -27,11 +27,16 @@ public class MeasureRate {
 	private ConnectionFactory connectionFactory;
 	
 	private void run() {
-		startConsumer();
-		startProducer();
+		new Thread(new Runnable() {
+			public void run() {
+				runConsumer();
+			} 		
+		}).start();
+		
+		runProducer();
 	}
 
-	private void startProducer() {
+	private void runProducer() {
 		Connection connection = null;
 		try {
 			connection = connectionFactory.createConnection();
@@ -57,7 +62,7 @@ public class MeasureRate {
 		return txtMsg;
 	}
 
-	private void startConsumer() {
+	private void runConsumer() {
 		Connection connection = null;
 		RateMessageListener listener = null; 
 		try {
