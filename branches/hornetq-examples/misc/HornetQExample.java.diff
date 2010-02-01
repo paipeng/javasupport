@@ -1,0 +1,37 @@
+Index: examples/common/src/org/hornetq/common/example/HornetQExample.java
+===================================================================
+--- examples/common/src/org/hornetq/common/example/HornetQExample.java  (revision 8843)
++++ examples/common/src/org/hornetq/common/example/HornetQExample.java  (working copy)
+@@ -53,14 +53,21 @@
+       serverClasspath = System.getProperty("hornetq.example.server.classpath");
+       boolean runServer = runServerProp == null ? true : Boolean.valueOf(runServerProp);
+       logServerOutput = logServerOutputProp == null ? false : Boolean.valueOf(logServerOutputProp);
+-      serverProps = System.getProperty("hornetq.example.server.args");
++      serverProps = System.getProperty("hornetq.example.server.args", "");
+       if (System.getProperty("hornetq.example.server.override.args") != null)
+       {
+          serverProps = System.getProperty("hornetq.example.server.override.args");
+       }
+       System.out.println("serverProps = " + serverProps);
+       HornetQExample.log.info("hornetq.example.runServer is " + runServer);
+-
++
++      String inheritProp = System.getProperty("hornetq.example.server.inherit.classpath", "false");
++      if (Boolean.valueOf(inheritProp))
++      {
++         String sep = System.getProperty("path.separator");
++         serverClasspath = serverClasspath + sep + System.getProperty("java.class.path");
++      }
++
+       this.configs = configs;
+ 
+       try
+@@ -130,7 +137,7 @@
+ 
+    protected InitialContext getContext(final int serverId) throws Exception
+    {
+-      String jndiFilename = "server" + serverId + "/client-jndi.properties";
++      String jndiFilename = configs[serverId] + "/client-jndi.properties";
+       File jndiFile = new File(jndiFilename);
+       HornetQExample.log.info("using " + jndiFile + " for jndi");
+       Properties props = new Properties();
