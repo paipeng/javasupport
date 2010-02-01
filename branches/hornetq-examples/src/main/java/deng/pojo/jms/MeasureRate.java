@@ -1,4 +1,4 @@
-package deng.jms;
+package deng.pojo.jms;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -13,12 +13,34 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+/**
+ * Usage (using default JNDI "ConnectionFactory" lookup by jndi.properties) 
+ *   java MeasureRate ExampleQueue 10000
+ *
+ * Usage (using using explicit ConnectionFactory class name) 
+ *        java MeasureRate ExampleQueue 10000 org.apache.activemq.spring.ActiveMQConnectionFactory
+ * 
+ * @author Zemian Deng
+ *
+ */
 public class MeasureRate {
 	public static void main(String[] args) {
+		String qname = "ExampleQueue";
+		int nSamples = 100;
+		ConnectionFactory cf = null;
+		
+		if (args.length >= 1) { qname = args[0]; }
+		if (args.length >= 2) { nSamples = Integer.parseInt(args[1]); }
+		if (args.length >= 3) { 
+			cf = Utils.newInstanceFromClassName(args[0]);
+		} else {				
+			cf = Utils.lookupJndi("ConnectionFactory");
+		}
+		
 		MeasureRate measureRate = new MeasureRate();
-		measureRate.queueName = "ExampleQueue";
-		measureRate.numberOfSamples = 3;
-		measureRate.connectionFactory = Utils.lookupJndi("ConnectionFactory");
+		measureRate.setQueueName(qname);
+		measureRate.setNumberOfSamples(nSamples);
+		measureRate.setConnectionFactory(cf);
 		measureRate.run();
 	}
 
@@ -26,14 +48,42 @@ public class MeasureRate {
 	private int numberOfSamples;
 	private ConnectionFactory connectionFactory;
 	
+	public void setQueueName(String queueName) {
+		this.queueName = queueName;
+	}
+	public void setNumberOfSamples(int numberOfSamples) {
+		this.numberOfSamples = numberOfSamples;
+	}
+	public void setConnectionFactory(ConnectionFactory connectionFactory) {
+		this.connectionFactory = connectionFactory;
+	}
+	
 	private void run() {
-		new Thread(new Runnable() {
+		long t1 = System.currentTimeMillis();
+		
+		// Start queue consumer on new thread.
+		Thread consumerThread = new Thread(new Runnable() {
 			public void run() {
 				runConsumer();
 			} 		
-		}).start();
+		});
+		consumerThread.start();
 		
+		// Send burst of messages to queue.
 		runProducer();
+		
+		try {
+			// Wait for consumer thread to finish.
+			consumerThread.join();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+		
+		long t2 = System.currentTimeMillis();
+		double elapsed = (t2 - t1) / 1000.0;
+				
+		System.out.printf("%d samples completed in %.2f secs\n", numberOfSamples, elapsed);
+		System.out.printf("Total average send/receive rate %.2f msg/sec\n", (numberOfSamples /elapsed));
 	}
 
 	private void runProducer() {
@@ -44,6 +94,7 @@ public class MeasureRate {
 			Queue dest = session.createQueue(queueName);
 			MessageProducer prodcuer = session.createProducer(dest);
 			
+			System.out.printf("Sending %d messages to %s\n", numberOfSamples, queueName);
 			for (int i = 0; i < numberOfSamples; i++) {
 				prodcuer.send(createSampleMessage(session, i));
 			}
@@ -56,18 +107,14 @@ public class MeasureRate {
 
 	private Message createSampleMessage(Session session, int index) throws JMSException {
 		TextMessage txtMsg = session.createTextMessage("Test msg # " + index);
-		if (index + 1 == numberOfSamples) {
-			txtMsg.setBooleanProperty("lastRateMsg", true);
-		}
 		return txtMsg;
 	}
 
 	private void runConsumer() {
 		Connection connection = null;
-		RateMessageListener listener = null; 
 		try {
+			RateMessageListener listener = new RateMessageListener(); 
 			connection = connectionFactory.createConnection();
-			listener = new RateMessageListener(connection);
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Queue dest = session.createQueue(queueName);
 			MessageConsumer consumer = session.createConsumer(dest);
@@ -76,6 +123,7 @@ public class MeasureRate {
 			
 			// Wait until it's done.
 			listener.getLastMsgLatch().await();
+			connection.stop();
 		} catch (JMSException e) {
 			throw new RuntimeException(e);
 		} catch (InterruptedException e) {
@@ -86,11 +134,7 @@ public class MeasureRate {
 	}	
 	
 	private class RateMessageListener implements MessageListener {
-		private Connection connection = null;
-		private CountDownLatch lastMsgLatch = new CountDownLatch(1);
-		public RateMessageListener(Connection connection) {
-			this.connection = connection;
-		}
+		private CountDownLatch lastMsgLatch = new CountDownLatch(numberOfSamples);
 		public CountDownLatch getLastMsgLatch() {
 			return lastMsgLatch;
 		}
@@ -99,15 +143,9 @@ public class MeasureRate {
 				// collect msg rate data.	
 				TextMessage txtMsg = (TextMessage)msg;
 				String txt = txtMsg.getText();
-				System.out.println(txt);
-					
-				// check for lastRateMsg.
-				boolean lastRateMsg = msg.getBooleanProperty("lastRateMsg");
-				if (lastRateMsg) {
-					System.out.println("Last rate msg received, stopping listener.");
-					this.connection.stop();
-					lastMsgLatch.countDown();
-				}
+				//System.out.println(txt);				
+				
+				lastMsgLatch.countDown();
 			} catch (JMSException e) {
 				throw new RuntimeException(e);
 			}			
