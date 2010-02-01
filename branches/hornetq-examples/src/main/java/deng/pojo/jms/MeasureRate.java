@@ -18,7 +18,7 @@ import javax.jms.TextMessage;
  *   java MeasureRate ExampleQueue 10000
  *
  * Usage (using using explicit ConnectionFactory class name) 
- *        java MeasureRate ExampleQueue 10000 org.apache.activemq.spring.ActiveMQConnectionFactory
+ *        java MeasureRate ExampleQueue 10000 org.apache.activemq.ActiveMQConnectionFactory
  * 
  * @author Zemian Deng
  *
