@@ -180,7 +180,7 @@ public class MeasureRate {
 	}
 	
 	/**
-	 * Default will sample rate on every 1000 msgs or 3 seconds, which ever comes first.
+	 * Default will sample rate on every 1000 msgs or 2 seconds, which ever comes first.
 	 * 
 	 * @author dengz1
 	 *
@@ -188,7 +188,7 @@ public class MeasureRate {
 	private class RateMeasurement {
 		private String name;
 		private int count;
-		private long maxSampleInterval = 3000; // in millis
+		private long maxSampleInterval = 2000; // in millis
 		private long maxMsgPerSampleInterval = 1000; 
 		private long startTime;
 		private long stopTime;
