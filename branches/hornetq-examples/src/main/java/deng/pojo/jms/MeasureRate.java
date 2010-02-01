@@ -96,16 +96,16 @@ public class MeasureRate {
 			Queue dest = session.createQueue(queueName);
 			MessageProducer producer = session.createProducer(dest);
 			
-			RateMeasurement rateMeasurement = new RateMeasurement("Producer");
-			rateMeasurement.start();
+			RateSampler rateSampler = new RateSampler("Producer");
+			rateSampler.start();
 			
 			for (int i = 0; i < numberOfSamples; i++) {
 				Message msg = createSampleMessage(session, i);
-				rateMeasurement.sample(msg);
+				rateSampler.sample(msg);
 				producer.send(msg);
 			}
-			rateMeasurement.stop();
-			rateMeasurement.printRates();
+			rateSampler.stop();
+			rateSampler.printRates();
 			
 			producer.close();
 			session.close();
@@ -130,8 +130,8 @@ public class MeasureRate {
 			Queue dest = session.createQueue(queueName);
 			MessageConsumer consumer = session.createConsumer(dest);
 			consumer.setMessageListener(listener);
-			RateMeasurement rateMeasurement = listener.getRateMeasurement();
-			rateMeasurement.start();
+			RateSampler rateSampler = listener.getRateMeasurement();
+			rateSampler.start();
 			
 			connection.start();
 			
@@ -139,8 +139,8 @@ public class MeasureRate {
 			listener.getLastMsgLatch().await();
 			
 			// We are done.
-			rateMeasurement.stop();
-			rateMeasurement.printRates();
+			rateSampler.stop();
+			rateSampler.printRates();
 			
 			consumer.close();
 			session.close();
@@ -156,9 +156,9 @@ public class MeasureRate {
 	
 	private class RateMessageListener implements MessageListener {
 		private CountDownLatch lastMsgLatch = new CountDownLatch(numberOfSamples);
-		private RateMeasurement rateMeasurement = new RateMeasurement("Consumer");
+		private RateSampler rateMeasurement = new RateSampler("Consumer");
 		
-		public RateMeasurement getRateMeasurement() {
+		public RateSampler getRateMeasurement() {
 			return rateMeasurement;
 		}
 		
@@ -185,7 +185,7 @@ public class MeasureRate {
 	 * @author dengz1
 	 *
 	 */
-	private class RateMeasurement {
+	public static class RateSampler {
 		private String name;
 		private int count;
 		private long maxSampleInterval = 2000; // in millis
@@ -197,7 +197,7 @@ public class MeasureRate {
 		private int currentCount;
 		private long lastSampleTime;
 		
-		public RateMeasurement(String name) {
+		public RateSampler(String name) {
 			this.name = name;
 		}
 		
@@ -209,7 +209,7 @@ public class MeasureRate {
 			stopTime = System.currentTimeMillis();
 		}
 		
-		public void sample(Message msg) {		
+		public void sample(Object data) {		
 			count ++;
 			currentCount ++;
 
