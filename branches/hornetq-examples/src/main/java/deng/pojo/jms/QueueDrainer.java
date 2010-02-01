@@ -1,4 +1,4 @@
-package deng.hornetqexamples.jms;
+package deng.pojo.jms;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
