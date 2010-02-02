@@ -26,3 +26,5 @@ $ e default-h2/deploy/h2-ds.xml
 $ /jb/bin/run.sh -c default-h2
 
 3. Verify the database tables created by JBoss server (Use the browser opened during h2db startup.)
+   JDBC URL: jdbc:h2:jboss
+   * The database file should be in $H2_HOME/data/jboss.db
