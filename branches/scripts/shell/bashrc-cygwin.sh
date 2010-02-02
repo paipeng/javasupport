@@ -123,7 +123,7 @@ function bakd {
   for x in "$@"; do
     BAK=${x}.`tstamp`.bak
     \mv -vf $x $BAK
-    echo "Backup and deleted $x to $BAK."
+    echo "Backup and deleted $x to $BAK"
   done
 }
 export -f bakd

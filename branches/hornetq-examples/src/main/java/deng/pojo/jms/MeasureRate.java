@@ -19,47 +19,35 @@ import javax.naming.NamingException;
 
 /**
  * Usage (using default JNDI "ConnectionFactory" lookup by jndi.properties) 
- *   java MeasureRate ExampleQueue 100
+ *   java -DqueueName=ExampleQueue -DnumberOfSamples=5000 deng.pojo.jms.MeasureRate
  *
  * Usage (using using explicit ConnectionFactory class name) 
- *        java MeasureRate ExampleQueue 100 org.apache.activemq.ActiveMQConnectionFactory
+ *        java -DqueueName=ExampleQueue -DnumberOfSamples=5000 -DconnectionFactory=org.apache.activemq.ActiveMQConnectionFactory deng.pojo.jms.MeasureRate
  * 
  * @author Zemian Deng
  *
  */
 public class MeasureRate {
-	public static void main(String[] args) {
-		String qname = "ExampleQueue";
-		int nSamples = 100;
-		ConnectionFactory cf = null;
-		
-		if (args.length >= 1) { qname = args[0]; }
-		if (args.length >= 2) { nSamples = Integer.parseInt(args[1]); }
-		if (args.length >= 3) { 
-			cf = Utils.newInstanceFromClassName(args[2]);
-		} else {				
-			cf = Utils.lookupJndi("ConnectionFactory");
-		}
-		
+	public static void main(String[] args) {		
 		MeasureRate measureRate = new MeasureRate();
-		measureRate.setQueueName(qname);
-		measureRate.setNumberOfSamples(nSamples);
-		measureRate.setConnectionFactory(cf);
 		measureRate.run();
 	}
-
-	private String queueName;
-	private int numberOfSamples;
+	
+	private String queueName = System.getProperty("queueName", "ExampleQueue");
+	private int numberOfSamples = Integer.parseInt(System.getProperty("numberOfSamples", "5000"));
+	private String connectionFactoryClassName = System.getProperty("connectionFactoryClassName");
+	private boolean persistMsg = Boolean.parseBoolean(System.getProperty("persistMsg", "false"));
+	private boolean runConsumerFlag = Boolean.parseBoolean(System.getProperty("runConsumer", "true"));
+	private boolean runProducerFlag = Boolean.parseBoolean(System.getProperty("runProducer", "true"));
+	
 	private ConnectionFactory connectionFactory;
 	
-	public void setQueueName(String queueName) {
-		this.queueName = queueName;
-	}
-	public void setNumberOfSamples(int numberOfSamples) {
-		this.numberOfSamples = numberOfSamples;
-	}
-	public void setConnectionFactory(ConnectionFactory connectionFactory) {
-		this.connectionFactory = connectionFactory;
+	public MeasureRate() {
+		if (connectionFactoryClassName == null) {
+			connectionFactory = Utils.lookupJndi("ConnectionFactory"); 
+		} else {				
+			connectionFactory = Utils.newInstanceFromClassName(connectionFactoryClassName);
+		}
 	}
 	
 	private void run() {
@@ -71,16 +59,23 @@ public class MeasureRate {
 				runConsumer();
 			} 		
 		});
-		consumerThread.start();
 		
-		// Send burst of messages to queue.
-		runProducer();
+		if (runConsumerFlag) {
+			consumerThread.start();
+		}
 		
-		try {
-			// Wait for consumer thread to finish.
-			consumerThread.join();
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
+		if (runProducerFlag) {
+			// Send burst of messages to queue.
+			runProducer();
+		}
+		
+		if (runConsumerFlag) {
+			try {
+				// Wait for consumer thread to finish.
+				consumerThread.join();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
 		}
 		
 		long t2 = System.currentTimeMillis();
@@ -105,7 +100,8 @@ public class MeasureRate {
 			for (int i = 0; i < numberOfSamples; i++) {
 				Message msg = createSampleMessage(session, i);
 				rateSampler.sample(msg);
-				producer.send(msg, DeliveryMode.NON_PERSISTENT, 5, 0);
+				int deliveryMode = persistMsg ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT;
+				producer.send(msg, deliveryMode, 5, 0);
 			}
 			rateSampler.stop();
 			rateSampler.printRates();
