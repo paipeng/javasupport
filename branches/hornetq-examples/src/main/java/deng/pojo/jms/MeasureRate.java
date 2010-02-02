@@ -5,6 +5,7 @@ import java.util.concurrent.CountDownLatch;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
@@ -104,7 +105,7 @@ public class MeasureRate {
 			for (int i = 0; i < numberOfSamples; i++) {
 				Message msg = createSampleMessage(session, i);
 				rateSampler.sample(msg);
-				producer.send(msg);
+				producer.send(msg, DeliveryMode.NON_PERSISTENT, 5, 0);
 			}
 			rateSampler.stop();
 			rateSampler.printRates();

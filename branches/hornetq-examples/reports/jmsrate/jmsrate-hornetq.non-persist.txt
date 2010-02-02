@@ -1,0 +1,110 @@
+>>> Source: http://code.google.com/p/javasupport/source/browse/branches/hornetq-examples/src/main/java/deng/pojo/jms/MeasureRate.java
+>>> Source: http://code.google.com/p/javasupport/source/browse/branches/hornetq-examples/src/main/resources/jndi.properties
+java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+java.naming.provider.url=jnp://localhost:1099
+
+set CLASSPATH=".;out;d:\apps\hornetq-2.0.0.GA\lib\*;d:\apps\jboss-5.1.0.GA\client\*"
+javac -d out MeasureRate.java
+
+>>> Start standalone non-cluster HornetQ Server
+java deng.pojo.jms.MeasureRate ExampleQueue 5000
+Consumer: Current sample rate=73.40 msgs/sec, maxRate=0.00, totalCount=367
+Producer: Current sample rate=73.18 msgs/sec, maxRate=0.00, totalCount=367
+Producer: Current sample rate=70.80 msgs/sec, maxRate=73.18, totalCount=721
+Consumer: Current sample rate=70.80 msgs/sec, maxRate=73.40, totalCount=721
+Consumer: Current sample rate=72.60 msgs/sec, maxRate=73.40, totalCount=1084
+Producer: Current sample rate=72.60 msgs/sec, maxRate=73.18, totalCount=1084
+Consumer: Current sample rate=75.00 msgs/sec, maxRate=73.40, totalCount=1459
+Producer: Current sample rate=75.00 msgs/sec, maxRate=73.18, totalCount=1459
+Consumer: Current sample rate=71.19 msgs/sec, maxRate=75.00, totalCount=1816
+Producer: Current sample rate=71.19 msgs/sec, maxRate=75.00, totalCount=1816
+Producer: Current sample rate=63.40 msgs/sec, maxRate=75.00, totalCount=2133
+Consumer: Current sample rate=63.40 msgs/sec, maxRate=75.00, totalCount=2133
+Producer: Current sample rate=71.60 msgs/sec, maxRate=75.00, totalCount=2491
+Consumer: Current sample rate=71.60 msgs/sec, maxRate=75.00, totalCount=2491
+Consumer: Current sample rate=69.66 msgs/sec, maxRate=75.00, totalCount=2848
+Producer: Current sample rate=69.66 msgs/sec, maxRate=75.00, totalCount=2848
+Consumer: Current sample rate=66.20 msgs/sec, maxRate=75.00, totalCount=3179
+Producer: Current sample rate=66.20 msgs/sec, maxRate=75.00, totalCount=3179
+Producer: Current sample rate=69.20 msgs/sec, maxRate=75.00, totalCount=3525
+Consumer: Current sample rate=69.20 msgs/sec, maxRate=75.00, totalCount=3525
+Consumer: Current sample rate=57.62 msgs/sec, maxRate=75.00, totalCount=3814
+Producer: Current sample rate=57.62 msgs/sec, maxRate=75.00, totalCount=3814
+Consumer: Current sample rate=70.00 msgs/sec, maxRate=75.00, totalCount=4164
+Producer: Current sample rate=70.00 msgs/sec, maxRate=75.00, totalCount=4164
+Consumer: Current sample rate=72.80 msgs/sec, maxRate=75.00, totalCount=4528
+Producer: Current sample rate=72.80 msgs/sec, maxRate=75.00, totalCount=4528
+Consumer: Current sample rate=72.58 msgs/sec, maxRate=75.00, totalCount=4892
+Producer: Current sample rate=72.58 msgs/sec, maxRate=75.00, totalCount=4892
+Consumer: Start time: Tue Feb 02 10:21:36 EST 2010
+Consumer: Stop time: Tue Feb 02 10:22:48 EST 2010
+Consumer: Ellapsed time: 71.62 secs
+Consumer: Sample interval: 5000 ms
+Consumer: Message count: 5001
+Consumer: Max rate 75.00 msg/sec
+Producer: Start time: Tue Feb 02 10:21:36 EST 2010
+Producer: Stop time: Tue Feb 02 10:22:48 EST 2010
+Producer: Ellapsed time: 71.66 secs
+Producer: Sample interval: 5000 ms
+Producer: Message count: 5000
+Producer: Max rate 75.00 msg/sec
+===================================================
+5000 samples completed in 72.02 secs
+Total average send/receive rate 69.43 msg/sec
+
+>>> Stop HornetQ Server and Start JBoss-5.1.0 default server
+java deng.pojo.jms.MeasureRate ExampleQueue 5000
+Producer: Current sample rate=355.62 msgs/sec, maxRate=0.00, totalCount=1000
+Consumer: Current sample rate=349.77 msgs/sec, maxRate=0.00, totalCount=1000
+Producer: Current sample rate=460.41 msgs/sec, maxRate=355.62, totalCount=2000
+Consumer: Current sample rate=473.93 msgs/sec, maxRate=349.77, totalCount=2000
+Producer: Current sample rate=547.05 msgs/sec, maxRate=460.41, totalCount=3000
+Consumer: Current sample rate=529.10 msgs/sec, maxRate=473.93, totalCount=3000
+Producer: Current sample rate=423.91 msgs/sec, maxRate=547.05, totalCount=4000
+Consumer: Current sample rate=402.41 msgs/sec, maxRate=529.10, totalCount=4000
+Producer: Current sample rate=395.10 msgs/sec, maxRate=547.05, totalCount=5000
+Producer: Start time: Tue Feb 02 10:25:39 EST 2010
+Producer: Stop time: Tue Feb 02 10:25:51 EST 2010
+Producer: Ellapsed time: 11.72 secs
+Producer: Sample interval: 5000 ms
+Consumer: Current sample rate=438.40 msgs/sec, maxRate=529.10, totalCount=5000
+Consumer: Start time: Tue Feb 02 10:25:39 EST 2010
+Consumer: Stop time: Tue Feb 02 10:25:51 EST 2010
+Consumer: Ellapsed time: 11.72 secs
+Consumer: Sample interval: 5000 ms
+Consumer: Message count: 5000
+Producer: Message count: 5000
+Producer: Max rate 547.05 msg/sec
+Consumer: Max rate 529.10 msg/sec
+===================================================
+5000 samples completed in 15.05 secs
+Total average send/receive rate 332.29 msg/sec
+
+>>> Setup to deliever non-persistent msg test
+java deng.pojo.jms.MeasureRate ExampleQueue 5000
+Producer: Current sample rate=2369.67 msgs/sec, maxRate=0.00, totalCount=1000
+Consumer: Current sample rate=1422.48 msgs/sec, maxRate=0.00, totalCount=1000
+Producer: Current sample rate=2000.00 msgs/sec, maxRate=2369.67, totalCount=2000
+Producer: Current sample rate=10752.69 msgs/sec, maxRate=2369.67, totalCount=3000
+Producer: Current sample rate=12658.23 msgs/sec, maxRate=10752.69, totalCount=4000
+Producer: Current sample rate=10752.69 msgs/sec, maxRate=12658.23, totalCount=5000
+Consumer: Current sample rate=2288.33 msgs/sec, maxRate=1422.48, totalCount=2000
+Producer: Start time: Tue Feb 02 13:17:16 EST 2010
+Producer: Stop time: Tue Feb 02 13:17:17 EST 2010
+Producer: Ellapsed time: 1.19 secs
+Producer: Sample interval: 5000 ms
+Producer: Message count: 5000
+Producer: Max rate 12658.23 msg/sec
+Consumer: Current sample rate=7092.20 msgs/sec, maxRate=2288.33, totalCount=3000
+Consumer: Current sample rate=6410.26 msgs/sec, maxRate=7092.20, totalCount=4000
+Consumer: Current sample rate=15873.02 msgs/sec, maxRate=7092.20, totalCount=5000
+Consumer: Start time: Tue Feb 02 13:17:16 EST 2010
+Consumer: Stop time: Tue Feb 02 13:17:17 EST 2010
+Consumer: Ellapsed time: 1.50 secs
+Consumer: Sample interval: 5000 ms
+Consumer: Message count: 5000
+Consumer: Max rate 15873.02 msg/sec
+===================================================
+5000 samples completed in 2.06 secs
+Total average send/receive rate 2424.83 msg/sec
