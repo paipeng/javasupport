@@ -1,4 +1,4 @@
-package deng.hornetqexamples.jms;
+package deng.pojo.jms;
 
 import java.util.Date;
 
@@ -17,37 +17,37 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 public class QueueListenerBean implements MessageListener {
-
-	/**
-	 * Maven can start this up with:
-	 * mvn exec:java -Dexec.mainClass=deng.hornetqexamples.jms.QueueListenerBean
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
 	public static void main(String[] args) throws Exception {
-		final QueueListenerBean bean = new QueueListenerBean();
-		
+		QueueListenerBean main = new QueueListenerBean();
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.run();
+	}
+	
+	private String queueName;
+	private Connection connection = null;
+	private int count = 0;
+
+	public void run() {		
 		// Shut it down when CTRL+C is hit.
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				System.out.println("Received CTRL+C");
-				bean.stop();
+				QueueListenerBean.this.stop();
 			}
 		});
-
-		String queueName = args[0];
-		bean.startListener(queueName);
 		
-		while (true) {
-			Thread.sleep(5000);
+		// Run
+		try {
+			start();		
+			synchronized(this) { this.wait(); }
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 	
-	private Connection connection = null;
-	private int count = 0;
-	
-	public void startListener(String queueName) throws Exception {
+	public void start() throws Exception {
 		Context ctx = new InitialContext();
 		try {
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
@@ -67,7 +67,7 @@ public class QueueListenerBean implements MessageListener {
 		}
 	}
 	
-	protected void stop() {
+	public void stop() {
 		if (connection != null) {
 			try {
 				System.out.println("Stopping message listener.");

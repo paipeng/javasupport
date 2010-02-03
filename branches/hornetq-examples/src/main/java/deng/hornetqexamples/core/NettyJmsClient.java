@@ -14,10 +14,10 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.hornetq.core.config.TransportConfiguration;
+import org.hornetq.api.core.TransportConfiguration;
 import org.hornetq.integration.transports.netty.NettyConnectorFactory;
-import org.hornetq.jms.HornetQQueue;
 import org.hornetq.jms.client.HornetQConnectionFactory;
+import org.hornetq.jms.client.HornetQQueue;
 
 /**
  * This example is based on blog entry here:

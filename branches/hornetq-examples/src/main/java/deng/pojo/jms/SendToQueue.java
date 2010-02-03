@@ -2,26 +2,31 @@ package deng.pojo.jms;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-public class SendToQueue {
-	
+public class SendToQueue {	
 	public static void main(String[] args) throws Exception {
-		SendToQueue bean = new SendToQueue();
-		String queueName = args[0];
-		String text = args[1];
-		bean.send(queueName, text);
+		SendToQueue main = new SendToQueue();
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.text = System.getProperty("text", "Test Message.");
+		main.run();
 	}
 	
-	public void send(String queueName, String text) throws Exception {
+	private String queueName;
+	private String text;
+	
+	public void run() {
 		Connection connection = null;
-		Context ctx = new InitialContext();
+		Context ctx = null;
 		try {
+			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
 			Queue queue = (Queue)ctx.lookup(queueName);
@@ -32,12 +37,16 @@ public class SendToQueue {
 			producer.send(message);		
 			session.close();
 			System.out.println("Message sent to queue: " + queueName);
+		} catch (JMSException e) {
+			throw new RuntimeException(e);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
 			if (ctx != null) {
-				ctx.close();
+				try { ctx.close(); } catch (NamingException e) { throw new RuntimeException(e); }
+			}
+			if (connection != null) {
+				try { connection.close(); } catch (JMSException e) { throw new RuntimeException(e); }
 			}
 		}
 	}

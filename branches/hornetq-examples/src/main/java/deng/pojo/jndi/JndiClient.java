@@ -1,4 +1,4 @@
-package deng.hornetqexamples;
+package deng.pojo.jndi;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

@@ -1,4 +1,10 @@
-package deng.hornetqexamples.jms;
+package deng.hornetqexamples.core;
+
+import static org.hornetq.integration.transports.netty.TransportConstants.PORT_PROP_NAME;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -8,15 +14,10 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import org.hornetq.jms.HornetQQueue;
-import org.hornetq.jms.client.HornetQConnectionFactory;
-import static org.hornetq.integration.transports.netty.TransportConstants.PORT_PROP_NAME;
+import org.hornetq.api.core.TransportConfiguration;
 import org.hornetq.integration.transports.netty.NettyConnectorFactory;
-import org.hornetq.core.config.TransportConfiguration;
-
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
+import org.hornetq.jms.client.HornetQConnectionFactory;
+import org.hornetq.jms.client.HornetQQueue;
 
 /**
  * Client Example from HornetQ maven example.

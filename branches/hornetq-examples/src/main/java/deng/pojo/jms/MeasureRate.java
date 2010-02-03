@@ -29,16 +29,22 @@ import javax.naming.NamingException;
  */
 public class MeasureRate {
 	public static void main(String[] args) {		
-		MeasureRate measureRate = new MeasureRate();
-		measureRate.run();
+		MeasureRate main = new MeasureRate();
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.numberOfSamples = Integer.parseInt(System.getProperty("numberOfSamples", "5000"));
+		main.connectionFactoryClassName = System.getProperty("connectionFactoryClassName");
+		main.persistMsg = Boolean.parseBoolean(System.getProperty("persistMsg", "false"));
+		main.runConsumerFlag = Boolean.parseBoolean(System.getProperty("runConsumer", "true"));
+		main.runProducerFlag = Boolean.parseBoolean(System.getProperty("runProducer", "true"));
+		main.run();
 	}
 	
-	private String queueName = System.getProperty("queueName", "ExampleQueue");
-	private int numberOfSamples = Integer.parseInt(System.getProperty("numberOfSamples", "5000"));
-	private String connectionFactoryClassName = System.getProperty("connectionFactoryClassName");
-	private boolean persistMsg = Boolean.parseBoolean(System.getProperty("persistMsg", "false"));
-	private boolean runConsumerFlag = Boolean.parseBoolean(System.getProperty("runConsumer", "true"));
-	private boolean runProducerFlag = Boolean.parseBoolean(System.getProperty("runProducer", "true"));
+	private String queueName;
+	private int numberOfSamples;
+	private String connectionFactoryClassName;
+	private boolean persistMsg;
+	private boolean runConsumerFlag;
+	private boolean runProducerFlag;
 	
 	private ConnectionFactory connectionFactory;
 	

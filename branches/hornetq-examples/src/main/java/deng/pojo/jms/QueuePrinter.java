@@ -4,12 +4,14 @@ import java.util.Enumeration;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueBrowser;
 import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -17,15 +19,17 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class QueuePrinter {
 	
 	public static void main(String[] args) throws Exception {
-		QueuePrinter bean = new QueuePrinter();
-		String queueName = args[0];
-		bean.browseQueue(queueName);
+		QueuePrinter main = new QueuePrinter();
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.run();
 	}
 	
-	public void browseQueue(String queueName) throws Exception {
+	private String queueName;
+	public void run() {
 		Connection connection = null;
-		Context ctx = new InitialContext();
+		Context ctx = null;
 		try {
+			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
 			Queue queue = (Queue)ctx.lookup(queueName);
@@ -47,12 +51,16 @@ public class QueuePrinter {
 			System.out.println(count + " msgs printed from queue: " + queueName);
 			
 			session.close();
+		} catch (JMSException e) {
+			throw new RuntimeException(e);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
 			if (ctx != null) {
-				ctx.close();
+				try { ctx.close(); } catch (NamingException e) { throw new RuntimeException(e); }
+			}
+			if (connection != null) {
+				try { connection.close(); } catch (JMSException e) { throw new RuntimeException(e); }
 			}
 		}
 	}
