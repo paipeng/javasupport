@@ -13,19 +13,33 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import lombok.Data;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+@Data
 public class QueuePrinter {
 	
 	public static void main(String[] args) throws Exception {
 		QueuePrinter main = new QueuePrinter();
-		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
 		main.run();
 	}
 	
 	private String queueName;
+	
 	public void run() {
+		try {
+			print();
+		} catch (JMSException e) {
+			throw new RuntimeException(e);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void print() throws JMSException, NamingException {
 		Connection connection = null;
 		Context ctx = null;
 		try {
@@ -51,16 +65,17 @@ public class QueuePrinter {
 			System.out.println(count + " msgs printed from queue: " + queueName);
 			
 			session.close();
-		} catch (JMSException e) {
-			throw new RuntimeException(e);
-		} catch (NamingException e) {
-			throw new RuntimeException(e);
 		} finally {
 			if (ctx != null) {
-				try { ctx.close(); } catch (NamingException e) { throw new RuntimeException(e); }
+				try { 
+					ctx.close(); 
+				} catch (NamingException e) { 
+					/* Just log it so next clean up can proceed.*/
+					System.out.println("WARN: Can not close JNDI context. " + e.getMessage());
+				}
 			}
 			if (connection != null) {
-				try { connection.close(); } catch (JMSException e) { throw new RuntimeException(e); }
+				connection.close();
 			}
 		}
 	}

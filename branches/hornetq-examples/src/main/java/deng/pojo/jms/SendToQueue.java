@@ -11,11 +11,14 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import lombok.Data;
+
+@Data
 public class SendToQueue {	
 	public static void main(String[] args) throws Exception {
 		SendToQueue main = new SendToQueue();
-		main.queueName = System.getProperty("queueName", "ExampleQueue");
-		main.text = System.getProperty("text", "Test Message.");
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setText(System.getProperty("text", "Test Message."));
 		main.run();
 	}
 	
@@ -23,6 +26,16 @@ public class SendToQueue {
 	private String text;
 	
 	public void run() {
+		try {
+			send();
+		} catch (JMSException e) {
+			throw new RuntimeException(e);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void send() throws JMSException, NamingException {
 		Connection connection = null;
 		Context ctx = null;
 		try {
@@ -37,16 +50,17 @@ public class SendToQueue {
 			producer.send(message);		
 			session.close();
 			System.out.println("Message sent to queue: " + queueName);
-		} catch (JMSException e) {
-			throw new RuntimeException(e);
-		} catch (NamingException e) {
-			throw new RuntimeException(e);
 		} finally {
 			if (ctx != null) {
-				try { ctx.close(); } catch (NamingException e) { throw new RuntimeException(e); }
+				try { 
+					ctx.close(); 
+				} catch (NamingException e) { 
+					/* Just log it so next clean up can proceed.*/
+					System.out.println("WARN: Can not close JNDI context. " + e.getMessage());
+				}
 			}
 			if (connection != null) {
-				try { connection.close(); } catch (JMSException e) { throw new RuntimeException(e); }
+				connection.close();
 			}
 		}
 	}
