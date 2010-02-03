@@ -1,4 +1,4 @@
-package deng.hornetqexamples;
+package deng.pojo.jndi;
 
 public class JndiNamesDumper {
 

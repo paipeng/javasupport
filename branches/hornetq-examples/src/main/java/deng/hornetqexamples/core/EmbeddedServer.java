@@ -1,7 +1,7 @@
 package deng.hornetqexamples.core;
 
 import org.hornetq.core.config.impl.FileConfiguration;
-import org.hornetq.core.server.HornetQ;
+import org.hornetq.core.server.HornetQServers;
 import org.hornetq.core.server.HornetQServer;
 import org.hornetq.jms.server.JMSServerManager;
 import org.hornetq.jms.server.impl.JMSServerManagerImpl;
@@ -25,7 +25,7 @@ public class EmbeddedServer {
 			configuration.setConfigurationUrl(configDir + "/hornetq-configuration.xml");
 			configuration.start();
 
-			HornetQServer server = HornetQ.newHornetQServer(configuration);
+			HornetQServer server = HornetQServers.newHornetQServer(configuration);
 			JMSServerManager jmsServerManager = new JMSServerManagerImpl(server, configDir + "/hornetq-jms.xml");
 			// if you want to use JNDI, simple inject a context here or don't
 			// call this method and make sure the JNDI parameters are set.

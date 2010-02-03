@@ -2,12 +2,14 @@ package deng.pojo.jms;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Queue;
 import javax.jms.Session;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -15,16 +17,20 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class QueueDrainer {
 	
 	public static void main(String[] args) throws Exception {
-		QueueDrainer bean = new QueueDrainer();
-		String queueName = args[0];
-		bean.drainQueue(queueName);
+		QueueDrainer main = new QueueDrainer();
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.timeout = Long.parseLong(System.getProperty("timeout", "5000"));
+		main.run();
 	}
+
+	private String queueName;
+	private long timeout = 5000; // 5 seconds.
 	
-	public void drainQueue(String queueName) throws Exception {
-		long timeout = 5000; // 5 seconds.
+	public void run() {
 		Connection connection = null;
-		Context ctx = new InitialContext();
+		Context ctx = null;
 		try {
+			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
 			Queue queue = (Queue)ctx.lookup(queueName);
@@ -45,12 +51,16 @@ public class QueueDrainer {
 			System.out.println(count + " msgs removed from queue: " + queueName);
 			
 			session.close();
+		} catch (JMSException e) {
+			throw new RuntimeException(e);
+		} catch (NamingException e) {
+			throw new RuntimeException(e);
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
 			if (ctx != null) {
-				ctx.close();
+				try { ctx.close(); } catch (NamingException e) { throw new RuntimeException(e); }
+			}
+			if (connection != null) {
+				try { connection.close(); } catch (JMSException e) { throw new RuntimeException(e); }
 			}
 		}
 	}
