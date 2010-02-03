@@ -901,11 +901,11 @@ public class TransactedExample {
             System.out.println("Program assumes five queues named A B C D E");
             System.exit(1);
         }
-        te.vendorOrderQueueName = new String("A");
-        te.retailerConfirmationQueueName = new String("B");
-        te.monitorOrderQueueName = new String("C");
-        te.storageOrderQueueName = new String("D");
-        te.vendorConfirmationQueueName = new String("E");
+        te.vendorOrderQueueName = new String("/queue/A");
+        te.retailerConfirmationQueueName = new String("/queue/B");
+        te.monitorOrderQueueName = new String("/queue/C");
+        te.storageOrderQueueName = new String("/queue/D");
+        te.vendorConfirmationQueueName = new String("/queue/E");
         quantity = (new Integer(args[0])).intValue();
         System.out.println("Quantity to be ordered is " + quantity);
         if (quantity > 0) {

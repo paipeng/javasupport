@@ -33,7 +33,7 @@ import lombok.Data;
 public class MeasureRate {
 	public static void main(String[] args) {		
 		MeasureRate main = new MeasureRate();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
 		main.setNumberOfSamples(Integer.parseInt(System.getProperty("numberOfSamples", "5000")));
 		main.setConnectionFactoryClassName(System.getProperty("connectionFactoryClassName"));
 		main.setPersistMsg(Boolean.parseBoolean(System.getProperty("persistMsg", "false")));

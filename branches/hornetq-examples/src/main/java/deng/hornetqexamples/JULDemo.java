@@ -24,7 +24,7 @@ public class JULDemo {
 		bean.logAllLevels();
 	}
 	
-	Logger logger = Logger.getLogger(getClass().getName());
+	private static Logger logger = Logger.getLogger(JULDemo.class.getName());
 	
 	public void showExistingLoggerInfo() {
 		// Checking existing handlers

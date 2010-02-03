@@ -75,12 +75,7 @@ public class SampleUtilities {
      */
     public static javax.jms.QueueConnectionFactory getQueueConnectionFactory() 
       throws Exception {
-        if (USE_JNDI) {
-            return (javax.jms.QueueConnectionFactory) jndiLookup(QUEUECONFAC);
-        } else {
-            // return new provider-specific QueueConnectionFactory
-            return null;
-        }
+    	return (QueueConnectionFactory)jndiLookup("ConnectionFactory");
     }
     
     /**
@@ -94,12 +89,7 @@ public class SampleUtilities {
      */
     public static javax.jms.TopicConnectionFactory getTopicConnectionFactory() 
       throws Exception {
-        if (USE_JNDI) {
-            return (javax.jms.TopicConnectionFactory) jndiLookup(TOPICCONFAC);
-        } else {
-            // return new provider-specific TopicConnectionFactory
-            return null;
-        }
+    	return (TopicConnectionFactory)jndiLookup("ConnectionFactory");
     }
     
     /**

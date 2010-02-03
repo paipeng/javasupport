@@ -21,7 +21,7 @@ public class QueueDrainer {
 	
 	public static void main(String[] args) throws Exception {
 		QueueDrainer main = new QueueDrainer();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
 		main.setTimeout(Long.parseLong(System.getProperty("timeout", "5000")));
 		main.run();
 	}
@@ -52,12 +52,12 @@ public class QueueDrainer {
 			System.out.println("Start to drain queue: " + queueName);
 			int count = 0;
 			MessageConsumer messageConsumer = session.createConsumer(queue);
+			connection.start();
+			
 			Message msg = null;
 			while ((msg = messageConsumer.receive(timeout)) != null) {
 				String msgStr = ToStringBuilder.reflectionToString(msg, ToStringStyle.MULTI_LINE_STYLE);
-				System.out.println("=== msg#" + (count + 1) + " ===");
-				System.out.println(msgStr);
-				System.out.println("===============================");
+				System.out.println("msg#" + (count + 1) + " : " + msgStr);
 
 				count ++;
 			}

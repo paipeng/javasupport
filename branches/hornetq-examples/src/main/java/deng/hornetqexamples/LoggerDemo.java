@@ -1,7 +1,6 @@
 package deng.hornetqexamples;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Demo of using a Logger.
@@ -11,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
  * Created on Nov 12, 2009
  */
 public class LoggerDemo {
-	private Log logger = LogFactory.getLog(getClass());
+	private static Logger logger = Logger.getLogger(LoggerDemo.class);
 	
 	public static void main(String[] args) {
 	  new LoggerDemo().logAllLevels();
