@@ -1,7 +1,5 @@
 package deng.pojo.jms;
 
-import java.util.Date;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -23,7 +21,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class QueueListenerBean implements MessageListener {
 	public static void main(String[] args) throws Exception {
 		QueueListenerBean main = new QueueListenerBean();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
 		main.run();
 	}
 	
@@ -96,9 +94,8 @@ public class QueueListenerBean implements MessageListener {
 	public void onMessage(Message msg) {
 		System.out.println();
 		String msgStr = ToStringBuilder.reflectionToString(msg, ToStringStyle.MULTI_LINE_STYLE);
-		System.out.println("=== msg#" + (count + 1) + " received on " + new Date() + "===");
-		System.out.println(msgStr);
-		System.out.println("===============================");
+		System.out.println("msg#" + (count + 1) + " : " + msgStr);
+
 		count ++;		
 	}
 }

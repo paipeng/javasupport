@@ -23,7 +23,7 @@ public class QueuePrinter {
 	
 	public static void main(String[] args) throws Exception {
 		QueuePrinter main = new QueuePrinter();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
 		main.run();
 	}
 	
@@ -56,9 +56,7 @@ public class QueuePrinter {
 			while (en.hasMoreElements()) {
 				Message msg = (Message)en.nextElement();
 				String msgStr = ToStringBuilder.reflectionToString(msg, ToStringStyle.MULTI_LINE_STYLE);
-				System.out.println("=== msg#" + (count + 1) + " ===");
-				System.out.println(msgStr);
-				System.out.println("===============================");
+				System.out.println("msg#" + (count + 1) + " : " + msgStr);
 
 				count ++;
 			}

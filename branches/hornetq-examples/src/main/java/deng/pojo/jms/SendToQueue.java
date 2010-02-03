@@ -17,7 +17,7 @@ import lombok.Data;
 public class SendToQueue {	
 	public static void main(String[] args) throws Exception {
 		SendToQueue main = new SendToQueue();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
 		main.setText(System.getProperty("text", "Test Message."));
 		main.run();
 	}
