@@ -1,4 +1,4 @@
-package deng.hornetqexamples.jms;
+package deng.hornetqexamples.core;
 
 import static org.hornetq.integration.transports.netty.TransportConstants.PORT_PROP_NAME;
 
