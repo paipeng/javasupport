@@ -32,12 +32,12 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<!-- Lombok lib requires JDK6 compiler!
+		<!-- Lombok lib requires JDK6 compiler! -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>0.9.1</version>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
