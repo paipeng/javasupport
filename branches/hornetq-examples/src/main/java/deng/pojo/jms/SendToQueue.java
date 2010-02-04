@@ -17,7 +17,7 @@ import lombok.Data;
 public class SendToQueue {	
 	public static void main(String[] args) throws Exception {
 		SendToQueue main = new SendToQueue();
-		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
 		main.setText(System.getProperty("text", "Test Message."));
 		main.run();
 	}
@@ -42,8 +42,8 @@ public class SendToQueue {
 			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
-			Queue queue = (Queue)ctx.lookup(queueName);
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			Queue queue = session.createQueue(queueName);
 			MessageProducer producer = session.createProducer(queue);
 			TextMessage message = session.createTextMessage(text);
 			System.out.println("Sending text: " + text);

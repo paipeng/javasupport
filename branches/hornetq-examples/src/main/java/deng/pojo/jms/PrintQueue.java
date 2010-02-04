@@ -19,11 +19,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Data
-public class QueuePrinter {
+public class PrintQueue {
 	
 	public static void main(String[] args) throws Exception {
-		QueuePrinter main = new QueuePrinter();
-		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
+		PrintQueue main = new PrintQueue();
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
 		main.run();
 	}
 	
@@ -46,9 +46,9 @@ public class QueuePrinter {
 			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
-			Queue queue = (Queue)ctx.lookup(queueName);
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
+			Queue queue = session.createQueue(queueName);
+			
 			System.out.println("Start to browse queue: " + queueName);
 			int count = 0;
 			QueueBrowser browser = session.createBrowser(queue);

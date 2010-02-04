@@ -7,6 +7,7 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
+import javax.jms.Queue;
 import javax.jms.Session;
 
 public class SendBlockUntilAck extends ExampleRunner {
@@ -18,16 +19,16 @@ public class SendBlockUntilAck extends ExampleRunner {
 	@Override
 	protected void runExample(Connection connection) throws JMSException {
 		final Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-		Destination queueA = session.createQueue("queueA");
-		Destination queueB = session.createQueue("queueB");
+		Queue aQueue = session.createQueue("AQueue");
+		Queue bQueue = session.createQueue("BQueue");
 		
 		// Setup a message processor.
-		MessageConsumer processer = session.createConsumer(queueA);
+		MessageConsumer processer = session.createConsumer(aQueue);
 		processer.setMessageListener(new MessageListener() {			
 			@Override
 			public void onMessage(Message request) {
 				try {
-					System.out.println("Processing request in queueA");
+					System.out.println("Processing request in AQueue");
 					Destination replyQ = request.getJMSReplyTo();
 					MessageProducer producer = session.createProducer(replyQ);
 					producer.send(request);
@@ -39,14 +40,14 @@ public class SendBlockUntilAck extends ExampleRunner {
 		connection.start();
 		
 		// Start testing a async send, then a sync receive to block until receipt is received.
-		System.out.println("Sending a request to queueA");
-		MessageProducer producer = session.createProducer(queueA);
+		System.out.println("Sending a request to AQueue");
+		MessageProducer producer = session.createProducer(aQueue);
 		Message msg = session.createMessage();
-		msg.setJMSReplyTo(queueB);
+		msg.setJMSReplyTo(bQueue);
 		producer.send(msg);
-		System.out.println("Request sent to queueA");
-		MessageConsumer consumer = session.createConsumer(queueB);
-		System.out.println("Waiting on receipt from queueB...");
+		System.out.println("Request sent to AQueue");
+		MessageConsumer consumer = session.createConsumer(bQueue);
+		System.out.println("Waiting on receipt from BQueue...");
 		Message receipt = consumer.receive();
 		System.out.println("Got a reply.");
 		print(receipt);

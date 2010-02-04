@@ -21,7 +21,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class QueueListenerBean implements MessageListener {
 	public static void main(String[] args) throws Exception {
 		QueueListenerBean main = new QueueListenerBean();
-		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
 		main.run();
 	}
 	
@@ -63,8 +63,8 @@ public class QueueListenerBean implements MessageListener {
 		try {
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
-			Queue queue = (Queue)ctx.lookup(queueName);
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			Queue queue = session.createQueue(queueName);
 
 			MessageConsumer messageConsumer = session.createConsumer(queue);
 			messageConsumer.setMessageListener(this);
