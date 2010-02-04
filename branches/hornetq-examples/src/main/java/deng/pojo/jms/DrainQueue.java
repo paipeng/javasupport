@@ -17,11 +17,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Data
-public class QueueDrainer {
+public class DrainQueue {
 	
 	public static void main(String[] args) throws Exception {
-		QueueDrainer main = new QueueDrainer();
-		main.setQueueName(System.getProperty("queueName", "/queue/ExampleQueue"));
+		DrainQueue main = new DrainQueue();
+		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
 		main.setTimeout(Long.parseLong(System.getProperty("timeout", "5000")));
 		main.run();
 	}
@@ -46,9 +46,8 @@ public class QueueDrainer {
 			ctx = new InitialContext();
 			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("/ConnectionFactory");
 			connection = cf.createConnection();
-			Queue queue = (Queue)ctx.lookup(queueName);
 			Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
+			Queue queue = session.createQueue(queueName);
 			System.out.println("Start to drain queue: " + queueName);
 			int count = 0;
 			MessageConsumer messageConsumer = session.createConsumer(queue);

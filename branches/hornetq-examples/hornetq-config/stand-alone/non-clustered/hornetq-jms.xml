@@ -27,36 +27,36 @@
 		<entry name="/topic/ExampleTopic"/>
 	</topic>	
 	
-	<queue name="queueA">
-		<entry name="/queue/A"/>
+	<queue name="AQueue">
+		<entry name="/queue/AQueue"/>
 	</queue>
-	<queue name="queueB">
-		<entry name="/queue/B"/>
+	<queue name="BQueue">
+		<entry name="/queue/BQueue"/>
 	</queue>
-	<queue name="queueC">
-		<entry name="/queue/C"/>
+	<queue name="CQueue">
+		<entry name="/queue/CQueue"/>
 	</queue>
-	<queue name="queueD">
-		<entry name="/queue/D"/>
+	<queue name="DQueue">
+		<entry name="/queue/DQueue"/>
 	</queue>
-	<queue name="queueE">
-		<entry name="/queue/E"/>
+	<queue name="EQueue">
+		<entry name="/queue/EQueue"/>
 	</queue>
 	
-	<topic name="topicA">
-		<entry name="/topic/A"/>
+	<topic name="ATopic">
+		<entry name="/topic/ATopic"/>
 	</topic>
-	<topic name="topicB">
-		<entry name="/topic/B"/>
+	<topic name="BTopic">
+		<entry name="/topic/BTopic"/>
 	</topic>
-	<topic name="topicC">
-		<entry name="/topic/C"/>
+	<topic name="CTopic">
+		<entry name="/topic/CTopic"/>
 	</topic>
-	<topic name="topicD">
-		<entry name="/topic/D"/>
+	<topic name="DTopic">
+		<entry name="/topic/DTopic"/>
 	</topic>
-	<topic name="topicE">
-		<entry name="/topic/E"/>
+	<topic name="ETopic">
+		<entry name="/topic/ETopic"/>
 	</topic>
 	
 </configuration>
