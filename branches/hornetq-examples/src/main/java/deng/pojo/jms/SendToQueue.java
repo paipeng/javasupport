@@ -11,14 +11,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import lombok.Data;
-
-@Data
 public class SendToQueue {	
 	public static void main(String[] args) throws Exception {
 		SendToQueue main = new SendToQueue();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
-		main.setText(System.getProperty("text", "Test Message."));
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.text = System.getProperty("text", "Test Message.");
 		main.run();
 	}
 	
