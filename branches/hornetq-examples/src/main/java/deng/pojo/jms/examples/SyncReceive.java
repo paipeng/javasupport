@@ -19,7 +19,7 @@ public class SyncReceive extends ExampleRunner {
 	@Override
 	protected void runExample(Connection connection) throws JMSException {
 		Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
-		Queue aQueue = session.createQueue("AQueue");
+		Queue aQueue = session.createQueue("ExampleQueue");
 		connection.start();
 		
 		int numOfMsg = getMsgCount(session, aQueue);

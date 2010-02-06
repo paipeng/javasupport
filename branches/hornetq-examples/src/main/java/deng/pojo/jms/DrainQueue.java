@@ -11,18 +11,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import lombok.Data;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@Data
 public class DrainQueue {
 	
 	public static void main(String[] args) throws Exception {
 		DrainQueue main = new DrainQueue();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
-		main.setTimeout(Long.parseLong(System.getProperty("timeout", "5000")));
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.timeout = Long.parseLong(System.getProperty("timeout", "5000"));
 		main.run();
 	}
 

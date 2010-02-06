@@ -17,8 +17,6 @@ import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import lombok.Data;
-
 /**
  * Usage (using default JNDI "ConnectionFactory" lookup by jndi.properties) 
  *   java -DqueueName=ExampleQueue -DnumberOfSamples=5000 deng.pojo.jms.MeasureRate
@@ -29,16 +27,15 @@ import lombok.Data;
  * @author Zemian Deng
  *
  */
-@Data
 public class MeasureRate {
 	public static void main(String[] args) {		
 		MeasureRate main = new MeasureRate();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
-		main.setNumberOfSamples(Integer.parseInt(System.getProperty("numberOfSamples", "5000")));
-		main.setConnectionFactoryClassName(System.getProperty("connectionFactoryClassName"));
-		main.setPersistMsg(Boolean.parseBoolean(System.getProperty("persistMsg", "false")));
-		main.setRunConsumerFlag(Boolean.parseBoolean(System.getProperty("runConsumer", "true")));
-		main.setRunProducerFlag(Boolean.parseBoolean(System.getProperty("runProducer", "true")));
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
+		main.numberOfSamples = Integer.parseInt(System.getProperty("numberOfSamples", "5000"));
+		main.connectionFactoryClassName = System.getProperty("connectionFactoryClassName");
+		main.persistMsg = Boolean.parseBoolean(System.getProperty("persistMsg", "false"));
+		main.runConsumerFlag = Boolean.parseBoolean(System.getProperty("runConsumer", "true"));
+		main.runProducerFlag = Boolean.parseBoolean(System.getProperty("runProducer", "true"));
 		main.run();
 	}
 	

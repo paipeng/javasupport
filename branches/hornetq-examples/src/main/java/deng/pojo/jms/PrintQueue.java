@@ -13,17 +13,14 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import lombok.Data;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-@Data
 public class PrintQueue {
 	
 	public static void main(String[] args) throws Exception {
 		PrintQueue main = new PrintQueue();
-		main.setQueueName(System.getProperty("queueName", "ExampleQueue"));
+		main.queueName = System.getProperty("queueName", "ExampleQueue");
 		main.run();
 	}
 	
