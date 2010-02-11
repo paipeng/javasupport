@@ -216,7 +216,7 @@ function svnadd() {
       words = ln.split
       files << words[1] if words[0].strip == "?"
     end
-    system("svn add \"#{files.join(" ")}\"") unless files.size == 0
+    files.each { |e| system("svn add \"#{e}\"") }
   ' "$@"
 }
 export -f svnadd
@@ -250,6 +250,8 @@ svnig 'target
 .project' .
 }
 alias svnall='svnadd && svnrm && svnci'
+
+alias patchf='patch -p0 -i'
 
 ###############################
 ## Java Development Helpers
