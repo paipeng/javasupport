@@ -1,0 +1,57 @@
+<Window title="Slide Gallery" maximized="true"
+    xmlns:wtkx="http://pivot.apache.org/wtkx"
+    xmlns:effects="org.apache.pivot.wtk.effects"
+    xmlns="org.apache.pivot.wtk">
+    <content>
+        <StackPane>
+            <CardPane wtkx:id="imageCardPane" styles="{selectionChangeEffect:'horizontal_slide'}">
+                <ImageView image="@image1.jpg"/>
+                <ImageView image="@image2.jpg"/>
+                <ImageView image="@image3.jpg"/>
+                <ImageView image="@image4.jpg"/>
+                <ImageView image="@image5.jpg"/>
+            </CardPane>
+            
+            <wtkx:define>
+                <ButtonGroup wtkx:id="imageButtonGroup">
+                    <buttonGroupListeners>
+                        <wtkx:script>
+                        <![CDATA[
+                        function selectionChanged(buttonGroup, previousSelection) {
+                            var selection = buttonGroup.getSelection();
+                            if (selection != null) {
+                                var index = imageButtonBoxPane.indexOf(selection);
+                                imageCardPane.setSelectedIndex(index);
+                            }
+                        }
+                        ]]>
+                        </wtkx:script>
+                    </buttonGroupListeners>    
+                </ButtonGroup>        
+            </wtkx:define>
+
+            <BoxPane wtkx:id="imageButtonBoxPane" styles="{verticalAlignment:'bottom', padding:8}">
+                <decorators>
+                    <effects:FadeDecorator opacity="0.75"/>
+                </decorators>
+                
+                <PushButton buttonData="1" toggleButton="true" buttonGroup="$imageButtonGroup" 
+                    styles="@button_styles.json"/>
+                <PushButton buttonData="2" toggleButton="true" buttonGroup="$imageButtonGroup" 
+                    styles="@button_styles.json"/>
+                <PushButton buttonData="3" toggleButton="true" buttonGroup="$imageButtonGroup" 
+                    styles="@button_styles.json"/>
+                <PushButton buttonData="4" toggleButton="true" buttonGroup="$imageButtonGroup" 
+                    styles="@button_styles.json"/>
+                <PushButton buttonData="5" toggleButton="true" buttonGroup="$imageButtonGroup" 
+                    styles="@button_styles.json"/>
+            </BoxPane>
+
+            <wtkx:script>
+            <![CDATA[
+            imageButtonGroup.setSelection(imageButtonBoxPane.get(0));
+            ]]>
+            </wtkx:script>
+        </StackPane>
+    </content>
+</Window>
