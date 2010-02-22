@@ -76,7 +76,7 @@ function trash {
   TRASHCAN=~/.trash/`tstamp`
   if [ -e $TRASHCAN ]; then
 		echo "Renaming existing trash can: $TRASHCAN"
-    \mv -vf $TRASHCAN ${TRASHCAN}.`tsdate "+%N"`
+    \mv -vf $TRASHCAN ${TRASHCAN}.`tstamp "+%N"`
   fi
 	mkdir -p $TRASHCAN
   echo "Deleting to trash can: $TRASHCAN"
