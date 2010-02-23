@@ -192,8 +192,8 @@ alias l='ls -CF'                               #
 # Very short and frequently used commands
 alias eb='guiedit ~/.bashrc'                             # edit .bashrc file
 alias ebx='guiedit ~/.bashrc-extra'                      # edit .bashrc-extra file
-alias ej='guiedit /source/journals/`date "+%m%d%Y"`.txt' # edit today's journal file
-alias rb='exec bash --login'                             # reload bashrc
+alias ej='guiedit /source/journals/`date "+%m%d%Y"`.markdown' # edit today's journal file
+alias rb='exec bash'                                     # reload bashrc
 # a quick find
 function f() { 
   TEXT=$1
