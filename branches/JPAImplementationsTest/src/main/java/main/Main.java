@@ -2,9 +2,10 @@ package main;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("Waiting 2 minutes to prepare for monitoring...");
+		//System.out.println("Waiting 2 minutes to prepare for monitoring...");
 		try {
-			Thread.sleep(120000);
+			//Thread.sleep(120000);
+			Thread.sleep(1);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
