@@ -1,0 +1,26 @@
+<persistence>
+   <persistence-unit name="JPAImplementationTest" transaction-type="RESOURCE_LOCAL">
+   	<class>entity.TitlesPK</class>
+   	<class>entity.Titles</class>
+   	<class>entity.SalariesPK</class>
+   	<class>entity.Salaries</class>
+   	<class>entity.Employees</class>
+   	<class>entity.DeptManagerPK</class>
+   	<class>entity.DeptManager</class>
+   	<class>entity.DeptEmpPK</class>
+   	<class>entity.DeptEmp</class>
+   	<class>entity.Departments</class>
+      <properties>
+         
+         <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+         <property name="hibernate.connection.username" value="root"/>
+         <property name="hibernate.connection.password" value="aassddff"/>
+         <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/employees"/>
+       
+         <!-- cache configuration -->
+
+         <!-- alternatively to <class> and <property> declarations, you can use a regular hibernate.cfg.xml file -->
+         <!-- property name="hibernate.ejb.cfgfile" value="/org/hibernate/ejb/test/hibernate.cfg.xml"/ -->
+      </properties>
+   </persistence-unit>
+</persistence>

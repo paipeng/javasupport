@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="JPAImplementationTest">
+		<provider> oracle.toplink.essentials.PersistenceProvider </provider>
+		<class>entity.TitlesPK</class>
+		<class>entity.Titles</class>
+		<class>entity.SalariesPK</class>
+		<class>entity.Salaries</class>
+		<class>entity.Employees</class>
+		<class>entity.DeptManagerPK</class>
+		<class>entity.DeptManager</class>
+		<class>entity.DeptEmpPK</class>
+		<class>entity.DeptEmp</class>
+		<class>entity.Departments</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="toplink.logging.level" value="INFO" />
+			<property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/employees" />
+			<property name="toplink.jdbc.password" value="aassddff" />
+			<property name="toplink.jdbc.user" value="root" />
+			<property name="toplink.session-name" value="JPAImplementationTest" />
+			<property name="toplink.weaving" value="false" />
+		</properties>
+	</persistence-unit>
+</persistence>
