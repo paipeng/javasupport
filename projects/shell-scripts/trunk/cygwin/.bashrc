@@ -251,6 +251,14 @@ svnig 'target
 }
 alias svnall='svnadd && svnrm && svnci'
 
+###############################
+## Git Helpers
+###############################
+alias gitsvnclone='git svn clone -s -r HEAD'
+
+###############################
+## Source Code Dev Utils
+###############################
 alias patchf='patch -p0 -i'
 
 ###############################
